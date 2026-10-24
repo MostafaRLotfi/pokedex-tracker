@@ -3,969 +3,147 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Let's Go Dex Tracker</title>
-<meta name="description" content="Route-ordered Pokédex checklist and Master Trainer tracker for Pokémon: Let's Go, Pikachu! and Let's Go, Eevee!">
+<title>Pokédex Tracker</title>
+<meta name="description" content="Free, no-account completion trackers for the main series Pokémon games: story-ordered Pokédex routes and endgame goals.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#f6f3ee; --surface:#ffffff; --surface-2:#faf8f5; --ink:#1d1f23; --muted:#6b6f78; --line:#e7e2da;
-  --red:#d6332b; --red-ink:#ffffff; --red-soft:#fbe9e7; --blue:#2f5d8a; --gold:#b27b0e; --brown:#8a5a2b;
-  --ok:#2e8b57; --ok-soft:#e5f3eb; --shadow:0 1px 2px rgba(0,0,0,.05),0 4px 16px rgba(0,0,0,.05);
+  --bg:#f6f3ee; --surface:#ffffff; --ink:#1d1f23; --muted:#6b6f78; --line:#e7e2da;
+  --red:#d6332b; --red-soft:#fbe9e7; --shadow:0 1px 2px rgba(0,0,0,.05),0 4px 16px rgba(0,0,0,.05);
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:#15171b; --surface:#1e2127; --surface-2:#23272e; --ink:#eceef1; --muted:#9aa0aa; --line:#30353d;
-    --red:#e5483f; --red-soft:#3a1f1e; --blue:#8bb6e0; --gold:#e0b04a; --brown:#d39a63;
-    --ok:#5cc28a; --ok-soft:#1c3328; --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 16px rgba(0,0,0,.25);
+    --bg:#15171b; --surface:#1e2127; --ink:#eceef1; --muted:#9aa0aa; --line:#30353d;
+    --red:#e5483f; --red-soft:#3a1f1e; --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 16px rgba(0,0,0,.25);
   }
 }
 :root[data-theme="dark"]{
-  --bg:#15171b; --surface:#1e2127; --surface-2:#23272e; --ink:#eceef1; --muted:#9aa0aa; --line:#30353d;
-  --red:#e5483f; --red-soft:#3a1f1e; --blue:#8bb6e0; --gold:#e0b04a; --brown:#d39a63;
-  --ok:#5cc28a; --ok-soft:#1c3328; --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 16px rgba(0,0,0,.25);
+  --bg:#15171b; --surface:#1e2127; --ink:#eceef1; --muted:#9aa0aa; --line:#30353d;
+  --red:#e5483f; --red-soft:#3a1f1e; --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 16px rgba(0,0,0,.25);
 }
 *{box-sizing:border-box}
 html,body{margin:0}
-body{background:var(--bg);color:var(--ink);font:15px/1.45 Inter,system-ui,-apple-system,sans-serif;padding-bottom:120px}
-button,input,select{font:inherit;color:inherit}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 Inter,system-ui,-apple-system,sans-serif}
+button,select{font:inherit;color:inherit}
 .wrap{max-width:1080px;margin:0 auto;padding:0 16px}
 
-/* header */
+/* game bar (shared across all game pages) */
+.gamebar{background:#121418;color:#fff;font-size:14px}
+.gamebar .wrap{display:flex;align-items:center;gap:14px;min-height:42px;overflow-x:auto;white-space:nowrap}
+.gamebar a{color:rgba(255,255,255,.72);text-decoration:none;font-weight:600}
+.gamebar a.brand{color:#fff;font-weight:800;margin-right:4px}
+.gamebar .games{display:flex;gap:4px}
+.gamebar .games a{padding:5px 12px;border-radius:999px}
+.gamebar .games a:hover{color:#fff}
+
 header.hero{background:var(--red);color:#fff;position:relative;overflow:hidden}
-header.hero .wrap{padding-top:28px;padding-bottom:24px;position:relative}
+header.hero .wrap{padding-top:32px;padding-bottom:36px;position:relative}
 .ball{position:absolute;right:-60px;top:-60px;width:260px;height:260px;border-radius:50%;border:26px solid rgba(255,255,255,.12)}
 .ball::after{content:"";position:absolute;left:-26px;right:-26px;top:calc(50% - 13px);height:26px;background:rgba(255,255,255,.12)}
 .ball::before{content:"";position:absolute;width:60px;height:60px;border-radius:50%;left:calc(50% - 30px);top:calc(50% - 30px);border:16px solid rgba(255,255,255,.12);background:var(--red);z-index:1}
-.hero h1,.hero .sub,.stats{position:relative;z-index:2}
-h1{margin:0;font-size:clamp(24px,4vw,34px);font-weight:800;letter-spacing:-.02em}
-.sub{margin:6px 0 0;opacity:.9;max-width:640px}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:20px}
-.stat{background:rgba(255,255,255,.14);border-radius:14px;padding:12px 14px}
-.stat .k{font-size:12px;text-transform:uppercase;letter-spacing:.08em;opacity:.85;font-weight:600}
-.stat .v{font-size:24px;font-weight:800;margin-top:2px}
-.stat .v small{font-size:14px;font-weight:600;opacity:.8}
-.bar{height:6px;background:rgba(255,255,255,.25);border-radius:6px;margin-top:8px;overflow:hidden}
-.bar i{display:block;height:100%;background:#fff;border-radius:6px;width:0;transition:width .3s}
+.hero h1,.hero .sub,.ctls{position:relative;z-index:2}
+h1{margin:0;font-size:clamp(26px,4.5vw,38px);font-weight:800;letter-spacing:-.02em}
+.sub{margin:8px 0 0;opacity:.92;max-width:620px}
+.ctls{display:flex;gap:8px;margin-top:18px}
+.ctl{border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.14);color:#fff;border-radius:999px;padding:7px 12px;cursor:pointer}
+.ctl option{color:#1d1f23}
 
-/* toolbar */
-.toolbar{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-.toolbar .wrap{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding-top:10px;padding-bottom:10px}
-.tabs{display:flex;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:3px}
-.tabs button{border:0;background:none;padding:7px 14px;border-radius:999px;font-weight:600;cursor:pointer;color:var(--muted)}
-.tabs button[aria-selected="true"]{background:var(--red);color:#fff}
-.search{flex:1;min-width:160px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:8px 14px}
-.ctl{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 12px;cursor:pointer}
-label.tog{display:flex;align-items:center;gap:6px;font-size:14px;color:var(--muted);cursor:pointer;white-space:nowrap}
-
-/* stops */
-main{padding-top:18px}
-.intro{color:var(--muted);font-size:14px;margin:0 0 14px}
-.stop{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);margin-bottom:16px;overflow:hidden}
-.stop>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:14px 16px}
-.stop>summary::-webkit-details-marker{display:none}
-.num{flex:none;width:32px;height:32px;border-radius:50%;background:var(--red-soft);color:var(--red);font-weight:800;display:grid;place-items:center;font-size:14px}
-.stop.done .num{background:var(--ok-soft);color:var(--ok)}
-.stop h2{margin:0;font-size:17px;font-weight:700;flex:1}
-.stop .count{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
-.chev{transition:transform .2s;color:var(--muted)}
-.stop[open] .chev{transform:rotate(90deg)}
-.tip{margin:0;padding:0 16px 10px 60px;color:var(--muted);font-size:13.5px}
-.rows{border-top:1px solid var(--line)}
-.head,.row{display:grid;grid-template-columns:36px 52px minmax(130px,1.1fr) minmax(150px,1.3fr) minmax(170px,1.5fr);gap:10px;align-items:center;padding:8px 16px}
-.head{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700;background:var(--surface-2)}
-.row{border-top:1px solid var(--line);cursor:pointer}
-.row:hover{background:var(--surface-2)}
-.row.caught .nm{color:var(--muted);text-decoration:line-through;text-decoration-color:color-mix(in srgb,var(--muted) 60%,transparent)}
-.row.offver{opacity:.55}
-.dex{font-family:"JetBrains Mono",monospace;font-size:12.5px;color:var(--muted)}
-.nm{font-weight:600}
-.how{font-size:13.5px;color:var(--muted)}
-.evo{font-size:13px;color:var(--blue)}
-.evo .arr{color:var(--muted);margin:0 4px}
-.tag{display:inline-block;font-size:10.5px;font-weight:700;padding:1px 6px;border-radius:6px;margin-left:6px;vertical-align:1px;white-space:nowrap}
-.tag.P{background:color-mix(in srgb,var(--gold) 16%,transparent);color:var(--gold)}
-.tag.E{background:color-mix(in srgb,var(--brown) 16%,transparent);color:var(--brown)}
-.tag.T{background:var(--surface-2);color:var(--muted);border:1px solid var(--line)}
-
-/* custom checkbox */
-.cb{appearance:none;-webkit-appearance:none;width:22px;height:22px;border:2px solid color-mix(in srgb,var(--muted) 60%,transparent);border-radius:50%;display:grid;place-items:center;cursor:pointer;margin:0;background:var(--surface);transition:all .15s;position:relative;overflow:hidden}
-.cb::before{content:"";position:absolute;inset:0;background:linear-gradient(var(--red) 0 46%,transparent 46% 54%,#fff 54%);opacity:0;transition:opacity .15s}
-.cb::after{content:"";width:6px;height:6px;border-radius:50%;background:#fff;border:2px solid #222;opacity:0;z-index:1;transition:opacity .15s}
-.cb:checked{border-color:#222}
-.cb:checked::before,.cb:checked::after{opacity:1}
-.cb:focus-visible{outline:3px solid color-mix(in srgb,var(--red) 40%,transparent);outline-offset:2px}
-
-/* masters */
-.gm{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:16px 18px;margin-bottom:16px}
-.gm h2{margin:0 0 6px;font-size:18px}
-.gm p{margin:4px 0;color:var(--muted);font-size:14px}
-.gm ul{margin:8px 0 0;padding-left:18px;color:var(--muted);font-size:14px}
-.gm .badge{display:inline-flex;align-items:center;gap:8px;margin-top:10px;padding:6px 12px;border-radius:999px;font-weight:700;font-size:14px;background:var(--red-soft);color:var(--red)}
-.gm .badge.won{background:var(--ok-soft);color:var(--ok)}
-.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
-.loc-left{text-transform:none;letter-spacing:0;font-weight:600}
-.loc-h{grid-column:1/-1;margin:14px 0 2px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
-.sec-h{grid-column:1/-1;margin:18px 0 0;padding-bottom:6px;border-bottom:1px solid var(--line);font-size:16px;font-weight:700}
-.sec-h:first-child{margin-top:0}
-.sec-p{display:block;font-size:13px;font-weight:400;color:var(--muted);margin-top:2px}
-.mcard{display:flex;gap:10px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;cursor:pointer}
-.mcard:hover{border-color:color-mix(in srgb,var(--red) 40%,var(--line))}
-.mcard.done{background:var(--ok-soft);border-color:color-mix(in srgb,var(--ok) 35%,var(--line))}
-.mcard .cb{margin-top:1px;flex:none}
-.mcard .t{font-weight:600}
-.mcard .s{font-size:12.5px;color:var(--muted)}
-.mcard .w{font-size:12px;color:var(--muted);font-style:italic}
-.pill{font-size:10.5px;font-weight:700;border-radius:6px;padding:1px 6px;margin-left:6px;background:color-mix(in srgb,var(--blue) 15%,transparent);color:var(--blue);white-space:nowrap}
-.pill.opt{background:var(--surface-2);color:var(--muted);border:1px solid var(--line)}
-
-/* save bar */
-.savebar{position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--surface);border-top:1px solid var(--line);box-shadow:0 -6px 24px rgba(0,0,0,.08)}
-.savebar .wrap{display:flex;gap:10px;align-items:center;padding-top:10px;padding-bottom:10px;flex-wrap:wrap}
-.savebar .lbl{font-size:12px;text-transform:uppercase;letter-spacing:.08em;font-weight:700;color:var(--muted)}
-.code{flex:1;min-width:200px;font-family:"JetBrains Mono",monospace;font-size:13px;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:9px 12px;white-space:nowrap;overflow-x:auto;user-select:all}
-.btn{border:0;border-radius:10px;padding:9px 14px;font-weight:700;cursor:pointer;background:var(--red);color:#fff}
-.btn.ghost{background:var(--surface-2);color:var(--ink);border:1px solid var(--line)}
-.loadrow{display:none;width:100%;gap:8px}
-.loadrow.show{display:flex}
-.loadrow input{flex:1;min-width:0;border:1px solid var(--line);background:var(--surface-2);border-radius:10px;padding:9px 12px;font-family:"JetBrains Mono",monospace;font-size:13px}
-.toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:10px;font-weight:600;font-size:14px;opacity:0;pointer-events:none;transition:all .2s;z-index:20}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-footer.src{color:var(--muted);font-size:12.5px;padding:10px 0 30px}
-footer.src a{color:inherit}
-[hidden]{display:none!important}
-
-@media (max-width:760px){
-  .stats{grid-template-columns:repeat(3,1fr);gap:8px}.stat{padding:10px}.stat .v{font-size:19px}.stat .k{font-size:10px}.stat .v small{font-size:12px}
-  .ball{opacity:.6}
-  .head{display:none}
-  .row{grid-template-columns:30px 1fr;grid-template-areas:"cb main";gap:4px 10px;padding:10px 14px}
-  .row .cbw{grid-area:cb;align-self:start;padding-top:2px}
-  .row .dex{display:none}
-  .row .main{grid-area:main}
-  .row .how,.row .evo{display:block;margin-top:2px}
-  .tip{padding-left:16px}
-  .savebar .lbl{display:none}
-}
-@media (min-width:761px){ .row .main{display:contents} }
+main.wrap{padding-top:24px;padding-bottom:32px}
+h2{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.card{display:flex;flex-direction:column;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:18px 20px;color:inherit;text-decoration:none;transition:border-color .15s,transform .15s}
+.card:hover{border-color:color-mix(in srgb,var(--red) 45%,var(--line));transform:translateY(-1px)}
+.card .gname{font-size:18px;font-weight:700;line-height:1.3}
+.card .gdesc{color:var(--muted);font-size:14px}
+.card .go{margin-top:auto;padding-top:6px;color:var(--red);font-weight:700}
+.note{color:var(--muted);font-size:14px;margin:18px 0 0}
+footer{color:var(--muted);font-size:12.5px;padding:0 0 30px}
 </style>
 </head>
 <body>
+<nav class="gamebar" aria-label="Games">
+  <div class="wrap">
+    <a class="brand" href="./" aria-current="page" data-i18n="title">Pokédex Tracker</a>
+    <span class="games"><a href="letsgo/">Let's Go</a></span>
+  </div>
+</nav>
 <header class="hero">
   <div class="wrap">
     <div class="ball" aria-hidden="true"></div>
-    <h1 data-i18n="title">Let's Go Dex Tracker</h1>
-    <p class="sub" data-i18n-html="sub">An efficient, story-ordered route to fill the Pokédex in Let's Go, Pikachu! / Eevee!, plus a Master Trainer tracker for the Grand Master title.</p>
-    <div class="stats">
-      <div class="stat"><div class="k" data-i18n="kDex">Pokédex</div><div class="v" id="sDex">0 <small>/ 153</small></div><div class="bar"><i id="bDex"></i></div></div>
-      <div class="stat"><div class="k" data-i18n="kMas">Master Trainers</div><div class="v" id="sMas">0 <small>/ 150</small></div><div class="bar"><i id="bMas"></i></div></div>
-      <div class="stat"><div class="k" data-i18n="kStop">Route stops cleared</div><div class="v" id="sStop">0 <small>/ 22</small></div><div class="bar"><i id="bStop"></i></div></div>
+    <h1 data-i18n="title">Pokédex Tracker</h1>
+    <p class="sub" data-i18n="sub">Free, no-account completion trackers for the main series Pokémon games. Pick a game to start.</p>
+    <div class="ctls">
+      <select class="ctl" id="lang" aria-label="Language"></select>
+      <button class="ctl" id="theme" style="font-size:17px;line-height:1" title="Toggle theme" aria-label="Toggle theme">◐</button>
     </div>
   </div>
 </header>
 
-<div class="toolbar">
-  <div class="wrap">
-    <div class="tabs" role="tablist">
-      <button role="tab" aria-selected="true" data-tab="dex" data-i18n="tabDex">Pokédex route</button>
-      <button role="tab" aria-selected="false" data-tab="mas" data-i18n="tabMas">Grand Master</button>
-    </div>
-    <input class="search" id="q" type="search" placeholder="Search Pokémon or location…" aria-label="Search" data-i18n-ph="search" data-i18n-aria="searchA">
-    <select class="ctl" id="ver" aria-label="Game version" data-i18n-aria="verA">
-      <option value="0" data-i18n="verBoth">Both versions</option>
-      <option value="1" data-i18n="verP">Let's Go Pikachu</option>
-      <option value="2" data-i18n="verE">Let's Go Eevee</option>
-    </select>
-    <label class="tog"><input type="checkbox" id="hide"> <span data-i18n="hide">Hide done</span></label>
-    <select class="ctl" id="lang" aria-label="Language" data-i18n-aria="lang"></select>
-    <button class="ctl" style="font-size:17px;line-height:1" id="theme" title="Toggle theme" aria-label="Toggle theme" data-i18n-title="theme" data-i18n-aria="theme">◐</button>
-  </div>
-</div>
-
 <main class="wrap">
-  <section id="tab-dex">
-    <p class="intro" data-i18n-html="intro">Follow the stops in order. Each Pokémon is listed at the earliest point you can get it. Tap a row to check it off. <b>Evolves into</b> shows later stages and levels, so for a living dex catch one of the base form per stage.</p>
-    <div style="display:flex;gap:10px;align-items:center;margin:0 0 12px;flex-wrap:wrap">
-      <label class="tog"><span data-i18n="viewBy">View</span>
-        <select class="ctl" id="dview"><option value="route" data-i18n="viewRoute">Route order</option><option value="num" data-i18n="viewNum">Dex number</option></select>
-      </label>
-    </div>
-    <div id="stops"></div>
-  </section>
-
-  <section id="tab-mas" hidden>
-    <div class="gm">
-      <h2 data-i18n="gmH">Grand Master title</h2>
-      <p data-i18n-html="gmP">Earn the Master title for every one of the first 150 Pokémon, then talk to the woman in the Game Freak office (Celadon Condominiums, 3F) to receive <b>Grand Master</b>.</p>
-      <ul>
-        <li data-i18n-html="gmL0">Master Trainers appear across Kanto only <b>after you become Champion</b>. None are inside Gyms.</li>
-        <li data-i18n-html="gmL1">Rules: you may use only one Pokémon of the trainer's species, in the lead slot, with no items. Alolan forms and Mega Evolution are allowed for you.</li>
-        <li data-i18n-html="gmL2">Ditto, the legendary birds and Mewtwo don't battle. Show them a Pokémon of that species with enough CP instead.</li>
-        <li data-i18n-html="gmL3">Mew, Meltan and Melmetal titles are optional for Grand Master (some guides list all 153; Bulbapedia says 150).</li>
-      </ul>
-      <div class="badge" id="gmBadge">0 / 150 required titles</div>
-    </div>
-    <div style="display:flex;gap:10px;align-items:center;margin:0 0 12px;flex-wrap:wrap">
-      <label class="tog"><span data-i18n="sortBy">Sort by</span>
-        <select class="ctl" id="msort"><option value="dex" data-i18n="sortDex">Dex number</option><option value="loc" data-i18n="sortLoc">Location</option></select>
-      </label>
-    </div>
-    <div class="mgrid" id="mgrid"></div>
-  </section>
-
-  <footer class="src" data-i18n-html="footer">
-    Locations cross-checked from <a href="https://www.thonky.com/pokemon-lets-go/list-of-pokemon-locations">Thonky</a> and <a href="https://daily.pokecommunity.com/2018/11/16/pokemon-lets-go-pikachu-and-eevee-dex-locations-and-more/">PokéCommunity Daily</a>. Master Trainer data from <a href="https://bulbapedia.bulbagarden.net/wiki/Master_Trainer">Bulbapedia</a>, <a href="https://www.supercheats.com/lets-go-pikachu/walkthrough/where-are-all-the-master-trainers">SuperCheats</a> and <a href="https://gamerguides.com/pokemon-lets-go-pikachu-and-lets-go-eevee/guide/postgame/master-trainers">GamerGuides</a>. Fan-made tracker, not affiliated with Nintendo, Game Freak or The Pokémon Company.
-  </footer>
-</main>
-
-<div class="savebar">
-  <div class="wrap">
-    <span class="lbl" data-i18n="save">Save code</span>
-    <div class="code" id="code" title="Copy this into your notes app" data-i18n-title="codeT"></div>
-    <button class="btn" id="copy" data-i18n="copy">Copy</button>
-    <button class="btn ghost" id="loadBtn" data-i18n="load">Load</button>
-    <div class="loadrow" id="loadRow">
-      <input id="loadIn" placeholder="Paste a saved code (LGPE1-…)" aria-label="Saved code" data-i18n-ph="loadPh" data-i18n-aria="loadA">
-      <button class="btn" id="loadGo" data-i18n="restore">Restore</button>
-    </div>
+  <h2 data-i18n="pick">Games</h2>
+  <div class="grid">
+    <a class="card" href="letsgo/">
+      <span class="gname" data-i18n="lgName">Pokémon: Let's Go, Pikachu! / Let's Go, Eevee!</span>
+      <span class="gdesc" data-i18n="lgDesc">A story-ordered route to all 153 Pokédex entries, plus a Master Trainer tracker for the Grand Master title.</span>
+      <span class="go" data-i18n="open">Open tracker →</span>
+    </a>
   </div>
-</div>
-<div class="toast" id="toast"></div>
+  <p class="note" data-i18n="saveNote">Each game has its own save code at the bottom of its page. Copy it into a notes app to keep your progress.</p>
+</main>
+<footer class="wrap" data-i18n="footer">Fan-made tracker, not affiliated with Nintendo, Game Freak or The Pokémon Company.</footer>
 
 <script>
-const STOPS = [{"title": "1. Route 1 & Route 2", "tip": "Start of the game. Grab these while you head to Viridian.", "mons": [{"n": 16, "name": "Pidgey", "tag": "", "how": "Wild", "evo": "Pidgeotto (Lv 18)  →  Pidgeot (Lv 36)"}, {"n": 19, "name": "Rattata", "tag": "", "how": "Wild", "evo": "Raticate (Lv 20)"}, {"n": 10, "name": "Caterpie", "tag": "", "how": "Wild", "evo": "Metapod (Lv 7)  →  Butterfree (Lv 10)"}, {"n": 13, "name": "Weedle", "tag": "", "how": "Wild", "evo": "Kakuna (Lv 7)  →  Beedrill (Lv 10)"}, {"n": 43, "name": "Oddish", "tag": "P", "how": "Wild", "evo": "Gloom (Lv 21)  →  Vileplume (Leaf Stone)"}, {"n": 69, "name": "Bellsprout", "tag": "E", "how": "Wild", "evo": "Weepinbell (Lv 21)  →  Victreebel (Leaf Stone)"}]}, {"title": "2. Route 22", "tip": "West of Viridian. Land spawns only for now (water comes later).", "mons": [{"n": 21, "name": "Spearow", "tag": "", "how": "Wild", "evo": "Fearow (Lv 20)"}, {"n": 29, "name": "Nidoran♀", "tag": "", "how": "Wild", "evo": "Nidorina (Lv 16)  →  Nidoqueen (Moon Stone)"}, {"n": 32, "name": "Nidoran♂", "tag": "", "how": "Wild", "evo": "Nidorino (Lv 16)  →  Nidoking (Moon Stone)"}, {"n": 30, "name": "Nidorina", "tag": "", "how": "Evolve Nidoran♀ (Lv 16)", "evo": "Nidoqueen (Moon Stone)"}, {"n": 33, "name": "Nidorino", "tag": "", "how": "Evolve Nidoran♂ (Lv 16)", "evo": "Nidoking (Moon Stone)"}]}, {"title": "3. Viridian Forest", "tip": "Bulbasaur is rare; build a catch combo to boost rare spawns.", "mons": [{"n": 1, "name": "Bulbasaur", "tag": "", "how": "Wild (rare); or Cerulean gift at 30 caught", "evo": "Ivysaur (Lv 16)  →  Venusaur (Lv 32)"}, {"n": 11, "name": "Metapod", "tag": "", "how": "Wild", "evo": "Butterfree (Lv 10)"}, {"n": 14, "name": "Kakuna", "tag": "", "how": "Wild", "evo": "Beedrill (Lv 10)"}, {"n": 15, "name": "Beedrill", "tag": "", "how": "Evolve Kakuna (Lv 10); rare wild in Eevee ver.", "evo": ""}, {"n": 25, "name": "Pikachu", "tag": "", "how": "Wild", "evo": "Raichu (Thunder Stone)"}, {"n": 12, "name": "Butterfree", "tag": "", "how": "Evolve Metapod (Lv 10); rare wild in Pikachu ver.", "evo": ""}]}, {"title": "4. Pewter City, Route 3 & Route 4", "tip": "Buy the Magikarp from the salesman at the Route 4 Pokémon Center. Pick up the Old Amber in the Pewter Museum for later.", "mons": [{"n": 4, "name": "Charmander", "tag": "", "how": "Wild (rare); or Route 24 gift at 50 caught", "evo": "Charmeleon (Lv 16)  →  Charizard (Lv 36)"}, {"n": 23, "name": "Ekans", "tag": "E", "how": "Wild", "evo": "Arbok (Lv 22)"}, {"n": 27, "name": "Sandshrew", "tag": "P", "how": "Wild", "evo": "Sandslash (Lv 22)"}, {"n": 56, "name": "Mankey", "tag": "P", "how": "Wild", "evo": "Primeape (Lv 28)"}, {"n": 24, "name": "Arbok", "tag": "E", "how": "Evolve Ekans (Lv 22)", "evo": ""}, {"n": 28, "name": "Sandslash", "tag": "P", "how": "Evolve Sandshrew (Lv 22)", "evo": ""}, {"n": 57, "name": "Primeape", "tag": "P", "how": "Evolve Mankey (Lv 28)", "evo": ""}, {"n": 2, "name": "Ivysaur", "tag": "", "how": "Evolve Bulbasaur (Lv 16)", "evo": "Venusaur (Lv 32)"}, {"n": 5, "name": "Charmeleon", "tag": "", "how": "Evolve Charmander (Lv 16)", "evo": "Charizard (Lv 36)"}, {"n": 17, "name": "Pidgeotto", "tag": "", "how": "Evolve Pidgey (Lv 18)", "evo": "Pidgeot (Lv 36)"}, {"n": 20, "name": "Raticate", "tag": "", "how": "Evolve Rattata (Lv 20)", "evo": ""}, {"n": 22, "name": "Fearow", "tag": "", "how": "Evolve Spearow (Lv 20)", "evo": ""}, {"n": 54, "name": "Psyduck", "tag": "", "how": "Wild (Route 4, on land)", "evo": "Golduck (Lv 33)"}, {"n": 129, "name": "Magikarp", "tag": "", "how": "Buy from salesman (Route 4 Pokémon Center)", "evo": "Gyarados (Lv 20)"}, {"n": 130, "name": "Gyarados", "tag": "", "how": "Evolve Magikarp (Lv 20)", "evo": ""}]}, {"title": "5. Mt. Moon", "tip": "Collect Moon Stones. You can only take ONE fossil (Helix or Dome); the other needs a trade.", "mons": [{"n": 41, "name": "Zubat", "tag": "", "how": "Wild", "evo": "Golbat (Lv 22)"}, {"n": 35, "name": "Clefairy", "tag": "", "how": "Wild", "evo": "Clefable (Moon Stone)"}, {"n": 36, "name": "Clefable", "tag": "", "how": "Wild, or Moon Stone on Clefairy", "evo": ""}, {"n": 46, "name": "Paras", "tag": "", "how": "Wild", "evo": "Parasect (Lv 24)"}, {"n": 74, "name": "Geodude", "tag": "", "how": "Wild", "evo": "Graveler (Lv 25)  →  Golem (Trade)"}, {"n": 95, "name": "Onix", "tag": "", "how": "Wild", "evo": ""}, {"n": 111, "name": "Rhyhorn", "tag": "", "how": "Wild (Mt. Moon per Thonky; else Rock Tunnel)", "evo": "Rhydon (Lv 42)"}, {"n": 113, "name": "Chansey", "tag": "", "how": "Wild (rare, many areas)", "evo": ""}, {"n": 42, "name": "Golbat", "tag": "", "how": "Evolve Zubat (Lv 22)", "evo": ""}, {"n": 47, "name": "Parasect", "tag": "", "how": "Evolve Paras (Lv 24)", "evo": ""}, {"n": 75, "name": "Graveler", "tag": "", "how": "Evolve Geodude (Lv 25)", "evo": "Golem (Trade)"}, {"n": 31, "name": "Nidoqueen", "tag": "", "how": "Moon Stone on Nidorina", "evo": ""}, {"n": 34, "name": "Nidoking", "tag": "", "how": "Moon Stone on Nidorino", "evo": ""}]}, {"title": "6. Cerulean City, Route 24 & Route 25", "tip": "Nugget Bridge and Bill's house. Land spawns now; water later.", "mons": [{"n": 7, "name": "Squirtle", "tag": "", "how": "Wild (rare); or Vermilion gift at 60 species", "evo": "Wartortle (Lv 16)  →  Blastoise (Lv 36)"}, {"n": 48, "name": "Venonat", "tag": "", "how": "Wild", "evo": "Venomoth (Lv 31)"}, {"n": 52, "name": "Meowth", "tag": "E", "how": "Wild", "evo": "Persian (Lv 28)"}, {"n": 58, "name": "Growlithe", "tag": "P", "how": "Wild (Thonky: Rt 24-25; PokeCommunity: Rt 5-8)", "evo": "Arcanine (Fire Stone)"}, {"n": 8, "name": "Wartortle", "tag": "", "how": "Evolve Squirtle (Lv 16)", "evo": "Blastoise (Lv 36)"}, {"n": 55, "name": "Golduck", "tag": "", "how": "Evolve Psyduck (Lv 33)", "evo": ""}, {"n": 53, "name": "Persian", "tag": "", "how": "Eevee ver: evolve Meowth (Lv 28). Pikachu ver: Vermilion trade", "evo": ""}]}, {"title": "7. Route 5 & Route 6", "tip": "On the way south to Vermilion. Save a Moon Stone for Jigglypuff.", "mons": [{"n": 37, "name": "Vulpix", "tag": "E", "how": "Wild", "evo": "Ninetales (Fire Stone)"}, {"n": 39, "name": "Jigglypuff", "tag": "", "how": "Wild", "evo": "Wigglytuff (Moon Stone)"}, {"n": 63, "name": "Abra", "tag": "", "how": "Wild", "evo": "Kadabra (Lv 16)  →  Alakazam (Trade)"}, {"n": 64, "name": "Kadabra", "tag": "", "how": "Evolve Abra (Lv 16)", "evo": "Alakazam (Trade)"}, {"n": 40, "name": "Wigglytuff", "tag": "", "how": "Moon Stone on Jigglypuff", "evo": ""}]}, {"title": "8. Vermilion, Route 11 & Diglett's Cave", "tip": "", "mons": [{"n": 96, "name": "Drowzee", "tag": "", "how": "Wild", "evo": "Hypno (Lv 26)"}, {"n": 122, "name": "Mr. Mime", "tag": "", "how": "Wild", "evo": ""}, {"n": 97, "name": "Hypno", "tag": "", "how": "Evolve Drowzee (Lv 26)", "evo": ""}, {"n": 50, "name": "Diglett", "tag": "", "how": "Wild", "evo": "Dugtrio (Lv 26)"}, {"n": 51, "name": "Dugtrio", "tag": "", "how": "Wild or evolve Diglett (Lv 26)", "evo": ""}]}, {"title": "9. Routes 9-10 & Rock Tunnel", "tip": "Level-based starter evolutions can happen any time; check them off whenever they hit the level.", "mons": [{"n": 66, "name": "Machop", "tag": "", "how": "Wild", "evo": "Machoke (Lv 28)  →  Machamp (Trade)"}, {"n": 98, "name": "Krabby", "tag": "", "how": "Wild (Route 10, on land)", "evo": "Kingler (Lv 28)"}, {"n": 104, "name": "Cubone", "tag": "", "how": "Wild", "evo": "Marowak (Lv 28)"}, {"n": 115, "name": "Kangaskhan", "tag": "", "how": "Wild", "evo": ""}, {"n": 67, "name": "Machoke", "tag": "", "how": "Evolve Machop (Lv 28)", "evo": "Machamp (Trade)"}, {"n": 105, "name": "Marowak", "tag": "", "how": "Evolve Cubone (Lv 28)", "evo": ""}, {"n": 3, "name": "Venusaur", "tag": "", "how": "Evolve Ivysaur (Lv 32)", "evo": ""}, {"n": 6, "name": "Charizard", "tag": "", "how": "Evolve Charmeleon (Lv 36)", "evo": ""}, {"n": 9, "name": "Blastoise", "tag": "", "how": "Evolve Wartortle (Lv 36)", "evo": ""}]}, {"title": "10. Route 7, Route 8 & Celadon City", "tip": "Buy evolution stones at the Celadon Dept. Store. Your partner Pikachu/Eevee can't evolve; use a wild-caught one.", "mons": [{"n": 38, "name": "Ninetales", "tag": "E", "how": "Wild, or Fire Stone on Vulpix", "evo": ""}, {"n": 137, "name": "Porygon", "tag": "", "how": "Wild on Route 7 (rare), or Silph Co. gift later", "evo": ""}, {"n": 26, "name": "Raichu", "tag": "", "how": "Thunder Stone on a non-partner Pikachu", "evo": ""}, {"n": 59, "name": "Arcanine", "tag": "", "how": "Pikachu ver: wild/Fire Stone. Eevee ver: Vermilion trade", "evo": ""}]}, {"title": "11. Pokémon Tower (Lavender Town)", "tip": "Needs the Silph Scope from the Celadon Rocket Hideout.", "mons": [{"n": 92, "name": "Gastly", "tag": "", "how": "Wild", "evo": "Haunter (Lv 25)  →  Gengar (Trade)"}, {"n": 93, "name": "Haunter", "tag": "", "how": "Wild", "evo": "Gengar (Trade)"}]}, {"title": "12. Routes 12-15 (after the Poké Flute)", "tip": "Wake the Snorlax on Route 12. Catch-combo for Scyther/Pinsir.", "mons": [{"n": 143, "name": "Snorlax", "tag": "", "how": "Poké Flute encounter (Route 12 or 16)", "evo": ""}, {"n": 83, "name": "Farfetch'd", "tag": "", "how": "Wild (rare)", "evo": ""}, {"n": 99, "name": "Kingler", "tag": "", "how": "Wild (Routes 12-13)", "evo": ""}, {"n": 44, "name": "Gloom", "tag": "P", "how": "Wild or evolve Oddish (Lv 21)", "evo": "Vileplume (Leaf Stone)"}, {"n": 70, "name": "Weepinbell", "tag": "E", "how": "Wild or evolve Bellsprout (Lv 21)", "evo": "Victreebel (Leaf Stone)"}, {"n": 49, "name": "Venomoth", "tag": "", "how": "Wild or evolve Venonat (Lv 31)", "evo": ""}, {"n": 123, "name": "Scyther", "tag": "P", "how": "Wild", "evo": ""}, {"n": 127, "name": "Pinsir", "tag": "E", "how": "Wild", "evo": ""}, {"n": 128, "name": "Tauros", "tag": "", "how": "Wild", "evo": ""}, {"n": 18, "name": "Pidgeot", "tag": "", "how": "Wild (Routes 12-18) or evolve Pidgeotto (Lv 36)", "evo": ""}]}, {"title": "13. Routes 16-18 (Cycling Road)", "tip": "Eevee is on Route 17. Catch 4 for a living dex (Eevee + 3 evolutions).", "mons": [{"n": 84, "name": "Doduo", "tag": "", "how": "Wild", "evo": "Dodrio (Lv 31)"}, {"n": 85, "name": "Dodrio", "tag": "", "how": "Wild", "evo": ""}, {"n": 77, "name": "Ponyta", "tag": "", "how": "Wild", "evo": "Rapidash (Lv 40)"}, {"n": 78, "name": "Rapidash", "tag": "", "how": "Wild", "evo": ""}, {"n": 133, "name": "Eevee", "tag": "", "how": "Wild (Route 17)", "evo": "Vaporeon / Jolteon / Flareon (Water / Thunder / Fire Stone)"}, {"n": 134, "name": "Vaporeon", "tag": "", "how": "Water Stone on Eevee", "evo": ""}, {"n": 135, "name": "Jolteon", "tag": "", "how": "Thunder Stone on Eevee", "evo": ""}, {"n": 136, "name": "Flareon", "tag": "", "how": "Fire Stone on Eevee", "evo": ""}]}, {"title": "14. Saffron City", "tip": "Dojo: pick one; the other is a rare Victory Road spawn. Silph Co. gives Lapras (and Porygon).", "mons": [{"n": 106, "name": "Hitmonlee", "tag": "", "how": "Dojo gift or Victory Road (rare)", "evo": ""}, {"n": 107, "name": "Hitmonchan", "tag": "", "how": "Dojo gift or Victory Road (rare)", "evo": ""}, {"n": 131, "name": "Lapras", "tag": "", "how": "Gift at Silph Co.", "evo": ""}]}, {"title": "15. Sea Skim water sweep", "tip": "Once you have Sea Skim, surf Routes 4, 6, 10-13, 18-25.", "mons": [{"n": 60, "name": "Poliwag", "tag": "", "how": "Water (Routes 22, 23, 25)", "evo": "Poliwhirl (Lv 25)  →  Poliwrath (Water Stone)"}, {"n": 61, "name": "Poliwhirl", "tag": "", "how": "Water, or evolve Poliwag (Lv 25)", "evo": "Poliwrath (Water Stone)"}, {"n": 62, "name": "Poliwrath", "tag": "", "how": "Water Stone on Poliwhirl", "evo": ""}, {"n": 72, "name": "Tentacool", "tag": "", "how": "Water (many routes)", "evo": "Tentacruel (Lv 30)"}, {"n": 73, "name": "Tentacruel", "tag": "", "how": "Water", "evo": ""}, {"n": 116, "name": "Horsea", "tag": "", "how": "Water (Routes 11-13)", "evo": "Seadra (Lv 32)"}, {"n": 117, "name": "Seadra", "tag": "", "how": "Water (Routes 11-13)", "evo": ""}, {"n": 118, "name": "Goldeen", "tag": "", "how": "Water (Route 6)", "evo": "Seaking (Lv 33)"}, {"n": 119, "name": "Seaking", "tag": "", "how": "Water (Route 6)", "evo": ""}, {"n": 120, "name": "Staryu", "tag": "", "how": "Water (Routes 18, 19, 21)", "evo": "Starmie (Water Stone)"}, {"n": 121, "name": "Starmie", "tag": "", "how": "Water (Routes 18, 19, 21)", "evo": ""}, {"n": 147, "name": "Dratini", "tag": "", "how": "Water (Route 10)", "evo": "Dragonair (Lv 30)  →  Dragonite (Lv 55)"}, {"n": 148, "name": "Dragonair", "tag": "", "how": "Water (Route 10)", "evo": "Dragonite (Lv 55)"}, {"n": 149, "name": "Dragonite", "tag": "", "how": "Evolve Dragonair (Lv 55)", "evo": ""}]}, {"title": "16. Seafoam Islands", "tip": "Legendaries and Snorlax: win a timed battle first, then catch.", "mons": [{"n": 79, "name": "Slowpoke", "tag": "", "how": "Wild", "evo": "Slowbro (Lv 37)"}, {"n": 80, "name": "Slowbro", "tag": "", "how": "Wild", "evo": ""}, {"n": 86, "name": "Seel", "tag": "", "how": "Wild", "evo": "Dewgong (Lv 34)"}, {"n": 87, "name": "Dewgong", "tag": "", "how": "Wild", "evo": ""}, {"n": 90, "name": "Shellder", "tag": "", "how": "Wild", "evo": "Cloyster (Water Stone)"}, {"n": 91, "name": "Cloyster", "tag": "", "how": "Wild", "evo": ""}, {"n": 124, "name": "Jynx", "tag": "", "how": "Wild", "evo": ""}, {"n": 144, "name": "Articuno", "tag": "", "how": "Legendary encounter", "evo": ""}]}, {"title": "17. Cinnabar Island", "tip": "Revive fossils at the Pokémon Lab; explore the Pokémon Mansion.", "mons": [{"n": 132, "name": "Ditto", "tag": "", "how": "Wild (Pokémon Mansion)", "evo": ""}, {"n": 126, "name": "Magmar", "tag": "", "how": "Wild (Pokémon Mansion)", "evo": ""}, {"n": 138, "name": "Omanyte", "tag": "", "how": "Revive Helix Fossil", "evo": "Omastar (Lv 40)"}, {"n": 139, "name": "Omastar", "tag": "", "how": "Evolve Omanyte (Lv 40)", "evo": ""}, {"n": 140, "name": "Kabuto", "tag": "", "how": "Revive Dome Fossil", "evo": "Kabutops (Lv 40)"}, {"n": 141, "name": "Kabutops", "tag": "", "how": "Evolve Kabuto (Lv 40)", "evo": ""}, {"n": 142, "name": "Aerodactyl", "tag": "", "how": "Revive Old Amber", "evo": ""}]}, {"title": "18. Route 21", "tip": "Water route between Pallet Town and Cinnabar.", "mons": [{"n": 114, "name": "Tangela", "tag": "", "how": "Wild", "evo": ""}, {"n": 45, "name": "Vileplume", "tag": "P", "how": "Wild, or Leaf Stone on Gloom", "evo": ""}, {"n": 71, "name": "Victreebel", "tag": "E", "how": "Wild, or Leaf Stone on Weepinbell", "evo": ""}]}, {"title": "19. Power Plant (surf Route 10)", "tip": "Grimer/Muk and Koffing/Weezing also spawn in the Pokémon Mansion.", "mons": [{"n": 81, "name": "Magnemite", "tag": "", "how": "Wild", "evo": "Magneton (Lv 30)"}, {"n": 82, "name": "Magneton", "tag": "", "how": "Wild", "evo": ""}, {"n": 100, "name": "Voltorb", "tag": "", "how": "Wild", "evo": "Electrode (Lv 30)"}, {"n": 101, "name": "Electrode", "tag": "", "how": "Wild", "evo": ""}, {"n": 125, "name": "Electabuzz", "tag": "", "how": "Wild", "evo": ""}, {"n": 88, "name": "Grimer", "tag": "P", "how": "Wild", "evo": "Muk (Lv 38)"}, {"n": 89, "name": "Muk", "tag": "P", "how": "Wild", "evo": ""}, {"n": 109, "name": "Koffing", "tag": "E", "how": "Wild", "evo": "Weezing (Lv 35)"}, {"n": 110, "name": "Weezing", "tag": "E", "how": "Wild", "evo": ""}, {"n": 145, "name": "Zapdos", "tag": "", "how": "Legendary encounter", "evo": ""}]}, {"title": "20. Route 23 & Victory Road", "tip": "Final stretch before the Elite Four.", "mons": [{"n": 102, "name": "Exeggcute", "tag": "", "how": "Wild (Route 23)", "evo": "Exeggutor (Leaf Stone)"}, {"n": 103, "name": "Exeggutor", "tag": "", "how": "Wild (Route 23)", "evo": ""}, {"n": 112, "name": "Rhydon", "tag": "", "how": "Wild, or evolve Rhyhorn (Lv 42)", "evo": ""}, {"n": 146, "name": "Moltres", "tag": "", "how": "Legendary encounter", "evo": ""}]}, {"title": "21. Post-game: Cerulean Cave", "tip": "Opens after you beat the Elite Four.", "mons": [{"n": 108, "name": "Lickitung", "tag": "", "how": "Wild", "evo": ""}, {"n": 150, "name": "Mewtwo", "tag": "", "how": "Legendary encounter", "evo": ""}]}, {"title": "22. Trades & specials", "tip": "Needs a second player, a second Switch, or Pokémon GO.", "mons": [{"n": 65, "name": "Alakazam", "tag": "", "how": "Trade Kadabra", "evo": ""}, {"n": 68, "name": "Machamp", "tag": "", "how": "Trade Machoke", "evo": ""}, {"n": 76, "name": "Golem", "tag": "", "how": "Trade Graveler", "evo": ""}, {"n": 94, "name": "Gengar", "tag": "", "how": "Trade Haunter", "evo": ""}, {"n": 151, "name": "Mew", "tag": "", "how": "Poké Ball Plus", "evo": ""}, {"n": 808, "name": "Meltan", "tag": "", "how": "Pokémon GO transfer (GO Park)", "evo": "Melmetal (400 Candy in GO)"}, {"n": 809, "name": "Melmetal", "tag": "", "how": "Evolve Meltan in Pokémon GO, then transfer", "evo": ""}]}];
-const MASTERS = [{"n": 1, "loc": "Route 4 East"}, {"n": 2, "loc": "Route 14"}, {"n": 3, "loc": "Route 23"}, {"n": 4, "loc": "Celadon Condominiums"}, {"n": 5, "loc": "Route 10"}, {"n": 6, "loc": "Route 23"}, {"n": 7, "loc": "Route 12"}, {"n": 8, "loc": "Route 20"}, {"n": 9, "loc": "Route 20"}, {"n": 10, "loc": "Route 18"}, {"n": 11, "loc": "Route 11"}, {"n": 12, "loc": "Route 2 North"}, {"n": 13, "loc": "Viridian Forest"}, {"n": 14, "loc": "Route 13"}, {"n": 15, "loc": "Route 8"}, {"n": 16, "loc": "Route 2 South"}, {"n": 17, "loc": "Route 16"}, {"n": 18, "loc": "Route 12"}, {"n": 19, "loc": "Route 10"}, {"n": 20, "loc": "Cerulean City"}, {"n": 21, "loc": "Pewter City"}, {"n": 22, "loc": "Route 18"}, {"n": 23, "loc": "Route 4 East"}, {"n": 24, "loc": "Rocket Hideout"}, {"n": 25, "loc": "Viridian Forest"}, {"n": 26, "loc": "Pokémon Tower"}, {"n": 27, "loc": "Route 11"}, {"n": 28, "loc": "Route 7"}, {"n": 29, "loc": "Route 3"}, {"n": 30, "loc": "Underground Path 7-8"}, {"n": 31, "loc": "Route 23"}, {"n": 32, "loc": "Route 4 West"}, {"n": 33, "loc": "Underground Path 7-8"}, {"n": 34, "loc": "Route 23"}, {"n": 35, "loc": "Saffron City"}, {"n": 36, "loc": "Mt. Moon"}, {"n": 37, "loc": "Route 6"}, {"n": 38, "loc": "Route 9"}, {"n": 39, "loc": "Pewter City"}, {"n": 40, "loc": "Silph Co."}, {"n": 41, "loc": "Rock Tunnel"}, {"n": 42, "loc": "Victory Road"}, {"n": 43, "loc": "Viridian City"}, {"n": 44, "loc": "Pewter City"}, {"n": 45, "loc": "Route 14"}, {"n": 46, "loc": "Mt. Moon"}, {"n": 47, "loc": "Route 2 North"}, {"n": 48, "loc": "Route 24"}, {"n": 49, "loc": "Route 15"}, {"n": 50, "loc": "Diglett's Cave"}, {"n": 51, "loc": "Diglett's Cave"}, {"n": 52, "loc": "Viridian City"}, {"n": 53, "loc": "Rocket Hideout"}, {"n": 54, "loc": "Route 21"}, {"n": 55, "loc": "Route 4 East"}, {"n": 56, "loc": "Route 5"}, {"n": 57, "loc": "Route 11"}, {"n": 58, "loc": "Route 7"}, {"n": 59, "loc": "Celadon City"}, {"n": 60, "loc": "Route 12"}, {"n": 61, "loc": "Cerulean City"}, {"n": 62, "loc": "Cerulean City"}, {"n": 63, "loc": "Viridian City"}, {"n": 64, "loc": "Saffron City"}, {"n": 65, "loc": "Route 10"}, {"n": 66, "loc": "Silph Co."}, {"n": 67, "loc": "Fuchsia City"}, {"n": 68, "loc": "Vermilion City"}, {"n": 69, "loc": "Viridian City"}, {"n": 70, "loc": "Pokémon Tower"}, {"n": 71, "loc": "Celadon City"}, {"n": 72, "loc": "Route 20"}, {"n": 73, "loc": "Route 20"}, {"n": 74, "loc": "Rock Tunnel"}, {"n": 75, "loc": "Victory Road"}, {"n": 76, "loc": "Pewter City"}, {"n": 77, "loc": "Saffron City"}, {"n": 78, "loc": "Saffron City"}, {"n": 79, "loc": "Route 21"}, {"n": 80, "loc": "Route 21"}, {"n": 81, "loc": "Underground Path 5-6"}, {"n": 82, "loc": "Underground Path 5-6"}, {"n": 83, "loc": "Vermilion City"}, {"n": 84, "loc": "Cerulean City"}, {"n": 85, "loc": "Route 15"}, {"n": 86, "loc": "Seafoam Islands"}, {"n": 87, "loc": "Seafoam Islands"}, {"n": 88, "loc": "Celadon City"}, {"n": 89, "loc": "Pokémon Mansion"}, {"n": 90, "loc": "Route 19"}, {"n": 91, "loc": "Route 20"}, {"n": 92, "loc": "Lavender Town"}, {"n": 93, "loc": "Lavender Town"}, {"n": 94, "loc": "Lavender Town"}, {"n": 95, "loc": "Underground Path 7-8"}, {"n": 96, "loc": "Viridian City"}, {"n": 97, "loc": "Pokémon Tower"}, {"n": 98, "loc": "Vermilion City"}, {"n": 99, "loc": "Silph Co."}, {"n": 100, "loc": "Power Plant"}, {"n": 101, "loc": "Route 16"}, {"n": 102, "loc": "Route 24"}, {"n": 103, "loc": "Cinnabar Island"}, {"n": 104, "loc": "Route 8"}, {"n": 105, "loc": "Lavender Town"}, {"n": 106, "loc": "Saffron City"}, {"n": 107, "loc": "Saffron City"}, {"n": 108, "loc": "Route 16"}, {"n": 109, "loc": "Route 17"}, {"n": 110, "loc": "Rocket Hideout"}, {"n": 111, "loc": "Route 17"}, {"n": 112, "loc": "Rocket Hideout"}, {"n": 113, "loc": "Fuchsia City"}, {"n": 114, "loc": "Route 15"}, {"n": 115, "loc": "Fuchsia City"}, {"n": 116, "loc": "Route 19"}, {"n": 117, "loc": "Route 12"}, {"n": 118, "loc": "Route 12"}, {"n": 119, "loc": "Route 13"}, {"n": 120, "loc": "Route 19"}, {"n": 121, "loc": "Route 25"}, {"n": 122, "loc": "Celadon City"}, {"n": 123, "loc": "Route 15"}, {"n": 124, "loc": "Cerulean City"}, {"n": 125, "loc": "Route 10"}, {"n": 126, "loc": "Pokémon Mansion"}, {"n": 127, "loc": "Route 18"}, {"n": 128, "loc": "Fuchsia City"}, {"n": 129, "loc": "Route 4 West"}, {"n": 130, "loc": "Celadon City"}, {"n": 131, "loc": "Pokémon Tower"}, {"n": 132, "loc": "Pokémon Mansion", "cp": 4000}, {"n": 133, "loc": "Route 17"}, {"n": 134, "loc": "Celadon City"}, {"n": 135, "loc": "Celadon City"}, {"n": 136, "loc": "Celadon City"}, {"n": 137, "loc": "Celadon City"}, {"n": 138, "loc": "Mt. Moon"}, {"n": 139, "loc": "Cinnabar Island"}, {"n": 140, "loc": "Mt. Moon"}, {"n": 141, "loc": "Pewter City"}, {"n": 142, "loc": "Pewter City"}, {"n": 143, "loc": "Celadon City"}, {"n": 144, "loc": "Seafoam Islands", "cp": 7500}, {"n": 145, "loc": "Power Plant", "cp": 7500}, {"n": 146, "loc": "Victory Road", "cp": 7500}, {"n": 147, "loc": "Route 23"}, {"n": 148, "loc": "Seafoam Islands"}, {"n": 149, "loc": "Cerulean City"}, {"n": 150, "loc": "Pokémon Mansion", "cp": 9000}, {"n": 151, "loc": "Pokémon Mansion", "cp": 8000, "opt": 1}, {"n": 808, "loc": "Pokémon Mansion", "cp": 4000, "opt": 1}, {"n": 809, "loc": "Pokémon Mansion", "cp": 8000, "opt": 1}];
-const ORDER = [...Array(151)].map((_,i)=>i+1).concat([808,809]); // bit order
-const IDX = new Map(ORDER.map((n,i)=>[n,i]));
-const NAME = {}; STOPS.forEach(s=>s.mons.forEach(m=>NAME[m.n]=m.name));
-const PN = {"ja": "フシギダネ|フシギソウ|フシギバナ|ヒトカゲ|リザード|リザードン|ゼニガメ|カメール|カメックス|キャタピー|トランセル|バタフリー|ビードル|コクーン|スピアー|ポッポ|ピジョン|ピジョット|コラッタ|ラッタ|オニスズメ|オニドリル|アーボ|アーボック|ピカチュウ|ライチュウ|サンド|サンドパン|ニドラン♀|ニドリーナ|ニドクイン|ニドラン♂|ニドリーノ|ニドキング|ピッピ|ピクシー|ロコン|キュウコン|プリン|プクリン|ズバット|ゴルバット|ナゾノクサ|クサイハナ|ラフレシア|パラス|パラセクト|コンパン|モルフォン|ディグダ|ダグトリオ|ニャース|ペルシアン|コダック|ゴルダック|マンキー|オコリザル|ガーディ|ウインディ|ニョロモ|ニョロゾ|ニョロボン|ケーシィ|ユンゲラー|フーディン|ワンリキー|ゴーリキー|カイリキー|マダツボミ|ウツドン|ウツボット|メノクラゲ|ドククラゲ|イシツブテ|ゴローン|ゴローニャ|ポニータ|ギャロップ|ヤドン|ヤドラン|コイル|レアコイル|カモネギ|ドードー|ドードリオ|パウワウ|ジュゴン|ベトベター|ベトベトン|シェルダー|パルシェン|ゴース|ゴースト|ゲンガー|イワーク|スリープ|スリーパー|クラブ|キングラー|ビリリダマ|マルマイン|タマタマ|ナッシー|カラカラ|ガラガラ|サワムラー|エビワラー|ベロリンガ|ドガース|マタドガス|サイホーン|サイドン|ラッキー|モンジャラ|ガルーラ|タッツー|シードラ|トサキント|アズマオウ|ヒトデマン|スターミー|バリヤード|ストライク|ルージュラ|エレブー|ブーバー|カイロス|ケンタロス|コイキング|ギャラドス|ラプラス|メタモン|イーブイ|シャワーズ|サンダース|ブースター|ポリゴン|オムナイト|オムスター|カブト|カブトプス|プテラ|カビゴン|フリーザー|サンダー|ファイヤー|ミニリュウ|ハクリュー|カイリュー|ミュウツー|ミュウ|メルタン|メルメタル", "fr": "Bulbizarre|Herbizarre|Florizarre|Salamèche|Reptincel|Dracaufeu|Carapuce|Carabaffe|Tortank|Chenipan|Chrysacier|Papilusion|Aspicot|Coconfort|Dardargnan|Roucool|Roucoups|Roucarnage|Rattata|Rattatac|Piafabec|Rapasdepic|Abo|Arbok|Pikachu|Raichu|Sabelette|Sablaireau|Nidoran♀|Nidorina|Nidoqueen|Nidoran♂|Nidorino|Nidoking|Mélofée|Mélodelfe|Goupix|Feunard|Rondoudou|Grodoudou|Nosferapti|Nosferalto|Mystherbe|Ortide|Rafflesia|Paras|Parasect|Mimitoss|Aéromite|Taupiqueur|Triopikeur|Miaouss|Persian|Psykokwak|Akwakwak|Férosinge|Colossinge|Caninos|Arcanin|Ptitard|Têtarte|Tartard|Abra|Kadabra|Alakazam|Machoc|Machopeur|Mackogneur|Chétiflor|Boustiflor|Empiflor|Tentacool|Tentacruel|Racaillou|Gravalanch|Grolem|Ponyta|Galopa|Ramoloss|Flagadoss|Magnéti|Magnéton|Canarticho|Doduo|Dodrio|Otaria|Lamantine|Tadmorv|Grotadmorv|Kokiyas|Crustabri|Fantominus|Spectrum|Ectoplasma|Onix|Soporifik|Hypnomade|Krabby|Krabboss|Voltorbe|Électrode|Noeunoeuf|Noadkoko|Osselait|Ossatueur|Kicklee|Tygnon|Excelangue|Smogo|Smogogo|Rhinocorne|Rhinoféros|Leveinard|Saquedeneu|Kangourex|Hypotrempe|Hypocéan|Poissirène|Poissoroy|Stari|Staross|M. Mime|Insécateur|Lippoutou|Élektek|Magmar|Scarabrute|Tauros|Magicarpe|Léviator|Lokhlass|Métamorph|Évoli|Aquali|Voltali|Pyroli|Porygon|Amonita|Amonistar|Kabuto|Kabutops|Ptéra|Ronflex|Artikodin|Électhor|Sulfura|Minidraco|Draco|Dracolosse|Mewtwo|Mew|Meltan|Melmetal", "de": "Bisasam|Bisaknosp|Bisaflor|Glumanda|Glutexo|Glurak|Schiggy|Schillok|Turtok|Raupy|Safcon|Smettbo|Hornliu|Kokuna|Bibor|Taubsi|Tauboga|Tauboss|Rattfratz|Rattikarl|Habitak|Ibitak|Rettan|Arbok|Pikachu|Raichu|Sandan|Sandamer|Nidoran♀|Nidorina|Nidoqueen|Nidoran♂|Nidorino|Nidoking|Piepi|Pixi|Vulpix|Vulnona|Pummeluff|Knuddeluff|Zubat|Golbat|Myrapla|Duflor|Giflor|Paras|Parasek|Bluzuk|Omot|Digda|Digdri|Mauzi|Snobilikat|Enton|Entoron|Menki|Rasaff|Fukano|Arkani|Quapsel|Quaputzi|Quappo|Abra|Kadabra|Simsala|Machollo|Maschock|Machomei|Knofensa|Ultrigaria|Sarzenia|Tentacha|Tentoxa|Kleinstein|Georok|Geowaz|Ponita|Gallopa|Flegmon|Lahmus|Magnetilo|Magneton|Porenta|Dodu|Dodri|Jurob|Jugong|Sleima|Sleimok|Muschas|Austos|Nebulak|Alpollo|Gengar|Onix|Traumato|Hypno|Krabby|Kingler|Voltobal|Lektrobal|Owei|Kokowei|Tragosso|Knogga|Kicklee|Nockchan|Schlurp|Smogon|Smogmog|Rihorn|Rizeros|Chaneira|Tangela|Kangama|Seeper|Seemon|Goldini|Golking|Sterndu|Starmie|Pantimos|Sichlor|Rossana|Elektek|Magmar|Pinsir|Tauros|Karpador|Garados|Lapras|Ditto|Evoli|Aquana|Blitza|Flamara|Porygon|Amonitas|Amoroso|Kabuto|Kabutops|Aerodactyl|Relaxo|Arktos|Zapdos|Lavados|Dratini|Dragonir|Dragoran|Mewtu|Mew|Meltan|Melmetal", "ko": "이상해씨|이상해풀|이상해꽃|파이리|리자드|리자몽|꼬부기|어니부기|거북왕|캐터피|단데기|버터플|뿔충이|딱충이|독침붕|구구|피죤|피죤투|꼬렛|레트라|깨비참|깨비드릴조|아보|아보크|피카츄|라이츄|모래두지|고지|니드런♀|니드리나|니드퀸|니드런♂|니드리노|니드킹|삐삐|픽시|식스테일|나인테일|푸린|푸크린|주뱃|골뱃|뚜벅쵸|냄새꼬|라플레시아|파라스|파라섹트|콘팡|도나리|디그다|닥트리오|나옹|페르시온|고라파덕|골덕|망키|성원숭|가디|윈디|발챙이|슈륙챙이|강챙이|캐이시|윤겔라|후딘|알통몬|근육몬|괴력몬|모다피|우츠동|우츠보트|왕눈해|독파리|꼬마돌|데구리|딱구리|포니타|날쌩마|야돈|야도란|코일|레어코일|파오리|두두|두트리오|쥬쥬|쥬레곤|질퍽이|질뻐기|셀러|파르셀|고오스|고우스트|팬텀|롱스톤|슬리프|슬리퍼|크랩|킹크랩|찌리리공|붐볼|아라리|나시|탕구리|텅구리|시라소몬|홍수몬|내루미|또가스|또도가스|뿔카노|코뿌리|럭키|덩쿠리|캥카|쏘드라|시드라|콘치|왕콘치|별가사리|아쿠스타|마임맨|스라크|루주라|에레브|마그마|쁘사이저|켄타로스|잉어킹|갸라도스|라프라스|메타몽|이브이|샤미드|쥬피썬더|부스터|폴리곤|암나이트|암스타|투구|투구푸스|프테라|잠만보|프리져|썬더|파이어|미뇽|신뇽|망나뇽|뮤츠|뮤|멜탄|멜메탈", "zh-Hant": "妙蛙種子|妙蛙草|妙蛙花|小火龍|火恐龍|噴火龍|傑尼龜|卡咪龜|水箭龜|綠毛蟲|鐵甲蛹|巴大蝶|獨角蟲|鐵殼蛹|大針蜂|波波|比比鳥|大比鳥|小拉達|拉達|烈雀|大嘴雀|阿柏蛇|阿柏怪|皮卡丘|雷丘|穿山鼠|穿山王|尼多蘭|尼多娜|尼多后|尼多朗|尼多力諾|尼多王|皮皮|皮可西|六尾|九尾|胖丁|胖可丁|超音蝠|大嘴蝠|走路草|臭臭花|霸王花|派拉斯|派拉斯特|毛球|摩魯蛾|地鼠|三地鼠|喵喵|貓老大|可達鴨|哥達鴨|猴怪|火爆猴|卡蒂狗|風速狗|蚊香蝌蚪|蚊香君|蚊香泳士|凱西|勇基拉|胡地|腕力|豪力|怪力|喇叭芽|口呆花|大食花|瑪瑙水母|毒刺水母|小拳石|隆隆石|隆隆岩|小火馬|烈焰馬|呆呆獸|呆殼獸|小磁怪|三合一磁怪|大蔥鴨|嘟嘟|嘟嘟利|小海獅|白海獅|臭泥|臭臭泥|大舌貝|刺甲貝|鬼斯|鬼斯通|耿鬼|大岩蛇|催眠貘|引夢貘人|大鉗蟹|巨鉗蟹|霹靂電球|頑皮雷彈|蛋蛋|椰蛋樹|卡拉卡拉|嘎啦嘎啦|飛腿郎|快拳郎|大舌頭|瓦斯彈|雙彈瓦斯|獨角犀牛|鑽角犀獸|吉利蛋|蔓藤怪|袋獸|墨海馬|海刺龍|角金魚|金魚王|海星星|寶石海星|魔牆人偶|飛天螳螂|迷唇姐|電擊獸|鴨嘴火獸|凱羅斯|肯泰羅|鯉魚王|暴鯉龍|拉普拉斯|百變怪|伊布|水伊布|雷伊布|火伊布|多邊獸|菊石獸|多刺菊石獸|化石盔|鐮刀盔|化石翼龍|卡比獸|急凍鳥|閃電鳥|火焰鳥|迷你龍|哈克龍|快龍|超夢|夢幻|美錄坦|美錄梅塔", "zh-Hans": "妙蛙种子|妙蛙草|妙蛙花|小火龙|火恐龙|喷火龙|杰尼龟|卡咪龟|水箭龟|绿毛虫|铁甲蛹|巴大蝶|独角虫|铁壳蛹|大针蜂|波波|比比鸟|大比鸟|小拉达|拉达|烈雀|大嘴雀|阿柏蛇|阿柏怪|皮卡丘|雷丘|穿山鼠|穿山王|尼多兰|尼多娜|尼多后|尼多朗|尼多力诺|尼多王|皮皮|皮可西|六尾|九尾|胖丁|胖可丁|超音蝠|大嘴蝠|走路草|臭臭花|霸王花|派拉斯|派拉斯特|毛球|摩鲁蛾|地鼠|三地鼠|喵喵|猫老大|可达鸭|哥达鸭|猴怪|火暴猴|卡蒂狗|风速狗|蚊香蝌蚪|蚊香君|蚊香泳士|凯西|勇基拉|胡地|腕力|豪力|怪力|喇叭芽|口呆花|大食花|玛瑙水母|毒刺水母|小拳石|隆隆石|隆隆岩|小火马|烈焰马|呆呆兽|呆壳兽|小磁怪|三合一磁怪|大葱鸭|嘟嘟|嘟嘟利|小海狮|白海狮|臭泥|臭臭泥|大舌贝|刺甲贝|鬼斯|鬼斯通|耿鬼|大岩蛇|催眠貘|引梦貘人|大钳蟹|巨钳蟹|霹雳电球|顽皮雷弹|蛋蛋|椰蛋树|卡拉卡拉|嘎啦嘎啦|飞腿郎|快拳郎|大舌头|瓦斯弹|双弹瓦斯|独角犀牛|钻角犀兽|吉利蛋|蔓藤怪|袋兽|墨海马|海刺龙|角金鱼|金鱼王|海星星|宝石海星|魔墙人偶|飞天螳螂|迷唇姐|电击兽|鸭嘴火兽|凯罗斯|肯泰罗|鲤鱼王|暴鲤龙|拉普拉斯|百变怪|伊布|水伊布|雷伊布|火伊布|多边兽|菊石兽|多刺菊石兽|化石盔|镰刀盔|化石翼龙|卡比兽|急冻鸟|闪电鸟|火焰鸟|迷你龙|哈克龙|快龙|超梦|梦幻|美录坦|美录梅塔"}; // official names in ORDER, from PokeAPI
-/* ---------- i18n ----------
-   English text lives in the page/data above. Other languages: Pokémon names (PN), UI strings,
-   places, items, stop text and the irregular "how to get" lines. Tokens: {#25} = Pokémon name,
-   {@Route 4} = place, {$Moon Stone} = item, {L28} = level. */
 const LANGS = [["en","English"],["ja","日本語"],["fr","Français"],["de","Deutsch"],["ko","한국어"],["zh-Hant","繁體中文"],["zh-Hans","简体中文"]];
-const ROUTE = (one,many,after)=>(n,pl,d)=>after ? n+one+(d?d:"") : (pl?many:one)+n+(d?d:"");
 const I18N = {
-en:{ lv:"Lv {n}", ui:{
-  verA:"Game version", lang:"Language", colDex:"Dex", colMon:"Pokémon", colHow:"How to get", colEvo:"Evolves into",
-  tagP:"Pikachu only", tagE:"Eevee only", tradeP:"Trade from Pikachu", tradeE:"Trade from Eevee",
-  badge:"{n} / 150 required titles", won:"★ All 150 earned. Go claim Grand Master in Celadon!",
-  secBattle:"Battle the Master Trainer", secShow:"No battle: show a high-CP Pokémon", secShowP:"Bring one of that species with at least the CP shown.",
-  pillShow:"Show {cp} CP", opt:"Optional", warn:"Catch one first", statOpt:" · +{n} optional",
-  tCopied:"Code copied. Paste it into your notes.", tSel:"Selected. Press Copy (⌘C / Ctrl+C).",
-  tRest:"Restored: {d} Pokédex, {m} Master titles", tBad:"That code doesn't look right. Check you copied all of it.",
-  stopN:"Stop {n}", locLeft:" · {n} left", locDone:" · ✓ all done"}},
-
-ja:{ cjk:1, lv:"Lv.{n}", route:ROUTE("番道路","",1), sep:"・", dash:"～",
- dir:{North:"（北）",South:"（南）",East:"（東）",West:"（西）"},
- loc:{"Pallet Town":"マサラタウン","Viridian City":"トキワシティ","Viridian Forest":"トキワのもり","Pewter City":"ニビシティ","Mt. Moon":"おつきみやま","Cerulean City":"ハナダシティ","Cerulean Cave":"ハナダのどうくつ","Vermilion City":"クチバシティ","Diglett's Cave":"ディグダのあな","Rock Tunnel":"イワヤマトンネル","Lavender Town":"シオンタウン","Pokémon Tower":"ポケモンタワー","Celadon City":"タマムシシティ","Celadon Condominiums":"タマムシマンション","Rocket Hideout":"ロケットだんアジト","Saffron City":"ヤマブキシティ","Silph Co.":"シルフカンパニー","Fuchsia City":"セキチクシティ","Seafoam Islands":"ふたごじま","Cinnabar Island":"グレンじま","Pokémon Mansion":"ポケモンやしき","Power Plant":"むじんはつでんしょ","Victory Road":"チャンピオンロード","Underground Path":"ちかつうろ","Pokémon Center":"ポケモンセンター","Nugget Bridge":"ゴールデンボールブリッジ","Cycling Road":"サイクリングロード","Pokémon Lab":"ポケモンけんきゅうじょ","Pewter Museum":"ニビかがくはくぶつかん","Celadon Dept. Store":"タマムシデパート","GO Park":"GOパーク","Dojo":"かくとうどうじょう"},
- item:{"Moon Stone":"つきのいし","Fire Stone":"ほのおのいし","Thunder Stone":"かみなりのいし","Water Stone":"みずのいし","Leaf Stone":"リーフのいし","Helix Fossil":"かいのカセキ","Dome Fossil":"こうらのカセキ","Old Amber":"ひみつのコハク","Poké Flute":"ポケモンのふえ","Silph Scope":"シルフスコープ"},
- how:{wild:"野生",rare:"レア",evolve:"{p}を進化（{lv}）",trade:"{p}を通信交換",stone:"{p}に{s}",revive:"{x}を復元",legend:"伝説のポケモン（イベント戦）",water:"水上",or:"、または",onLand:"{l}・陸上",tradeEvo:"通信交換",candy:"GOでアメ400個"},
- ui:{title:"Let's Go 図鑑トラッカー",
-  sub:"『ポケットモンスター Let's Go! ピカチュウ・Let's Go! イーブイ』の図鑑をストーリー順に効率よく埋めるルートと、グランドマスターを目指すためのマスタートレーナー記録表です。",
-  kDex:"ポケモン図鑑",kMas:"マスタートレーナー",kStop:"クリアした地点",tabDex:"図鑑ルート",tabMas:"グランドマスター",
-  search:"ポケモン名や場所で検索…",searchA:"検索",verA:"ゲームのバージョン",verBoth:"両バージョン",verP:"Let's Go! ピカチュウ",verE:"Let's Go! イーブイ",
-  hide:"完了を隠す",theme:"テーマ切り替え",lang:"言語",
-  intro:"上から順に進めてください。各ポケモンは最も早く手に入る地点に載っています。行をタップするとチェックできます。<b>進化先</b>には以降の進化とレベルを表示しています。生きた図鑑（リビング図鑑）を作るなら、進化段階ごとに1匹ずつ捕まえましょう。",
-  colDex:"No.",colMon:"ポケモン",colHow:"入手方法",colEvo:"進化先",
-  tagP:"ピカチュウ版のみ",tagE:"イーブイ版のみ",tradeP:"ピカチュウ版から交換",tradeE:"イーブイ版から交換",
-  gmH:"グランドマスターの称号",
-  gmP:"最初の150種すべてでマスターの称号を獲得したら、ゲームフリークのオフィス（{@Celadon Condominiums} 3F）にいる女性に話しかけると<b>グランドマスター</b>の称号がもらえます。",
-  gmL0:"マスタートレーナーは<b>殿堂入りした後</b>にカントー各地に現れます。ジムの中にはいません。",
-  gmL1:"ルール: 相手と同じ種類のポケモン1匹だけを先頭にして戦い、道具は使えません。アローラのすがたとメガシンカは使えます。",
-  gmL2:"{#132}、伝説の鳥ポケモン、{#150}とはバトルしません。代わりに、その種類でCPが十分に高いポケモンを見せます。",
-  gmL3:"{#151}、{#808}、{#809}の称号はグランドマスターには不要です（153種すべてとする攻略サイトもありますが、Bulbapediaでは150種）。",
-  badge:"必要な称号 {n} / 150",won:"★ 150種すべて獲得！{@Celadon City}でグランドマスターを受け取りましょう！",
-  sortBy:"並び順",sortDex:"図鑑番号",sortLoc:"場所",
-  secBattle:"マスタートレーナーとバトル",secShow:"バトルなし: 高CPのポケモンを見せる",secShowP:"その種類で、表示されたCP以上のポケモンを連れていきましょう。",
-  pillShow:"CP {cp} 以上を見せる",opt:"任意",warn:"先に1匹捕まえよう",statOpt:" · 任意 +{n}",
-  footer:"出現場所は {thonky} と {pc} で照合。マスタートレーナーのデータは {bulba}、{sc}、{gg} より。ファンが作った非公式ツールで、任天堂・ゲームフリーク・株式会社ポケモンとは関係ありません。",
-  save:"セーブコード",codeT:"メモアプリにコピーしておきましょう",copy:"コピー",load:"読み込む",loadPh:"保存したコードを貼り付け（LGPE1-…）",loadA:"保存したコード",restore:"復元",
-  tCopied:"コードをコピーしました。メモに貼り付けてください。",tSel:"選択しました。⌘C / Ctrl+C でコピーしてください。",tRest:"復元しました: 図鑑 {d}、マスター称号 {m}",tBad:"コードが正しくないようです。すべてコピーできているか確認してください。",
-  viewBy:"表示",viewRoute:"ルート順",viewNum:"図鑑番号順",stopN:"地点{n}",locLeft:" · 残り{n}",locDone:" · ✓ 完了"},
- stops:[
-  ["{@Route 1}・{@Route 2}","ゲーム開始直後。{@Viridian City}へ向かう途中で捕まえましょう。"],
-  ["{@Route 22}","{@Viridian City}の西。今は陸上の出現のみ（水上は後で）。"],
-  ["{@Viridian Forest}","{#1}はレア。捕獲コンボを続けるとレアなポケモンが出やすくなります。"],
-  ["{@Pewter City}・{@Route 3}・{@Route 4}","{@Route 4}の{@Pokémon Center}にいる商人から{#129}を買いましょう。{@Pewter Museum}で{$Old Amber}を拾っておくと後で使えます。"],
-  ["{@Mt. Moon}","{$Moon Stone}を集めましょう。化石は1つだけ（{$Helix Fossil}か{$Dome Fossil}）。もう一方は交換が必要です。"],
-  ["{@Cerulean City}・{@Route 24}・{@Route 25}","{@Nugget Bridge}とマサキの家。今は陸上の出現、水上は後で。"],
-  ["{@Route 5}・{@Route 6}","南の{@Vermilion City}へ向かう途中。{#39}用に{$Moon Stone}を1つ残しておきましょう。"],
-  ["{@Vermilion City}・{@Route 11}・{@Diglett's Cave}",""],
-  ["{@Routes 9-10}・{@Rock Tunnel}","最初の3匹のレベル進化はいつ起きても大丈夫。レベルに達したらチェックしましょう。"],
-  ["{@Route 7}・{@Route 8}・{@Celadon City}","進化の石は{@Celadon Dept. Store}で買えます。相棒の{#25}／{#133}は進化できないので、野生で捕まえた個体を使いましょう。"],
-  ["{@Pokémon Tower}（{@Lavender Town}）","{@Celadon City}の{@Rocket Hideout}で手に入る{$Silph Scope}が必要です。"],
-  ["{@Routes 12-15}（{$Poké Flute}入手後）","{@Route 12}の{#143}を起こしましょう。{#123}／{#127}は捕獲コンボで。"],
-  ["{@Routes 16-18}（{@Cycling Road}）","{#133}は{@Route 17}に出現。リビング図鑑なら4匹捕まえましょう（{#133}＋進化形3種）。"],
-  ["{@Saffron City}","{@Dojo}: どちらか1匹を選びます。もう一方は{@Victory Road}でまれに出現。{@Silph Co.}で{#131}（と{#137}）がもらえます。"],
-  ["水上ルートをまとめて回る","水上を移動できるようになったら、{@Routes 4, 6, 10-13, 18-25}の水上を回りましょう。"],
-  ["{@Seafoam Islands}","伝説のポケモンと{#143}: まず制限時間内のバトルに勝ってから捕まえます。"],
-  ["{@Cinnabar Island}","{@Pokémon Lab}で化石を復元し、{@Pokémon Mansion}を探索しましょう。"],
-  ["{@Route 21}","{@Pallet Town}と{@Cinnabar Island}を結ぶ水上ルート。"],
-  ["{@Power Plant}（{@Route 10}を水上移動）","{#88}／{#89}と{#109}／{#110}は{@Pokémon Mansion}にも出現します。"],
-  ["{@Route 23}・{@Victory Road}","四天王に挑む前の最後の区間。"],
-  ["殿堂入り後: {@Cerulean Cave}","四天王を倒した後に入れます。"],
-  ["交換・特別な入手","2人目のプレイヤー、2台目のSwitch、またはPokémon GOが必要です。"]],
- howX:{
-  "Buy from salesman (Route 4 Pokémon Center)":"商人から購入（{@Route 4}の{@Pokémon Center}）",
-  "Dojo gift or Victory Road (rare)":"{@Dojo}でもらう、または{@Victory Road}（レア）",
-  "Eevee ver: evolve Meowth (Lv 28). Pikachu ver: Vermilion trade":"イーブイ版: {#52}を進化（{L28}）。ピカチュウ版: {@Vermilion City}で交換",
-  "Evolve Kakuna (Lv 10); rare wild in Eevee ver.":"{#14}を進化（{L10}）。イーブイ版ではまれに野生で出現",
-  "Evolve Meltan in Pokémon GO, then transfer":"Pokémon GOで{#808}を進化させてから転送",
-  "Evolve Metapod (Lv 10); rare wild in Pikachu ver.":"{#11}を進化（{L10}）。ピカチュウ版ではまれに野生で出現",
-  "Gift at Silph Co.":"{@Silph Co.}でもらう",
-  "Pikachu ver: wild/Fire Stone. Eevee ver: Vermilion trade":"ピカチュウ版: 野生／{$Fire Stone}。イーブイ版: {@Vermilion City}で交換",
-  "Poké Ball Plus":"モンスターボール Plus",
-  "Poké Flute encounter (Route 12 or 16)":"{$Poké Flute}で起こす（{@Route 12}または{@Route 16}）",
-  "Pokémon GO transfer (GO Park)":"Pokémon GOから転送（{@GO Park}）",
-  "Thunder Stone on a non-partner Pikachu":"相棒ではない{#25}に{$Thunder Stone}",
-  "Water (many routes)":"水上（多くの道路）",
-  "Wild (Mt. Moon per Thonky; else Rock Tunnel)":"野生（Thonkyでは{@Mt. Moon}、それ以外では{@Rock Tunnel}）",
-  "Wild (Thonky: Rt 24-25; PokeCommunity: Rt 5-8)":"野生（Thonky: {@Routes 24-25}、PokeCommunity: {@Routes 5-8}）",
-  "Wild (rare, many areas)":"野生（レア、多くの場所）",
-  "Wild (rare); or Cerulean gift at 30 caught":"野生（レア）、または{@Cerulean City}で30匹捕まえた後にもらう",
-  "Wild (rare); or Route 24 gift at 50 caught":"野生（レア）、または{@Route 24}で50匹捕まえた後にもらう",
-  "Wild (rare); or Vermilion gift at 60 species":"野生（レア）、または{@Vermilion City}で60種捕まえた後にもらう",
-  "Wild on Route 7 (rare), or Silph Co. gift later":"{@Route 7}で野生（レア）、または後で{@Silph Co.}でもらう"}},
-
-fr:{ lv:"N.{n}", route:ROUTE("Route ","Routes "), dir:{North:" (nord)",South:" (sud)",East:" (est)",West:" (ouest)"},
- loc:{"Pallet Town":"Bourg Palette","Viridian City":"Jadielle","Viridian Forest":"Forêt de Jade","Pewter City":"Argenta","Mt. Moon":"Mont Sélénite","Cerulean City":"Azuria","Cerulean Cave":"Caverne Azurée","Vermilion City":"Carmin sur Mer","Diglett's Cave":"Cave Taupiqueur","Rock Tunnel":"Grotte","Lavender Town":"Lavanville","Pokémon Tower":"Tour Pokémon","Celadon City":"Céladopole","Celadon Condominiums":"Résidence de Céladopole","Rocket Hideout":"Repaire Rocket","Saffron City":"Safrania","Silph Co.":"Sylphe SARL","Fuchsia City":"Parmanie","Seafoam Islands":"Îles Écume","Cinnabar Island":"Cramois'Île","Pokémon Mansion":"Manoir Pokémon","Power Plant":"Centrale","Victory Road":"Route Victoire","Underground Path":"Souterrain","Pokémon Center":"Centre Pokémon","Nugget Bridge":"Pont Pépite","Cycling Road":"Piste Cyclable","Pokémon Lab":"Labo Pokémon","Pewter Museum":"Musée d'Argenta","Celadon Dept. Store":"Centre Commercial de Céladopole","GO Park":"Parc GO","Dojo":"Dojo"},
- item:{"Moon Stone":"Pierre Lune","Fire Stone":"Pierre Feu","Thunder Stone":"Pierre Foudre","Water Stone":"Pierre Eau","Leaf Stone":"Pierre Plante","Helix Fossil":"Nautile","Dome Fossil":"Fossile Dôme","Old Amber":"Vieil Ambre","Poké Flute":"Poké Flûte","Silph Scope":"Scope Sylphe"},
- how:{wild:"sauvage",rare:"rare",evolve:"faire évoluer {p} ({lv})",trade:"échanger {p}",stone:"{s} sur {p}",revive:"ranimer {x}",legend:"rencontre légendaire",water:"sur l'eau",or:", ou ",onLand:"{l}, sur la terre ferme",tradeEvo:"échange",candy:"400 Bonbons dans GO"},
- ui:{title:"Suivi du Pokédex Let's Go",
-  sub:"Un itinéraire efficace, dans l'ordre de l'histoire, pour compléter le Pokédex de Pokémon : Let's Go, Pikachu et Let's Go, Évoli, plus un suivi des Maîtres Dresseurs pour le titre de Grand Maître.",
-  kDex:"Pokédex",kMas:"Maîtres Dresseurs",kStop:"Étapes terminées",tabDex:"Itinéraire Pokédex",tabMas:"Grand Maître",
-  search:"Rechercher un Pokémon ou un lieu…",searchA:"Rechercher",verA:"Version du jeu",verBoth:"Les deux versions",verP:"Let's Go, Pikachu",verE:"Let's Go, Évoli",
-  hide:"Masquer les terminés",theme:"Changer de thème",lang:"Langue",
-  intro:"Suivez les étapes dans l'ordre. Chaque Pokémon est indiqué au premier endroit où vous pouvez l'obtenir. Touchez une ligne pour la cocher. <b>Évolue en</b> indique les stades suivants et leurs niveaux : pour un Pokédex vivant, attrapez une forme de base par stade.",
-  colDex:"N°",colMon:"Pokémon",colHow:"Obtention",colEvo:"Évolue en",
-  tagP:"Pikachu uniquement",tagE:"Évoli uniquement",tradeP:"Échange depuis Pikachu",tradeE:"Échange depuis Évoli",
-  gmH:"Titre de Grand Maître",
-  gmP:"Obtenez le titre de Maître pour chacun des 150 premiers Pokémon, puis parlez à la femme dans les bureaux de Game Freak ({@Celadon Condominiums}, 3e étage) pour recevoir le titre de <b>Grand Maître</b>.",
-  gmL0:"Les Maîtres Dresseurs n'apparaissent dans Kanto <b>qu'après être devenu Maître de la Ligue</b>. Aucun ne se trouve dans une Arène.",
-  gmL1:"Règles : un seul Pokémon de l'espèce du Dresseur, en tête d'équipe, sans objet. Les formes d'Alola et la Méga-Évolution sont autorisées de votre côté.",
-  gmL2:"{#132}, les oiseaux légendaires et {#150} ne combattent pas. Montrez-leur plutôt un Pokémon de cette espèce avec assez de PC.",
-  gmL3:"Les titres de {#151}, {#808} et {#809} sont facultatifs pour Grand Maître (certains guides en listent 153 ; Bulbapedia en compte 150).",
-  badge:"{n} / 150 titres requis",won:"★ Les 150 titres obtenus ! Allez chercher le titre de Grand Maître à {@Celadon City} !",
-  sortBy:"Trier par",sortDex:"Numéro",sortLoc:"Lieu",
-  secBattle:"Affronter le Maître Dresseur",secShow:"Sans combat : montrer un Pokémon avec beaucoup de PC",secShowP:"Amenez un Pokémon de cette espèce avec au moins les PC indiqués.",
-  pillShow:"Montrer {cp} PC",opt:"Facultatif",warn:"Attrapez-en un d'abord",statOpt:" · +{n} facultatif(s)",
-  footer:"Lieux vérifiés avec {thonky} et {pc}. Données des Maîtres Dresseurs : {bulba}, {sc} et {gg}. Outil créé par un fan, sans lien avec Nintendo, Game Freak ou The Pokémon Company.",
-  save:"Code de sauvegarde",codeT:"Copiez-le dans votre app de notes",copy:"Copier",load:"Charger",loadPh:"Collez un code sauvegardé (LGPE1-…)",loadA:"Code sauvegardé",restore:"Restaurer",
-  tCopied:"Code copié. Collez-le dans vos notes.",tSel:"Sélectionné. Copiez avec ⌘C / Ctrl+C.",tRest:"Restauré : {d} Pokédex, {m} titres de Maître",tBad:"Ce code semble incorrect. Vérifiez que vous l'avez copié en entier.",
-  viewBy:"Affichage",viewRoute:"Ordre de l'itinéraire",viewNum:"Numéro du Pokédex",stopN:"Étape {n}",locLeft:" · {n} restant(s)",locDone:" · ✓ terminé"},
- stops:[
-  ["{@Route 1} et {@Route 2}","Début du jeu. Attrapez-les en route vers {@Viridian City}."],
-  ["{@Route 22}","À l'ouest de {@Viridian City}. Seulement les apparitions sur terre pour l'instant (l'eau viendra plus tard)."],
-  ["{@Viridian Forest}","{#1} est rare : enchaînez un combo de captures pour augmenter les apparitions rares."],
-  ["{@Pewter City}, {@Route 3} et {@Route 4}","Achetez le {#129} au vendeur du {@Pokémon Center} de la {@Route 4}. Récupérez le {$Old Amber} au {@Pewter Museum} pour plus tard."],
-  ["{@Mt. Moon}","Ramassez des Pierres Lune. Vous ne pouvez prendre qu'UN fossile ({$Helix Fossil} ou {$Dome Fossil}) ; l'autre nécessite un échange."],
-  ["{@Cerulean City}, {@Route 24} et {@Route 25}","{@Nugget Bridge} et la maison de Léo. Apparitions sur terre maintenant, sur l'eau plus tard."],
-  ["{@Route 5} et {@Route 6}","En route vers {@Vermilion City}, au sud. Gardez une {$Moon Stone} pour {#39}."],
-  ["{@Vermilion City}, {@Route 11} et {@Diglett's Cave}",""],
-  ["{@Routes 9-10} et {@Rock Tunnel}","Les évolutions par niveau des starters peuvent arriver à tout moment : cochez-les dès qu'ils atteignent le niveau."],
-  ["{@Route 7}, {@Route 8} et {@Celadon City}","Achetez les pierres d'évolution au {@Celadon Dept. Store}. Votre partenaire {#25}/{#133} ne peut pas évoluer : utilisez-en un sauvage."],
-  ["{@Pokémon Tower} ({@Lavender Town})","Nécessite le {$Silph Scope} du {@Rocket Hideout} de {@Celadon City}."],
-  ["{@Routes 12-15} (après la {$Poké Flute})","Réveillez le {#143} de la {@Route 12}. Combo de captures pour {#123}/{#127}."],
-  ["{@Routes 16-18} ({@Cycling Road})","{#133} se trouve sur la {@Route 17}. Attrapez-en 4 pour un Pokédex vivant ({#133} + 3 évolutions)."],
-  ["{@Saffron City}","{@Dojo} : choisissez-en un ; l'autre apparaît rarement sur la {@Victory Road}. {@Silph Co.} vous donne {#131} (et {#137})."],
-  ["Tournée des routes sur l'eau","Une fois que vous pouvez voyager sur l'eau, parcourez les {@Routes 4, 6, 10-13, 18-25}."],
-  ["{@Seafoam Islands}","Légendaires et {#143} : gagnez d'abord un combat chronométré, puis capturez-les."],
-  ["{@Cinnabar Island}","Ranimez les fossiles au {@Pokémon Lab} ; explorez le {@Pokémon Mansion}."],
-  ["{@Route 21}","Route maritime entre {@Pallet Town} et {@Cinnabar Island}."],
-  ["{@Power Plant} (par l'eau depuis la {@Route 10})","{#88}/{#89} et {#109}/{#110} apparaissent aussi au {@Pokémon Mansion}."],
-  ["{@Route 23} et {@Victory Road}","Dernière ligne droite avant le Conseil 4."],
-  ["Après le jeu : {@Cerulean Cave}","Accessible après avoir battu le Conseil 4."],
-  ["Échanges et cas spéciaux","Nécessite un second joueur, une seconde Switch ou Pokémon GO."]],
- howX:{
-  "Buy from salesman (Route 4 Pokémon Center)":"Achat auprès du vendeur ({@Pokémon Center} de la {@Route 4})",
-  "Dojo gift or Victory Road (rare)":"Cadeau du {@Dojo} ou {@Victory Road} (rare)",
-  "Eevee ver: evolve Meowth (Lv 28). Pikachu ver: Vermilion trade":"Version Évoli : faire évoluer {#52} ({L28}). Version Pikachu : échange à {@Vermilion City}",
-  "Evolve Kakuna (Lv 10); rare wild in Eevee ver.":"Faire évoluer {#14} ({L10}) ; sauvage rare dans la version Évoli",
-  "Evolve Meltan in Pokémon GO, then transfer":"Faire évoluer {#808} dans Pokémon GO, puis le transférer",
-  "Evolve Metapod (Lv 10); rare wild in Pikachu ver.":"Faire évoluer {#11} ({L10}) ; sauvage rare dans la version Pikachu",
-  "Gift at Silph Co.":"Cadeau chez {@Silph Co.}",
-  "Pikachu ver: wild/Fire Stone. Eevee ver: Vermilion trade":"Version Pikachu : sauvage/{$Fire Stone}. Version Évoli : échange à {@Vermilion City}",
-  "Poké Ball Plus":"Poké Ball Plus",
-  "Poké Flute encounter (Route 12 or 16)":"Rencontre avec la {$Poké Flute} ({@Route 12} ou {@Route 16})",
-  "Pokémon GO transfer (GO Park)":"Transfert depuis Pokémon GO ({@GO Park})",
-  "Thunder Stone on a non-partner Pikachu":"{$Thunder Stone} sur un {#25} qui n'est pas votre partenaire",
-  "Water (many routes)":"Sur l'eau (nombreuses routes)",
-  "Wild (Mt. Moon per Thonky; else Rock Tunnel)":"Sauvage ({@Mt. Moon} selon Thonky ; sinon {@Rock Tunnel})",
-  "Wild (Thonky: Rt 24-25; PokeCommunity: Rt 5-8)":"Sauvage (Thonky : {@Routes 24-25} ; PokeCommunity : {@Routes 5-8})",
-  "Wild (rare, many areas)":"Sauvage (rare, nombreuses zones)",
-  "Wild (rare); or Cerulean gift at 30 caught":"Sauvage (rare) ; ou cadeau à {@Cerulean City} après 30 captures",
-  "Wild (rare); or Route 24 gift at 50 caught":"Sauvage (rare) ; ou cadeau sur la {@Route 24} après 50 captures",
-  "Wild (rare); or Vermilion gift at 60 species":"Sauvage (rare) ; ou cadeau à {@Vermilion City} après 60 espèces",
-  "Wild on Route 7 (rare), or Silph Co. gift later":"Sauvage sur la {@Route 7} (rare), ou cadeau de {@Silph Co.} plus tard"}},
-
-de:{ lv:"Lv. {n}", route:ROUTE("Route ","Routen "), dir:{North:" (Nord)",South:" (Süd)",East:" (Ost)",West:" (West)"},
- loc:{"Pallet Town":"Alabastia","Viridian City":"Vertania City","Viridian Forest":"Vertania-Wald","Pewter City":"Marmoria City","Mt. Moon":"Mondberg","Cerulean City":"Azuria City","Cerulean Cave":"Azuria-Höhle","Vermilion City":"Orania City","Diglett's Cave":"Digda-Höhle","Rock Tunnel":"Felstunnel","Lavender Town":"Lavandia","Pokémon Tower":"Pokémon-Turm","Celadon City":"Prismania City","Celadon Condominiums":"Prismania-Wohnanlage","Rocket Hideout":"Rocket-Versteck","Saffron City":"Saffronia City","Silph Co.":"Silph Co.","Fuchsia City":"Fuchsania City","Seafoam Islands":"Seeschauminseln","Cinnabar Island":"Zinnoberinsel","Pokémon Mansion":"Pokémon-Villa","Power Plant":"Kraftwerk","Victory Road":"Siegesstraße","Underground Path":"Tunnelpfad","Pokémon Center":"Pokémon-Center","Nugget Bridge":"Nugget-Brücke","Cycling Road":"Radweg","Pokémon Lab":"Pokémon-Labor","Pewter Museum":"Museum von Marmoria","Celadon Dept. Store":"Prismania-Kaufhaus","GO Park":"GO-Park","Dojo":"Dojo"},
- item:{"Moon Stone":"Mondstein","Fire Stone":"Feuerstein","Thunder Stone":"Donnerstein","Water Stone":"Wasserstein","Leaf Stone":"Blattstein","Helix Fossil":"Helixfossil","Dome Fossil":"Domfossil","Old Amber":"Altbernstein","Poké Flute":"Pokéflöte","Silph Scope":"Silph Scope"},
- how:{wild:"wild",rare:"selten",evolve:"{p} entwickeln ({lv})",trade:"{p} tauschen",stone:"{s} bei {p}",revive:"{x} wiederbeleben",legend:"legendäre Begegnung",water:"auf dem Wasser",or:" oder ",onLand:"{l}, an Land",tradeEvo:"Tausch",candy:"400 Bonbons in GO"},
- ui:{title:"Let's Go Pokédex-Tracker",
-  sub:"Eine effiziente Route in Story-Reihenfolge, um den Pokédex in Pokémon: Let's Go, Pikachu! / Let's Go, Evoli! zu füllen, plus ein Meistertrainer-Tracker für den Titel Großmeister.",
-  kDex:"Pokédex",kMas:"Meistertrainer",kStop:"Abgeschlossene Etappen",tabDex:"Pokédex-Route",tabMas:"Großmeister",
-  search:"Pokémon oder Ort suchen …",searchA:"Suche",verA:"Spieledition",verBoth:"Beide Editionen",verP:"Let's Go, Pikachu!",verE:"Let's Go, Evoli!",
-  hide:"Erledigte ausblenden",theme:"Design wechseln",lang:"Sprache",
-  intro:"Folge den Etappen der Reihe nach. Jedes Pokémon steht beim frühesten Ort, an dem du es bekommen kannst. Tippe auf eine Zeile, um sie abzuhaken. <b>Entwickelt sich zu</b> zeigt spätere Stufen und Level – für einen lebenden Pokédex fang pro Stufe ein Exemplar der Grundform.",
-  colDex:"Nr.",colMon:"Pokémon",colHow:"Fundort / Erhalt",colEvo:"Entwickelt sich zu",
-  tagP:"Nur Pikachu",tagE:"Nur Evoli",tradeP:"Tausch aus Pikachu",tradeE:"Tausch aus Evoli",
-  gmH:"Titel Großmeister",
-  gmP:"Verdiene den Meistertitel für jedes der ersten 150 Pokémon und sprich dann mit der Frau im Büro von Game Freak ({@Celadon Condominiums}, 3. Stock), um den Titel <b>Großmeister</b> zu erhalten.",
-  gmL0:"Meistertrainer erscheinen in Kanto erst, <b>nachdem du Champ geworden bist</b>. Keiner ist in einer Arena.",
-  gmL1:"Regeln: Du darfst nur ein Pokémon der Art des Trainers einsetzen, an erster Stelle und ohne Items. Alola-Formen und Mega-Entwicklung sind für dich erlaubt.",
-  gmL2:"{#132}, die legendären Vögel und {#150} kämpfen nicht. Zeig ihnen stattdessen ein Pokémon dieser Art mit genug WP.",
-  gmL3:"Die Titel für {#151}, {#808} und {#809} sind für Großmeister optional (manche Guides listen alle 153, Bulbapedia nennt 150).",
-  badge:"{n} / 150 benötigte Titel",won:"★ Alle 150 geschafft! Hol dir den Großmeister-Titel in {@Celadon City}!",
-  sortBy:"Sortieren nach",sortDex:"Pokédex-Nummer",sortLoc:"Ort",
-  secBattle:"Gegen den Meistertrainer kämpfen",secShow:"Kein Kampf: ein Pokémon mit hohen WP zeigen",secShowP:"Bring eines dieser Art mit mindestens den angegebenen WP mit.",
-  pillShow:"{cp} WP zeigen",opt:"Optional",warn:"Erst eins fangen",statOpt:" · +{n} optional",
-  footer:"Fundorte abgeglichen mit {thonky} und {pc}. Meistertrainer-Daten von {bulba}, {sc} und {gg}. Fan-Projekt, nicht verbunden mit Nintendo, Game Freak oder The Pokémon Company.",
-  save:"Speichercode",codeT:"Kopiere ihn in deine Notizen-App",copy:"Kopieren",load:"Laden",loadPh:"Gespeicherten Code einfügen (LGPE1-…)",loadA:"Gespeicherter Code",restore:"Wiederherstellen",
-  tCopied:"Code kopiert. Füge ihn in deine Notizen ein.",tSel:"Markiert. Kopieren mit ⌘C / Strg+C.",tRest:"Wiederhergestellt: {d} Pokédex, {m} Meistertitel",tBad:"Dieser Code scheint falsch zu sein. Prüfe, ob du ihn vollständig kopiert hast.",
-  viewBy:"Ansicht",viewRoute:"Routen-Reihenfolge",viewNum:"Pokédex-Nummer",stopN:"Etappe {n}",locLeft:" · noch {n}",locDone:" · ✓ erledigt"},
- stops:[
-  ["{@Route 1} & {@Route 2}","Spielbeginn. Fang sie auf dem Weg nach {@Viridian City}."],
-  ["{@Route 22}","Westlich von {@Viridian City}. Vorerst nur Pokémon an Land (Wasser kommt später)."],
-  ["{@Viridian Forest}","{#1} ist selten – bau eine Fangserie auf, damit seltene Pokémon häufiger erscheinen."],
-  ["{@Pewter City}, {@Route 3} & {@Route 4}","Kauf das {#129} beim Händler im {@Pokémon Center} an {@Route 4}. Hol dir im {@Pewter Museum} den {$Old Amber} für später."],
-  ["{@Mt. Moon}","Sammle Mondsteine. Du kannst nur EIN Fossil nehmen ({$Helix Fossil} oder {$Dome Fossil}); das andere gibt es nur per Tausch."],
-  ["{@Cerulean City}, {@Route 24} & {@Route 25}","{@Nugget Bridge} und Bills Haus. Jetzt Pokémon an Land, Wasser später."],
-  ["{@Route 5} & {@Route 6}","Auf dem Weg nach Süden nach {@Vermilion City}. Heb einen {$Moon Stone} für {#39} auf."],
-  ["{@Vermilion City}, {@Route 11} & {@Diglett's Cave}",""],
-  ["{@Routes 9-10} & {@Rock Tunnel}","Starter-Entwicklungen per Level können jederzeit passieren – hak sie ab, sobald sie das Level erreichen."],
-  ["{@Route 7}, {@Route 8} & {@Celadon City}","Entwicklungssteine gibt es im {@Celadon Dept. Store}. Dein Partner-{#25}/-{#133} kann sich nicht entwickeln – nimm ein wild gefangenes."],
-  ["{@Pokémon Tower} ({@Lavender Town})","Benötigt das {$Silph Scope} aus dem {@Rocket Hideout} in {@Celadon City}."],
-  ["{@Routes 12-15} (nach der {$Poké Flute})","Weck das {#143} auf {@Route 12}. Fangserie für {#123}/{#127}."],
-  ["{@Routes 16-18} ({@Cycling Road})","{#133} gibt es auf {@Route 17}. Fang 4 für einen lebenden Pokédex ({#133} + 3 Entwicklungen)."],
-  ["{@Saffron City}","{@Dojo}: Wähle eins; das andere erscheint selten in der {@Victory Road}. In der {@Silph Co.} bekommst du {#131} (und {#137})."],
-  ["Wasserrouten abklappern","Sobald du übers Wasser reisen kannst, fahr {@Routes 4, 6, 10-13, 18-25} ab."],
-  ["{@Seafoam Islands}","Legendäre und {#143}: Gewinne zuerst einen Kampf auf Zeit, dann fang sie."],
-  ["{@Cinnabar Island}","Belebe Fossilien im {@Pokémon Lab} wieder; erkunde die {@Pokémon Mansion}."],
-  ["{@Route 21}","Wasserroute zwischen {@Pallet Town} und {@Cinnabar Island}."],
-  ["{@Power Plant} (übers Wasser von {@Route 10})","{#88}/{#89} und {#109}/{#110} erscheinen auch in der {@Pokémon Mansion}."],
-  ["{@Route 23} & {@Victory Road}","Letzte Etappe vor den Top Vier."],
-  ["Nach dem Spiel: {@Cerulean Cave}","Öffnet sich, nachdem du die Top Vier besiegt hast."],
-  ["Tausch & Spezielles","Benötigt einen zweiten Spieler, eine zweite Switch oder Pokémon GO."]],
- howX:{
-  "Buy from salesman (Route 4 Pokémon Center)":"Vom Händler kaufen ({@Pokémon Center} an {@Route 4})",
-  "Dojo gift or Victory Road (rare)":"Geschenk im {@Dojo} oder {@Victory Road} (selten)",
-  "Eevee ver: evolve Meowth (Lv 28). Pikachu ver: Vermilion trade":"Evoli-Edition: {#52} entwickeln ({L28}). Pikachu-Edition: Tausch in {@Vermilion City}",
-  "Evolve Kakuna (Lv 10); rare wild in Eevee ver.":"{#14} entwickeln ({L10}); in der Evoli-Edition selten wild",
-  "Evolve Meltan in Pokémon GO, then transfer":"{#808} in Pokémon GO entwickeln, dann übertragen",
-  "Evolve Metapod (Lv 10); rare wild in Pikachu ver.":"{#11} entwickeln ({L10}); in der Pikachu-Edition selten wild",
-  "Gift at Silph Co.":"Geschenk in der {@Silph Co.}",
-  "Pikachu ver: wild/Fire Stone. Eevee ver: Vermilion trade":"Pikachu-Edition: wild/{$Fire Stone}. Evoli-Edition: Tausch in {@Vermilion City}",
-  "Poké Ball Plus":"Poké Ball Plus",
-  "Poké Flute encounter (Route 12 or 16)":"Begegnung per {$Poké Flute} ({@Route 12} oder {@Route 16})",
-  "Pokémon GO transfer (GO Park)":"Übertragung aus Pokémon GO ({@GO Park})",
-  "Thunder Stone on a non-partner Pikachu":"{$Thunder Stone} bei einem {#25}, das nicht dein Partner ist",
-  "Water (many routes)":"Auf dem Wasser (viele Routen)",
-  "Wild (Mt. Moon per Thonky; else Rock Tunnel)":"Wild ({@Mt. Moon} laut Thonky; sonst {@Rock Tunnel})",
-  "Wild (Thonky: Rt 24-25; PokeCommunity: Rt 5-8)":"Wild (Thonky: {@Routes 24-25}; PokeCommunity: {@Routes 5-8})",
-  "Wild (rare, many areas)":"Wild (selten, viele Gebiete)",
-  "Wild (rare); or Cerulean gift at 30 caught":"Wild (selten); oder Geschenk in {@Cerulean City} ab 30 Fängen",
-  "Wild (rare); or Route 24 gift at 50 caught":"Wild (selten); oder Geschenk auf {@Route 24} ab 50 Fängen",
-  "Wild (rare); or Vermilion gift at 60 species":"Wild (selten); oder Geschenk in {@Vermilion City} ab 60 Arten",
-  "Wild on Route 7 (rare), or Silph Co. gift later":"Wild auf {@Route 7} (selten) oder später Geschenk der {@Silph Co.}"}},
-
-
-ko:{ lv:"Lv.{n}", route:ROUTE("번도로","",1), dash:"~", dir:{North:" (북쪽)",South:" (남쪽)",East:" (동쪽)",West:" (서쪽)"},
- loc:{"Pallet Town":"태초마을","Viridian City":"상록시티","Viridian Forest":"상록숲","Pewter City":"회색시티","Mt. Moon":"달맞이산","Cerulean City":"블루시티","Cerulean Cave":"블루시티 동굴","Vermilion City":"갈색시티","Diglett's Cave":"디그다굴","Rock Tunnel":"돌산터널","Lavender Town":"보라타운","Pokémon Tower":"포켓몬타워","Celadon City":"무지개시티","Celadon Condominiums":"무지개맨션","Rocket Hideout":"로켓단 아지트","Saffron City":"노랑시티","Silph Co.":"실프주식회사","Fuchsia City":"연분홍시티","Seafoam Islands":"쌍둥이섬","Cinnabar Island":"홍련섬","Pokémon Mansion":"포켓몬저택","Power Plant":"무인발전소","Victory Road":"챔피언로드","Underground Path":"지하통로","Pokémon Center":"포켓몬센터","Nugget Bridge":"골든볼브릿지","Cycling Road":"사이클링로드","Pokémon Lab":"포켓몬연구소","Pewter Museum":"회색시티 박물관","Celadon Dept. Store":"무지개백화점","GO Park":"GO파크","Dojo":"격투도장"},
- item:{"Moon Stone":"달의돌","Fire Stone":"불꽃의돌","Thunder Stone":"천둥의돌","Water Stone":"물의돌","Leaf Stone":"리프의돌","Helix Fossil":"조개화석","Dome Fossil":"껍질화석","Old Amber":"비밀의호박","Poké Flute":"포켓몬피리","Silph Scope":"실프스코프"},
- how:{wild:"야생",rare:"희귀",evolve:"{p} 진화 ({lv})",trade:"{p} 통신교환",stone:"{p}에게 {s}",revive:"{x} 복원",legend:"전설의 포켓몬 이벤트",water:"수상",or:" 또는 ",onLand:"{l}, 육지",tradeEvo:"통신교환",candy:"GO에서 사탕 400개"},
- ui:{title:"레츠고 도감 트래커",
-  sub:"포켓몬스터 레츠고! 피카츄·레츠고! 이브이의 도감을 스토리 순서대로 효율적으로 채우는 루트와, 그랜드마스터 칭호를 위한 마스터 트레이너 기록표입니다.",
-  kDex:"포켓몬 도감",kMas:"마스터 트레이너",kStop:"완료한 지점",tabDex:"도감 루트",tabMas:"그랜드마스터",
-  search:"포켓몬 이름이나 장소 검색…",searchA:"검색",verA:"게임 버전",verBoth:"두 버전 모두",verP:"레츠고! 피카츄",verE:"레츠고! 이브이",
-  hide:"완료 숨기기",theme:"테마 전환",lang:"언어",
-  intro:"순서대로 진행하세요. 각 포켓몬은 가장 먼저 얻을 수 있는 지점에 적혀 있습니다. 줄을 탭하면 체크됩니다. <b>진화</b> 칸에는 이후 단계와 레벨이 나옵니다. 리빙 도감을 만든다면 진화 단계마다 기본형을 한 마리씩 잡으세요.",
-  colDex:"No.",colMon:"포켓몬",colHow:"입수 방법",colEvo:"진화",
-  tagP:"피카츄 버전 한정",tagE:"이브이 버전 한정",tradeP:"피카츄 버전에서 교환",tradeE:"이브이 버전에서 교환",
-  gmH:"그랜드마스터 칭호",
-  gmP:"처음 150종 모두로 마스터 칭호를 얻은 뒤, 게임프리크 사무실({@Celadon Condominiums} 3층)에 있는 여성에게 말을 걸면 <b>그랜드마스터</b> 칭호를 받을 수 있습니다.",
-  gmL0:"마스터 트레이너는 <b>챔피언이 된 후</b>에야 관동 지방 곳곳에 나타납니다. 체육관 안에는 없습니다.",
-  gmL1:"규칙: 상대와 같은 종류의 포켓몬 1마리만 선두에 내보낼 수 있으며 도구는 쓸 수 없습니다. 알로라의 모습과 메가진화는 쓸 수 있습니다.",
-  gmL2:"다음 포켓몬의 마스터와는 배틀하지 않습니다: {#132}, 전설의 새 포켓몬, {#150}. 대신 같은 종류 중 CP가 충분히 높은 포켓몬을 보여 주세요.",
-  gmL3:"{#151}, {#808}, {#809}의 칭호는 그랜드마스터에 필요하지 않습니다(153종 모두를 꼽는 공략도 있지만 Bulbapedia는 150종).",
-  badge:"필수 칭호 {n} / 150",won:"★ 150개 모두 획득! {@Celadon City}에서 그랜드마스터 칭호를 받으세요!",
-  sortBy:"정렬",sortDex:"도감 번호",sortLoc:"장소",
-  secBattle:"마스터 트레이너와 배틀",secShow:"배틀 없음: CP가 높은 포켓몬 보여 주기",secShowP:"같은 종류 중 표시된 CP 이상인 포켓몬을 데려가세요.",
-  pillShow:"CP {cp} 이상 보여 주기",opt:"선택",warn:"먼저 한 마리 잡기",statOpt:" · 선택 +{n}",
-  footer:"출현 장소는 {thonky}, {pc}에서 대조했습니다. 마스터 트레이너 데이터 출처: {bulba}, {sc}, {gg}. 팬이 만든 비공식 도구로 닌텐도, 게임프리크, 포켓몬 컴퍼니와 관계없습니다.",
-  save:"세이브 코드",codeT:"메모 앱에 복사해 두세요",copy:"복사",load:"불러오기",loadPh:"저장한 코드 붙여넣기 (LGPE1-…)",loadA:"저장한 코드",restore:"복원",
-  tCopied:"코드를 복사했습니다. 메모에 붙여 넣으세요.",tSel:"선택했습니다. ⌘C / Ctrl+C로 복사하세요.",tRest:"복원 완료: 도감 {d}, 마스터 칭호 {m}",tBad:"코드가 올바르지 않은 것 같습니다. 전부 복사했는지 확인하세요.",
-  viewBy:"보기",viewRoute:"루트 순서",viewNum:"도감 번호순",stopN:"{n}번 지점",locLeft:" · {n}명 남음",locDone:" · ✓ 완료"},
- stops:[
-  ["{@Route 1} · {@Route 2}","게임 시작 직후. {@Viridian City}에 가는 길에 잡으세요."],
-  ["{@Route 22}","{@Viridian City} 서쪽. 지금은 육지 출현만 (수상은 나중에)."],
-  ["{@Viridian Forest}","희귀 포켓몬: {#1}. 포획 콤보를 이어 가면 희귀 포켓몬이 더 자주 나옵니다."],
-  ["{@Pewter City} · {@Route 3} · {@Route 4}","{@Route 4} {@Pokémon Center}의 상인에게서 {#129} 구입. {@Pewter Museum}에서 {$Old Amber}도 미리 챙겨 두세요."],
-  ["{@Mt. Moon}","{$Moon Stone}을 모으세요. 화석은 하나만({$Helix Fossil} 또는 {$Dome Fossil}) 가져갈 수 있고, 다른 하나는 교환이 필요합니다."],
-  ["{@Cerulean City} · {@Route 24} · {@Route 25}","{@Nugget Bridge}와 이수재의 집. 지금은 육지 출현, 수상은 나중에."],
-  ["{@Route 5} · {@Route 6}","남쪽 {@Vermilion City}로 가는 길. {#39}용 {$Moon Stone} 하나를 남겨 두세요."],
-  ["{@Vermilion City} · {@Route 11} · {@Diglett's Cave}",""],
-  ["{@Routes 9-10} · {@Rock Tunnel}","스타팅 포켓몬의 레벨 진화는 언제 일어나도 괜찮습니다. 레벨에 도달하면 체크하세요."],
-  ["{@Route 7} · {@Route 8} · {@Celadon City}","진화의 돌은 {@Celadon Dept. Store}에서 살 수 있습니다. 파트너 {#25}/{#133}는 진화할 수 없으니 야생에서 잡은 개체를 쓰세요."],
-  ["{@Pokémon Tower} ({@Lavender Town})","{@Celadon City} {@Rocket Hideout}에서 얻는 {$Silph Scope}가 필요합니다."],
-  ["{@Routes 12-15} ({$Poké Flute} 입수 후)","{@Route 12}의 {#143} 깨우기. {#123}/{#127}는 포획 콤보로."],
-  ["{@Routes 16-18} ({@Cycling Road})","{#133}는 {@Route 17}에 출현. 리빙 도감이라면 4마리 잡으세요 ({#133} + 진화형 3종)."],
-  ["{@Saffron City}","{@Dojo}: 하나를 고르세요. 다른 하나는 {@Victory Road}에서 드물게 출현. {@Silph Co.}에서 {#131} 증정 ({#137}도 받을 수 있음)."],
-  ["수상 루트 한 바퀴","물 위를 이동할 수 있게 되면 {@Routes 4, 6, 10-13, 18-25}의 수상을 돌아보세요."],
-  ["{@Seafoam Islands}","전설의 포켓몬과 {#143}: 먼저 제한 시간 배틀에서 이긴 뒤 잡으세요."],
-  ["{@Cinnabar Island}","{@Pokémon Lab}에서 화석을 복원하고 {@Pokémon Mansion}도 탐색하세요."],
-  ["{@Route 21}","{@Pallet Town}과 {@Cinnabar Island} 사이의 수상 루트."],
-  ["{@Power Plant} ({@Route 10} 수상 이동)","{#88}/{#89}, {#109}/{#110}는 {@Pokémon Mansion}에도 출현합니다."],
-  ["{@Route 23} · {@Victory Road}","사천왕에 도전하기 전 마지막 구간."],
-  ["엔딩 후: {@Cerulean Cave}","사천왕을 이긴 후에 열립니다."],
-  ["교환 · 특별 입수","두 번째 플레이어, 두 번째 Switch 또는 Pokémon GO가 필요합니다."]],
- howX:{
-  "Buy from salesman (Route 4 Pokémon Center)":"상인에게서 구입 ({@Route 4} {@Pokémon Center})",
-  "Dojo gift or Victory Road (rare)":"{@Dojo}에서 받기 또는 {@Victory Road} (희귀)",
-  "Eevee ver: evolve Meowth (Lv 28). Pikachu ver: Vermilion trade":"이브이 버전: {#52} 진화 ({L28}). 피카츄 버전: {@Vermilion City}에서 교환",
-  "Evolve Kakuna (Lv 10); rare wild in Eevee ver.":"{#14} 진화 ({L10}); 이브이 버전에서는 드물게 야생 출현",
-  "Evolve Meltan in Pokémon GO, then transfer":"Pokémon GO에서 {#808} 진화 후 전송",
-  "Evolve Metapod (Lv 10); rare wild in Pikachu ver.":"{#11} 진화 ({L10}); 피카츄 버전에서는 드물게 야생 출현",
-  "Gift at Silph Co.":"{@Silph Co.}에서 받기",
-  "Pikachu ver: wild/Fire Stone. Eevee ver: Vermilion trade":"피카츄 버전: 야생/{$Fire Stone}. 이브이 버전: {@Vermilion City}에서 교환",
-  "Poké Ball Plus":"몬스터볼 Plus",
-  "Poké Flute encounter (Route 12 or 16)":"{$Poké Flute} 이벤트 ({@Route 12} 또는 {@Route 16})",
-  "Pokémon GO transfer (GO Park)":"Pokémon GO에서 전송 ({@GO Park})",
-  "Thunder Stone on a non-partner Pikachu":"파트너가 아닌 {#25}에게 {$Thunder Stone}",
-  "Water (many routes)":"수상 (여러 도로)",
-  "Wild (Mt. Moon per Thonky; else Rock Tunnel)":"야생 (Thonky 기준 {@Mt. Moon}, 그 외 {@Rock Tunnel})",
-  "Wild (Thonky: Rt 24-25; PokeCommunity: Rt 5-8)":"야생 (Thonky: {@Routes 24-25}; PokeCommunity: {@Routes 5-8})",
-  "Wild (rare, many areas)":"야생 (희귀, 여러 지역)",
-  "Wild (rare); or Cerulean gift at 30 caught":"야생 (희귀); 또는 {@Cerulean City}에서 30마리 포획 시 선물",
-  "Wild (rare); or Route 24 gift at 50 caught":"야생 (희귀); 또는 {@Route 24}에서 50마리 포획 시 선물",
-  "Wild (rare); or Vermilion gift at 60 species":"야생 (희귀); 또는 {@Vermilion City}에서 60종 포획 시 선물",
-  "Wild on Route 7 (rare), or Silph Co. gift later":"{@Route 7}에서 야생 (희귀), 또는 나중에 {@Silph Co.}에서 선물"}},
-
-"zh-Hant":{ cjk:1, lv:"Lv.{n}", route:ROUTE("號道路","",1), sep:"、", dash:"～", dir:{North:"（北）",South:"（南）",East:"（東）",West:"（西）"},
- loc:{"Pallet Town":"真新鎮","Viridian City":"常磐市","Viridian Forest":"常磐森林","Pewter City":"尼比市","Mt. Moon":"月見山","Cerulean City":"華藍市","Cerulean Cave":"華藍洞窟","Vermilion City":"枯葉市","Diglett's Cave":"地鼠洞穴","Rock Tunnel":"岩山隧道","Lavender Town":"紫苑鎮","Pokémon Tower":"寶可夢塔","Celadon City":"玉虹市","Celadon Condominiums":"玉虹公寓","Rocket Hideout":"火箭隊秘密基地","Saffron City":"金黃市","Silph Co.":"西爾佛公司","Fuchsia City":"淺紅市","Seafoam Islands":"雙子島","Cinnabar Island":"紅蓮島","Pokémon Mansion":"寶可夢屋敷","Power Plant":"無人發電廠","Victory Road":"冠軍之路","Underground Path":"地下通道","Pokémon Center":"寶可夢中心","Nugget Bridge":"金球大橋","Cycling Road":"自行車道","Pokémon Lab":"寶可夢研究所","Pewter Museum":"尼比科學博物館","Celadon Dept. Store":"玉虹百貨","GO Park":"GO公園","Dojo":"格鬥道館"},
- item:{"Moon Stone":"月之石","Fire Stone":"火之石","Thunder Stone":"雷之石","Water Stone":"水之石","Leaf Stone":"葉之石","Helix Fossil":"貝殼化石","Dome Fossil":"甲殼化石","Old Amber":"秘密琥珀","Poké Flute":"寶可夢之笛","Silph Scope":"西爾佛檢視鏡"},
- how:{wild:"野生",rare:"稀有",evolve:"{p}進化（{lv}）",trade:"連線交換{p}",stone:"對{p}使用{s}",revive:"復原{x}",legend:"傳說寶可夢（事件戰）",water:"水上",or:"，或",onLand:"{l}，陸地",tradeEvo:"連線交換",candy:"GO中400顆糖果"},
- ui:{title:"Let's Go 圖鑑追蹤",
-  sub:"依照劇情順序、有效率地完成《精靈寶可夢 Let's Go! 皮卡丘／Let's Go! 伊布》圖鑑的路線，以及為了「大師中的大師」稱號而準備的大師訓練家追蹤表。",
-  kDex:"寶可夢圖鑑",kMas:"大師訓練家",kStop:"已完成的地點",tabDex:"圖鑑路線",tabMas:"大師中的大師",
-  search:"搜尋寶可夢或地點…",searchA:"搜尋",verA:"遊戲版本",verBoth:"兩個版本",verP:"Let's Go! 皮卡丘",verE:"Let's Go! 伊布",
-  hide:"隱藏已完成",theme:"切換主題",lang:"語言",
-  intro:"依序前往各地點。每隻寶可夢都列在最早能取得的地方。點一下該列即可勾選。<b>進化</b>欄顯示之後的進化階段與等級；若要收集活圖鑑，每個進化階段都要捕捉一隻基本型。",
-  colDex:"編號",colMon:"寶可夢",colHow:"取得方式",colEvo:"進化",
-  tagP:"皮卡丘版限定",tagE:"伊布版限定",tradeP:"從皮卡丘版交換",tradeE:"從伊布版交換",
-  gmH:"「大師中的大師」稱號",
-  gmP:"以最初150種寶可夢全部取得大師稱號後，到Game Freak辦公室（{@Celadon Condominiums} 3樓）和女性交談，即可獲得<b>大師中的大師</b>稱號。",
-  gmL0:"大師訓練家要在<b>成為冠軍之後</b>才會出現在關都各地，道館內則沒有。",
-  gmL1:"規則：只能使用1隻與對方相同種類的寶可夢，放在隊伍首位，且不能使用道具。你可以使用阿羅拉的樣子和超級進化。",
-  gmL2:"{#132}、傳說的鳥寶可夢和{#150}的大師不會對戰，改為向他們展示CP夠高的同種寶可夢。",
-  gmL3:"{#151}、{#808}、{#809}的稱號對「大師中的大師」並非必要（有些攻略列出全部153種，Bulbapedia則為150種）。",
-  badge:"必要稱號 {n} / 150",won:"★ 已取得全部150個！快去{@Celadon City}領取「大師中的大師」稱號！",
-  sortBy:"排序",sortDex:"圖鑑編號",sortLoc:"地點",
-  secBattle:"與大師訓練家對戰",secShow:"不對戰：展示高CP的寶可夢",secShowP:"帶一隻該種類、CP不低於所示數值的寶可夢。",
-  pillShow:"展示 CP {cp}",opt:"非必要",warn:"請先捕捉一隻",statOpt:" · 非必要 +{n}",
-  footer:"出現地點參照 {thonky} 與 {pc} 核對。大師訓練家資料來自 {bulba}、{sc} 與 {gg}。粉絲製作的非官方工具，與任天堂、Game Freak 及寶可夢公司無關。",
-  save:"存檔代碼",codeT:"複製到你的記事本App",copy:"複製",load:"讀取",loadPh:"貼上已儲存的代碼（LGPE1-…）",loadA:"已儲存的代碼",restore:"還原",
-  tCopied:"已複製代碼，請貼到記事本中。",tSel:"已選取，請按 ⌘C / Ctrl+C 複製。",tRest:"已還原：圖鑑 {d}、大師稱號 {m}",tBad:"這個代碼似乎不正確，請確認是否完整複製。",
-  viewBy:"顯示",viewRoute:"路線順序",viewNum:"圖鑑編號",stopN:"第{n}站",locLeft:" · 剩餘{n}",locDone:" · ✓ 完成"},
- stops:[
-  ["{@Route 1}・{@Route 2}","遊戲剛開始。在前往{@Viridian City}的路上捕捉。"],
-  ["{@Route 22}","{@Viridian City}西邊。目前只有陸地上的出現（水上之後再來）。"],
-  ["{@Viridian Forest}","{#1}很稀有；持續連續捕捉可提高稀有寶可夢的出現率。"],
-  ["{@Pewter City}・{@Route 3}・{@Route 4}","在{@Route 4}的{@Pokémon Center}向商人購買{#129}。順便在{@Pewter Museum}拿{$Old Amber}，之後會用到。"],
-  ["{@Mt. Moon}","收集{$Moon Stone}。化石只能拿一個（{$Helix Fossil}或{$Dome Fossil}），另一個需要交換。"],
-  ["{@Cerulean City}・{@Route 24}・{@Route 25}","{@Nugget Bridge}與正輝的家。現在是陸地出現，水上之後再來。"],
-  ["{@Route 5}・{@Route 6}","往南前往{@Vermilion City}的路上。留一顆{$Moon Stone}給{#39}。"],
-  ["{@Vermilion City}・{@Route 11}・{@Diglett's Cave}",""],
-  ["{@Routes 9-10}・{@Rock Tunnel}","御三家的等級進化隨時都可能發生，達到等級時就勾選。"],
-  ["{@Route 7}・{@Route 8}・{@Celadon City}","在{@Celadon Dept. Store}購買進化石。搭檔{#25}／{#133}無法進化，請使用野生捕捉的。"],
-  ["{@Pokémon Tower}（{@Lavender Town}）","需要{@Celadon City}{@Rocket Hideout}的{$Silph Scope}。"],
-  ["{@Routes 12-15}（取得{$Poké Flute}後）","叫醒{@Route 12}的{#143}。用連續捕捉尋找{#123}／{#127}。"],
-  ["{@Routes 16-18}（{@Cycling Road}）","{#133}出現在{@Route 17}。活圖鑑需要捕捉4隻（{#133}＋3種進化型）。"],
-  ["{@Saffron City}","{@Dojo}：二選一，另一隻會在{@Victory Road}稀有出現。{@Silph Co.}會送你{#131}（還有{#137}）。"],
-  ["水路一次掃完","能在水上移動後，巡遊{@Routes 4, 6, 10-13, 18-25}的水面。"],
-  ["{@Seafoam Islands}","傳說寶可夢與{#143}：先在限時對戰中獲勝，再進行捕捉。"],
-  ["{@Cinnabar Island}","在{@Pokémon Lab}復原化石；探索{@Pokémon Mansion}。"],
-  ["{@Route 21}","{@Pallet Town}與{@Cinnabar Island}之間的水路。"],
-  ["{@Power Plant}（從{@Route 10}水上前往）","{#88}／{#89}和{#109}／{#110}也會出現在{@Pokémon Mansion}。"],
-  ["{@Route 23}・{@Victory Road}","挑戰四天王前的最後一段路。"],
-  ["通關後：{@Cerulean Cave}","打倒四天王後開放。"],
-  ["交換與特殊取得","需要第二位玩家、第二台Switch或Pokémon GO。"]],
- howX:{
-  "Buy from salesman (Route 4 Pokémon Center)":"向商人購買（{@Route 4}的{@Pokémon Center}）",
-  "Dojo gift or Victory Road (rare)":"{@Dojo}贈送，或{@Victory Road}（稀有）",
-  "Eevee ver: evolve Meowth (Lv 28). Pikachu ver: Vermilion trade":"伊布版：{#52}進化（{L28}）。皮卡丘版：在{@Vermilion City}交換",
-  "Evolve Kakuna (Lv 10); rare wild in Eevee ver.":"{#14}進化（{L10}）；伊布版中野生稀有出現",
-  "Evolve Meltan in Pokémon GO, then transfer":"在Pokémon GO中讓{#808}進化後再傳送",
-  "Evolve Metapod (Lv 10); rare wild in Pikachu ver.":"{#11}進化（{L10}）；皮卡丘版中野生稀有出現",
-  "Gift at Silph Co.":"在{@Silph Co.}獲贈",
-  "Pikachu ver: wild/Fire Stone. Eevee ver: Vermilion trade":"皮卡丘版：野生／{$Fire Stone}。伊布版：在{@Vermilion City}交換",
-  "Poké Ball Plus":"精靈球 Plus",
-  "Poké Flute encounter (Route 12 or 16)":"使用{$Poké Flute}遭遇（{@Route 12}或{@Route 16}）",
-  "Pokémon GO transfer (GO Park)":"從Pokémon GO傳送（{@GO Park}）",
-  "Thunder Stone on a non-partner Pikachu":"對非搭檔的{#25}使用{$Thunder Stone}",
-  "Water (many routes)":"水上（多條道路）",
-  "Wild (Mt. Moon per Thonky; else Rock Tunnel)":"野生（Thonky記載為{@Mt. Moon}；否則為{@Rock Tunnel}）",
-  "Wild (Thonky: Rt 24-25; PokeCommunity: Rt 5-8)":"野生（Thonky：{@Routes 24-25}；PokeCommunity：{@Routes 5-8}）",
-  "Wild (rare, many areas)":"野生（稀有，多處）",
-  "Wild (rare); or Cerulean gift at 30 caught":"野生（稀有）；或在{@Cerulean City}捕捉30隻後獲贈",
-  "Wild (rare); or Route 24 gift at 50 caught":"野生（稀有）；或在{@Route 24}捕捉50隻後獲贈",
-  "Wild (rare); or Vermilion gift at 60 species":"野生（稀有）；或在{@Vermilion City}捕捉60種後獲贈",
-  "Wild on Route 7 (rare), or Silph Co. gift later":"{@Route 7}野生（稀有），或之後在{@Silph Co.}獲贈"}},
-
-"zh-Hans":{ cjk:1, lv:"Lv.{n}", route:ROUTE("号道路","",1), sep:"、", dash:"～", dir:{North:"（北）",South:"（南）",East:"（东）",West:"（西）"},
- loc:{"Pallet Town":"真新镇","Viridian City":"常磐市","Viridian Forest":"常磐森林","Pewter City":"尼比市","Mt. Moon":"月见山","Cerulean City":"华蓝市","Cerulean Cave":"华蓝洞窟","Vermilion City":"枯叶市","Diglett's Cave":"地鼠洞穴","Rock Tunnel":"岩山隧道","Lavender Town":"紫苑镇","Pokémon Tower":"宝可梦塔","Celadon City":"玉虹市","Celadon Condominiums":"玉虹公寓","Rocket Hideout":"火箭队秘密基地","Saffron City":"金黄市","Silph Co.":"西尔佛公司","Fuchsia City":"浅红市","Seafoam Islands":"双子岛","Cinnabar Island":"红莲岛","Pokémon Mansion":"宝可梦屋敷","Power Plant":"无人发电厂","Victory Road":"冠军之路","Underground Path":"地下通道","Pokémon Center":"宝可梦中心","Nugget Bridge":"金球大桥","Cycling Road":"自行车道","Pokémon Lab":"宝可梦研究所","Pewter Museum":"尼比科学博物馆","Celadon Dept. Store":"玉虹百货","GO Park":"GO公园","Dojo":"格斗道馆"},
- item:{"Moon Stone":"月之石","Fire Stone":"火之石","Thunder Stone":"雷之石","Water Stone":"水之石","Leaf Stone":"叶之石","Helix Fossil":"贝壳化石","Dome Fossil":"甲壳化石","Old Amber":"秘密琥珀","Poké Flute":"宝可梦之笛","Silph Scope":"西尔佛检视镜"},
- how:{wild:"野生",rare:"稀有",evolve:"{p}进化（{lv}）",trade:"连线交换{p}",stone:"对{p}使用{s}",revive:"复原{x}",legend:"传说宝可梦（事件战）",water:"水上",or:"，或",onLand:"{l}，陆地",tradeEvo:"连线交换",candy:"GO中400颗糖果"},
- ui:{title:"Let's Go 图鉴追踪",
-  sub:"按照剧情顺序、高效完成《精灵宝可梦 Let's Go! 皮卡丘／Let's Go! 伊布》图鉴的路线，以及为了“大师中的大师”称号而准备的大师训练家追踪表。",
-  kDex:"宝可梦图鉴",kMas:"大师训练家",kStop:"已完成的地点",tabDex:"图鉴路线",tabMas:"大师中的大师",
-  search:"搜索宝可梦或地点…",searchA:"搜索",verA:"游戏版本",verBoth:"两个版本",verP:"Let's Go! 皮卡丘",verE:"Let's Go! 伊布",
-  hide:"隐藏已完成",theme:"切换主题",lang:"语言",
-  intro:"按顺序前往各地点。每只宝可梦都列在最早能获得的地方。点一下该行即可勾选。<b>进化</b>栏显示之后的进化阶段与等级；如果要收集活图鉴，每个进化阶段都要捕捉一只基本型。",
-  colDex:"编号",colMon:"宝可梦",colHow:"获得方式",colEvo:"进化",
-  tagP:"皮卡丘版限定",tagE:"伊布版限定",tradeP:"从皮卡丘版交换",tradeE:"从伊布版交换",
-  gmH:"“大师中的大师”称号",
-  gmP:"用最初150种宝可梦全部取得大师称号后，到Game Freak办公室（{@Celadon Condominiums} 3楼）和女性交谈，即可获得<b>大师中的大师</b>称号。",
-  gmL0:"大师训练家要在<b>成为冠军之后</b>才会出现在关都各地，道馆内则没有。",
-  gmL1:"规则：只能使用1只与对方相同种类的宝可梦，放在队伍首位，且不能使用道具。你可以使用阿罗拉的样子和超级进化。",
-  gmL2:"{#132}、传说的鸟宝可梦和{#150}的大师不会对战，改为向他们展示CP够高的同种宝可梦。",
-  gmL3:"{#151}、{#808}、{#809}的称号对“大师中的大师”并非必要（有些攻略列出全部153种，Bulbapedia则为150种）。",
-  badge:"必要称号 {n} / 150",won:"★ 已取得全部150个！快去{@Celadon City}领取“大师中的大师”称号！",
-  sortBy:"排序",sortDex:"图鉴编号",sortLoc:"地点",
-  secBattle:"与大师训练家对战",secShow:"不对战：展示高CP的宝可梦",secShowP:"带一只该种类、CP不低于所示数值的宝可梦。",
-  pillShow:"展示 CP {cp}",opt:"非必要",warn:"请先捕捉一只",statOpt:" · 非必要 +{n}",
-  footer:"出现地点参照 {thonky} 与 {pc} 核对。大师训练家资料来自 {bulba}、{sc} 与 {gg}。粉丝制作的非官方工具，与任天堂、Game Freak 及宝可梦公司无关。",
-  save:"存档代码",codeT:"复制到你的备忘录App",copy:"复制",load:"读取",loadPh:"粘贴已保存的代码（LGPE1-…）",loadA:"已保存的代码",restore:"还原",
-  tCopied:"已复制代码，请粘贴到备忘录中。",tSel:"已选中，请按 ⌘C / Ctrl+C 复制。",tRest:"已还原：图鉴 {d}、大师称号 {m}",tBad:"这个代码似乎不正确，请确认是否完整复制。",
-  viewBy:"显示",viewRoute:"路线顺序",viewNum:"图鉴编号",stopN:"第{n}站",locLeft:" · 剩余{n}",locDone:" · ✓ 完成"},
- stops:[
-  ["{@Route 1}・{@Route 2}","游戏刚开始。在前往{@Viridian City}的路上捕捉。"],
-  ["{@Route 22}","{@Viridian City}西边。目前只有陆地上的出现（水上之后再来）。"],
-  ["{@Viridian Forest}","{#1}很稀有；持续连续捕捉可提高稀有宝可梦的出现率。"],
-  ["{@Pewter City}・{@Route 3}・{@Route 4}","在{@Route 4}的{@Pokémon Center}向商人购买{#129}。顺便在{@Pewter Museum}拿{$Old Amber}，之后会用到。"],
-  ["{@Mt. Moon}","收集{$Moon Stone}。化石只能拿一个（{$Helix Fossil}或{$Dome Fossil}），另一个需要交换。"],
-  ["{@Cerulean City}・{@Route 24}・{@Route 25}","{@Nugget Bridge}与正辉的家。现在是陆地出现，水上之后再来。"],
-  ["{@Route 5}・{@Route 6}","往南前往{@Vermilion City}的路上。留一颗{$Moon Stone}给{#39}。"],
-  ["{@Vermilion City}・{@Route 11}・{@Diglett's Cave}",""],
-  ["{@Routes 9-10}・{@Rock Tunnel}","御三家的等级进化随时都可能发生，达到等级时就勾选。"],
-  ["{@Route 7}・{@Route 8}・{@Celadon City}","在{@Celadon Dept. Store}购买进化石。搭档{#25}／{#133}无法进化，请使用野生捕捉的。"],
-  ["{@Pokémon Tower}（{@Lavender Town}）","需要{@Celadon City}{@Rocket Hideout}的{$Silph Scope}。"],
-  ["{@Routes 12-15}（取得{$Poké Flute}后）","叫醒{@Route 12}的{#143}。用连续捕捉寻找{#123}／{#127}。"],
-  ["{@Routes 16-18}（{@Cycling Road}）","{#133}出现在{@Route 17}。活图鉴需要捕捉4只（{#133}＋3种进化型）。"],
-  ["{@Saffron City}","{@Dojo}：二选一，另一只会在{@Victory Road}稀有出现。{@Silph Co.}会送你{#131}（还有{#137}）。"],
-  ["水路一次扫完","能在水上移动后，巡游{@Routes 4, 6, 10-13, 18-25}的水面。"],
-  ["{@Seafoam Islands}","传说宝可梦与{#143}：先在限时对战中获胜，再进行捕捉。"],
-  ["{@Cinnabar Island}","在{@Pokémon Lab}复原化石；探索{@Pokémon Mansion}。"],
-  ["{@Route 21}","{@Pallet Town}与{@Cinnabar Island}之间的水路。"],
-  ["{@Power Plant}（从{@Route 10}水上前往）","{#88}／{#89}和{#109}／{#110}也会出现在{@Pokémon Mansion}。"],
-  ["{@Route 23}・{@Victory Road}","挑战四天王前的最后一段路。"],
-  ["通关后：{@Cerulean Cave}","打倒四天王后开放。"],
-  ["交换与特殊获得","需要第二位玩家、第二台Switch或Pokémon GO。"]],
- howX:{
-  "Buy from salesman (Route 4 Pokémon Center)":"向商人购买（{@Route 4}的{@Pokémon Center}）",
-  "Dojo gift or Victory Road (rare)":"{@Dojo}赠送，或{@Victory Road}（稀有）",
-  "Eevee ver: evolve Meowth (Lv 28). Pikachu ver: Vermilion trade":"伊布版：{#52}进化（{L28}）。皮卡丘版：在{@Vermilion City}交换",
-  "Evolve Kakuna (Lv 10); rare wild in Eevee ver.":"{#14}进化（{L10}）；伊布版中野生稀有出现",
-  "Evolve Meltan in Pokémon GO, then transfer":"在Pokémon GO中让{#808}进化后再传送",
-  "Evolve Metapod (Lv 10); rare wild in Pikachu ver.":"{#11}进化（{L10}）；皮卡丘版中野生稀有出现",
-  "Gift at Silph Co.":"在{@Silph Co.}获赠",
-  "Pikachu ver: wild/Fire Stone. Eevee ver: Vermilion trade":"皮卡丘版：野生／{$Fire Stone}。伊布版：在{@Vermilion City}交换",
-  "Poké Ball Plus":"精灵球 Plus",
-  "Poké Flute encounter (Route 12 or 16)":"使用{$Poké Flute}遭遇（{@Route 12}或{@Route 16}）",
-  "Pokémon GO transfer (GO Park)":"从Pokémon GO传送（{@GO Park}）",
-  "Thunder Stone on a non-partner Pikachu":"对非搭档的{#25}使用{$Thunder Stone}",
-  "Water (many routes)":"水上（多条道路）",
-  "Wild (Mt. Moon per Thonky; else Rock Tunnel)":"野生（Thonky记载为{@Mt. Moon}；否则为{@Rock Tunnel}）",
-  "Wild (Thonky: Rt 24-25; PokeCommunity: Rt 5-8)":"野生（Thonky：{@Routes 24-25}；PokeCommunity：{@Routes 5-8}）",
-  "Wild (rare, many areas)":"野生（稀有，多处）",
-  "Wild (rare); or Cerulean gift at 30 caught":"野生（稀有）；或在{@Cerulean City}捕捉30只后获赠",
-  "Wild (rare); or Route 24 gift at 50 caught":"野生（稀有）；或在{@Route 24}捕捉50只后获赠",
-  "Wild (rare); or Vermilion gift at 60 species":"野生（稀有）；或在{@Vermilion City}捕捉60种后获赠",
-  "Wild on Route 7 (rare), or Silph Co. gift later":"{@Route 7}野生（稀有），或之后在{@Silph Co.}获赠"}}
+ ja:{title:"ポケモン図鑑トラッカー",sub:"本編ポケモンのゲームを完全攻略するための、無料・アカウント不要のトラッカーです。ゲームを選んでください。",pick:"ゲーム",
+  lgName:"ポケットモンスター Let's Go! ピカチュウ・Let's Go! イーブイ",lgDesc:"図鑑153匹をストーリー順に埋めるルートと、グランドマスターを目指すためのマスタートレーナー記録表。",open:"トラッカーを開く →",
+  saveNote:"各ゲームのページ下部にそれぞれのセーブコードがあります。メモアプリにコピーしておけば進行状況を残せます。",
+  footer:"ファンが作った非公式ツールで、任天堂・ゲームフリーク・株式会社ポケモンとは関係ありません。",lang:"言語",theme:"テーマ切り替え"},
+ fr:{title:"Suivi de Pokédex",sub:"Des outils gratuits et sans compte pour compléter les jeux Pokémon de la série principale. Choisissez un jeu.",pick:"Jeux",
+  lgName:"Pokémon : Let's Go, Pikachu et Let's Go, Évoli",lgDesc:"Un itinéraire dans l'ordre de l'histoire pour les 153 entrées du Pokédex, plus un suivi des Maîtres Dresseurs pour le titre de Grand Maître.",open:"Ouvrir le suivi →",
+  saveNote:"Chaque jeu a son propre code de sauvegarde en bas de sa page. Copiez-le dans une app de notes pour garder votre progression.",
+  footer:"Outil créé par un fan, sans lien avec Nintendo, Game Freak ou The Pokémon Company.",lang:"Langue",theme:"Changer de thème"},
+ de:{title:"Pokédex-Tracker",sub:"Kostenlose Tracker ohne Konto, um die Pokémon-Hauptspiele zu vervollständigen. Wähle ein Spiel.",pick:"Spiele",
+  lgName:"Pokémon: Let's Go, Pikachu! / Let's Go, Evoli!",lgDesc:"Eine Route in Story-Reihenfolge zu allen 153 Pokédex-Einträgen, plus ein Meistertrainer-Tracker für den Titel Großmeister.",open:"Tracker öffnen →",
+  saveNote:"Jedes Spiel hat unten auf seiner Seite einen eigenen Speichercode. Kopiere ihn in eine Notizen-App, um deinen Fortschritt zu behalten.",
+  footer:"Fan-Projekt, nicht verbunden mit Nintendo, Game Freak oder The Pokémon Company.",lang:"Sprache",theme:"Design wechseln"},
+ ko:{title:"포켓몬 도감 트래커",sub:"포켓몬스터 본편 게임을 완성하기 위한 무료 트래커입니다. 계정이 필요 없습니다. 게임을 고르세요.",pick:"게임",
+  lgName:"포켓몬스터 레츠고! 피카츄·레츠고! 이브이",lgDesc:"도감 153종을 스토리 순서대로 채우는 루트와, 그랜드마스터 칭호를 위한 마스터 트레이너 기록표.",open:"트래커 열기 →",
+  saveNote:"게임마다 페이지 아래에 각각의 세이브 코드가 있습니다. 메모 앱에 복사해 두면 진행 상황을 보관할 수 있습니다.",
+  footer:"팬이 만든 비공식 도구로 닌텐도, 게임프리크, 포켓몬 컴퍼니와 관계없습니다.",lang:"언어",theme:"테마 전환"},
+ "zh-Hant":{title:"寶可夢圖鑑追蹤",sub:"免費、不需帳號的寶可夢正傳遊戲完成度追蹤工具。請選擇遊戲。",pick:"遊戲",
+  lgName:"精靈寶可夢 Let's Go! 皮卡丘／Let's Go! 伊布",lgDesc:"依劇情順序完成全部153個圖鑑項目的路線，以及為了「大師中的大師」稱號而準備的大師訓練家追蹤表。",open:"開啟追蹤 →",
+  saveNote:"每款遊戲的頁面底部都有自己的存檔代碼。複製到記事本App即可保存進度。",
+  footer:"粉絲製作的非官方工具，與任天堂、Game Freak 及寶可夢公司無關。",lang:"語言",theme:"切換主題"},
+ "zh-Hans":{title:"宝可梦图鉴追踪",sub:"免费、无需账号的宝可梦正传游戏完成度追踪工具。请选择游戏。",pick:"游戏",
+  lgName:"精灵宝可梦 Let's Go! 皮卡丘／Let's Go! 伊布",lgDesc:"按剧情顺序完成全部153个图鉴项目的路线，以及为了“大师中的大师”称号而准备的大师训练家追踪表。",open:"打开追踪 →",
+  saveNote:"每款游戏的页面底部都有自己的存档代码。复制到备忘录App即可保存进度。",
+  footer:"粉丝制作的非官方工具，与任天堂、Game Freak 及宝可梦公司无关。",lang:"语言",theme:"切换主题"}
 };
-let LANG = "en";
-const PNL = {}; Object.keys(PN).forEach(k=>PNL[k]=PN[k].split("|"));
-const EN2N = {}; Object.keys(NAME).forEach(n=>EN2N[NAME[n]]=+n);
-const T = ()=>I18N[LANG];
-const nm = n=>LANG==="en" ? NAME[n] : PNL[LANG][IDX.get(+n)];
-const nmE = s=>EN2N[s] ? nm(EN2N[s]) : s;
-const par = x=>T().cjk ? "（"+x+"）" : " ("+x+")";
-const lv = n=>T().lv.replace("{n}",n);
-const item = s=>(T().item||{})[s] || s;
-function fill(str,p){
-  return String(str).replace(/\{([#@$]?)([^{}]+)\}/g,(all,k,v)=>
-    k==="#" ? nm(v) : k==="@" ? L(v) : k==="$" ? item(v) :
-    p && v in p ? p[v] : /^L\d+$/.test(v) ? lv(v.slice(1)) : all);
-}
-function t(key,p){ const s=(T().ui||{})[key]; return fill(s!=null ? s : I18N.en.ui[key], p); }
-const cap = s=>s.charAt(0).toUpperCase()+s.slice(1);
-/* place names: "Route 4", "Routes 12-13", "Routes 18, 19, 21", "Route 2 North", "Underground Path 5-6" */
-function L(s){
-  const X=T(); if(LANG==="en") return s;
-  if(X.loc[s]) return X.loc[s];
-  if(X.loc[s+" City"]) return X.loc[s+" City"];
-  let m=s.match(/^(?:Routes?|Rt) (\d[\d,\- ]*?)(?: (North|South|East|West))?$/);
-  if(m) return X.route(m[1].split(/,\s*/).map(x=>x.replace("-",X.dash||"–")).join(X.sep||", "), /[-,]/.test(m[1]), m[2]?X.dir[m[2]]:"");
-  m=s.match(/^Underground Path (\d+)-(\d+)$/);
-  if(m) return X.loc["Underground Path"]+par(m[1]+(X.dash||"–")+m[2]);
-  return s;
-}
-/* "how to get": exact lines first, then the regular patterns */
-function tHow(s){
-  if(LANG==="en") return s;
-  const X=T(), H=X.how;
-  if(X.howX[s]) return fill(X.howX[s]);
-  const seg=x=>{ let m;
-    if(x==="Wild") return H.wild;
-    if(x==="Legendary encounter") return H.legend;
-    if((m=x.match(/^Wild \((.+)\)$/))) return H.wild+par(paren(m[1]));
-    if((m=x.match(/^Water(?: \((.+)\))?$/))) return H.water+(m[1]?par(paren(m[1])):"");
-    if((m=x.match(/^evolve (.+) \(Lv (\d+)\)$/i))) return fill(H.evolve,{p:nmE(m[1]),lv:lv(m[2])});
-    if((m=x.match(/^Trade (.+)$/))) return fill(H.trade,{p:nmE(m[1])});
-    if((m=x.match(/^(\w+ Stone) on (.+)$/))) return fill(H.stone,{s:item(m[1]),p:nmE(m[2])});
-    if((m=x.match(/^Revive (.+)$/))) return fill(H.revive,{x:item(m[1])});
-    return x;
-  };
-  const paren=x=>{ if(x==="rare") return H.rare; const m=x.match(/^(.+), on land$/); return m ? fill(H.onLand,{l:L(m[1])}) : L(x); };
-  return cap(s.split(/,? or /).map(seg).join(H.or));
-}
-/* "Evolves into": "Gloom (Lv 21)  →  Vileplume (Leaf Stone)" */
-function tEvo(e){
-  if(LANG==="en"||!e) return e;
-  const H=T().how;
-  const cond=c=>{ const m=c.match(/^Lv (\d+)$/); if(m) return lv(m[1]);
-    if(c==="Trade") return H.tradeEvo; if(c==="400 Candy in GO") return H.candy;
-    return item(/Stone$/.test(c)?c:c+" Stone"); };
-  return e.split("  →  ").map(part=>{
-    const m=part.match(/^(.+?) \((.+)\)$/); if(!m) return nmE(part);
-    const ns=m[1].split(" / "), cs=m[2].split(" / ");
-    return ns.length>1 ? ns.map((n,i)=>nmE(n)+" ("+cond(cs[i])+")").join(" / ") : nmE(m[1])+" ("+cond(m[2])+")";
-  }).join("  →  ");
-}
-/* search: case-, accent- and hiragana/katakana-insensitive */
-const norm = s=>String(s).toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g,"").replace(/[\u3041-\u3096]/g,c=>String.fromCharCode(c.charCodeAt(0)+0x60));
-
-const state = {dex:new Set(), mas:new Set(), ver:0};
 const $ = s=>document.querySelector(s);
-
-/* ---------- encode / decode ---------- */
-function encode(){
-  const bytes = new Uint8Array(1+20+20);
-  bytes[0] = state.ver;
-  state.dex.forEach(n=>{const i=IDX.get(n); bytes[1+(i>>3)] |= 1<<(i&7)});
-  state.mas.forEach(n=>{const i=IDX.get(n); bytes[21+(i>>3)] |= 1<<(i&7)});
-  let bin=""; bytes.forEach(b=>bin+=String.fromCharCode(b));
-  return "LGPE1-"+btoa(bin).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
-}
-function decode(str){
-  str=(str||"").trim().replace(/^#/,"");
-  if(!str.startsWith("LGPE1-")) throw new Error("bad prefix");
-  let b=str.slice(6).replace(/-/g,"+").replace(/_/g,"/"); while(b.length%4) b+="=";
-  const bin=atob(b); if(bin.length!==41) throw new Error("bad length");
-  const dex=new Set(), mas=new Set();
-  ORDER.forEach((n,i)=>{
-    if(bin.charCodeAt(1+(i>>3)) & (1<<(i&7))) dex.add(n);
-    if(bin.charCodeAt(21+(i>>3)) & (1<<(i&7))) mas.add(n);
-  });
-  return {ver:Math.min(2,bin.charCodeAt(0)), dex, mas};
-}
-
-/* ---------- render: route ---------- */
-function evoHTML(e){
-  if(!e) return "";
-  return e.split("  →  ").map(x=>x.replace(/\(([^)]*)\)/,'<span style="color:var(--muted)">($1)</span>')).join('<span class="arr">→</span>');
-}
-function tagHTML(g){
-  if(!g) return "";
-  if(state.ver && ((g==="P"&&state.ver===2)||(g==="E"&&state.ver===1))) return `<span class="tag T">${esc(t("trade"+g))}</span>`;
-  return `<span class="tag ${g}">${esc(t("tag"+g))}</span>`;
-}
-function stopTitle(i){
-  const m=STOPS[i].title.match(/^(\d+)\.\s*(.*)$/), tr=LANG!=="en"&&T().stops[i];
-  return {num:m[1], title:tr?fill(tr[0]):m[2], tip:tr?fill(tr[1]):STOPS[i].tip};
-}
-function rowHTML(p,i,withStop){
-  const s=STOPS[i], st=stopTitle(i), name=nm(p.n), how=tHow(p.how);
-  return `<div class="row" data-n="${p.n}" data-q="${esc(norm([p.name,name,p.how,how,s.title,st.title].join(" ")))}">
-          <span class="cbw"><input type="checkbox" class="cb" data-dex="${p.n}" aria-label="${esc(name)}"></span>
-          <span class="dex">#${String(p.n).padStart(3,"0")}</span>
-          <span class="main"><span class="nm">${esc(name)}${tagHTML(p.tag)}</span>
-          <span class="how">${esc(how)}${withStop?`<span class="tag T" title="${esc(st.title)}">${esc(t("stopN",{n:st.num}))}</span>`:""}</span>
-          <span class="evo">${evoHTML(esc(tEvo(p.evo)))}</span></span>
-        </div>`;
-}
-const headHTML=()=>`<div class="head"><span></span><span>${esc(t("colDex"))}</span><span>${esc(t("colMon"))}</span><span>${esc(t("colHow"))}</span><span>${esc(t("colEvo"))}</span></div>`;
-function renderStops(){
-  if($("#dview").value==="num"){
-    $("#stops").innerHTML=`<div class="stop"><div class="rows">${headHTML()}${ORDER.map(n=>rowHTML(MONS[n],MSTOP[n],true)).join("")}</div></div>`;
-    return;
-  }
-  const open = new Set([...document.querySelectorAll(".stop[open]")].map(d=>d.dataset.i));
-  const first = !document.querySelector("details.stop");
-  $("#stops").innerHTML = STOPS.map((s,i)=>{
-    const st=stopTitle(i);
-    return `<details class="stop" data-i="${i}" ${first||open.has(String(i))?"open":""}>
-      <summary><span class="num">${st.num}</span><h2>${esc(st.title)}</h2><span class="count"></span><span class="chev">›</span></summary>
-      ${st.tip?`<p class="tip">${esc(st.tip)}</p>`:""}
-      <div class="rows">
-        ${headHTML()}
-        ${s.mons.map(p=>rowHTML(p,i,false)).join("")}
-      </div></details>`;
-  }).join("");
-}
-
-/* ---------- render: masters ---------- */
-function renderMasters(){
-  const sort=$("#msort").value;
-  const coll=new Intl.Collator(LANG);
-  const list=[...MASTERS].sort((a,b)=> sort==="loc" ? coll.compare(L(a.loc),L(b.loc))||IDX.get(a.n)-IDX.get(b.n) : IDX.get(a.n)-IDX.get(b.n));
-  const groups = sort==="loc" ? [list] : [list.filter(m=>!m.cp), list.filter(m=>m.cp)];
-  let html="", lastLoc=null;
-  groups.forEach((group,gi)=>{
-  if(sort!=="loc") html+= gi===0
-    ? `<div class="sec-h">${esc(t("secBattle"))}</div>`
-    : `<div class="sec-h">${esc(t("secShow"))}<span class="sec-p">${esc(t("secShowP"))}</span></div>`;
-  lastLoc=null;
-  group.forEach(m=>{
-    const loc=L(m.loc), name=nm(m.n);
-    if(sort==="loc" && loc!==lastLoc){ html+=`<div class="loc-h">${esc(loc)}<span class="loc-left"></span></div>`; lastLoc=loc; }
-    html+=`<label class="mcard" data-m="${m.n}" data-q="${esc(norm([NAME[m.n],name,m.loc,loc].join(" ")))}">
-      <input type="checkbox" class="cb" data-mas="${m.n}">
-      <span><span class="t">${esc(name)}</span>${m.cp?`<span class="pill">${esc(t("pillShow",{cp:m.cp.toLocaleString(LANG)}))}</span>`:""}${m.opt?`<span class="pill opt">${esc(t("opt"))}</span>`:""}
-      <div class="s">#${String(m.n).padStart(3,"0")} · ${esc(loc)}</div>
-      <div class="w" data-warn="${m.n}">${esc(t("warn"))}</div></span>
-    </label>`;
-  });
-  });
-  $("#mgrid").innerHTML=html;
-}
-
-/* ---------- sync UI with state ---------- */
-function sync(){
-  document.querySelectorAll("[data-dex]").forEach(cb=>{const on=state.dex.has(+cb.dataset.dex); cb.checked=on; cb.closest(".row").classList.toggle("caught",on)});
-  document.querySelectorAll("[data-mas]").forEach(cb=>{const on=state.mas.has(+cb.dataset.mas); cb.checked=on; cb.closest(".mcard").classList.toggle("done",on)});
-  document.querySelectorAll("[data-warn]").forEach(w=>w.hidden=state.dex.has(+w.dataset.warn)||state.mas.has(+w.dataset.warn));
-  // off-version dim
-  document.querySelectorAll(".row").forEach(r=>{
-    const p=findMon(+r.dataset.n);
-    r.classList.toggle("offver", !!(state.ver && p.tag && ((p.tag==="P"&&state.ver===2)||(p.tag==="E"&&state.ver===1))));
-  });
-  const stopsDone=STOPS.filter(s=>s.mons.every(m=>state.dex.has(m.n))).length;
-  document.querySelectorAll(".stop[data-i]").forEach(d=>{
-    const s=STOPS[+d.dataset.i], got=s.mons.filter(m=>state.dex.has(m.n)).length;
-    d.querySelector(".count").textContent=`${got} / ${s.mons.length}`;
-    d.classList.toggle("done",got===s.mons.length);
-  });
-  document.querySelectorAll(".loc-h").forEach(h=>{
-    let el=h.nextElementSibling, left=0;
-    while(el&&el.matches(".mcard")){ if(!state.mas.has(+el.dataset.m)) left++; el=el.nextElementSibling; }
-    h.querySelector(".loc-left").textContent = left ? t("locLeft",{n:left}) : t("locDone");
-  });
-  const req=[...state.mas].filter(n=>n<=150).length;
-  $("#sDex").innerHTML=`${state.dex.size} <small>/ 153</small>`; $("#bDex").style.width=state.dex.size/153*100+"%";
-  $("#sMas").innerHTML=`${req} <small>/ 150${state.mas.size>req?esc(t("statOpt",{n:state.mas.size-req})):""}</small>`; $("#bMas").style.width=req/150*100+"%";
-  $("#sStop").innerHTML=`${stopsDone} <small>/ ${STOPS.length}</small>`; $("#bStop").style.width=stopsDone/STOPS.length*100+"%";
-  const b=$("#gmBadge"); b.classList.toggle("won",req===150);
-  b.textContent = req===150 ? t("won") : t("badge",{n:req});
-  $("#ver").value=String(state.ver);
-  applyFilter();
-  const code=encode(); $("#code").textContent=code;
-  try{ history.replaceState(null,"","#"+code); }catch(e){}
-  try{ localStorage.setItem("lgpe-code",code); }catch(e){}
-}
-const MONS={}; STOPS.forEach(s=>s.mons.forEach(m=>MONS[m.n]=m));
-const findMon=n=>MONS[n];
-const MSTOP={}; STOPS.forEach((s,i)=>s.mons.forEach(m=>MSTOP[m.n]=i));
-
-function applyFilter(){
-  const q=norm($("#q").value.trim()), hide=$("#hide").checked;
-  document.querySelectorAll(".row").forEach(r=>{
-    r.hidden=(q&&!r.dataset.q.includes(q))||(hide&&state.dex.has(+r.dataset.n));
-  });
-  document.querySelectorAll(".stop").forEach(d=>{
-    const any=[...d.querySelectorAll(".row")].some(r=>!r.hidden);
-    d.hidden=!any; if(q&&any) d.open=true;
-  });
-  document.querySelectorAll(".mcard").forEach(c=>{
-    c.hidden=(q&&!c.dataset.q.includes(q))||(hide&&state.mas.has(+c.dataset.m));
-  });
-  document.querySelectorAll(".loc-h,.sec-h").forEach(h=>{
-    const stop=h.classList.contains("sec-h")?".sec-h":".loc-h,.sec-h";
-    let el=h.nextElementSibling, any=false;
-    while(el&&!el.matches(stop)){ if(el.matches(".mcard")&&!el.hidden) any=true; el=el.nextElementSibling; }
-    h.hidden=!any;
-  });
-}
-
-/* ---------- events ---------- */
-document.addEventListener("click",e=>{
-  const row=e.target.closest(".row");
-  if(row && !e.target.matches(".cb")){ const n=+row.dataset.n; state.dex.has(n)?state.dex.delete(n):state.dex.add(n); sync(); }
-});
-document.addEventListener("change",e=>{
-  const t=e.target;
-  if(t.dataset.dex){ const n=+t.dataset.dex; t.checked?state.dex.add(n):state.dex.delete(n); sync(); }
-  if(t.dataset.mas){ const n=+t.dataset.mas; t.checked?state.mas.add(n):state.mas.delete(n); sync(); }
-});
-document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{
-  document.querySelectorAll(".tabs button").forEach(x=>x.setAttribute("aria-selected",x===b));
-  $("#tab-dex").hidden=b.dataset.tab!=="dex"; $("#tab-mas").hidden=b.dataset.tab!=="mas";
-  try{localStorage.setItem("lgpe-tab",b.dataset.tab)}catch(e){}
-});
-$("#q").oninput=applyFilter; $("#hide").onchange=applyFilter;
-$("#ver").onchange=e=>{state.ver=+e.target.value; renderStops(); sync();};
-$("#msort").onchange=()=>{renderMasters(); sync();};
-$("#dview").onchange=()=>{renderStops(); sync();};
-$("#copy").onclick=async()=>{
-  const code=encode();
-  try{ await navigator.clipboard.writeText(code); toast(t("tCopied")); }
-  catch(e){ const r=document.createRange(); r.selectNodeContents($("#code")); const s=getSelection(); s.removeAllRanges(); s.addRange(r); toast(t("tSel")); }
-};
-$("#loadBtn").onclick=()=>{ $("#loadRow").classList.toggle("show"); $("#loadIn").focus(); };
-$("#loadGo").onclick=()=>{
-  try{ const d=decode($("#loadIn").value); Object.assign(state,d); renderStops(); sync(); $("#loadIn").value=""; $("#loadRow").classList.remove("show"); toast(t("tRest",{d:d.dex.size,m:d.mas.size})); }
-  catch(e){ toast(t("tBad")); }
-};
-/* static text: English comes from the HTML itself, saved on first run */
-const LINKS={}, I18N_ATTR={i18n:"textContent","i18n-html":"innerHTML","i18n-ph":"placeholder","i18n-aria":"aria-label","i18n-title":"title"};
+const EN = {lang:"Language", theme:"Toggle theme"};
+document.querySelectorAll("[data-i18n]").forEach(el=>EN[el.dataset.i18n]=el.textContent);
+let LANG = "en";
 function applyLang(){
+  const tr=k=>(I18N[LANG]||{})[k] || EN[k];
   document.documentElement.lang=LANG;
-  Object.entries(I18N_ATTR).forEach(([a,prop])=>document.querySelectorAll(`[data-${a}]`).forEach(el=>{
-    const k=el.getAttribute("data-"+a), attr=prop!=="textContent"&&prop!=="innerHTML";
-    if(!(k in I18N.en.ui)) I18N.en.ui[k]=attr?el.getAttribute(prop):el[prop];
-    const v=LANG==="en"?I18N.en.ui[k]:t(k,LINKS);
-    if(attr) el.setAttribute(prop,v); else el[prop]=v;
-  }));
-  document.title=t("title");
-  $("#lang").value=LANG;
+  document.querySelectorAll("[data-i18n]").forEach(el=>el.textContent=tr(el.dataset.i18n));
+  $("#lang").setAttribute("aria-label",tr("lang"));
+  $("#theme").title=tr("theme"); $("#theme").setAttribute("aria-label",tr("theme"));
+  document.title=tr("title"); $("#lang").value=LANG;
 }
 $("#lang").innerHTML=LANGS.map(([k,n])=>`<option value="${k}">${n}</option>`).join("");
-$("#lang").onchange=e=>{
-  LANG=e.target.value; try{localStorage.setItem("lgpe-lang",LANG)}catch(err){}
-  applyLang(); renderStops(); renderMasters(); sync();
-};
-$("#loadIn").onkeydown=e=>{ if(e.key==="Enter") $("#loadGo").click(); };
+$("#lang").onchange=e=>{ LANG=e.target.value; try{localStorage.setItem("dex-lang",LANG)}catch(err){} applyLang(); };
 $("#theme").onclick=()=>{
   const cur=document.documentElement.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");
   const nxt=cur==="dark"?"light":"dark"; document.documentElement.dataset.theme=nxt;
-  try{localStorage.setItem("lgpe-theme",nxt)}catch(e){}
+  try{localStorage.setItem("dex-theme",nxt)}catch(e){}
 };
-let tt; function toast(m){ const t=$("#toast"); t.textContent=m; t.classList.add("show"); clearTimeout(tt); tt=setTimeout(()=>t.classList.remove("show"),2200); }
-function esc(s){ return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
-
-/* ---------- boot ---------- */
-(function(){
-  try{ const th=localStorage.getItem("lgpe-theme"); if(th) document.documentElement.dataset.theme=th; }catch(e){}
-  let src=location.hash.slice(1);
-  if(!src){ try{ src=localStorage.getItem("lgpe-code")||""; }catch(e){} }
-  if(src){ try{ Object.assign(state,decode(src)); }catch(e){} }
-  ["thonky","pc","bulba","sc","gg"].forEach((k,i)=>LINKS[k]=document.querySelectorAll("footer.src a")[i].outerHTML);
-  try{ const lg=localStorage.getItem("lgpe-lang"); if(I18N[lg]) LANG=lg; }catch(e){}
-  applyLang(); renderStops(); renderMasters(); sync();
-  try{ if(localStorage.getItem("lgpe-tab")==="mas") document.querySelector('[data-tab="mas"]').click(); }catch(e){}
-})();
+try{ const th=localStorage.getItem("dex-theme")||localStorage.getItem("lgpe-theme"); if(th) document.documentElement.dataset.theme=th; }catch(e){}
+try{ const lg=localStorage.getItem("dex-lang")||localStorage.getItem("lgpe-lang"); if(lg==="en"||I18N[lg]) LANG=lg; }catch(e){}
+applyLang();
 </script>
 </body>
 </html>
