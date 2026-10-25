@@ -167,7 +167,7 @@ footer.src a{color:inherit}
 <nav class="gamebar" aria-label="Games">
   <div class="wrap">
     <a class="brand" href="../" data-i18n="brand">Pokédex Tracker</a>
-    <select id="gamesel" aria-label="Game" data-i18n-aria="gameA"><option value="../za/" data-i18n="gZa">Legends Z-A</option><option value="../sv/" data-i18n="gSv" selected>Scarlet & Violet</option><option value="../la/" data-i18n="gLa">Legends: Arceus</option><option value="../letsgo/" data-i18n="gLetsgo">Let's Go</option></select>
+    <select id="gamesel" aria-label="Game" data-i18n-aria="gameA"><option value="../za/" data-i18n="gZa">Legends Z-A</option><option value="../sv/" data-i18n="gSv" selected>Scarlet & Violet</option><option value="../la/" data-i18n="gLa">Legends: Arceus</option><option value="../bdsp/" data-i18n="gBd">Brilliant Diamond & Shining Pearl</option><option value="../letsgo/" data-i18n="gLetsgo">Let's Go</option></select>
   </div>
 </nav>
 <header class="hero">
@@ -238,6 +238,7 @@ footer.src a{color:inherit}
     <div class="code" id="code" title="Copy this into your notes app" data-i18n-title="codeT"></div>
     <button class="btn" id="copy" data-i18n="copy">Copy</button>
     <button class="btn ghost" id="loadBtn" data-i18n="load">Load</button>
+    <button class="btn ghost" id="copyAll" data-i18n="copyAll" title="Copy the save codes of every game you track here, to paste into your notes" data-i18n-title="copyAllT">Copy all games</button>
     <div class="loadrow" id="loadRow">
       <input id="loadIn" placeholder="Paste a saved code (PSV1-…)" aria-label="Saved code" data-i18n-ph="loadPh" data-i18n-aria="loadA">
       <button class="btn" id="loadGo" data-i18n="restore">Restore</button>
@@ -270,7 +271,7 @@ en:{ lv:"Lv {n}", sep:", ",
   dexP:"Paldea Pokédex",dexK:"Kitakami Pokédex (The Teal Mask)",dexB:"Blueberry Pokédex (The Indigo Disk)",
   badge:"{n} / {t} stakes",won:"★ All 32 stakes pulled!",locLeft:" · {n} left",locDone:" · ✓ all done",
   tCopied:"Code copied. Paste it into your notes.",tSel:"Selected. Press Copy (⌘C / Ctrl+C).",
-  tRest:"Restored: {d} Pokédex, {m} stakes",tBad:"That code doesn't look right. Check you copied all of it."},
+  tRest:"Restored: {d} Pokédex, {m} stakes",tBad:"That code doesn't look right. Check you copied all of it.",tCopiedAll:"Copied the save codes of {n} games. Paste them into your notes.",tRestAll:"Restored {n} games."},
  how:{raid:"Tera Raids",tm:"Kitakami",id:"Terarium",colon:": ",join:"; ",evolve:"Evolve {p} ({c})",trade:"Trade a {p} in {place}",more:" +{n} more",
   shrineH:"{c} stakes: {s} ({p})",stakeN:"{c} stake {n}",cPurple:"Purple",cYellow:"Yellow",cBlue:"Blue",cGreen:"Green"},
  cond:{day:", day",night:", night",dark:", Dark-type in party",rain:", in rain",nature:", form depends on Nature",trade:"Trade",tradeItem:"Trade holding {i}",
@@ -309,8 +310,8 @@ ja:{ lv:"Lv.{n}", sep:"、",
   footer:"出現場所と進化は {serebii}、野生のレベルは {pokestop}、杭のエリアは {imore} を参照しました。図鑑の順番と各言語の名前は {pokeapi} より。ファンが作った非公式ツールで、任天堂・ゲームフリーク・株式会社ポケモンとは関係ありません。",
   save:"セーブコード",codeT:"メモアプリにコピーしておきましょう",copy:"コピー",load:"読み込む",loadPh:"保存したコードを貼り付け（PSV1-…）",loadA:"保存したコード",restore:"復元",
   tCopied:"コードをコピーしました。メモに貼り付けてください。",tSel:"選択しました。⌘C / Ctrl+C でコピーしてください。",
-  tRest:"復元しました: 図鑑 {d}、杭 {m}",tBad:"コードが正しくないようです。すべてコピーできているか確認してください。",
-  brand:"ポケモン図鑑トラッカー",gameA:"ゲーム",gZa:"レジェンズZ-A",gLa:"レジェンズ アルセウス",gSv:"スカーレット・バイオレット"},
+  tRest:"復元しました: 図鑑 {d}、杭 {m}",tBad:"コードが正しくないようです。すべてコピーできているか確認してください。",copyAll:"全ゲームをコピー",copyAllT:"このサイトで記録している全ゲームのセーブコードをまとめてコピー",tCopiedAll:"{n}本のゲームのセーブコードをコピーしました。メモに貼り付けてください。",tRestAll:"{n}本のゲームを復元しました。",
+  brand:"ポケモン図鑑トラッカー",gameA:"ゲーム",gZa:"レジェンズZ-A",gBd:"ブリリアントダイヤモンド・シャイニングパール",gSv:"スカーレット・バイオレット",gLa:"レジェンズ アルセウス"},
  how:{raid:"テラレイドバトル",tm:"キタカミ",id:"テラリウムドーム",colon:"：",join:"／",evolve:"{p}を進化（{c}）",trade:"{place}で{p}と交換",more:" ほか{n}か所",
   shrineH:"{c}の杭：{s}（{p}）",stakeN:"{c}の杭 {n}",cPurple:"紫",cYellow:"黄",cBlue:"青",cGreen:"緑"},
  cond:{day:"・昼",night:"・夜",dark:"・あくタイプが手持ちにいる",rain:"・雨",nature:"・せいかくで姿が変わる",trade:"通信交換",tradeItem:"{i}を持たせて通信交換",
@@ -348,8 +349,8 @@ fr:{ lv:"N.{n}", sep:", ",
   footer:"Lieux et évolutions d'après {serebii}, niveaux sauvages d'après {pokestop}, zones des pieux d'après {imore}. Ordre du Pokédex et noms traduits : {pokeapi}. Outil créé par un fan, sans lien avec Nintendo, Game Freak ou The Pokémon Company.",
   save:"Code de sauvegarde",codeT:"Copiez-le dans votre app de notes",copy:"Copier",load:"Charger",loadPh:"Collez un code sauvegardé (PSV1-…)",loadA:"Code sauvegardé",restore:"Restaurer",
   tCopied:"Code copié. Collez-le dans vos notes.",tSel:"Sélectionné. Copiez avec ⌘C / Ctrl+C.",
-  tRest:"Restauré : {d} Pokédex, {m} pieux",tBad:"Ce code semble incorrect. Vérifiez que vous l'avez copié en entier.",
-  brand:"Suivi de Pokédex",gameA:"Jeu",gZa:"Légendes Z-A",gLa:"Légendes Arceus",gSv:"Écarlate et Violet"},
+  tRest:"Restauré : {d} Pokédex, {m} pieux",tBad:"Ce code semble incorrect. Vérifiez que vous l'avez copié en entier.",copyAll:"Copier tous les jeux",copyAllT:"Copier les codes de sauvegarde de tous les jeux suivis ici",tCopiedAll:"Codes de {n} jeux copiés. Collez-les dans vos notes.",tRestAll:"{n} jeux restaurés.",
+  brand:"Suivi de Pokédex",gameA:"Jeu",gZa:"Légendes Z-A",gBd:"Diamant Étincelant et Perle Scintillante",gSv:"Écarlate et Violet",gLa:"Légendes Arceus"},
  how:{raid:"Raids Téracristal",tm:"Septentria",id:"Térarium",colon:" : ",join:" ; ",evolve:"Faire évoluer {p} ({c})",trade:"Échanger un {p} à {place}",more:" +{n} autres",
   shrineH:"Pieux {c} : {s} ({p})",stakeN:"Pieu {n}",cPurple:"violets",cYellow:"jaunes",cBlue:"bleus",cGreen:"verts"},
  cond:{day:", le jour",night:", la nuit",dark:", avec un Pokémon Ténèbres dans l'équipe",rain:", sous la pluie",nature:", forme selon la nature",trade:"Échange",tradeItem:"Échange en tenant {i}",
@@ -388,8 +389,8 @@ de:{ lv:"Lv. {n}", sep:", ",
   footer:"Fundorte und Entwicklungen nach {serebii}, wilde Level nach {pokestop}, Gebiete der Pfähle nach {imore}. Pokédex-Reihenfolge und übersetzte Namen von {pokeapi}. Fan-Projekt, nicht verbunden mit Nintendo, Game Freak oder The Pokémon Company.",
   save:"Speichercode",codeT:"Kopiere ihn in deine Notizen-App",copy:"Kopieren",load:"Laden",loadPh:"Gespeicherten Code einfügen (PSV1-…)",loadA:"Gespeicherter Code",restore:"Wiederherstellen",
   tCopied:"Code kopiert. Füge ihn in deine Notizen ein.",tSel:"Markiert. Kopieren mit ⌘C / Strg+C.",
-  tRest:"Wiederhergestellt: {d} Pokédex, {m} Pfähle",tBad:"Dieser Code scheint falsch zu sein. Prüfe, ob du ihn vollständig kopiert hast.",
-  brand:"Pokédex-Tracker",gameA:"Spiel",gZa:"Legenden Z-A",gLa:"Legenden Arceus",gSv:"Karmesin & Purpur"},
+  tRest:"Wiederhergestellt: {d} Pokédex, {m} Pfähle",tBad:"Dieser Code scheint falsch zu sein. Prüfe, ob du ihn vollständig kopiert hast.",copyAll:"Alle Spiele kopieren",copyAllT:"Speichercodes aller hier verfolgten Spiele kopieren",tCopiedAll:"Speichercodes von {n} Spielen kopiert. Füge sie in deine Notizen ein.",tRestAll:"{n} Spiele wiederhergestellt.",
+  brand:"Pokédex-Tracker",gameA:"Spiel",gZa:"Legenden Z-A",gBd:"Strahlender Diamant & Leuchtende Perle",gSv:"Karmesin & Purpur",gLa:"Legenden Arceus"},
  how:{raid:"Tera-Raids",tm:"Kitakami",id:"Terrarium",colon:": ",join:"; ",evolve:"{p} entwickeln ({c})",trade:"Tausch gegen {p} in {place}",more:" +{n} weitere",
   shrineH:"{c} Pfähle: {s} ({p})",stakeN:"Pfahl {n}",cPurple:"Lila",cYellow:"Gelbe",cBlue:"Blaue",cGreen:"Grüne"},
  cond:{day:", tagsüber",night:", nachts",dark:", mit einem Unlicht-Pokémon im Team",rain:", bei Regen",nature:", Form hängt vom Wesen ab",trade:"Tausch",tradeItem:"Tausch mit {i}",
@@ -428,8 +429,8 @@ ko:{ lv:"Lv.{n}", sep:", ",
   footer:"출현 장소와 진화는 {serebii}, 야생 레벨은 {pokestop}, 말뚝 위치는 {imore}를 참고했습니다. 도감 순서와 각 언어 이름: {pokeapi}. 팬이 만든 비공식 도구로 닌텐도, 게임프리크, 포켓몬 컴퍼니와 관계없습니다.",
   save:"세이브 코드",codeT:"메모 앱에 복사해 두세요",copy:"복사",load:"불러오기",loadPh:"저장한 코드 붙여넣기 (PSV1-…)",loadA:"저장한 코드",restore:"복원",
   tCopied:"코드를 복사했습니다. 메모에 붙여 넣으세요.",tSel:"선택했습니다. ⌘C / Ctrl+C로 복사하세요.",
-  tRest:"복원 완료: 도감 {d}, 말뚝 {m}",tBad:"코드가 올바르지 않은 것 같습니다. 전부 복사했는지 확인하세요.",
-  brand:"포켓몬 도감 트래커",gameA:"게임",gLetsgo:"레츠고",gZa:"레전즈 Z-A",gLa:"레전즈 아르세우스",gSv:"스칼렛·바이올렛"},
+  tRest:"복원 완료: 도감 {d}, 말뚝 {m}",tBad:"코드가 올바르지 않은 것 같습니다. 전부 복사했는지 확인하세요.",copyAll:"모든 게임 복사",copyAllT:"여기서 기록 중인 모든 게임의 세이브 코드를 한꺼번에 복사",tCopiedAll:"게임 {n}개의 세이브 코드를 복사했습니다. 메모에 붙여 넣으세요.",tRestAll:"게임 {n}개를 복원했습니다.",
+  brand:"포켓몬 도감 트래커",gameA:"게임",gLetsgo:"레츠고",gZa:"레전즈 Z-A",gBd:"브릴리언트 다이아몬드·샤이닝 펄",gSv:"스칼렛·바이올렛",gLa:"레전즈 아르세우스"},
  how:{raid:"테라 레이드배틀",tm:"북신의 고장",id:"테라리움",colon:": ",join:"; ",evolve:"{p} 진화 ({c})",trade:"{place}에서 {p}와 교환",more:" 외 {n}곳",
   shrineH:"{c} 말뚝: {s} ({p})",stakeN:"{c} 말뚝 {n}",cPurple:"보라",cYellow:"노랑",cBlue:"파랑",cGreen:"초록"},
  cond:{day:", 낮",night:", 밤",dark:", 지닌 포켓몬에 악타입이 있을 때",rain:", 비",nature:", 성격에 따라 모습이 달라짐",trade:"통신교환",tradeItem:"{i}를 지니게 하고 통신교환",
@@ -467,8 +468,8 @@ ko:{ lv:"Lv.{n}", sep:", ",
   footer:"出現地點與進化參照 {serebii}，野生等級參照 {pokestop}，樁子區域參照 {imore}。圖鑑順序與各語言名稱來自 {pokeapi}。粉絲製作的非官方工具，與任天堂、Game Freak 及寶可夢公司無關。",
   save:"存檔代碼",codeT:"複製到你的記事本App",copy:"複製",load:"讀取",loadPh:"貼上已儲存的代碼（PSV1-…）",loadA:"已儲存的代碼",restore:"還原",
   tCopied:"已複製代碼，請貼到記事本中。",tSel:"已選取，請按 ⌘C / Ctrl+C 複製。",
-  tRest:"已還原：圖鑑 {d}、樁子 {m}",tBad:"這個代碼似乎不正確，請確認是否完整複製。",
-  brand:"寶可夢圖鑑追蹤",gameA:"遊戲",gZa:"傳說 Z-A",gLa:"傳說 阿爾宙斯",gSv:"朱・紫"},
+  tRest:"已還原：圖鑑 {d}、樁子 {m}",tBad:"這個代碼似乎不正確，請確認是否完整複製。",copyAll:"複製所有遊戲",copyAllT:"一次複製這裡記錄的所有遊戲存檔代碼",tCopiedAll:"已複製{n}款遊戲的存檔代碼，請貼到記事本中。",tRestAll:"已還原{n}款遊戲。",
+  brand:"寶可夢圖鑑追蹤",gameA:"遊戲",gZa:"傳說 Z-A",gBd:"晶燦鑽石・明亮珍珠",gSv:"朱・紫",gLa:"傳說 阿爾宙斯"},
  how:{raid:"太晶團體戰",tm:"北上鄉",id:"太晶生態球",colon:"：",join:"；",evolve:"{p}進化（{c}）",trade:"在{place}用{p}交換",more:"等{n}處",
   shrineH:"{c}樁子：{s}（{p}）",stakeN:"{c}樁子 {n}",cPurple:"紫色",cYellow:"黃色",cBlue:"藍色",cGreen:"綠色"},
  cond:{day:"，白天",night:"，夜晚",dark:"，隊伍中有惡屬性寶可夢",rain:"，下雨時",nature:"，樣子依性格而定",trade:"連線交換",tradeItem:"攜帶{i}連線交換",
@@ -506,8 +507,8 @@ ko:{ lv:"Lv.{n}", sep:", ",
   footer:"出现地点与进化参照 {serebii}，野生等级参照 {pokestop}，桩子区域参照 {imore}。图鉴顺序与各语言名称来自 {pokeapi}。粉丝制作的非官方工具，与任天堂、Game Freak 及宝可梦公司无关。",
   save:"存档代码",codeT:"复制到你的备忘录App",copy:"复制",load:"读取",loadPh:"粘贴已保存的代码（PSV1-…）",loadA:"已保存的代码",restore:"还原",
   tCopied:"已复制代码，请粘贴到备忘录中。",tSel:"已选中，请按 ⌘C / Ctrl+C 复制。",
-  tRest:"已还原：图鉴 {d}、桩子 {m}",tBad:"这个代码似乎不正确，请确认是否完整复制。",
-  brand:"宝可梦图鉴追踪",gameA:"游戏",gZa:"传说 Z-A",gSv:"朱・紫"},
+  tRest:"已还原：图鉴 {d}、桩子 {m}",tBad:"这个代码似乎不正确，请确认是否完整复制。",copyAll:"复制所有游戏",copyAllT:"一次复制这里记录的所有游戏存档代码",tCopiedAll:"已复制{n}款游戏的存档代码，请粘贴到备忘录中。",tRestAll:"已还原{n}款游戏。",
+  brand:"宝可梦图鉴追踪",gameA:"游戏",gZa:"传说 Z-A",gSv:"朱・紫",gLa:"传说 阿尔宙斯"},
  how:{raid:"太晶团体战",tm:"北上乡",id:"太晶生态球",colon:"：",join:"；",evolve:"{p}进化（{c}）",trade:"在{place}用{p}交换",more:"等{n}处",
   shrineH:"{c}桩子：{s}（{p}）",stakeN:"{c}桩子 {n}",cPurple:"紫色",cYellow:"黄色",cBlue:"蓝色",cGreen:"绿色"},
  cond:{day:"，白天",night:"，夜晚",dark:"，队伍中有恶属性宝可梦",rain:"，下雨时",nature:"，样子依性格而定",trade:"连线交换",tradeItem:"携带{i}连线交换",
@@ -798,6 +799,29 @@ gamesel.onchange=e=>{ if(e.target.value) location.href=e.target.value; };
 addEventListener("pageshow",()=>gamesel.value=gameCur);
 $("#lang").innerHTML=LANGS.map(([k,n])=>`<option value="${k}">${n}</option>`).join("");
 $("#lang").onchange=e=>{ LANG=e.target.value; try{localStorage.setItem("dex-lang",LANG)}catch(err){} applyLang(); renderStops(); renderStakes(); sync(); };
+
+/* every game: copy all save codes at once; Load also accepts several codes and restores each game */
+const PAGE_PREFIX="PSV1-", ALL_KEYS=[["PLZA1-","plza-code"],["PSV1-","psv-code"],["PLA1-","pla-code"],["PBDSP1-","pbdsp-code"],["LGPE1-","lgpe-code"]];
+// each game's code has a fixed length, so codes are found even when pasted without separators
+const CODE_RE=/(LGPE1-[A-Za-z0-9_-]{55}|PLZA1-[A-Za-z0-9_-]{79}|PSV1-[A-Za-z0-9_-]{118}|PLA1-[A-Za-z0-9_-]{67}|PBDSP1-[A-Za-z0-9_-]{83})/g;
+function allCodes(){ return ALL_KEYS.map(([,k])=>{ try{ return localStorage.getItem(k)||""; }catch(e){ return ""; } }).filter(Boolean); }
+function storeAll(text){ let n=0; (String(text).match(CODE_RE)||[]).forEach(c=>{ const m=ALL_KEYS.find(([p])=>c.startsWith(p)); if(m){ try{ localStorage.setItem(m[1],c); n++; }catch(e){} } }); return n; }
+$("#copyAll").onclick=async()=>{
+  const codes=allCodes();
+  try{ await navigator.clipboard.writeText(codes.join("\n")); toast(t("tCopiedAll",{n:codes.length})); }
+  catch(e){ $("#loadRow").classList.add("show"); $("#loadIn").value=codes.join(" "); $("#loadIn").select(); toast(t("tSel")); }
+};
+const loadOne=$("#loadGo").onclick;
+$("#loadGo").onclick=()=>{
+  const raw=$("#loadIn").value, codes=raw.match(CODE_RE)||[];
+  if(codes.length>1 || (codes.length===1 && !codes[0].startsWith(PAGE_PREFIX))){
+    const n=storeAll(raw); if(!n){ toast(t("tBad")); return; }
+    try{ sessionStorage.setItem("dex-toast",t("tRestAll",{n})); }catch(e){}
+    const mine=codes.find(c=>c.startsWith(PAGE_PREFIX)); location.hash=mine?mine:""; location.reload(); return;
+  }
+  loadOne();
+};
+try{ const m=sessionStorage.getItem("dex-toast"); if(m){ sessionStorage.removeItem("dex-toast"); setTimeout(()=>toast(m),300); } }catch(e){}
 
 /* ---------- boot ---------- */
 (function(){
