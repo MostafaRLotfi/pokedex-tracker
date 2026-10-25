@@ -13,7 +13,7 @@ Free, single-page completion trackers for the main series Pokémon games. Each g
 | Pokémon: Let's Go, Pikachu! / Let's Go, Eevee! | [Open](https://mostafarlotfi.github.io/pokedex-tracker/letsgo/) | Pokédex route · Grand Master (all 153 Master Trainers) |
 | Pokémon Legends: Z-A (+ Mega Dimension DLC) | [Open](https://mostafarlotfi.github.io/pokedex-tracker/za/) | Pokédex route (232 Lumiose + 132 Hyperspace, with a Wild Zone view) · Mega Stones (all 92) |
 
-Use the bar at the top of any page to switch games.
+Use the game menu at the top of any page to switch games. Games are listed from newest release to oldest.
 
 ## Features
 
@@ -37,7 +37,7 @@ The page also remembers your progress in the browser you're using, but that copy
 
 - `index.html` is the game picker.
 - Each game lives in its own folder (`letsgo/index.html`) as one self-contained page: all CSS, JavaScript and data inline, no build step.
-- Every page has the same game bar at the top. When a game is added, its link goes into the bar on every page and it gets a card on the picker.
+- Every page has the same game menu at the top, listing games from newest release to oldest. When a game is added, it goes into that menu on every page (in release order) and gets a card on the picker.
 - Each game's save code has its own prefix (`LGPE1-` for Let's Go, `PLZA1-` for Legends: Z-A). The bit order inside a code never changes; a format change means a new prefix, and the old one keeps loading.
 - Language and theme are shared across pages through `dex-lang` and `dex-theme` in browser storage.
 

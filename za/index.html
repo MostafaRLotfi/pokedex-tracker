@@ -37,10 +37,8 @@ button,input,select{font:inherit;color:inherit}
 .gamebar .wrap{display:flex;align-items:center;gap:14px;min-height:42px;overflow-x:auto;white-space:nowrap}
 .gamebar a{color:rgba(255,255,255,.72);text-decoration:none;font-weight:600}
 .gamebar a.brand{color:#fff;font-weight:800;margin-right:4px}
-.gamebar .games{display:flex;gap:4px}
-.gamebar .games a{padding:5px 12px;border-radius:999px}
-.gamebar .games a:hover{color:#fff}
-.gamebar .games a[aria-current="page"]{background:rgba(255,255,255,.16);color:#fff}
+.gamebar select{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:5px 12px;font:inherit;font-weight:600;cursor:pointer;max-width:60vw}
+.gamebar select option{color:#1d1f23;background:#fff}
 
 /* header */
 header.hero{background:var(--red);color:#fff;position:relative;overflow:hidden}
@@ -167,7 +165,7 @@ footer.src a{color:inherit}
 <nav class="gamebar" aria-label="Games">
   <div class="wrap">
     <a class="brand" href="../" data-i18n="brand">Pokédex Tracker</a>
-    <span class="games"><a href="../letsgo/" data-i18n="gLetsgo">Let's Go</a><a href="../za/" aria-current="page" data-i18n="gZa">Legends Z-A</a></span>
+    <select id="gamesel" aria-label="Game" data-i18n-aria="gameA"><option value="../za/" data-i18n="gZa" selected>Legends Z-A</option><option value="../letsgo/" data-i18n="gLetsgo">Let's Go</option></select>
   </div>
 </nav>
 <header class="hero">
@@ -318,7 +316,7 @@ ja:{ lv:"Lv.{n}", sep:"、", wz:zs=>"ワイルドゾーン"+zs.join("・"),
   save:"セーブコード",codeT:"メモアプリにコピーしておきましょう",copy:"コピー",load:"読み込む",loadPh:"保存したコードを貼り付け（PLZA1-…）",loadA:"保存したコード",restore:"復元",
   tCopied:"コードをコピーしました。メモに貼り付けてください。",tSel:"選択しました。⌘C / Ctrl+C でコピーしてください。",
   tRest:"復元しました: 図鑑 {d}、メガストーン {m}",tBad:"コードが正しくないようです。すべてコピーできているか確認してください。",
-  brand:"ポケモン図鑑トラッカー",gZa:"レジェンズZ-A"},
+  brand:"ポケモン図鑑トラッカー",gameA:"ゲーム",gZa:"レジェンズZ-A"},
  how:{streets:"街なか",streetsSome:"街なか（{d}）",sewers:"下水道",labs:"フラダリラボ",oldhouse:"古い家",
   hs:"異次元ミアレ",colon:"：",special:"スペシャル",evolve:"{p}を進化（{c}）",sm:"サイドミッション{n}でもらう",trade:"{p}と交換（サイドミッション{n}）",join:"／",
   g_streets:"街なか",g_sewers:"下水道",g_labs:"フラダリラボ",g_oldhouse:"古い家",g_gift:"もらう・交換・特別な出会い",g_evo:"進化のみ",
@@ -381,7 +379,7 @@ fr:{ lv:"N.{n}", sep:", ", wz:zs=>zs.length>1 ? "Zones sauvages n° "+zs.join(",
   save:"Code de sauvegarde",codeT:"Copiez-le dans votre app de notes",copy:"Copier",load:"Charger",loadPh:"Collez un code sauvegardé (PLZA1-…)",loadA:"Code sauvegardé",restore:"Restaurer",
   tCopied:"Code copié. Collez-le dans vos notes.",tSel:"Sélectionné. Copiez avec ⌘C / Ctrl+C.",
   tRest:"Restauré : {d} Pokédex, {m} Méga-Gemmes",tBad:"Ce code semble incorrect. Vérifiez que vous l'avez copié en entier.",
-  brand:"Suivi de Pokédex",gZa:"Légendes Z-A"},
+  brand:"Suivi de Pokédex",gameA:"Jeu",gZa:"Légendes Z-A"},
  how:{streets:"Rues de la ville",streetsSome:"Rues de la ville ({d})",sewers:"Égouts",labs:"Labo Lysandre",oldhouse:"Vieille maison",
   hs:"Hyperespace",colon:" : ",special:"Spécial",evolve:"Faire évoluer {p} ({c})",sm:"Cadeau de la mission secondaire {n}",trade:"Échanger un {p} (mission secondaire {n})",join:" ; ",
   g_streets:"Rues de la ville",g_sewers:"Égouts",g_labs:"Labo Lysandre",g_oldhouse:"Vieille maison",g_gift:"Cadeaux, échanges et rencontres spéciales",g_evo:"Uniquement par évolution",
@@ -443,7 +441,7 @@ de:{ lv:"Lv. {n}", sep:", ", wz:zs=>zs.length>1 ? "Wildsektoren "+zs.join(", ") 
   save:"Speichercode",codeT:"Kopiere ihn in deine Notizen-App",copy:"Kopieren",load:"Laden",loadPh:"Gespeicherten Code einfügen (PLZA1-…)",loadA:"Gespeicherter Code",restore:"Wiederherstellen",
   tCopied:"Code kopiert. Füge ihn in deine Notizen ein.",tSel:"Markiert. Kopieren mit ⌘C / Strg+C.",
   tRest:"Wiederhergestellt: {d} Pokédex, {m} Mega-Steine",tBad:"Dieser Code scheint falsch zu sein. Prüfe, ob du ihn vollständig kopiert hast.",
-  brand:"Pokédex-Tracker",gZa:"Legenden Z-A"},
+  brand:"Pokédex-Tracker",gameA:"Spiel",gZa:"Legenden Z-A"},
  how:{streets:"Straßen der Stadt",streetsSome:"Straßen der Stadt ({d})",sewers:"Kanalisation",labs:"Flordelis-Labor",oldhouse:"Altes Haus",
   hs:"Dimensions-Illumina",colon:": ",special:"Spezial",evolve:"{p} entwickeln ({c})",sm:"Geschenk aus Nebenmission {n}",trade:"Tausch gegen {p} (Nebenmission {n})",join:"; ",
   g_streets:"Straßen der Stadt",g_sewers:"Kanalisation",g_labs:"Flordelis-Labor",g_oldhouse:"Altes Haus",g_gift:"Geschenke, Tausch und besondere Begegnungen",g_evo:"Nur durch Entwicklung",
@@ -506,7 +504,7 @@ ko:{ lv:"Lv.{n}", sep:", ", wz:zs=>"와일드존 "+zs.join("·"),
   save:"세이브 코드",codeT:"메모 앱에 복사해 두세요",copy:"복사",load:"불러오기",loadPh:"저장한 코드 붙여넣기 (PLZA1-…)",loadA:"저장한 코드",restore:"복원",
   tCopied:"코드를 복사했습니다. 메모에 붙여 넣으세요.",tSel:"선택했습니다. ⌘C / Ctrl+C로 복사하세요.",
   tRest:"복원 완료: 도감 {d}, 메가스톤 {m}",tBad:"코드가 올바르지 않은 것 같습니다. 전부 복사했는지 확인하세요.",
-  brand:"포켓몬 도감 트래커",gLetsgo:"레츠고",gZa:"레전즈 Z-A"},
+  brand:"포켓몬 도감 트래커",gameA:"게임",gLetsgo:"레츠고",gZa:"레전즈 Z-A"},
  how:{streets:"거리",streetsSome:"거리 ({d})",sewers:"하수도",labs:"플라드리 연구소",oldhouse:"오래된 집",
   hs:"이차원 미르",colon:": ",special:"스페셜",evolve:"{p} 진화 ({c})",sm:"사이드 미션 {n} 보상",trade:"{p}와 교환 (사이드 미션 {n})",join:"; ",
   g_streets:"거리",g_sewers:"하수도",g_labs:"플라드리 연구소",g_oldhouse:"오래된 집",g_gift:"선물, 교환, 특별한 만남",g_evo:"진화로만 입수",
@@ -568,7 +566,7 @@ ko:{ lv:"Lv.{n}", sep:", ", wz:zs=>"와일드존 "+zs.join("·"),
   save:"存檔代碼",codeT:"複製到你的記事本App",copy:"複製",load:"讀取",loadPh:"貼上已儲存的代碼（PLZA1-…）",loadA:"已儲存的代碼",restore:"還原",
   tCopied:"已複製代碼，請貼到記事本中。",tSel:"已選取，請按 ⌘C / Ctrl+C 複製。",
   tRest:"已還原：圖鑑 {d}、超級石 {m}",tBad:"這個代碼似乎不正確，請確認是否完整複製。",
-  brand:"寶可夢圖鑑追蹤",gZa:"傳說 Z-A"},
+  brand:"寶可夢圖鑑追蹤",gameA:"遊戲",gZa:"傳說 Z-A"},
  how:{streets:"城市街道",streetsSome:"城市街道（{d}）",sewers:"下水道",labs:"弗拉達利研究所",oldhouse:"舊房子",
   hs:"異次元密阿雷",colon:"：",special:"特殊",evolve:"{p}進化（{c}）",sm:"支線任務{n}獲贈",trade:"用{p}交換（支線任務{n}）",join:"；",
   g_streets:"城市街道",g_sewers:"下水道",g_labs:"弗拉達利研究所",g_oldhouse:"舊房子",g_gift:"獲贈、交換與特殊相遇",g_evo:"僅能透過進化取得",
@@ -631,7 +629,7 @@ ko:{ lv:"Lv.{n}", sep:", ", wz:zs=>"와일드존 "+zs.join("·"),
   save:"存档代码",codeT:"复制到你的备忘录App",copy:"复制",load:"读取",loadPh:"粘贴已保存的代码（PLZA1-…）",loadA:"已保存的代码",restore:"还原",
   tCopied:"已复制代码，请粘贴到备忘录中。",tSel:"已选中，请按 ⌘C / Ctrl+C 复制。",
   tRest:"已还原：图鉴 {d}、超级石 {m}",tBad:"这个代码似乎不正确，请确认是否完整复制。",
-  brand:"宝可梦图鉴追踪",gZa:"传说 Z-A"},
+  brand:"宝可梦图鉴追踪",gameA:"游戏",gZa:"传说 Z-A"},
  how:{streets:"城市街道",streetsSome:"城市街道（{d}）",sewers:"下水道",labs:"弗拉达利研究所",oldhouse:"旧房子",
   hs:"异次元密阿雷",colon:"：",special:"特殊",evolve:"{p}进化（{c}）",sm:"支线任务{n}获赠",trade:"用{p}交换（支线任务{n}）",join:"；",
   g_streets:"城市街道",g_sewers:"下水道",g_labs:"弗拉达利研究所",g_oldhouse:"旧房子",g_gift:"获赠、交换与特殊相遇",g_evo:"仅能通过进化获得",
@@ -961,6 +959,10 @@ function applyLang(){
   }));
   document.title=t("title"); $("#lang").value=LANG;
 }
+/* game picker in the top bar (games listed newest release first) */
+const gamesel=document.getElementById("gamesel"), gameCur=gamesel.value;
+gamesel.onchange=e=>{ if(e.target.value) location.href=e.target.value; };
+addEventListener("pageshow",()=>gamesel.value=gameCur);
 $("#lang").innerHTML=LANGS.map(([k,n])=>`<option value="${k}">${n}</option>`).join("");
 $("#lang").onchange=e=>{ LANG=e.target.value; try{localStorage.setItem("dex-lang",LANG)}catch(err){} applyLang(); renderStops(); renderMega(); sync(); };
 
