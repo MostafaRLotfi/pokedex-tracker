@@ -66,7 +66,7 @@ footer{color:var(--muted);font-size:12.5px;padding:0 0 30px}
 <nav class="gamebar" aria-label="Games">
   <div class="wrap">
     <a class="brand" href="./" aria-current="page" data-i18n="title">Pokédex Tracker</a>
-    <span class="games"><a href="letsgo/">Let's Go</a></span>
+    <span class="games"><a href="letsgo/">Let's Go</a><a href="za/" data-i18n="gZa">Legends Z-A</a></span>
   </div>
 </nav>
 <header class="hero">
@@ -89,6 +89,11 @@ footer{color:var(--muted);font-size:12.5px;padding:0 0 30px}
       <span class="gdesc" data-i18n="lgDesc">A story-ordered route to all 153 Pokédex entries, plus a Master Trainer tracker for the Grand Master title.</span>
       <span class="go" data-i18n="open">Open tracker →</span>
     </a>
+    <a class="card" href="za/">
+      <span class="gname" data-i18n="zaName">Pokémon Legends: Z-A</span>
+      <span class="gdesc" data-i18n="zaDesc">A story-ordered route to all 232 Lumiose Pokédex entries plus the 132 from the Mega Dimension DLC, a Wild Zone view, and a Mega Stone checklist.</span>
+      <span class="go" data-i18n="open">Open tracker →</span>
+    </a>
   </div>
   <p class="note" data-i18n="saveNote">Each game has its own save code at the bottom of its page. Copy it into a notes app to keep your progress.</p>
 </main>
@@ -97,27 +102,27 @@ footer{color:var(--muted);font-size:12.5px;padding:0 0 30px}
 <script>
 const LANGS = [["en","English"],["ja","日本語"],["fr","Français"],["de","Deutsch"],["ko","한국어"],["zh-Hant","繁體中文"],["zh-Hans","简体中文"]];
 const I18N = {
- ja:{title:"ポケモン図鑑トラッカー",sub:"本編ポケモンのゲームを完全攻略するための、無料・アカウント不要のトラッカーです。ゲームを選んでください。",pick:"ゲーム",
+ ja:{zaName:"Pokémon LEGENDS Z-A",zaDesc:"ミアレ図鑑232匹と追加コンテンツ「M次元ラッシュ」の132匹をストーリー順に埋めるルート、ワイルドゾーン別の表示、メガストーンのチェックリスト。",gZa:"レジェンズZ-A",title:"ポケモン図鑑トラッカー",sub:"本編ポケモンのゲームを完全攻略するための、無料・アカウント不要のトラッカーです。ゲームを選んでください。",pick:"ゲーム",
   lgName:"ポケットモンスター Let's Go! ピカチュウ・Let's Go! イーブイ",lgDesc:"図鑑153匹をストーリー順に埋めるルートと、グランドマスターを目指すためのマスタートレーナー記録表。",open:"トラッカーを開く →",
   saveNote:"各ゲームのページ下部にそれぞれのセーブコードがあります。メモアプリにコピーしておけば進行状況を残せます。",
   footer:"ファンが作った非公式ツールで、任天堂・ゲームフリーク・株式会社ポケモンとは関係ありません。",lang:"言語",theme:"テーマ切り替え"},
- fr:{title:"Suivi de Pokédex",sub:"Des outils gratuits et sans compte pour compléter les jeux Pokémon de la série principale. Choisissez un jeu.",pick:"Jeux",
+ fr:{zaName:"Légendes Pokémon : Z-A",zaDesc:"Un itinéraire dans l'ordre de l'histoire pour les 232 entrées du Pokédex d'Illumis et les 132 du DLC Méga-Dimension, une vue par zone sauvage et la liste des Méga-Gemmes.",gZa:"Légendes Z-A",title:"Suivi de Pokédex",sub:"Des outils gratuits et sans compte pour compléter les jeux Pokémon de la série principale. Choisissez un jeu.",pick:"Jeux",
   lgName:"Pokémon : Let's Go, Pikachu et Let's Go, Évoli",lgDesc:"Un itinéraire dans l'ordre de l'histoire pour les 153 entrées du Pokédex, plus un suivi des Maîtres Dresseurs pour le titre de Grand Maître.",open:"Ouvrir le suivi →",
   saveNote:"Chaque jeu a son propre code de sauvegarde en bas de sa page. Copiez-le dans une app de notes pour garder votre progression.",
   footer:"Outil créé par un fan, sans lien avec Nintendo, Game Freak ou The Pokémon Company.",lang:"Langue",theme:"Changer de thème"},
- de:{title:"Pokédex-Tracker",sub:"Kostenlose Tracker ohne Konto, um die Pokémon-Hauptspiele zu vervollständigen. Wähle ein Spiel.",pick:"Spiele",
+ de:{zaName:"Pokémon-Legenden: Z-A",zaDesc:"Eine Route in Story-Reihenfolge zu allen 232 Einträgen des Illumina-Pokédex und den 132 aus dem Mega-Dimension-DLC, eine Ansicht nach Wildsektor und eine Mega-Stein-Checkliste.",gZa:"Legenden Z-A",title:"Pokédex-Tracker",sub:"Kostenlose Tracker ohne Konto, um die Pokémon-Hauptspiele zu vervollständigen. Wähle ein Spiel.",pick:"Spiele",
   lgName:"Pokémon: Let's Go, Pikachu! / Let's Go, Evoli!",lgDesc:"Eine Route in Story-Reihenfolge zu allen 153 Pokédex-Einträgen, plus ein Meistertrainer-Tracker für den Titel Großmeister.",open:"Tracker öffnen →",
   saveNote:"Jedes Spiel hat unten auf seiner Seite einen eigenen Speichercode. Kopiere ihn in eine Notizen-App, um deinen Fortschritt zu behalten.",
   footer:"Fan-Projekt, nicht verbunden mit Nintendo, Game Freak oder The Pokémon Company.",lang:"Sprache",theme:"Design wechseln"},
- ko:{title:"포켓몬 도감 트래커",sub:"포켓몬스터 본편 게임을 완성하기 위한 무료 트래커입니다. 계정이 필요 없습니다. 게임을 고르세요.",pick:"게임",
+ ko:{zaName:"Pokémon LEGENDS Z-A",zaDesc:"미르 도감 232종과 메가 차원 러시 DLC의 132종을 스토리 순서대로 채우는 루트, 와일드존별 보기, 메가스톤 체크리스트.",gZa:"레전즈 Z-A",title:"포켓몬 도감 트래커",sub:"포켓몬스터 본편 게임을 완성하기 위한 무료 트래커입니다. 계정이 필요 없습니다. 게임을 고르세요.",pick:"게임",
   lgName:"포켓몬스터 레츠고! 피카츄·레츠고! 이브이",lgDesc:"도감 153종을 스토리 순서대로 채우는 루트와, 그랜드마스터 칭호를 위한 마스터 트레이너 기록표.",open:"트래커 열기 →",
   saveNote:"게임마다 페이지 아래에 각각의 세이브 코드가 있습니다. 메모 앱에 복사해 두면 진행 상황을 보관할 수 있습니다.",
   footer:"팬이 만든 비공식 도구로 닌텐도, 게임프리크, 포켓몬 컴퍼니와 관계없습니다.",lang:"언어",theme:"테마 전환"},
- "zh-Hant":{title:"寶可夢圖鑑追蹤",sub:"免費、不需帳號的寶可夢正傳遊戲完成度追蹤工具。請選擇遊戲。",pick:"遊戲",
+ "zh-Hant":{zaName:"寶可夢傳說 Z-A",zaDesc:"依劇情順序完成密阿雷圖鑑232種與「超次元爆湧」DLC 132種的路線，加上依野生特區顯示與超級石檢查清單。",gZa:"傳說 Z-A",title:"寶可夢圖鑑追蹤",sub:"免費、不需帳號的寶可夢正傳遊戲完成度追蹤工具。請選擇遊戲。",pick:"遊戲",
   lgName:"精靈寶可夢 Let's Go! 皮卡丘／Let's Go! 伊布",lgDesc:"依劇情順序完成全部153個圖鑑項目的路線，以及為了「大師中的大師」稱號而準備的大師訓練家追蹤表。",open:"開啟追蹤 →",
   saveNote:"每款遊戲的頁面底部都有自己的存檔代碼。複製到記事本App即可保存進度。",
   footer:"粉絲製作的非官方工具，與任天堂、Game Freak 及寶可夢公司無關。",lang:"語言",theme:"切換主題"},
- "zh-Hans":{title:"宝可梦图鉴追踪",sub:"免费、无需账号的宝可梦正传游戏完成度追踪工具。请选择游戏。",pick:"游戏",
+ "zh-Hans":{zaName:"宝可梦传说 Z-A",zaDesc:"按剧情顺序完成密阿雷图鉴232种与“超次元爆涌”DLC 132种的路线，加上按野生特区显示与超级石检查清单。",gZa:"传说 Z-A",title:"宝可梦图鉴追踪",sub:"免费、无需账号的宝可梦正传游戏完成度追踪工具。请选择游戏。",pick:"游戏",
   lgName:"精灵宝可梦 Let's Go! 皮卡丘／Let's Go! 伊布",lgDesc:"按剧情顺序完成全部153个图鉴项目的路线，以及为了“大师中的大师”称号而准备的大师训练家追踪表。",open:"打开追踪 →",
   saveNote:"每款游戏的页面底部都有自己的存档代码。复制到备忘录App即可保存进度。",
   footer:"粉丝制作的非官方工具，与任天堂、Game Freak 及宝可梦公司无关。",lang:"语言",theme:"切换主题"}

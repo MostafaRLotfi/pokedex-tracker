@@ -1,0 +1,983 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Legends: Z-A Dex Tracker</title>
+<meta name="description" content="Story-ordered Pokédex checklist, Wild Zone guide and Mega Stone tracker for Pokémon Legends: Z-A and the Mega Dimension DLC.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f3ee; --surface:#ffffff; --surface-2:#faf8f5; --ink:#1d1f23; --muted:#6b6f78; --line:#e7e2da;
+  --red:#d6332b; --red-ink:#ffffff; --red-soft:#fbe9e7; --blue:#2f5d8a; --gold:#b27b0e; --brown:#8a5a2b;
+  --ok:#2e8b57; --ok-soft:#e5f3eb; --shadow:0 1px 2px rgba(0,0,0,.05),0 4px 16px rgba(0,0,0,.05);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#15171b; --surface:#1e2127; --surface-2:#23272e; --ink:#eceef1; --muted:#9aa0aa; --line:#30353d;
+    --red:#e5483f; --red-soft:#3a1f1e; --blue:#8bb6e0; --gold:#e0b04a; --brown:#d39a63;
+    --ok:#5cc28a; --ok-soft:#1c3328; --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 16px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15171b; --surface:#1e2127; --surface-2:#23272e; --ink:#eceef1; --muted:#9aa0aa; --line:#30353d;
+  --red:#e5483f; --red-soft:#3a1f1e; --blue:#8bb6e0; --gold:#e0b04a; --brown:#d39a63;
+  --ok:#5cc28a; --ok-soft:#1c3328; --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 16px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.45 Inter,system-ui,-apple-system,sans-serif;padding-bottom:120px}
+button,input,select{font:inherit;color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px}
+
+/* game bar (shared across all game pages) */
+.gamebar{background:#121418;color:#fff;font-size:14px}
+.gamebar .wrap{display:flex;align-items:center;gap:14px;min-height:42px;overflow-x:auto;white-space:nowrap}
+.gamebar a{color:rgba(255,255,255,.72);text-decoration:none;font-weight:600}
+.gamebar a.brand{color:#fff;font-weight:800;margin-right:4px}
+.gamebar .games{display:flex;gap:4px}
+.gamebar .games a{padding:5px 12px;border-radius:999px}
+.gamebar .games a:hover{color:#fff}
+.gamebar .games a[aria-current="page"]{background:rgba(255,255,255,.16);color:#fff}
+
+/* header */
+header.hero{background:var(--red);color:#fff;position:relative;overflow:hidden}
+header.hero .wrap{padding-top:28px;padding-bottom:24px;position:relative}
+.ball{position:absolute;right:-60px;top:-60px;width:260px;height:260px;border-radius:50%;border:26px solid rgba(255,255,255,.12)}
+.ball::after{content:"";position:absolute;left:-26px;right:-26px;top:calc(50% - 13px);height:26px;background:rgba(255,255,255,.12)}
+.ball::before{content:"";position:absolute;width:60px;height:60px;border-radius:50%;left:calc(50% - 30px);top:calc(50% - 30px);border:16px solid rgba(255,255,255,.12);background:var(--red);z-index:1}
+.hero h1,.hero .sub,.stats{position:relative;z-index:2}
+h1{margin:0;font-size:clamp(24px,4vw,34px);font-weight:800;letter-spacing:-.02em}
+.sub{margin:6px 0 0;opacity:.9;max-width:640px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:20px}
+.stat{background:rgba(255,255,255,.14);border-radius:14px;padding:12px 14px}
+.stat .k{font-size:12px;text-transform:uppercase;letter-spacing:.08em;opacity:.85;font-weight:600}
+.stat .v{font-size:24px;font-weight:800;margin-top:2px}
+.stat .v small{font-size:14px;font-weight:600;opacity:.8}
+.bar{height:6px;background:rgba(255,255,255,.25);border-radius:6px;margin-top:8px;overflow:hidden}
+.bar i{display:block;height:100%;background:#fff;border-radius:6px;width:0;transition:width .3s}
+
+/* toolbar */
+.toolbar{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.toolbar .wrap{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding-top:10px;padding-bottom:10px}
+.tabs{display:flex;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:3px}
+.tabs button{border:0;background:none;padding:7px 14px;border-radius:999px;font-weight:600;cursor:pointer;color:var(--muted)}
+.tabs button[aria-selected="true"]{background:var(--red);color:#fff}
+.search{flex:1;min-width:160px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:8px 14px}
+.ctl{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 12px;cursor:pointer}
+label.tog{display:flex;align-items:center;gap:6px;font-size:14px;color:var(--muted);cursor:pointer;white-space:nowrap}
+
+/* stops */
+main{padding-top:18px}
+.intro{color:var(--muted);font-size:14px;margin:0 0 14px}
+.stop{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);margin-bottom:16px;overflow:hidden}
+.stop>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:14px 16px}
+.stop>summary::-webkit-details-marker{display:none}
+.num{flex:none;width:32px;height:32px;border-radius:50%;background:var(--red-soft);color:var(--red);font-weight:800;display:grid;place-items:center;font-size:14px}
+.stop.done .num{background:var(--ok-soft);color:var(--ok)}
+.stop h2{margin:0;font-size:17px;font-weight:700;flex:1}
+.stop .count{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.chev{transition:transform .2s;color:var(--muted)}
+.stop[open] .chev{transform:rotate(90deg)}
+.tip{margin:0;padding:0 16px 10px 60px;color:var(--muted);font-size:13.5px}
+.rows{border-top:1px solid var(--line)}
+.head,.row{display:grid;grid-template-columns:36px 52px minmax(130px,1.1fr) minmax(150px,1.3fr) minmax(170px,1.5fr);gap:10px;align-items:center;padding:8px 16px}
+.head{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700;background:var(--surface-2)}
+.row{border-top:1px solid var(--line);cursor:pointer}
+.row:hover{background:var(--surface-2)}
+.row.caught .nm{color:var(--muted);text-decoration:line-through;text-decoration-color:color-mix(in srgb,var(--muted) 60%,transparent)}
+.row.offver{opacity:.55}
+.dex{font-family:"JetBrains Mono",monospace;font-size:12.5px;color:var(--muted)}
+.nm{font-weight:600}
+.how{font-size:13.5px;color:var(--muted)}
+.evo{font-size:13px;color:var(--blue)}
+.evo .arr{color:var(--muted);margin:0 4px}
+.tag{display:inline-block;font-size:10.5px;font-weight:700;padding:1px 6px;border-radius:6px;margin-left:6px;vertical-align:1px;white-space:nowrap}
+.tag.P{background:color-mix(in srgb,var(--gold) 16%,transparent);color:var(--gold)}
+.tag.E{background:color-mix(in srgb,var(--brown) 16%,transparent);color:var(--brown)}
+.tag.T{background:var(--surface-2);color:var(--muted);border:1px solid var(--line)}
+
+/* custom checkbox */
+.cb{appearance:none;-webkit-appearance:none;width:22px;height:22px;border:2px solid color-mix(in srgb,var(--muted) 60%,transparent);border-radius:50%;display:grid;place-items:center;cursor:pointer;margin:0;background:var(--surface);transition:all .15s;position:relative;overflow:hidden}
+.cb::before{content:"";position:absolute;inset:0;background:linear-gradient(var(--red) 0 46%,transparent 46% 54%,#fff 54%);opacity:0;transition:opacity .15s}
+.cb::after{content:"";width:6px;height:6px;border-radius:50%;background:#fff;border:2px solid #222;opacity:0;z-index:1;transition:opacity .15s}
+.cb:checked{border-color:#222}
+.cb:checked::before,.cb:checked::after{opacity:1}
+.cb:focus-visible{outline:3px solid color-mix(in srgb,var(--red) 40%,transparent);outline-offset:2px}
+
+/* masters */
+.gm{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:16px 18px;margin-bottom:16px}
+.gm h2{margin:0 0 6px;font-size:18px}
+.gm p{margin:4px 0;color:var(--muted);font-size:14px}
+.gm ul{margin:8px 0 0;padding-left:18px;color:var(--muted);font-size:14px}
+.gm .badge{display:inline-flex;align-items:center;gap:8px;margin-top:10px;padding:6px 12px;border-radius:999px;font-weight:700;font-size:14px;background:var(--red-soft);color:var(--red)}
+.gm .badge.won{background:var(--ok-soft);color:var(--ok)}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+.loc-left{text-transform:none;letter-spacing:0;font-weight:600}
+.loc-h{grid-column:1/-1;margin:14px 0 2px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.sec-h{grid-column:1/-1;margin:18px 0 0;padding-bottom:6px;border-bottom:1px solid var(--line);font-size:16px;font-weight:700}
+.sec-h:first-child{margin-top:0}
+.sec-p{display:block;font-size:13px;font-weight:400;color:var(--muted);margin-top:2px}
+.mcard{display:flex;gap:10px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;cursor:pointer}
+.mcard:hover{border-color:color-mix(in srgb,var(--red) 40%,var(--line))}
+.mcard.done{background:var(--ok-soft);border-color:color-mix(in srgb,var(--ok) 35%,var(--line))}
+.mcard .cb{margin-top:1px;flex:none}
+.mcard .t{font-weight:600}
+.mcard .s{font-size:12.5px;color:var(--muted)}
+.mcard .w{font-size:12px;color:var(--muted);font-style:italic}
+.pill{font-size:10.5px;font-weight:700;border-radius:6px;padding:1px 6px;margin-left:6px;background:color-mix(in srgb,var(--blue) 15%,transparent);color:var(--blue);white-space:nowrap}
+.pill.opt{background:var(--surface-2);color:var(--muted);border:1px solid var(--line)}
+
+/* save bar */
+.savebar{position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--surface);border-top:1px solid var(--line);box-shadow:0 -6px 24px rgba(0,0,0,.08)}
+.savebar .wrap{display:flex;gap:10px;align-items:center;padding-top:10px;padding-bottom:10px;flex-wrap:wrap}
+.savebar .lbl{font-size:12px;text-transform:uppercase;letter-spacing:.08em;font-weight:700;color:var(--muted)}
+.code{flex:1;min-width:200px;font-family:"JetBrains Mono",monospace;font-size:13px;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:9px 12px;white-space:nowrap;overflow-x:auto;user-select:all}
+.btn{border:0;border-radius:10px;padding:9px 14px;font-weight:700;cursor:pointer;background:var(--red);color:#fff}
+.btn.ghost{background:var(--surface-2);color:var(--ink);border:1px solid var(--line)}
+.loadrow{display:none;width:100%;gap:8px}
+.loadrow.show{display:flex}
+.loadrow input{flex:1;min-width:0;border:1px solid var(--line);background:var(--surface-2);border-radius:10px;padding:9px 12px;font-family:"JetBrains Mono",monospace;font-size:13px}
+.toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:10px;font-weight:600;font-size:14px;opacity:0;pointer-events:none;transition:all .2s;z-index:20}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+footer.src{color:var(--muted);font-size:12.5px;padding:10px 0 30px}
+footer.src a{color:inherit}
+[hidden]{display:none!important}
+
+@media (max-width:760px){
+  .stats{grid-template-columns:repeat(3,1fr);gap:8px}.stat{padding:10px}.stat .v{font-size:19px}.stat .k{font-size:10px}.stat .v small{font-size:12px}
+  .ball{opacity:.6}
+  .head{display:none}
+  .row{grid-template-columns:30px 1fr;grid-template-areas:"cb main";gap:4px 10px;padding:10px 14px}
+  .row .cbw{grid-area:cb;align-self:start;padding-top:2px}
+  .row .dex{display:none}
+  .row .main{grid-area:main}
+  .row .how,.row .evo{display:block;margin-top:2px}
+  .tip{padding-left:16px}
+  .savebar .lbl{display:none}
+}
+@media (min-width:761px){ .row .main{display:contents} }
+.note{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin:0 0 14px;font-size:14px;color:var(--muted)}
+.note b{color:var(--ink)}
+</style>
+</head>
+<body>
+<nav class="gamebar" aria-label="Games">
+  <div class="wrap">
+    <a class="brand" href="../" data-i18n="brand">Pokédex Tracker</a>
+    <span class="games"><a href="../letsgo/" data-i18n="gLetsgo">Let's Go</a><a href="../za/" aria-current="page" data-i18n="gZa">Legends Z-A</a></span>
+  </div>
+</nav>
+<header class="hero">
+  <div class="wrap">
+    <div class="ball" aria-hidden="true"></div>
+    <h1 data-i18n="title">Legends: Z-A Dex Tracker</h1>
+    <p class="sub" data-i18n="sub">An efficient, story-ordered route to fill the Pokédex in Pokémon Legends: Z-A, with the Mega Dimension DLC, plus a checklist of every Mega Stone.</p>
+    <div class="stats">
+      <div class="stat"><div class="k" data-i18n="kDex">Pokédex</div><div class="v" id="sDex">0</div><div class="bar"><i id="bDex"></i></div></div>
+      <div class="stat"><div class="k" data-i18n="kMeg">Mega Stones</div><div class="v" id="sMeg">0</div><div class="bar"><i id="bMeg"></i></div></div>
+      <div class="stat"><div class="k" data-i18n="kStop">Route stops cleared</div><div class="v" id="sStop">0</div><div class="bar"><i id="bStop"></i></div></div>
+    </div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="wrap">
+    <div class="tabs" role="tablist">
+      <button role="tab" aria-selected="true" data-tab="dex" data-i18n="tabDex">Pokédex route</button>
+      <button role="tab" aria-selected="false" data-tab="meg" data-i18n="tabMeg">Mega Stones</button>
+    </div>
+    <input class="search" id="q" type="search" placeholder="Search Pokémon, Wild Zone or Mega Stone…" aria-label="Search" data-i18n-ph="search" data-i18n-aria="searchA">
+    <label class="tog" title="Show the Mega Dimension DLC Pokédex and Mega Stones" data-i18n-title="dlcT"><input type="checkbox" id="dlc" checked> <span data-i18n="dlc">Mega Dimension DLC</span></label>
+    <label class="tog"><input type="checkbox" id="hide"> <span data-i18n="hide">Hide done</span></label>
+    <select class="ctl" id="lang" aria-label="Language" data-i18n-aria="lang"></select>
+    <button class="ctl" style="font-size:17px;line-height:1" id="theme" title="Toggle theme" aria-label="Toggle theme" data-i18n-title="theme" data-i18n-aria="theme">◐</button>
+  </div>
+</div>
+
+<main class="wrap">
+  <section id="tab-dex">
+    <p class="intro" data-i18n-html="intro">Follow the stops in order. Each Pokémon is listed at the earliest point you can get it, based on when its Wild Zone unlocks in the main missions. Tap a row to check it off. <b>Evolves into</b> shows later stages and how they evolve.</p>
+    <p class="note" data-i18n-html="shiny"><b>Shiny Charm:</b> in Legends: Z-A it isn't a reward for finishing the Pokédex. You get it at Research Level 50 in Mable's Pokédex research, which counts catching, battling and other research tasks. Filling the Pokédex earns a big share of those points.</p>
+    <div style="display:flex;gap:10px;align-items:center;margin:0 0 12px;flex-wrap:wrap">
+      <label class="tog"><span data-i18n="viewBy">View</span>
+        <select class="ctl" id="dview"><option value="route" data-i18n="viewRoute">Route order</option><option value="num" data-i18n="viewNum">Dex number</option><option value="zone" data-i18n="viewZone">Wild Zone</option></select>
+      </label>
+    </div>
+    <div id="stops"></div>
+  </section>
+
+  <section id="tab-meg" hidden>
+    <div class="gm">
+      <h2 data-i18n="megH">Mega Stones</h2>
+      <p data-i18n-html="megP">Each Mega Stone lets one Pokémon Mega Evolve. You can only use them once you have the Mega Ring from the main story (Main Mission 10). Every stone is a one-time pickup, so check each one off as you get it.</p>
+      <ul>
+        <li data-i18n-html="megL0">Most stones are sold in shops for Mega Shards or found around the city's districts. Hyperspace stones need the <b>Mega Dimension DLC</b>.</li>
+        <li data-i18n-html="megL1">A few come from online ranked battles or Mystery Gift events, which may be time-limited.</li>
+        <li data-i18n-html="megL2"><b>Catch one first</b> means you haven't checked off that Pokémon in the Pokédex tab yet.</li>
+      </ul>
+      <div class="badge" id="megBadge">0</div>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center;margin:0 0 12px;flex-wrap:wrap">
+      <label class="tog"><span data-i18n="sortBy">Sort by</span>
+        <select class="ctl" id="msort"><option value="dex" data-i18n="sortDex">Pokémon</option><option value="loc" data-i18n="sortLoc">Where to get it</option></select>
+      </label>
+    </div>
+    <div class="mgrid" id="mgrid"></div>
+  </section>
+
+  <footer class="src" data-i18n-html="footer">
+    Locations, evolutions and Mega Stones from <a href="https://www.serebii.net/legendsz-a/">Serebii</a>. Pokédex order and localized names from <a href="https://pokeapi.co/">PokeAPI</a>. Fan-made tracker, not affiliated with Nintendo, Game Freak or The Pokémon Company.
+  </footer>
+</main>
+
+<div class="savebar">
+  <div class="wrap">
+    <span class="lbl" data-i18n="save">Save code</span>
+    <div class="code" id="code" title="Copy this into your notes app" data-i18n-title="codeT"></div>
+    <button class="btn" id="copy" data-i18n="copy">Copy</button>
+    <button class="btn ghost" id="loadBtn" data-i18n="load">Load</button>
+    <div class="loadrow" id="loadRow">
+      <input id="loadIn" placeholder="Paste a saved code (PLZA1-…)" aria-label="Saved code" data-i18n-ph="loadPh" data-i18n-aria="loadA">
+      <button class="btn" id="loadGo" data-i18n="restore">Restore</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const D = {"entries":[{"id":"L001","n":152,"stop":0,"tok":[["x","starter"],["wz",[20]]],"g":["wz20","gift"],"evo":[[[153,"l16"]],[[154,"l32"]]],"dlc":false,"hs":[["hs",[["Grass",[2,3]]]]]},{"id":"L004","n":498,"stop":0,"tok":[["x","starter"],["wz",[20]]],"g":["wz20","gift"],"evo":[[[499,"l17"]],[[500,"l36"]]],"dlc":false,"hs":[["hs",[["Fire",[2,3]],["Fighting",[3]]]]]},{"id":"L007","n":158,"stop":0,"tok":[["x","starter"],["wz",[20]]],"g":["wz20","gift"],"evo":[[[159,"l18"]],[[160,"l30"]]],"dlc":false,"hs":[["hs",[["Water",[2,3]]]]]},{"id":"L179","n":214,"stop":1,"tok":[["trade",25,2],["wz",[13,20]]],"g":["wz13","wz20","gift"],"evo":[],"dlc":false,"hs":[["hs",[["Bug",[4]],["Fighting",[4]],["Special",[5]]]]]},{"id":"L049","n":568,"stop":1,"tok":[["streets",1]],"g":["streets"],"evo":[[[569,"l36"]]],"dlc":false,"hs":[["hs",[["Poison",[1,4]]]]]},{"id":"L077","n":511,"stop":1,"tok":[["streets",1]],"g":["streets"],"evo":[[[512,"leafstone"]]],"dlc":false,"hs":[["hs",[["Grass",[2,4]],["Special",[5]]]]]},{"id":"L079","n":513,"stop":1,"tok":[["streets",1]],"g":["streets"],"evo":[[[514,"firestone"]]],"dlc":false,"hs":[["hs",[["Fire",[2,4]]]]]},{"id":"L081","n":515,"stop":1,"tok":[["streets",1]],"g":["streets"],"evo":[[[516,"waterstone"]]],"dlc":false,"hs":[["hs",[["Water",[2,4]],["Special",[5]]]]]},{"id":"L087","n":280,"stop":1,"tok":[["streets",1]],"g":["streets"],"evo":[[[281,"l20"]],[[282,"l30"],[475,"maledawnstone"]]],"dlc":false,"hs":[["hs",[["Psychic",[3]]]]]},{"id":"L096","n":682,"stop":1,"tok":[["streets",1]],"g":["streets"],"evo":[[[683,"tradesachet"]]],"dlc":false,"hs":[["hs",[["Fairy",[2,3]]]]]},{"id":"L098","n":684,"stop":1,"tok":[["streets",1]],"g":["streets"],"evo":[[[685,"tradewhippeddream"]]],"dlc":false,"hs":[["hs",[["Fairy",[2,4]],["Special",[5]]]]]},{"id":"L135","n":447,"stop":1,"tok":[["streets",1]],"g":["streets"],"evo":[[[448,"happinessday"]]],"dlc":false,"hs":[["hs",[["Fighting",[4]],["Steel",[4]],["Special",[5]]]]]},{"id":"L145","n":147,"stop":1,"tok":[["streets",1]],"g":["streets"],"evo":[[[148,"l30"]],[[149,"l55"]]],"dlc":false,"hs":[["hs",[["Dragon",[3,4]]]]]},{"id":"L165","n":704,"stop":1,"tok":[["streets",1],["sewers"]],"g":["streets","sewers"],"evo":[[[705,"l40"]],[[706,"l50rain"]]],"dlc":false,"hs":[["hs",[["Dragon",[3,4]]]]]},{"id":"L184","n":559,"stop":1,"tok":[["streets",1],["sewers"]],"g":["streets","sewers"],"evo":[[[560,"l39"]]],"dlc":false,"hs":[["hs",[["Dark",[1,4]],["Fighting",[4]],["Special",[5]]]]]},{"id":"L010","n":661,"stop":1,"tok":[["wz",[1,3,5]],["streets",1]],"g":["wz1","wz3","wz5","streets"],"evo":[[[662,"l17"]],[[663,"l35"]]],"dlc":false,"hs":[["hs",[["Flying",[1,3]],["Normal",[1,2]],["Fire",[3]]]]]},{"id":"L013","n":659,"stop":1,"tok":[["wz",[1,5]],["streets",1]],"g":["wz1","wz5","streets"],"evo":[[[660,"l20"]]],"dlc":false,"hs":[["hs",[["Normal",[1,2,3]],["Ground",[3]]]]]},{"id":"L015","n":664,"stop":1,"tok":[["wz",[1]],["streets",1]],"g":["wz1","streets"],"evo":[[[665,"l9"]],[[666,"l12"]]],"dlc":false,"hs":[["hs",[["Bug",[1]],["Flying",[1]]]]]},{"id":"L018","n":13,"stop":1,"tok":[["wz",[1]],["streets",1]],"g":["wz1","streets"],"evo":[[[14,"l7"]],[[15,"l10"]]],"dlc":false,"hs":[["hs",[["Bug",[1]]]]]},{"id":"L021","n":16,"stop":1,"tok":[["wz",[1,5]],["streets",1]],"g":["wz1","wz5","streets"],"evo":[[[17,"l18"]],[[18,"l36"]]],"dlc":false,"hs":[["hs",[["Flying",[1,3]],["Normal",[1,2,3]]]]]},{"id":"L024","n":179,"stop":1,"tok":[["wz",[1]]],"g":["wz1"],"evo":[[[180,"l15"]],[[181,"l30"]]],"dlc":false,"hs":[["hs",[["Electric",[2,3]]]]]},{"id":"L052","n":172,"stop":1,"tok":[["wz",[1]],["streets",1]],"g":["wz1","streets"],"evo":[[[25,"happiness"]],[[26,"thunderstone"]]],"dlc":false,"hs":[["hs",[["Electric",[2]]]]]},{"id":"L019","n":14,"stop":1,"tok":[["wz",[2,7]],["streets",1],["evo",13,"l7"]],"g":["wz2","wz7","streets"],"evo":[[[15,"l10"]]],"dlc":false,"hs":[["hs",[["Bug",[1,4]],["Poison",[4]]]]]},{"id":"L027","n":504,"stop":1,"tok":[["wz",[2,4,5]],["streets",1],["sewers"]],"g":["wz2","wz4","wz5","streets","sewers"],"evo":[[[505,"l20"]]],"dlc":false,"hs":[["hs",[["Normal",[1,2]]]]]},{"id":"L029","n":406,"stop":1,"tok":[["wz",[2]],["streets",1]],"g":["wz2","streets"],"evo":[[[315,"happinessday"]],[[407,"shinystone"]]],"dlc":false,"hs":[["hs",[["Poison",[1,3]],["Grass",[2,3]]]]]},{"id":"L032","n":129,"stop":1,"tok":[["wz",[2,6]],["streets",1]],"g":["wz2","wz6","streets"],"evo":[[[130,"l20"]]],"dlc":false,"hs":[["hs",[["Water",[2,4]],["Special",[5]]]]]},{"id":"L034","n":688,"stop":1,"tok":[["wz",[2,5,6]],["streets",1]],"g":["wz2","wz5","wz6","streets"],"evo":[[[689,"l39"]]],"dlc":false,"hs":[["hs",[["Water",[2,4]],["Rock",[3,4]],["Special",[5]]]]]},{"id":"L036","n":120,"stop":1,"tok":[["wz",[2,10]],["streets",["Bleu","Magenta"]]],"g":["wz2","wz10","streets"],"evo":[[[121,"waterstone"]]],"dlc":false,"hs":[["hs",[["Water",[2,4]],["Psychic",[4]]]]]},{"id":"L038","n":669,"stop":1,"tok":[["wz",[3]],["streets",1]],"g":["wz3","streets"],"evo":[[[670,"l19"]],[[671,"shinystone"]]],"dlc":false,"hs":[["hs",[["Fairy",[2,3]]]]]},{"id":"L043","n":677,"stop":1,"tok":[["wz",[3,9]],["streets",1]],"g":["wz3","wz9","streets"],"evo":[[[678,"l25"]]],"dlc":false,"hs":[["hs",[["Psychic",[1,4]],["Special",[5]]]]]},{"id":"L053","n":25,"stop":1,"tok":[["wz",[3,6]],["streets",["Vert"]],["evo",172,"happiness"]],"g":["wz3","wz6","streets"],"evo":[[[26,"thunderstone"]]],"dlc":false,"hs":[["hs",[["Electric",[2,4]]]]]},{"id":"L016","n":665,"stop":1,"tok":[["wz",[4]],["streets",1],["evo",664,"l9"]],"g":["wz4","streets"],"evo":[[[666,"l12"]]],"dlc":false,"hs":[["hs",[["Bug",[1]],["Flying",[1]]]]]},{"id":"L058","n":167,"stop":1,"tok":[["wz",[4]],["streets",1]],"g":["wz4","streets"],"evo":[[[168,"l22"]]],"dlc":false,"hs":[["hs",[["Bug",[1]],["Poison",[3]]]]]},{"id":"L060","n":23,"stop":1,"tok":[["wz",[4]],["streets",1],["labs"]],"g":["wz4","streets","labs"],"evo":[[[24,"l22"]]],"dlc":false,"hs":[["hs",[["Poison",[1,3]]]]]},{"id":"L065","n":92,"stop":1,"tok":[["wz",[4,7]],["streets",1],["sewers"],["oldhouse"]],"g":["wz4","wz7","streets","sewers","oldhouse"],"evo":[[[93,"l25"]],[[94,"trade"]]],"dlc":false,"hs":[["hs",[["Ghost",[1,3]]]]]},{"id":"L062","n":63,"stop":1,"tok":[["wz",[5]],["streets",1]],"g":["wz5","streets"],"evo":[[[64,"l16"]],[[65,"trade"]]],"dlc":false,"hs":[["hs",[["Psychic",[1,3]]]]]},{"id":"L074","n":69,"stop":1,"tok":[["wz",[5,10]],["streets",1]],"g":["wz5","wz10","streets"],"evo":[[[70,"l21"]],[[71,"leafstone"]]],"dlc":false,"hs":[["hs",[["Poison",[1,3]],["Grass",[2,3]]]]]},{"id":"L093","n":333,"stop":1,"tok":[["wz",[6,18]],["streets",1]],"g":["wz6","wz18","streets"],"evo":[[[334,"l35"]]],"dlc":false,"hs":[["hs",[["Flying",[1,3]],["Dragon",[3]],["Special",[5]]]]]},{"id":"L109","n":427,"stop":1,"tok":[["wz",[6]],["streets",["Vert","Bleu","Magenta"]]],"g":["wz6","streets"],"evo":[[[428,"happiness"]]],"dlc":false,"hs":[["hs",[["Normal",[2,3]]]]]},{"id":"L030","n":315,"stop":1,"tok":[["wz",[7]],["evo",406,"happinessday"]],"g":["wz7"],"evo":[[[407,"shinystone"]]],"dlc":false,"hs":[["hs",[["Grass",[3,4]],["Poison",[3,4]],["Special",[5]]]]]},{"id":"L111","n":353,"stop":1,"tok":[["wz",[7,15]],["streets",1]],"g":["wz7","wz15","streets"],"evo":[[[354,"l37"]]],"dlc":false,"hs":[["hs",[["Ghost",[1,3]]]]]},{"id":"L133","n":303,"stop":1,"tok":[["wz",[9,17]],["streets",1]],"g":["wz9","wz17","streets"],"evo":[],"dlc":false,"hs":[["hs",[["Fairy",[3]],["Steel",[3]]]]]},{"id":"L180","n":587,"stop":1,"tok":[["wz",[14]],["streets",1]],"g":["wz14","streets"],"evo":[],"dlc":false,"hs":[["hs",[["Electric",[3]],["Flying",[3]]]]]},{"id":"L020","n":15,"stop":1,"tok":[["wz",[15]],["streets",1],["evo",14,"l10"]],"g":["wz15","streets"],"evo":[],"dlc":false,"hs":[["hs",[["Bug",[4]],["Poison",[4]]]]]},{"id":"L186","n":714,"stop":1,"tok":[["wz",[15,18]],["streets",1],["sewers"],["labs"]],"g":["wz15","wz18","streets","sewers","labs"],"evo":[[[715,"l48"]]],"dlc":false,"hs":[["hs",[["Dragon",[3,4]],["Flying",[3,4]],["Special",[5]]]]]},{"id":"L206","n":246,"stop":1,"tok":[["wz",[15]],["streets",1]],"g":["wz15","streets"],"evo":[[[247,"l30"]],[[248,"l55"]]],"dlc":false,"hs":[["hs",[["Ground",[3]],["Rock",[3,4]],["Special",[5]]]]]},{"id":"L037","n":121,"stop":1,"tok":[["wz",[16,20]],["evo",120,"waterstone"]],"g":["wz16","wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Psychic",[4]],["Water",[4]]]]]},{"id":"L110","n":428,"stop":1,"tok":[["wz",[18]],["evo",427,"happiness"]],"g":["wz18"],"evo":[],"dlc":false,"hs":[["hs",[["Normal",[3]]]]]},{"id":"L055","n":173,"stop":1,"tok":[["wz",[19]],["streets",1]],"g":["wz19","streets"],"evo":[[[35,"happiness"]],[[36,"moonstone"]]],"dlc":false,"hs":[["hs",[["Fairy",[2]]]]]},{"id":"L056","n":35,"stop":1,"tok":[["wz",[19]],["evo",173,"happiness"]],"g":["wz19"],"evo":[[[36,"moonstone"]]],"dlc":false,"hs":[["hs",[["Fairy",[2,4]],["Special",[5]]]]]},{"id":"L100","n":133,"stop":1,"tok":[["wz",[19]],["streets",1]],"g":["wz19","streets"],"evo":[[[134,"waterstone"],[135,"thunderstone"],[136,"firestone"],[196,"happinessday"],[197,"happinessnight"],[470,"leafstone"],[471,"icestone"],[700,"monamie"]]],"dlc":false,"hs":[["hs",[["Normal",[2,5]],["Dark",[4]],["Electric",[4]],["Fairy",[4]],["Fire",[4]],["Grass",[4]],["Ice",[4]],["Psychic",[4]],["Water",[4]]]]]},{"id":"L031","n":407,"stop":1,"tok":[["wz",[20]],["evo",315,"shinystone"]],"g":["wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Grass",[4]],["Poison",[4]],["Special",[5]]]]]},{"id":"L051","n":702,"stop":1,"tok":[["wz",[20]],["streets",1]],"g":["wz20","streets"],"evo":[],"dlc":false,"hs":[["hs",[["Electric",[3]],["Fairy",[3]]]]]},{"id":"L054","n":26,"stop":1,"tok":[["wz",[20]],["evo",25,"thunderstone"]],"g":["wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Electric",[4]]]]]},{"id":"L057","n":36,"stop":1,"tok":[["wz",[20]],["evo",35,"moonstone"]],"g":["wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Fairy",[4]],["Special",[5]]]]]},{"id":"L078","n":512,"stop":1,"tok":[["wz",[20]],["evo",511,"leafstone"]],"g":["wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Grass",[4]],["Special",[5]]]]]},{"id":"L080","n":514,"stop":1,"tok":[["wz",[20]],["evo",513,"firestone"]],"g":["wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Fire",[4]]]]]},{"id":"L082","n":516,"stop":1,"tok":[["wz",[20]],["evo",515,"waterstone"]],"g":["wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Water",[4]],["Special",[5]]]]]},{"id":"L101","n":134,"stop":1,"tok":[["wz",[20]],["evo",133,"waterstone"]],"g":["wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Water",[4]],["Normal",[5]]]]]},{"id":"L102","n":135,"stop":1,"tok":[["wz",[20]],["evo",133,"thunderstone"]],"g":["wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Electric",[4]],["Normal",[5]]]]]},{"id":"L103","n":136,"stop":1,"tok":[["wz",[20]],["evo",133,"firestone"]],"g":["wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Fire",[4]],["Normal",[5]]]]]},{"id":"L106","n":470,"stop":1,"tok":[["wz",[20]],["evo",133,"leafstone"]],"g":["wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Grass",[4]],["Normal",[5]]]]]},{"id":"L107","n":471,"stop":1,"tok":[["wz",[20]],["evo",133,"icestone"]],"g":["wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Ice",[4]],["Normal",[5]]]]]},{"id":"L108","n":700,"stop":1,"tok":[["wz",[20]],["evo",133,"monamie"]],"g":["wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Fairy",[4]],["Normal",[5]]]]]},{"id":"L134","n":359,"stop":1,"tok":[["wz",[20]],["streets",1]],"g":["wz20","streets"],"evo":[],"dlc":false,"hs":[["hs",[["Dark",[4]]]]]},{"id":"L136","n":448,"stop":1,"tok":[["wz",[20]],["evo",447,"happinessday"]],"g":["wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Fighting",[4]],["Steel",[4]],["Special",[5]]]]]},{"id":"L181","n":701,"stop":1,"tok":[["wz",[20]],["streets",1]],"g":["wz20","streets"],"evo":[],"dlc":false,"hs":[["hs",[["Fighting",[3]],["Flying",[3]],["Special",[5]]]]]},{"id":"L097","n":683,"stop":1,"tok":[["evo",682,"tradesachet"]],"g":["evo"],"evo":[],"dlc":false,"hs":[["hs",[["Fairy",[3]]]]]},{"id":"L099","n":685,"stop":1,"tok":[["evo",684,"tradewhippeddream"]],"g":["evo"],"evo":[],"dlc":false,"hs":[["hs",[["Fairy",[4]],["Special",[5]]]]]},{"id":"L104","n":196,"stop":1,"tok":[["evo",133,"happinessday"]],"g":["evo"],"evo":[],"dlc":false,"hs":[["hs",[["Psychic",[4]],["Normal",[5]]]]]},{"id":"L105","n":197,"stop":1,"tok":[["evo",133,"happinessnight"]],"g":["evo"],"evo":[],"dlc":false,"hs":[["hs",[["Dark",[4]],["Normal",[5]]]]]},{"id":"L209","n":656,"stop":2,"tok":[["sm",9],["wz",[16]]],"g":["wz16","gift"],"evo":[[[657,"l16"]],[[658,"l36"]]],"dlc":false,"hs":[["hs",[["Water",[2,3,5]]]]]},{"id":"L213","n":650,"stop":2,"tok":[["sm",7],["wz",[17]]],"g":["wz17","gift"],"evo":[[[651,"l16"]],[[652,"l36"]]],"dlc":false,"hs":[["hs",[["Grass",[2,3,5]]]]]},{"id":"L217","n":653,"stop":2,"tok":[["sm",8],["wz",[18]]],"g":["wz18","gift"],"evo":[[[654,"l16"]],[[655,"l36"]]],"dlc":false,"hs":[["hs",[["Fire",[2,3,5]]]]]},{"id":"L041","n":672,"stop":2,"tok":[["wz",[3]]],"g":["wz3"],"evo":[[[673,"l32"]]],"dlc":false,"hs":[["hs",[["Grass",[2,3]]]]]},{"id":"L045","n":667,"stop":2,"tok":[["wz",[3]]],"g":["wz3"],"evo":[[[668,"l35"]]],"dlc":false,"hs":[["hs",[["Fire",[2,4]]]]]},{"id":"L047","n":674,"stop":2,"tok":[["wz",[3]]],"g":["wz3"],"evo":[[[675,"l32dark"]]],"dlc":false,"hs":[["hs",[["Fighting",[1,4]],["Dark",[4]],["Special",[5]]]]]},{"id":"L198","n":208,"stop":2,"tok":[["wz",[3]],["evo",95,"trademetalcoat"]],"g":["wz3"],"evo":[],"dlc":false,"hs":[["hs",[["Steel",[4]],["Special",[5]]]]]},{"id":"L071","n":679,"stop":2,"tok":[["wz",[4]],["labs"]],"g":["wz4","labs"],"evo":[[[680,"l35"]],[[681,"duskstone"]]],"dlc":false,"hs":[["hs",[["Steel",[2,3]]]]]},{"id":"L011","n":662,"stop":2,"tok":[["wz",[5,7,9]],["streets",1],["evo",661,"l17"]],"g":["wz5","wz7","wz9","streets"],"evo":[[[663,"l35"]]],"dlc":false,"hs":[["hs",[["Fire",[3,4]],["Flying",[3,4]]]]]},{"id":"L022","n":17,"stop":2,"tok":[["wz",[5]],["streets",1],["evo",16,"l18"]],"g":["wz5","streets"],"evo":[[[18,"l36"]]],"dlc":false,"hs":[["hs",[["Flying",[3,4]],["Normal",[3,4]]]]]},{"id":"L068","n":543,"stop":2,"tok":[["wz",[5]]],"g":["wz5"],"evo":[[[544,"l22"]],[[545,"l30"]]],"dlc":false,"hs":[["hs",[["Bug",[1]],["Poison",[1]]]]]},{"id":"L069","n":544,"stop":2,"tok":[["wz",[5,15]],["evo",543,"l22"]],"g":["wz5","wz15"],"evo":[[[545,"l30"]]],"dlc":false,"hs":[["hs",[["Bug",[4]],["Poison",[4]]]]]},{"id":"L085","n":309,"stop":2,"tok":[["wz",[5]],["labs"]],"g":["wz5","labs"],"evo":[[[310,"l26"]]],"dlc":false,"hs":[["hs",[["Electric",[2,3]]]]]},{"id":"L090","n":475,"stop":2,"tok":[["wz",[5,20]],["evo",281,"maledawnstone"]],"g":["wz5","wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Fighting",[4]],["Psychic",[4]]]]]},{"id":"L025","n":180,"stop":2,"tok":[["wz",[6,16]],["evo",179,"l15"]],"g":["wz6","wz16"],"evo":[[[181,"l30"]]],"dlc":false,"hs":[["hs",[["Electric",[3,4]]]]]},{"id":"L083","n":307,"stop":2,"tok":[["wz",[6]]],"g":["wz6"],"evo":[[[308,"l37"]]],"dlc":false,"hs":[["hs",[["Fighting",[1,3]],["Psychic",[1,3]]]]]},{"id":"L091","n":228,"stop":2,"tok":[["wz",[6]],["labs"]],"g":["wz6","labs"],"evo":[[[229,"l24"]]],"dlc":false,"hs":[["hs",[["Dark",[1,3]],["Fire",[2,3]]]]]},{"id":"L092","n":229,"stop":2,"tok":[["wz",[6]],["labs"],["evo",228,"l24"]],"g":["wz6","labs"],"evo":[],"dlc":false,"hs":[["hs",[["Dark",[3]],["Fire",[3]]]]]},{"id":"L017","n":666,"stop":2,"tok":[["wz",[13,20]],["streets",1],["evo",665,"l12"]],"g":["wz13","wz20","streets"],"evo":[],"dlc":false,"hs":[["hs",[["Bug",[1]],["Flying",[1]]]]]},{"id":"L148","n":1,"stop":3,"tok":[["sm",22],["wz",[20]]],"g":["wz20","gift"],"evo":[[[2,"l16"]],[[3,"l32"]]],"dlc":false,"hs":[["hs",[["Poison",[1,3]],["Grass",[2,3,5]]]]]},{"id":"L151","n":4,"stop":3,"tok":[["sm",22],["wz",[20]]],"g":["wz20","gift"],"evo":[[[5,"l16"]],[[6,"l36"]]],"dlc":false,"hs":[["hs",[["Fire",[2,3,5]]]]]},{"id":"L154","n":7,"stop":3,"tok":[["sm",22],["wz",[20]]],"g":["wz20","gift"],"evo":[[[8,"l16"]],[[9,"l36"]]],"dlc":false,"hs":[["hs",[["Water",[2,3,5]]]]]},{"id":"L039","n":670,"stop":3,"tok":[["wz",[7]],["streets",1],["evo",669,"l19"]],"g":["wz7","streets"],"evo":[[[671,"shinystone"]]],"dlc":false,"hs":[["hs",[["Fairy",[3,4]]]]]},{"id":"L095","n":531,"stop":3,"tok":[["wz",[7,19]]],"g":["wz7","wz19"],"evo":[],"dlc":false,"hs":[["hs",[["Normal",[3]]]]]},{"id":"L113","n":582,"stop":3,"tok":[["wz",[7,12]]],"g":["wz7","wz12"],"evo":[[[583,"l35"]],[[584,"l47"]]],"dlc":false,"hs":[["hs",[["Ice",[3]]]]]},{"id":"L118","n":449,"stop":3,"tok":[["wz",[7]]],"g":["wz7"],"evo":[[[450,"l34"]]],"dlc":false,"hs":[["hs",[["Ground",[1,4]]]]]},{"id":"L116","n":322,"stop":3,"tok":[["wz",[8]]],"g":["wz8"],"evo":[[[323,"l33"]]],"dlc":false,"hs":[["hs",[["Ground",[1,4]],["Fire",[2,4]]]]]},{"id":"L117","n":323,"stop":3,"tok":[["wz",[8]],["evo",322,"l33"]],"g":["wz8"],"evo":[],"dlc":false,"hs":[["hs",[["Fire",[4]],["Ground",[4]]]]]},{"id":"L120","n":529,"stop":3,"tok":[["wz",[8,14]]],"g":["wz8","wz14"],"evo":[[[530,"l31"]]],"dlc":false,"hs":[["hs",[["Ground",[1,4]],["Steel",[4]]]]]},{"id":"L122","n":551,"stop":3,"tok":[["wz",[8]]],"g":["wz8"],"evo":[[[552,"l29"]],[[553,"l40"]]],"dlc":false,"hs":[["hs",[["Dark",[1,3]],["Ground",[1,3]]]]]},{"id":"L123","n":552,"stop":3,"tok":[["wz",[8]],["evo",551,"l29"]],"g":["wz8"],"evo":[[[553,"l40"]]],"dlc":false,"hs":[["hs",[["Dark",[3,4]],["Ground",[3,4]]]]]},{"id":"L125","n":66,"stop":3,"tok":[["wz",[8,12]]],"g":["wz8","wz12"],"evo":[[[67,"l28"]],[[68,"trade"]]],"dlc":false,"hs":[["hs",[["Fighting",[1,3]]]]]},{"id":"L128","n":443,"stop":3,"tok":[["wz",[8]]],"g":["wz8"],"evo":[[[444,"l24"]],[[445,"l48"]]],"dlc":false,"hs":[["hs",[["Dragon",[3,4]],["Ground",[3]]]]]},{"id":"L044","n":678,"stop":3,"tok":[["wz",[9]],["evo",677,"l25"]],"g":["wz9"],"evo":[],"dlc":false,"hs":[["hs",[["Psychic",[4]],["Special",[5]]]]]},{"id":"L048","n":675,"stop":3,"tok":[["wz",[9,20]],["evo",674,"l32dark"]],"g":["wz9","wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Dark",[4]],["Fighting",[4]],["Special",[5]]]]]},{"id":"L063","n":64,"stop":3,"tok":[["wz",[9]],["evo",63,"l16"]],"g":["wz9"],"evo":[[[65,"trade"]]],"dlc":false,"hs":[["hs",[["Psychic",[3,4]]]]]},{"id":"L086","n":310,"stop":3,"tok":[["wz",[9]],["labs"],["evo",309,"l26"]],"g":["wz9","labs"],"evo":[],"dlc":false,"hs":[["hs",[["Electric",[3]]]]]},{"id":"L131","n":703,"stop":3,"tok":[["wz",[9,20]]],"g":["wz9","wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Fairy",[2]],["Rock",[3]]]]]},{"id":"L132","n":302,"stop":3,"tok":[["wz",[9,20]]],"g":["wz9","wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Dark",[1]],["Ghost",[1]]]]]},{"id":"L028","n":505,"stop":3,"tok":[["wz",[10]],["evo",504,"l20"]],"g":["wz10"],"evo":[],"dlc":false,"hs":[["hs",[["Normal",[2]]]]]},{"id":"L061","n":24,"stop":3,"tok":[["wz",[10]],["streets",["Rouge"]],["labs"],["evo",23,"l22"]],"g":["wz10","streets","labs"],"evo":[],"dlc":false,"hs":[["hs",[["Poison",[3]]]]]},{"id":"L137","n":79,"stop":3,"tok":[["wz",[10,11]]],"g":["wz10","wz11"],"evo":[[[80,"l37"],[199,"tradeking'srock"]]],"dlc":false,"hs":[["hs",[["Psychic",[3,4]],["Water",[3,4]],["Poison",[5]]]]]},{"id":"L140","n":318,"stop":3,"tok":[["wz",[10]]],"g":["wz10"],"evo":[[[319,"l30"]]],"dlc":false,"hs":[["hs",[["Water",[2,3]],["Dark",[3]]]]]},{"id":"L141","n":319,"stop":3,"tok":[["wz",[10]],["evo",318,"l30"]],"g":["wz10"],"evo":[],"dlc":false,"hs":[["hs",[["Dark",[3]],["Water",[3]]]]]},{"id":"L142","n":602,"stop":3,"tok":[["wz",[10]]],"g":["wz10"],"evo":[[[603,"l39"]],[[604,"thunderstone"]]],"dlc":false,"hs":[["hs",[["Electric",[2,3]]]]]},{"id":"L033","n":130,"stop":3,"tok":[["wz",[11,20]],["evo",129,"l20"]],"g":["wz11","wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Water",[4]],["Special",[5]]]]]},{"id":"L075","n":70,"stop":3,"tok":[["wz",[13]],["evo",69,"l21"]],"g":["wz13"],"evo":[[[71,"leafstone"]]],"dlc":false,"hs":[["hs",[["Grass",[3,4]],["Poison",[3,4]],["Special",[5]]]]]},{"id":"L066","n":93,"stop":3,"tok":[["wz",[15]],["streets",1],["sewers"],["oldhouse"],["evo",92,"l25"]],"g":["wz15","streets","sewers","oldhouse"],"evo":[[[94,"trade"]]],"dlc":false,"hs":[["hs",[["Ghost",[1,3,4]]]]]},{"id":"L040","n":671,"stop":3,"tok":[["wz",[16,20]],["evo",670,"shinystone"]],"g":["wz16","wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Fairy",[3,4]]]]]},{"id":"L014","n":660,"stop":3,"tok":[["wz",[17,20]],["evo",659,"l20"]],"g":["wz17","wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Ground",[3]],["Normal",[3]]]]]},{"id":"L059","n":168,"stop":3,"tok":[["wz",[20]],["streets",1],["sewers"],["evo",167,"l22"]],"g":["wz20","streets","sewers"],"evo":[],"dlc":false,"hs":[["hs",[["Poison",[3]]]]]},{"id":"L064","n":65,"stop":3,"tok":[["wz",[20]],["evo",64,"trade"]],"g":["wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Psychic",[4]]]]]},{"id":"L067","n":94,"stop":3,"tok":[["wz",[20]],["oldhouse"],["evo",93,"trade"]],"g":["wz20","oldhouse"],"evo":[],"dlc":false,"hs":[["hs",[["Ghost",[4]]]]]},{"id":"L076","n":71,"stop":3,"tok":[["wz",[20]],["evo",70,"leafstone"]],"g":["wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Grass",[4]],["Poison",[4]],["Special",[5]]]]]},{"id":"L002","n":153,"stop":3,"tok":[["evo",152,"l16"]],"g":["evo"],"evo":[[[154,"l32"]]],"dlc":false,"hs":[["hs",[["Grass",[3,4]]]]]},{"id":"L005","n":499,"stop":3,"tok":[["evo",498,"l17"]],"g":["evo"],"evo":[[[500,"l36"]]],"dlc":false,"hs":[["hs",[["Fighting",[3,4]],["Fire",[3,4]]]]]},{"id":"L008","n":159,"stop":3,"tok":[["evo",158,"l18"]],"g":["evo"],"evo":[[[160,"l30"]]],"dlc":false,"hs":[["hs",[["Water",[3,4]]]]]},{"id":"L088","n":281,"stop":3,"tok":[["evo",280,"l20"]],"g":["evo"],"evo":[[[282,"l30"],[475,"maledawnstone"]]],"dlc":false,"hs":[["hs",[["Psychic",[3,4]],["Fairy",[4]],["Fighting",[4]],["Special",[5]]]]]},{"id":"L129","n":444,"stop":3,"tok":[["evo",443,"l24"]],"g":["evo"],"evo":[[[445,"l48"]]],"dlc":false,"hs":[["hs",[["Dragon",[4]]]]]},{"id":"L139","n":199,"stop":3,"tok":[["evo",79,"tradeking'srock"]],"g":["evo"],"evo":[],"dlc":false,"hs":[["hs",[["Psychic",[4]],["Water",[4]],["Poison",[5]]]]]},{"id":"L149","n":2,"stop":3,"tok":[["evo",1,"l16"]],"g":["evo"],"evo":[[[3,"l32"]]],"dlc":false,"hs":[["hs",[["Grass",[3,4]],["Poison",[3,4]]]]]},{"id":"L152","n":5,"stop":3,"tok":[["evo",4,"l16"]],"g":["evo"],"evo":[[[6,"l36"]]],"dlc":false,"hs":[["hs",[["Fire",[3,4]],["Flying",[4]]]]]},{"id":"L155","n":8,"stop":3,"tok":[["evo",7,"l16"]],"g":["evo"],"evo":[[[9,"l36"]]],"dlc":false,"hs":[["hs",[["Water",[3,4]]]]]},{"id":"L210","n":657,"stop":3,"tok":[["evo",656,"l16"]],"g":["evo"],"evo":[[[658,"l36"]]],"dlc":false,"hs":[["hs",[["Water",[3,4]],["Dark",[4]]]]]},{"id":"L214","n":651,"stop":3,"tok":[["evo",650,"l16"]],"g":["evo"],"evo":[[[652,"l36"]]],"dlc":false,"hs":[["hs",[["Grass",[3,4]],["Fighting",[4]]]]]},{"id":"L218","n":654,"stop":3,"tok":[["evo",653,"l16"]],"g":["evo"],"evo":[[[655,"l36"]]],"dlc":false,"hs":[["hs",[["Fire",[3,4]],["Psychic",[4]]]]]},{"id":"L192","n":142,"stop":4,"tok":[["x","fossil"]],"g":["gift"],"evo":[],"dlc":false,"hs":[["hs",[["Rock",[5]]]]]},{"id":"L193","n":696,"stop":4,"tok":[["x","fossil"]],"g":["gift"],"evo":[[[697,"lday39"]]],"dlc":false,"hs":[["hs",[["Rock",[3,5]]]]]},{"id":"L195","n":698,"stop":4,"tok":[["x","fossil"]],"g":["gift"],"evo":[[[699,"lnight39"]]],"dlc":false,"hs":[["hs",[["Rock",[3,5]],["Ice",[4]]]]]},{"id":"L146","n":148,"stop":4,"tok":[["streets",1],["evo",147,"l30"]],"g":["streets"],"evo":[[[149,"l55"]]],"dlc":false,"hs":[["hs",[["Dragon",[4]]]]]},{"id":"L138","n":80,"stop":4,"tok":[["wz",[11]],["evo",79,"l37"]],"g":["wz11"],"evo":[],"dlc":false,"hs":[["hs",[["Psychic",[4]],["Water",[4]],["Poison",[5]]]]]},{"id":"L157","n":618,"stop":4,"tok":[["wz",[11,20]]],"g":["wz11","wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Ground",[3,4]]]]]},{"id":"L158","n":676,"stop":4,"tok":[["wz",[11,19,20]]],"g":["wz11","wz19","wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Normal",[4]]]]]},{"id":"L159","n":686,"stop":4,"tok":[["wz",[11]],["sewers"]],"g":["wz11","sewers"],"evo":[[[687,"l303ds"]]],"dlc":false,"hs":[["hs",[["Psychic",[1,4]],["Dark",[4]]]]]},{"id":"L163","n":692,"stop":4,"tok":[["wz",[11]]],"g":["wz11"],"evo":[[[693,"l37"]]],"dlc":false,"hs":[["hs",[["Water",[2,3]]]]]},{"id":"L164","n":693,"stop":4,"tok":[["wz",[11]],["evo",692,"l37"]],"g":["wz11"],"evo":[],"dlc":false,"hs":[["hs",[["Water",[3]]]]]},{"id":"L042","n":673,"stop":4,"tok":[["wz",[12,20]],["evo",672,"l32"]],"g":["wz12","wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Grass",[3]]]]]},{"id":"L126","n":67,"stop":4,"tok":[["wz",[12]],["evo",66,"l28"]],"g":["wz12"],"evo":[[[68,"trade"]]],"dlc":false,"hs":[["hs",[["Fighting",[3,4]],["Special",[5]]]]]},{"id":"L168","n":225,"stop":4,"tok":[["wz",[12,20]]],"g":["wz12","wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Ice",[3]]]]]},{"id":"L169","n":361,"stop":4,"tok":[["wz",[12]]],"g":["wz12"],"evo":[[[362,"l42"],[478,"femaledawnstone"]]],"dlc":false,"hs":[["hs",[["Ice",[3,4]]]]]},{"id":"L172","n":459,"stop":4,"tok":[["wz",[12]]],"g":["wz12"],"evo":[[[460,"l40"]]],"dlc":false,"hs":[["hs",[["Ice",[3,4]],["Grass",[4]]]]]},{"id":"L173","n":460,"stop":4,"tok":[["wz",[12]],["evo",459,"l40"]],"g":["wz12"],"evo":[],"dlc":false,"hs":[["hs",[["Grass",[4]],["Ice",[4]]]]]},{"id":"L174","n":712,"stop":4,"tok":[["wz",[12]]],"g":["wz12"],"evo":[[[713,"l37"]]],"dlc":false,"hs":[["hs",[["Ice",[3,4,5]],["Rock",[4]]]]]},{"id":"L175","n":713,"stop":4,"tok":[["wz",[12]],["evo",712,"l37"]],"g":["wz12"],"evo":[],"dlc":false,"hs":[["hs",[["Ice",[4,5]],["Rock",[4]]]]]},{"id":"L176","n":123,"stop":4,"tok":[["wz",[13]]],"g":["wz13"],"evo":[[[900,"blackaugurite"],[212,"trademetalcoat"]]],"dlc":false,"hs":[["hs",[["Bug",[4]],["Steel",[4]]]]]},{"id":"L178","n":127,"stop":4,"tok":[["wz",[13,20]]],"g":["wz13","wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Bug",[4]]]]]},{"id":"L182","n":708,"stop":4,"tok":[["wz",[13]]],"g":["wz13"],"evo":[[[709,"trade"]]],"dlc":false,"hs":[["hs",[["Ghost",[1,4]],["Grass",[4]]]]]},{"id":"L183","n":709,"stop":4,"tok":[["wz",[13,15]],["evo",708,"trade"]],"g":["wz13","wz15"],"evo":[],"dlc":false,"hs":[["hs",[["Ghost",[4]],["Grass",[4]]]]]},{"id":"L121","n":530,"stop":4,"tok":[["wz",[14]],["evo",529,"l31"]],"g":["wz14"],"evo":[],"dlc":false,"hs":[["hs",[["Ground",[4]],["Steel",[4]]]]]},{"id":"L070","n":545,"stop":4,"tok":[["wz",[15,20]],["evo",544,"l30"]],"g":["wz15","wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Bug",[4]],["Poison",[4]]]]]},{"id":"L026","n":181,"stop":4,"tok":[["wz",[16]],["evo",180,"l30"]],"g":["wz16"],"evo":[],"dlc":false,"hs":[["hs",[["Electric",[4]]]]]},{"id":"L046","n":668,"stop":4,"tok":[["wz",[17]],["evo",667,"l35"]],"g":["wz17"],"evo":[],"dlc":false,"hs":[["hs",[["Fire",[4]]]]]},{"id":"L094","n":334,"stop":4,"tok":[["wz",[18,20]],["evo",333,"l35"]],"g":["wz18","wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Dragon",[3]],["Flying",[3]],["Special",[5]]]]]},{"id":"L012","n":663,"stop":4,"tok":[["wz",[20]],["streets",1],["evo",662,"l35"]],"g":["wz20","streets"],"evo":[],"dlc":false,"hs":[["hs",[["Fire",[4]],["Flying",[4]]]]]},{"id":"L073","n":681,"stop":4,"tok":[["wz",[20]],["evo",680,"duskstone"]],"g":["wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Steel",[4]]]]]},{"id":"L089","n":282,"stop":4,"tok":[["wz",[20]],["evo",281,"l30"]],"g":["wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Fairy",[4]],["Psychic",[4]],["Special",[5]]]]]},{"id":"L119","n":450,"stop":4,"tok":[["wz",[20]],["evo",449,"l34"]],"g":["wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Ground",[4]]]]]},{"id":"L127","n":68,"stop":4,"tok":[["wz",[20]],["evo",67,"trade"]],"g":["wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Fighting",[4]],["Special",[5]]]]]},{"id":"L171","n":478,"stop":4,"tok":[["wz",[20]],["evo",361,"femaledawnstone"]],"g":["wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Ice",[4]]]]]},{"id":"L072","n":680,"stop":4,"tok":[["labs"],["evo",679,"l35"]],"g":["labs"],"evo":[[[681,"duskstone"]]],"dlc":false,"hs":[["hs",[["Steel",[3,4]]]]]},{"id":"L003","n":154,"stop":4,"tok":[["evo",153,"l32"]],"g":["evo"],"evo":[],"dlc":false,"hs":[["hs",[["Grass",[4]]]]]},{"id":"L009","n":160,"stop":4,"tok":[["evo",159,"l30"]],"g":["evo"],"evo":[],"dlc":false,"hs":[["hs",[["Water",[4]]]]]},{"id":"L114","n":583,"stop":4,"tok":[["evo",582,"l35"]],"g":["evo"],"evo":[[[584,"l47"]]],"dlc":false,"hs":[["hs",[["Ice",[3,4]]]]]},{"id":"L150","n":3,"stop":4,"tok":[["evo",2,"l32"]],"g":["evo"],"evo":[],"dlc":false,"hs":[["hs",[["Grass",[4,5]],["Poison",[4]]]]]},{"id":"L177","n":212,"stop":4,"tok":[["evo",123,"trademetalcoat"]],"g":["evo"],"evo":[],"dlc":false,"hs":[["hs",[["Bug",[4]],["Steel",[4]]]]]},{"id":"L207","n":247,"stop":4,"tok":[["evo",246,"l30"]],"g":["evo"],"evo":[[[248,"l55"]]],"dlc":false,"hs":[["hs",[["Dark",[4]],["Rock",[4]],["Special",[5]]]]]},{"id":"L023","n":18,"stop":5,"tok":[["streets",1],["evo",17,"l36"]],"g":["streets"],"evo":[],"dlc":false,"hs":[["hs",[["Flying",[4]],["Normal",[4]]]]]},{"id":"L166","n":705,"stop":5,"tok":[["streets",1],["evo",704,"l40"]],"g":["streets"],"evo":[[[706,"l50rain"]]],"dlc":false,"hs":[["hs",[["Dragon",[4,5]]]]]},{"id":"L197","n":95,"stop":5,"tok":[["wz",[14]]],"g":["wz14"],"evo":[[[208,"trademetalcoat"]]],"dlc":false,"hs":[["hs",[["Ground",[1,3]],["Rock",[3]],["Steel",[4]],["Special",[5]]]]]},{"id":"L199","n":304,"stop":5,"tok":[["wz",[14]]],"g":["wz14"],"evo":[[[305,"l32"]],[[306,"l42"]]],"dlc":false,"hs":[["hs",[["Steel",[2,3]],["Rock",[3]]]]]},{"id":"L200","n":305,"stop":5,"tok":[["wz",[14]],["evo",304,"l32"]],"g":["wz14"],"evo":[[[306,"l42"]]],"dlc":false,"hs":[["hs",[["Rock",[3,4]],["Steel",[3,4]],["Special",[5]]]]]},{"id":"L202","n":694,"stop":5,"tok":[["wz",[14]]],"g":["wz14"],"evo":[[[695,"sunstone"]]],"dlc":false,"hs":[["hs",[["Electric",[2,4]],["Normal",[4]]]]]},{"id":"L112","n":354,"stop":5,"tok":[["wz",[15]],["evo",353,"l37"]],"g":["wz15"],"evo":[],"dlc":false,"hs":[["hs",[["Ghost",[3]]]]]},{"id":"L204","n":710,"stop":5,"tok":[["wz",[15]]],"g":["wz15"],"evo":[[[711,"trade"]]],"dlc":false,"hs":[["hs",[["Ghost",[1,4]],["Grass",[4]]]]]},{"id":"L205","n":711,"stop":5,"tok":[["wz",[15,20]],["evo",710,"trade"]],"g":["wz15","wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Ghost",[4]],["Grass",[4]]]]]},{"id":"L035","n":689,"stop":5,"tok":[["wz",[16,20]],["evo",688,"l39"]],"g":["wz16","wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Rock",[4]],["Water",[4]],["Special",[5]]]]]},{"id":"L084","n":308,"stop":5,"tok":[["wz",[16,20]],["evo",307,"l37"]],"g":["wz16","wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Fighting",[3]],["Psychic",[3]]]]]},{"id":"L050","n":569,"stop":5,"tok":[["wz",[20]],["streets",["Jaune"]],["evo",568,"l36"]],"g":["wz20","streets"],"evo":[],"dlc":false,"hs":[["hs",[["Poison",[4]]]]]},{"id":"L124","n":553,"stop":5,"tok":[["wz",[20]],["evo",552,"l40"]],"g":["wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Dark",[4]],["Ground",[4]]]]]},{"id":"L144","n":604,"stop":5,"tok":[["wz",[20]],["evo",603,"thunderstone"]],"g":["wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Electric",[4]]]]]},{"id":"L185","n":560,"stop":5,"tok":[["wz",[20]],["streets",1],["evo",559,"l39"]],"g":["wz20","streets"],"evo":[],"dlc":false,"hs":[["hs",[["Dark",[4]],["Fighting",[4]],["Special",[5]]]]]},{"id":"L201","n":306,"stop":5,"tok":[["wz",[20]],["evo",305,"l42"]],"g":["wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Rock",[4]],["Steel",[4]],["Special",[5]]]]]},{"id":"L203","n":695,"stop":5,"tok":[["wz",[20]],["evo",694,"sunstone"]],"g":["wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Electric",[4]],["Normal",[4]]]]]},{"id":"L006","n":500,"stop":5,"tok":[["evo",499,"l36"]],"g":["evo"],"evo":[],"dlc":false,"hs":[["hs",[["Fighting",[4]],["Fire",[4]]]]]},{"id":"L143","n":603,"stop":5,"tok":[["evo",602,"l39"]],"g":["evo"],"evo":[[[604,"thunderstone"]]],"dlc":false,"hs":[["hs",[["Electric",[3,4]]]]]},{"id":"L153","n":6,"stop":5,"tok":[["evo",5,"l36"]],"g":["evo"],"evo":[],"dlc":false,"hs":[["hs",[["Fire",[4,5]],["Flying",[4]]]]]},{"id":"L156","n":9,"stop":5,"tok":[["evo",8,"l36"]],"g":["evo"],"evo":[],"dlc":false,"hs":[["hs",[["Water",[4,5]]]]]},{"id":"L170","n":362,"stop":5,"tok":[["evo",361,"l42"]],"g":["evo"],"evo":[],"dlc":false,"hs":[["hs",[["Ice",[4]]]]]},{"id":"L194","n":697,"stop":5,"tok":[["evo",696,"lday39"]],"g":["evo"],"evo":[],"dlc":false,"hs":[["hs",[["Rock",[5]]]]]},{"id":"L196","n":699,"stop":5,"tok":[["evo",698,"lnight39"]],"g":["evo"],"evo":[],"dlc":false,"hs":[["hs",[["Rock",[5]]]]]},{"id":"L211","n":658,"stop":5,"tok":[["evo",657,"l36"]],"g":["evo"],"evo":[],"dlc":false,"hs":[["hs",[["Dark",[4]],["Water",[4,5]]]]]},{"id":"L215","n":652,"stop":5,"tok":[["evo",651,"l36"]],"g":["evo"],"evo":[],"dlc":false,"hs":[["hs",[["Fighting",[4]],["Grass",[4,5]]]]]},{"id":"L219","n":655,"stop":5,"tok":[["evo",654,"l36"]],"g":["evo"],"evo":[],"dlc":false,"hs":[["hs",[["Fire",[4,5]],["Psychic",[4]]]]]},{"id":"L212","n":870,"stop":6,"tok":[["wz",[16,20]]],"g":["wz16","wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Fighting",[3]]]]]},{"id":"L188","n":707,"stop":6,"tok":[["wz",[17,20]],["sewers"]],"g":["wz17","wz20","sewers"],"evo":[],"dlc":false,"hs":[["hs",[["Fairy",[2]],["Steel",[2]]]]]},{"id":"L190","n":608,"stop":6,"tok":[["wz",[17]],["evo",607,"l41"]],"g":["wz17"],"evo":[[[609,"duskstone"]]],"dlc":false,"hs":[["hs",[["Fire",[3,4]],["Ghost",[3,4]]]]]},{"id":"L216","n":227,"stop":6,"tok":[["wz",[17,20]]],"g":["wz17","wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Steel",[3]],["Flying",[4]]]]]},{"id":"L187","n":715,"stop":6,"tok":[["wz",[18,20]],["labs"],["evo",714,"l48"]],"g":["wz18","wz20","labs"],"evo":[],"dlc":false,"hs":[["hs",[["Dragon",[4]],["Flying",[4]],["Special",[5]]]]]},{"id":"L115","n":584,"stop":6,"tok":[["wz",[20]],["evo",583,"l47"]],"g":["wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Ice",[4]]]]]},{"id":"L130","n":445,"stop":6,"tok":[["wz",[20]],["evo",444,"l48"]],"g":["wz20"],"evo":[],"dlc":false},{"id":"L191","n":609,"stop":6,"tok":[["wz",[20]],["evo",608,"duskstone"]],"g":["wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Fire",[4]],["Ghost",[4]]]]]},{"id":"L220","n":371,"stop":7,"tok":[["wz",[18]]],"g":["wz18"],"evo":[[[372,"l30"]],[[373,"l50"]]],"dlc":false,"hs":[["hs",[["Dragon",[3,4]]]]]},{"id":"L222","n":373,"stop":7,"tok":[["wz",[18]],["evo",372,"l50"]],"g":["wz18"],"evo":[],"dlc":false},{"id":"L223","n":115,"stop":7,"tok":[["wz",[19,20]]],"g":["wz19","wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Normal",[4]]]]]},{"id":"L224","n":780,"stop":7,"tok":[["wz",[19,20]]],"g":["wz19","wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Dragon",[4]],["Normal",[4]]]]]},{"id":"L147","n":149,"stop":7,"tok":[["wz",[20]],["evo",148,"l55"]],"g":["wz20"],"evo":[],"dlc":false},{"id":"L167","n":706,"stop":7,"tok":[["wz",[20]],["evo",705,"l50rain"]],"g":["wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Dragon",[5]]]]]},{"id":"L208","n":248,"stop":7,"tok":[["wz",[20]],["evo",247,"l55"]],"g":["wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Dark",[4]]]]]},{"id":"L221","n":372,"stop":7,"tok":[["evo",371,"l30"]],"g":["evo"],"evo":[[[373,"l50"]]],"dlc":false,"hs":[["hs",[["Dragon",[4]]]]]},{"id":"L162","n":691,"stop":8,"tok":[["wz",[20]],["sewers"],["evo",690,"l48"]],"g":["wz20","sewers"],"evo":[],"dlc":false,"hs":[["hs",[["Dragon",[4]],["Poison",[4]]]]]},{"id":"L227","n":376,"stop":8,"tok":[["wz",[20]],["evo",375,"l45"]],"g":["wz20"],"evo":[],"dlc":false},{"id":"L161","n":690,"stop":8,"tok":[["sewers"]],"g":["sewers"],"evo":[[[691,"l48"]]],"dlc":false,"hs":[["hs",[["Poison",[3,4]],["Dragon",[4]]]]]},{"id":"L189","n":607,"stop":8,"tok":[["sewers"]],"g":["sewers"],"evo":[[[608,"l41"]],[[609,"duskstone"]]],"dlc":false,"hs":[["hs",[["Ghost",[1,3]],["Fire",[2,3]]]]]},{"id":"L225","n":374,"stop":8,"tok":[["labs"]],"g":["labs"],"evo":[[[375,"l20"]],[[376,"l45"]]],"dlc":false,"hs":[["hs",[["Steel",[2,4]],["Psychic",[3]]]]]},{"id":"L226","n":375,"stop":8,"tok":[["labs"],["evo",374,"l20"]],"g":["labs"],"evo":[[[376,"l45"]]],"dlc":false,"hs":[["hs",[["Steel",[4]]]]]},{"id":"L160","n":687,"stop":9,"tok":[["wz",[20]],["evo",686,"l303ds"]],"g":["wz20"],"evo":[],"dlc":false,"hs":[["hs",[["Dark",[4]],["Psychic",[4]]]]]},{"id":"L228","n":716,"stop":10,"tok":[["x","xerneas"]],"g":["wz11","gift"],"evo":[],"dlc":false},{"id":"L229","n":717,"stop":10,"tok":[["x","yveltal"]],"g":["streets","gift"],"evo":[],"dlc":false},{"id":"L230","n":718,"stop":10,"tok":[["x","zygarde"]],"g":["wz20","gift"],"evo":[],"dlc":false},{"id":"L231","n":719,"stop":10,"tok":[["x","diancie"]],"g":["streets","gift"],"evo":[],"dlc":false},{"id":"L232","n":150,"stop":10,"tok":[["x","mewtwo"]],"g":["labs","gift"],"evo":[],"dlc":false},{"id":"H035","n":999,"stop":11,"tok":[["x","gimmighoul"],["hs",[["Ghost",[5]]]]],"g":["hs-Ghost","gift"],"evo":[[[1000,"gimmighoulcoin"]]],"dlc":true},{"id":"H001","n":56,"stop":11,"tok":[["hs",[["Fighting",[1,3]]]]],"g":["hs-Fighting"],"evo":[[[57,"l28"]],[[979,"ragefist"]]],"dlc":true},{"id":"H002","n":57,"stop":11,"tok":[["hs",[["Fighting",[3]]]],["evo",56,"l28"]],"g":["hs-Fighting"],"evo":[[[979,"ragefist"]]],"dlc":true},{"id":"H004","n":52,"stop":11,"tok":[["hs",[["Dark",[1,4]],["Normal",[1,3]],["Steel",[2,4]],["Special",[5]]]]],"g":["hs-Dark","hs-Normal","hs-Steel","hs-Special"],"evo":[[[53,"l28"],[863,"l28"]]],"dlc":true},{"id":"H005","n":53,"stop":11,"tok":[["hs",[["Normal",[3]],["Dark",[4]]]],["evo",52,"l28"]],"g":["hs-Normal","hs-Dark"],"evo":[],"dlc":true},{"id":"H006","n":863,"stop":11,"tok":[["hs",[["Steel",[4]],["Special",[5]]]],["evo",52,"l28"]],"g":["hs-Steel","hs-Special"],"evo":[],"dlc":true},{"id":"H009","n":104,"stop":11,"tok":[["hs",[["Ground",[1,4]],["Fire",[4]]]]],"g":["hs-Ground","hs-Fire"],"evo":[[[105,"l28"]]],"dlc":true},{"id":"H010","n":105,"stop":11,"tok":[["hs",[["Fire",[4]],["Ground",[4]]]],["evo",104,"l28"]],"g":["hs-Fire","hs-Ground"],"evo":[],"dlc":true},{"id":"H023","n":971,"stop":11,"tok":[["hs",[["Ghost",[1,4]]]]],"g":["hs-Ghost"],"evo":[[[972,"l30night"]]],"dlc":true},{"id":"H024","n":972,"stop":11,"tok":[["hs",[["Ghost",[4]]]],["evo",971,"l30night"]],"g":["hs-Ghost"],"evo":[],"dlc":true},{"id":"H025","n":769,"stop":11,"tok":[["hs",[["Ground",[1,4]]]]],"g":["hs-Ground"],"evo":[[[770,"l42"]]],"dlc":true},{"id":"H026","n":770,"stop":11,"tok":[["hs",[["Ground",[4]]]],["evo",769,"l42"]],"g":["hs-Ground"],"evo":[],"dlc":true},{"id":"H048","n":349,"stop":11,"tok":[["streets",["Vert"]],["hs",[["Water",[2]]]]],"g":["hs-Water","streets"],"evo":[[[350,"levelpokeblock"]]],"dlc":true},{"id":"H050","n":433,"stop":11,"tok":[["hs",[["Psychic",[1,3]]]]],"g":["hs-Psychic"],"evo":[[[358,"happinessnight"]]],"dlc":true},{"id":"H051","n":358,"stop":11,"tok":[["hs",[["Psychic",[3]]]],["evo",433,"happinessnight"]],"g":["hs-Psychic"],"evo":[],"dlc":true},{"id":"H053","n":509,"stop":11,"tok":[["hs",[["Dark",[1,3]]]]],"g":["hs-Dark"],"evo":[[[510,"l20"]]],"dlc":true},{"id":"H054","n":510,"stop":11,"tok":[["hs",[["Dark",[3]]]],["evo",509,"l20"]],"g":["hs-Dark"],"evo":[],"dlc":true},{"id":"H055","n":517,"stop":11,"tok":[["hs",[["Psychic",[1,4]],["Special",[5]]]]],"g":["hs-Psychic","hs-Special"],"evo":[[[518,"moonstone"]]],"dlc":true},{"id":"H056","n":518,"stop":11,"tok":[["hs",[["Psychic",[4]],["Special",[5]]]],["evo",517,"moonstone"]],"g":["hs-Psychic","hs-Special"],"evo":[],"dlc":true},{"id":"H059","n":562,"stop":11,"tok":[["hs",[["Ghost",[1,3,4]],["Ground",[3]]]]],"g":["hs-Ghost","hs-Ground"],"evo":[[[563,"l34"],[867,"ldamage"]]],"dlc":true},{"id":"H060","n":563,"stop":11,"tok":[["hs",[["Ghost",[4]]]],["evo",562,"l34"]],"g":["hs-Ghost"],"evo":[],"dlc":true},{"id":"H062","n":767,"stop":11,"tok":[["hs",[["Bug",[1]],["Water",[3]]]]],"g":["hs-Bug","hs-Water"],"evo":[[[768,"l30"]]],"dlc":true},{"id":"H063","n":768,"stop":11,"tok":[["hs",[["Water",[3]]]],["evo",767,"l30"]],"g":["hs-Water"],"evo":[],"dlc":true},{"id":"H064","n":827,"stop":11,"tok":[["hs",[["Dark",[1,3]]]]],"g":["hs-Dark"],"evo":[[[828,"l18"]]],"dlc":true},{"id":"H065","n":828,"stop":11,"tok":[["hs",[["Dark",[3]]]],["evo",827,"l18"]],"g":["hs-Dark"],"evo":[],"dlc":true},{"id":"H066","n":852,"stop":11,"tok":[["hs",[["Fighting",[1,4]],["Special",[5]]]]],"g":["hs-Fighting","hs-Special"],"evo":[[[853,"leveltaunt"]]],"dlc":true},{"id":"H067","n":853,"stop":11,"tok":[["hs",[["Fighting",[4]],["Special",[5]]]],["evo",852,"leveltaunt"]],"g":["hs-Fighting","hs-Special"],"evo":[],"dlc":true},{"id":"H069","n":900,"stop":11,"tok":[["hs",[["Bug",[4]]]],["evo",123,"blackaugurite"]],"g":["hs-Bug"],"evo":[],"dlc":true},{"id":"H073","n":821,"stop":11,"tok":[["hs",[["Flying",[1,3]]]]],"g":["hs-Flying"],"evo":[[[822,"l18"]],[[823,"l38"]]],"dlc":true},{"id":"H074","n":822,"stop":11,"tok":[["hs",[["Flying",[3,4]]]],["evo",821,"l18"]],"g":["hs-Flying"],"evo":[[[823,"l38"]]],"dlc":true},{"id":"H075","n":823,"stop":11,"tok":[["hs",[["Flying",[4]]]],["evo",822,"l38"]],"g":["hs-Flying"],"evo":[],"dlc":true},{"id":"H081","n":396,"stop":11,"tok":[["hs",[["Flying",[1,3]],["Normal",[1,2]]]]],"g":["hs-Flying","hs-Normal"],"evo":[[[397,"l14"]],[[398,"l34"]]],"dlc":true},{"id":"H082","n":397,"stop":11,"tok":[["hs",[["Normal",[2,4]],["Flying",[3]]]],["evo",396,"l14"]],"g":["hs-Normal","hs-Flying"],"evo":[[[398,"l34"]]],"dlc":true},{"id":"H083","n":398,"stop":11,"tok":[["hs",[["Normal",[4]]]],["evo",397,"l34"]],"g":["hs-Normal"],"evo":[],"dlc":true},{"id":"H084","n":325,"stop":11,"tok":[["hs",[["Psychic",[1,4]]]]],"g":["hs-Psychic"],"evo":[[[326,"l32"]]],"dlc":true},{"id":"H085","n":326,"stop":11,"tok":[["hs",[["Psychic",[4]]]],["evo",325,"l32"]],"g":["hs-Psychic"],"evo":[],"dlc":true},{"id":"H086","n":931,"stop":11,"tok":[["hs",[["Normal",[1]]]]],"g":["hs-Normal"],"evo":[],"dlc":true},{"id":"H087","n":739,"stop":11,"tok":[["hs",[["Fighting",[1,4]],["Ice",[4]]]]],"g":["hs-Fighting","hs-Ice"],"evo":[[[740,"icestone"]]],"dlc":true},{"id":"H088","n":740,"stop":11,"tok":[["hs",[["Fighting",[4]],["Ice",[4]]]],["evo",739,"icestone"]],"g":["hs-Fighting","hs-Ice"],"evo":[],"dlc":true},{"id":"H092","n":316,"stop":11,"tok":[["hs",[["Poison",[1,4]]]]],"g":["hs-Poison"],"evo":[[[317,"l26"]]],"dlc":true},{"id":"H093","n":317,"stop":11,"tok":[["hs",[["Poison",[4]]]],["evo",316,"l26"]],"g":["hs-Poison"],"evo":[],"dlc":true},{"id":"H094","n":41,"stop":11,"tok":[["hs",[["Poison",[1]],["Flying",[3]]]]],"g":["hs-Poison","hs-Flying"],"evo":[[[42,"l22"]],[[169,"happiness"]]],"dlc":true},{"id":"H095","n":42,"stop":11,"tok":[["hs",[["Flying",[3]],["Poison",[4]]]],["evo",41,"l22"]],"g":["hs-Flying","hs-Poison"],"evo":[[[169,"happiness"]]],"dlc":true},{"id":"H096","n":169,"stop":11,"tok":[["hs",[["Poison",[4]]]],["evo",42,"happiness"]],"g":["hs-Poison"],"evo":[],"dlc":true},{"id":"H100","n":942,"stop":11,"tok":[["hs",[["Dark",[1,4]]]]],"g":["hs-Dark"],"evo":[[[943,"l30"]]],"dlc":true},{"id":"H101","n":943,"stop":11,"tok":[["hs",[["Dark",[4]]]],["evo",942,"l30"]],"g":["hs-Dark"],"evo":[],"dlc":true},{"id":"H104","n":944,"stop":11,"tok":[["hs",[["Poison",[1,4]],["Normal",[3]]]]],"g":["hs-Poison","hs-Normal"],"evo":[[[945,"l28"]]],"dlc":true},{"id":"H105","n":945,"stop":11,"tok":[["hs",[["Normal",[3]],["Poison",[4]]]],["evo",944,"l28"]],"g":["hs-Normal","hs-Poison"],"evo":[],"dlc":true},{"id":"H108","n":439,"stop":11,"tok":[["hs",[["Psychic",[1,3]],["Fairy",[2]]]]],"g":["hs-Psychic","hs-Fairy"],"evo":[[[122,"levelmimic"]],[[866,"l42"]]],"dlc":true},{"id":"H109","n":122,"stop":11,"tok":[["hs",[["Ice",[3,4]],["Psychic",[3]]]],["evo",439,"levelmimic"]],"g":["hs-Ice","hs-Psychic"],"evo":[[[866,"l42"]]],"dlc":true},{"id":"H110","n":866,"stop":11,"tok":[["hs",[["Ice",[4]]]],["evo",122,"l42"]],"g":["hs-Ice"],"evo":[],"dlc":true},{"id":"H003","n":979,"stop":11,"tok":[["evo",57,"ragefist"]],"g":["evo"],"evo":[],"dlc":true},{"id":"H036","n":1000,"stop":11,"tok":[["evo",999,"gimmighoulcoin"]],"g":["evo"],"evo":[],"dlc":true},{"id":"H049","n":350,"stop":11,"tok":[["evo",349,"levelpokeblock"]],"g":["evo"],"evo":[],"dlc":true},{"id":"H061","n":867,"stop":11,"tok":[["evo",562,"ldamage"]],"g":["evo"],"evo":[],"dlc":true},{"id":"H007","n":83,"stop":12,"tok":[["hs",[["Normal",[2]],["Fighting",[3]]]]],"g":["hs-Normal","hs-Fighting"],"evo":[[[865,"lbattles"]]],"dlc":true},{"id":"H014","n":951,"stop":12,"tok":[["hs",[["Grass",[2,3]],["Fire",[3]]]]],"g":["hs-Grass","hs-Fire"],"evo":[[[952,"firestone"]]],"dlc":true},{"id":"H015","n":952,"stop":12,"tok":[["hs",[["Fire",[3]],["Grass",[3]]]],["evo",951,"firestone"]],"g":["hs-Fire","hs-Grass"],"evo":[],"dlc":true},{"id":"H016","n":957,"stop":12,"tok":[["hs",[["Steel",[2,3]]]]],"g":["hs-Steel"],"evo":[[[958,"l24"]],[[959,"l38"]]],"dlc":true},{"id":"H017","n":958,"stop":12,"tok":[["hs",[["Steel",[3,4]],["Fairy",[4]]]],["evo",957,"l24"]],"g":["hs-Steel","hs-Fairy"],"evo":[[[959,"l38"]]],"dlc":true},{"id":"H018","n":959,"stop":12,"tok":[["hs",[["Fairy",[4]],["Steel",[4]]]],["evo",958,"l38"]],"g":["hs-Fairy","hs-Steel"],"evo":[],"dlc":true},{"id":"H037","n":211,"stop":12,"tok":[["hs",[["Water",[2]],["Poison",[3,5]]]]],"g":["hs-Water","hs-Poison"],"evo":[[[904,"barbbarrge"]]],"dlc":true},{"id":"H038","n":904,"stop":12,"tok":[["hs",[["Poison",[5]]]],["evo",211,"barbbarrge"]],"g":["hs-Poison"],"evo":[],"dlc":true},{"id":"H039","n":252,"stop":12,"tok":[["hs",[["Grass",[2,3,5]]]]],"g":["hs-Grass"],"evo":[[[253,"l16"]],[[254,"l36"]]],"dlc":true},{"id":"H040","n":253,"stop":12,"tok":[["hs",[["Grass",[3,4]]]],["evo",252,"l16"]],"g":["hs-Grass"],"evo":[[[254,"l36"]]],"dlc":true},{"id":"H041","n":254,"stop":12,"tok":[["hs",[["Grass",[4,5]]]],["evo",253,"l36"]],"g":["hs-Grass"],"evo":[],"dlc":true},{"id":"H042","n":255,"stop":12,"tok":[["hs",[["Fire",[2,3,5]]]]],"g":["hs-Fire"],"evo":[[[256,"l16"]],[[257,"l36"]]],"dlc":true},{"id":"H043","n":256,"stop":12,"tok":[["hs",[["Fire",[3,4]],["Fighting",[4]]]],["evo",255,"l16"]],"g":["hs-Fire","hs-Fighting"],"evo":[[[257,"l36"]]],"dlc":true},{"id":"H044","n":257,"stop":12,"tok":[["hs",[["Fighting",[4]],["Fire",[4,5]]]],["evo",256,"l36"]],"g":["hs-Fighting","hs-Fire"],"evo":[],"dlc":true},{"id":"H045","n":258,"stop":12,"tok":[["hs",[["Water",[2,3,5]]]]],"g":["hs-Water"],"evo":[[[259,"l16"]],[[260,"l36"]]],"dlc":true},{"id":"H046","n":259,"stop":12,"tok":[["hs",[["Water",[3,4]],["Ground",[4]]]],["evo",258,"l16"]],"g":["hs-Water","hs-Ground"],"evo":[[[260,"l36"]]],"dlc":true},{"id":"H047","n":260,"stop":12,"tok":[["hs",[["Ground",[4]],["Water",[4,5]]]],["evo",259,"l36"]],"g":["hs-Ground","hs-Water"],"evo":[],"dlc":true},{"id":"H076","n":174,"stop":12,"tok":[["hs",[["Fairy",[2,3]]]]],"g":["hs-Fairy"],"evo":[[[39,"happiness"]],[[40,"moonstone"]]],"dlc":true},{"id":"H077","n":39,"stop":12,"tok":[["hs",[["Fairy",[3,4]],["Special",[5]]]],["evo",174,"happiness"]],"g":["hs-Fairy","hs-Special"],"evo":[[[40,"moonstone"]]],"dlc":true},{"id":"H078","n":40,"stop":12,"tok":[["hs",[["Fairy",[4]],["Special",[5]]]],["evo",39,"moonstone"]],"g":["hs-Fairy","hs-Special"],"evo":[],"dlc":true},{"id":"H079","n":926,"stop":12,"tok":[["hs",[["Fairy",[2,3]]]]],"g":["hs-Fairy"],"evo":[[[927,"l26"]]],"dlc":true},{"id":"H080","n":927,"stop":12,"tok":[["hs",[["Fairy",[3]]]],["evo",926,"l26"]],"g":["hs-Fairy"],"evo":[],"dlc":true},{"id":"H097","n":935,"stop":12,"tok":[["hs",[["Fire",[2]]]]],"g":["hs-Fire"],"evo":[[[936,"auspiciousarmor"],[937,"maliciousarmor"]]],"dlc":true},{"id":"H102","n":848,"stop":12,"tok":[["hs",[["Electric",[2,4]]]]],"g":["hs-Electric"],"evo":[[[849,"nature30"]]],"dlc":true},{"id":"H103","n":849,"stop":12,"tok":[["hs",[["Electric",[4]]]],["evo",848,"nature30"]],"g":["hs-Electric"],"evo":[],"dlc":true},{"id":"H106","n":335,"stop":12,"tok":[["hs",[["Normal",[2]]]]],"g":["hs-Normal"],"evo":[],"dlc":true},{"id":"H111","n":590,"stop":12,"tok":[["hs",[["Grass",[2,4]]]]],"g":["hs-Grass"],"evo":[[[591,"l39"]]],"dlc":true},{"id":"H112","n":591,"stop":12,"tok":[["hs",[["Grass",[4]]]],["evo",590,"l39"]],"g":["hs-Grass"],"evo":[],"dlc":true},{"id":"H008","n":865,"stop":12,"tok":[["evo",83,"lbattles"]],"g":["evo"],"evo":[],"dlc":true},{"id":"H098","n":936,"stop":12,"tok":[["evo",935,"auspiciousarmor"]],"g":["evo"],"evo":[],"dlc":true},{"id":"H099","n":937,"stop":12,"tok":[["evo",935,"maliciousarmor"]],"g":["evo"],"evo":[],"dlc":true},{"id":"H011","n":137,"stop":13,"tok":[["hs",[["Normal",[3,5]]]]],"g":["hs-Normal"],"evo":[[[233,"tradeupgrade"]],[[474,"tradedubiousdisc"]]],"dlc":true},{"id":"H012","n":233,"stop":13,"tok":[["hs",[["Normal",[5]]]],["evo",137,"tradeupgrade"]],"g":["hs-Normal"],"evo":[[[474,"tradedubiousdisc"]]],"dlc":true},{"id":"H013","n":474,"stop":13,"tok":[["hs",[["Normal",[5]]]],["evo",233,"tradedubiousdisc"]],"g":["hs-Normal"],"evo":[],"dlc":true},{"id":"H020","n":969,"stop":13,"tok":[["hs",[["Poison",[3,4]],["Rock",[3,4]]]]],"g":["hs-Poison","hs-Rock"],"evo":[[[970,"l35"]]],"dlc":true},{"id":"H021","n":970,"stop":13,"tok":[["hs",[["Poison",[4]],["Rock",[4]]]],["evo",969,"l35"]],"g":["hs-Poison","hs-Rock"],"evo":[],"dlc":true},{"id":"H029","n":615,"stop":13,"tok":[["hs",[["Ice",[3]]]]],"g":["hs-Ice"],"evo":[],"dlc":true},{"id":"H052","n":876,"stop":13,"tok":[["hs",[["Normal",[3]]]]],"g":["hs-Normal"],"evo":[],"dlc":true},{"id":"H057","n":538,"stop":13,"tok":[["hs",[["Fighting",[3]],["Special",[5]]]]],"g":["hs-Fighting","hs-Special"],"evo":[],"dlc":true},{"id":"H058","n":539,"stop":13,"tok":[["hs",[["Fighting",[3]],["Special",[5]]]]],"g":["hs-Fighting","hs-Special"],"evo":[],"dlc":true},{"id":"H068","n":778,"stop":13,"tok":[["hs",[["Ghost",[3]]]]],"g":["hs-Ghost"],"evo":[],"dlc":true},{"id":"H070","n":877,"stop":13,"tok":[["hs",[["Electric",[3]]]]],"g":["hs-Electric"],"evo":[],"dlc":true},{"id":"H071","n":622,"stop":13,"tok":[["hs",[["Ground",[3,4]]]]],"g":["hs-Ground"],"evo":[[[623,"l43"]]],"dlc":true},{"id":"H072","n":623,"stop":13,"tok":[["hs",[["Ground",[4]]]],["evo",622,"l43"]],"g":["hs-Ground"],"evo":[],"dlc":true},{"id":"H089","n":932,"stop":13,"tok":[["hs",[["Rock",[3]]]]],"g":["hs-Rock"],"evo":[[[933,"l24"]],[[934,"l38"]]],"dlc":true},{"id":"H090","n":933,"stop":13,"tok":[["hs",[["Rock",[3,4]],["Special",[5]]]],["evo",932,"l24"]],"g":["hs-Rock","hs-Special"],"evo":[[[934,"l38"]]],"dlc":true},{"id":"H091","n":934,"stop":13,"tok":[["hs",[["Rock",[4]],["Special",[5]]]],["evo",933,"l38"]],"g":["hs-Rock","hs-Special"],"evo":[],"dlc":true},{"id":"H107","n":336,"stop":13,"tok":[["hs",[["Poison",[3]]]]],"g":["hs-Poison"],"evo":[],"dlc":true},{"id":"H019","n":967,"stop":14,"tok":[["hs",[["Dragon",[4]],["Normal",[4]]]]],"g":["hs-Dragon","hs-Normal"],"evo":[],"dlc":true},{"id":"H027","n":352,"stop":14,"tok":[["hs",[["Normal",[4]]]]],"g":["hs-Normal"],"evo":[],"dlc":true},{"id":"H028","n":973,"stop":14,"tok":[["hs",[["Flying",[4]]]]],"g":["hs-Flying"],"evo":[],"dlc":true},{"id":"H030","n":977,"stop":14,"tok":[["hs",[["Water",[4]]]]],"g":["hs-Water"],"evo":[],"dlc":true},{"id":"H031","n":978,"stop":14,"tok":[["hs",[["Water",[4]]]]],"g":["hs-Water"],"evo":[],"dlc":true},{"id":"H022","n":479,"stop":15,"tok":[["hs",[["Electric",[5]]]]],"g":["hs-Electric"],"evo":[],"dlc":true},{"id":"H032","n":996,"stop":15,"tok":[["hs",[["Dragon",[5]],["Ice",[5]]]]],"g":["hs-Dragon","hs-Ice"],"evo":[[[997,"l35"]],[[998,"l54"]]],"dlc":true},{"id":"H033","n":997,"stop":15,"tok":[["hs",[["Dragon",[5]],["Ice",[5]]]],["evo",996,"l35"]],"g":["hs-Dragon","hs-Ice"],"evo":[[[998,"l54"]]],"dlc":true},{"id":"H034","n":998,"stop":15,"tok":[["hs",[["Dragon",[5]],["Ice",[5]]]],["evo",997,"l54"]],"g":["hs-Dragon","hs-Ice"],"evo":[],"dlc":true},{"id":"H113","n":485,"stop":16,"tok":[["x","heatran"]],"g":["gift"],"evo":[],"dlc":true},{"id":"H114","n":721,"stop":16,"tok":[["x","volcanion"]],"g":["gift"],"evo":[],"dlc":true},{"id":"H115","n":638,"stop":16,"tok":[["x","scan"]],"g":["gift"],"evo":[],"dlc":true},{"id":"H116","n":639,"stop":16,"tok":[["x","scan"]],"g":["gift"],"evo":[],"dlc":true},{"id":"H117","n":640,"stop":16,"tok":[["x","scan"]],"g":["gift"],"evo":[],"dlc":true},{"id":"H118","n":647,"stop":16,"tok":[["x","scan"]],"g":["gift"],"evo":[],"dlc":true},{"id":"H119","n":648,"stop":16,"tok":[["x","scan"]],"g":["gift"],"evo":[],"dlc":true},{"id":"H120","n":649,"stop":16,"tok":[["x","genesect"]],"g":["gift"],"evo":[],"dlc":true},{"id":"H121","n":720,"stop":16,"tok":[["x","hoopa"]],"g":["gift"],"evo":[],"dlc":true},{"id":"H122","n":802,"stop":16,"tok":[["x","marshadow"]],"g":["gift"],"evo":[],"dlc":true},{"id":"H123","n":808,"stop":16,"tok":[["x","meltan"]],"g":["gift"],"evo":[[[809,"meltan400"]]],"dlc":true},{"id":"H124","n":809,"stop":16,"tok":[["x","melmetal"]],"g":["gift"],"evo":[],"dlc":true},{"id":"H125","n":491,"stop":16,"tok":[["x","darkrai"]],"g":["gift"],"evo":[],"dlc":true},{"id":"H126","n":380,"stop":16,"tok":[["x","scan"]],"g":["gift"],"evo":[],"dlc":true},{"id":"H127","n":381,"stop":16,"tok":[["x","scan"]],"g":["gift"],"evo":[],"dlc":true},{"id":"H128","n":382,"stop":16,"tok":[["x","kyogre"]],"g":["gift"],"evo":[],"dlc":true},{"id":"H129","n":383,"stop":16,"tok":[["x","groudon"]],"g":["gift"],"evo":[],"dlc":true},{"id":"H130","n":384,"stop":16,"tok":[["x","rayquaza"]],"g":["gift"],"evo":[],"dlc":true},{"id":"H131","n":801,"stop":16,"tok":[["x","magearna"]],"g":["gift"],"evo":[],"dlc":true},{"id":"H132","n":807,"stop":16,"tok":[["x","zeraora"]],"g":["gift"],"evo":[],"dlc":true}],"stops":["Main Missions 1–2: arrival in Lumiose City","Main Mission 3: Wild Zone 1 and the city streets","Main Mission 5: Wild Zones 2–6","Main Mission 10: Wild Zones 7–10","Main Mission 15: Wild Zones 11–13","Main Mission 20: Wild Zones 14–15","Main Mission 25: Wild Zones 16–17","Main Mission 30: Wild Zones 18–19","The Sewers, Lysandre Labs and the Old House","Post-game: Wild Zone 20 (Main Mission 39)","Post-game: Legendary Pokémon","Mega Dimension: Hyperspace ★1","Mega Dimension: Hyperspace ★2","Mega Dimension: Hyperspace ★3","Mega Dimension: Hyperspace ★4","Mega Dimension: Hyperspace ★5","Mega Dimension: story and special encounters"],"stones":[{"id":"abomasite","item":713,"name":"Abomasite","n":460,"loc":"Shop Vernal Avenue","dlc":false},{"id":"absolite","item":716,"name":"Absolite","n":359,"loc":"Vert District","dlc":false},{"id":"absolite-z","item":2265,"name":"Absolite Z","n":359,"loc":"Hyperspace Disaster Arena","dlc":true},{"id":"aerodactylite","item":711,"name":"Aerodactylite","n":142,"loc":"Shop Quasartico Inc.","dlc":false},{"id":"aggronite","item":706,"name":"Aggronite","n":306,"loc":"Shop Quasartico Inc.","dlc":false},{"id":"alakazite","item":718,"name":"Alakazite","n":65,"loc":"Shop Quasartico Inc.","dlc":false},{"id":"altarianite","item":796,"name":"Altarianite","n":334,"loc":"Magenta District (Magenta Sector 4)","dlc":false},{"id":"ampharosite","item":697,"name":"Ampharosite","n":181,"loc":"Rouge District (Rouge Sector 6)","dlc":false},{"id":"audinite","item":798,"name":"Audinite","n":531,"loc":"Shop Quasartico Inc.","dlc":false},{"id":"banettite","item":707,"name":"Banettite","n":354,"loc":"Jaune District (Jaune Sector 9)","dlc":false},{"id":"barbaracite","item":2255,"name":"Barbaracite","n":689,"loc":"Bleu District (Bleu Sector 5)","dlc":false},{"id":"baxcalibrite","item":2275,"name":"Baxcalibrite","n":998,"loc":"Ranked Battle Rank-up reward","dlc":true},{"id":"beedrillite","item":811,"name":"Beedrillite","n":15,"loc":"Vert District (Vert Sector 5)","dlc":false},{"id":"blastoisinite","item":700,"name":"Blastoisinite","n":9,"loc":"Shop Vernal Avenue","dlc":false},{"id":"blazikenite","item":703,"name":"Blazikenite","n":257,"loc":"Ranked Battle Rank-up reward","dlc":true},{"id":"cameruptite","item":808,"name":"Cameruptite","n":323,"loc":"Jaune District (Jaune Sector 3)","dlc":false},{"id":"chandelurite","item":2248,"name":"Chandelurite","n":609,"loc":"Shop Quasartico Inc.","dlc":false},{"id":"charizardite-x","item":699,"name":"Charizardite X","n":6,"loc":"Shop Vernal Avenue","dlc":false},{"id":"charizardite-y","item":717,"name":"Charizardite Y","n":6,"loc":"Shop Vernal Avenue","dlc":false},{"id":"chesnaughtite","item":2249,"name":"Chesnaughtite","n":652,"loc":"Z-A Battle Club Ranked Reward","dlc":false},{"id":"chimechite","item":2264,"name":"Chimechite","n":358,"loc":"Hyperspace Lumiose","dlc":true},{"id":"clefablite","item":2233,"name":"Clefablite","n":36,"loc":"Shop Quasartico Inc.","dlc":false},{"id":"crabominite","item":2271,"name":"Crabominite","n":740,"loc":"Side Mission 141: Rogue Mega Showdown","dlc":true},{"id":"darkranite","item":2242,"name":"Darkranite","n":491,"loc":"Hyperspace Newmoon Nightmare","dlc":true},{"id":"delphoxite","item":2250,"name":"Delphoxite","n":655,"loc":"Z-A Battle Club Ranked Reward","dlc":false},{"id":"diancite","item":805,"name":"Diancite","n":719,"loc":"Mystery Gift","dlc":false},{"id":"dragalgite","item":2256,"name":"Dragalgite","n":691,"loc":"Shop Quasartico Inc.","dlc":false},{"id":"dragoninite","item":2236,"name":"Dragoninite","n":149,"loc":"Vert District (Vert Sector 3)","dlc":false},{"id":"drampanite","item":2259,"name":"Drampanite","n":780,"loc":"Shop Quasartico Inc.","dlc":false},{"id":"eelektrossite","item":2247,"name":"Eelektrossite","n":604,"loc":"Shop Quasartico Inc.","dlc":false},{"id":"emboarite","item":2243,"name":"Emboarite","n":500,"loc":"Hotel Z Shop Vernal Avenue","dlc":false},{"id":"excadrite","item":2244,"name":"Excadrite","n":530,"loc":"Shop Quasartico Inc.","dlc":false},{"id":"falinksite","item":2261,"name":"Falinksite","n":870,"loc":"Shop Quasartico Inc.","dlc":false},{"id":"feraligite","item":2238,"name":"Feraligite","n":160,"loc":"Hotel Z Shop Vernal Avenue","dlc":false},{"id":"floettite","item":2253,"name":"Floettite","n":670,"loc":"Quasartico Inc.","dlc":false},{"id":"froslassite","item":2240,"name":"Froslassite","n":478,"loc":"Bleu District (Aymlis Park)","dlc":false},{"id":"galladite","item":797,"name":"Galladite","n":475,"loc":"Shop Quasartico Inc.","dlc":false},{"id":"garchompite","item":722,"name":"Garchompite","n":445,"loc":"Shop Vernal Avenue","dlc":false},{"id":"garchompite-z","item":2267,"name":"Garchompite Z","n":445,"loc":"Hyperspace Lumiose (Event)","dlc":true},{"id":"gardevoirite","item":696,"name":"Gardevoirite","n":282,"loc":"Shop Quasartico Inc.","dlc":false},{"id":"gengarite","item":695,"name":"Gengarite","n":94,"loc":"Shop Vernal Avenue","dlc":false},{"id":"glalitite","item":804,"name":"Glalitite","n":362,"loc":"Shop Quasartico Inc.","dlc":false},{"id":"glimmoranite","item":2277,"name":"Glimmoranite","n":970,"loc":"Hyperspace Lumiose","dlc":true},{"id":"golisopite","item":2272,"name":"Golisopite","n":768,"loc":"Hyperspace Lumiose","dlc":true},{"id":"golurkite","item":2269,"name":"Golurkite","n":623,"loc":"Hyperspace Lumiose","dlc":true},{"id":"greninjite","item":2251,"name":"Greninjite","n":658,"loc":"Z-A Battle Club Ranked Reward","dlc":false},{"id":"gyaradosite","item":715,"name":"Gyaradosite","n":130,"loc":"Shop Quasartico Inc.","dlc":false},{"id":"hawluchanite","item":2257,"name":"Hawluchanite","n":701,"loc":"Magenta District (Magenta Sector 3)","dlc":false},{"id":"heatranite","item":2241,"name":"Heatranite","n":485,"loc":"Hyperspace Infernal Arena","dlc":true},{"id":"heracronite","item":719,"name":"Heracronite","n":214,"loc":"Shop Quasartico Inc.","dlc":false},{"id":"houndoominite","item":705,"name":"Houndoominite","n":229,"loc":"Shop Quasartico Inc.","dlc":false},{"id":"kangaskhanite","item":714,"name":"Kangaskhanite","n":115,"loc":"Shop Vernal Avenue","dlc":false},{"id":"latiasite","item":760,"name":"Latiasite","n":380,"loc":"Side Mission 189: Siblings of the Sky","dlc":true},{"id":"latiosite","item":761,"name":"Latiosite","n":381,"loc":"Side Mission 189: Siblings of the Sky","dlc":true},{"id":"lopunnite","item":809,"name":"Lopunnite","n":428,"loc":"Shop Quasartico Inc.","dlc":false},{"id":"lucarionite","item":712,"name":"Lucarionite","n":448,"loc":"Shop Quasartico Inc.","dlc":false},{"id":"lucarionite-z","item":2268,"name":"Lucarionite Z","n":448,"loc":"Side Mission 197: Ultra-Hardcore Lucario Showdown","dlc":true},{"id":"magearnite","item":2273,"name":"Magearnite","n":801,"loc":"Quasartico Inc.","dlc":true},{"id":"malamarite","item":2254,"name":"Malamarite","n":687,"loc":"Shop Quasartico Inc.","dlc":false},{"id":"manectite","item":721,"name":"Manectite","n":310,"loc":"Shop Quasartico Inc.","dlc":false},{"id":"mawilite","item":720,"name":"Mawilite","n":303,"loc":"Magenta District (Magenta Sector 6)","dlc":false},{"id":"medichamite","item":704,"name":"Medichamite","n":308,"loc":"Shop Vernal Avenue","dlc":false},{"id":"meganiumite","item":2237,"name":"Meganiumite","n":154,"loc":"Hotel Z Shop Vernal Avenue","dlc":false},{"id":"meowsticite","item":2270,"name":"Meowsticite","n":678,"loc":"Hyperspace Second-Sight Arena","dlc":true},{"id":"metagrossite","item":799,"name":"Metagrossite","n":376,"loc":"Shop Quasartico Inc.","dlc":false},{"id":"mewtwonite-x","item":701,"name":"Mewtwonite X","n":150,"loc":"Mystery Gift","dlc":false},{"id":"mewtwonite-y","item":702,"name":"Mewtwonite Y","n":150,"loc":"Mystery Gift","dlc":false},{"id":"pidgeotite","item":803,"name":"Pidgeotite","n":18,"loc":"Shop Quasartico Inc.","dlc":false},{"id":"pinsirite","item":710,"name":"Pinsirite","n":127,"loc":"Shop Quasartico Inc.","dlc":false},{"id":"pyroarite","item":2252,"name":"Pyroarite","n":668,"loc":"Shop Quasartico Inc.","dlc":false},{"id":"raichunite-x","item":2262,"name":"Raichunite X","n":26,"loc":"Side Mission 139: The Dauntless Raichu Duo","dlc":true},{"id":"raichunite-y","item":2263,"name":"Raichunite Y","n":26,"loc":"Side Mission 139: The Dauntless Raichu Duo","dlc":true},{"id":"sablenite","item":795,"name":"Sablenite","n":302,"loc":"Shop Quasartico Inc.","dlc":false},{"id":"salamencite","item":810,"name":"Salamencite","n":373,"loc":"Shop Quasartico Inc.","dlc":false},{"id":"sceptilite","item":794,"name":"Sceptilite","n":254,"loc":"Ranked Battle Rank-up reward","dlc":true},{"id":"scizorite","item":709,"name":"Scizorite","n":212,"loc":"Shop Vernal Avenue","dlc":false},{"id":"scolipite","item":2245,"name":"Scolipite","n":545,"loc":"Shop Quasartico Inc.","dlc":false},{"id":"scovillainite","item":2274,"name":"Scovillainite","n":952,"loc":"Hyperspace Lumiose","dlc":true},{"id":"scraftinite","item":2246,"name":"Scraftinite","n":560,"loc":"Shop Quasartico Inc.","dlc":false},{"id":"sharpedonite","item":800,"name":"Sharpedonite","n":319,"loc":"Shop Quasartico Inc.","dlc":false},{"id":"skarmorite","item":2239,"name":"Skarmorite","n":227,"loc":"Shop Quasartico Inc.","dlc":false},{"id":"slowbronite","item":801,"name":"Slowbronite","n":80,"loc":"Bleu District (Aymlis Park)","dlc":false},{"id":"staraptite","item":2266,"name":"Staraptite","n":398,"loc":"Hyperspace Hunting Grounds","dlc":true},{"id":"starminite","item":2235,"name":"Starminite","n":121,"loc":"Bleu District (Bleu Sector 9)","dlc":false},{"id":"steelixite","item":802,"name":"Steelixite","n":208,"loc":"Shop Vernal Avenue","dlc":false},{"id":"swampertite","item":793,"name":"Swampertite","n":260,"loc":"Ranked Battle Rank-up reward","dlc":true},{"id":"tatsugirinite","item":2276,"name":"Tatsugirinite","n":978,"loc":"Hyperspace Sushi Paradise","dlc":true},{"id":"tyranitarite","item":708,"name":"Tyranitarite","n":248,"loc":"Jaune District (Jaune Sector 4)","dlc":false},{"id":"venusaurite","item":698,"name":"Venusaurite","n":3,"loc":"Jaune District (Jaune Sector 8)","dlc":false},{"id":"victreebelite","item":2234,"name":"Victreebelite","n":71,"loc":"Magenta District (Magenta Sector 9)","dlc":false},{"id":"zeraorite","item":2260,"name":"Zeraorite","n":807,"loc":"Hyperspace Lumiose","dlc":true},{"id":"zygardite","item":2258,"name":"Zygardite","n":718,"loc":"Centrico Plaza","dlc":false}]};
+const N = {"NAMES":{"en":{"1":"Bulbasaur","2":"Ivysaur","3":"Venusaur","4":"Charmander","5":"Charmeleon","6":"Charizard","7":"Squirtle","8":"Wartortle","9":"Blastoise","13":"Weedle","14":"Kakuna","15":"Beedrill","16":"Pidgey","17":"Pidgeotto","18":"Pidgeot","23":"Ekans","24":"Arbok","25":"Pikachu","26":"Raichu","35":"Clefairy","36":"Clefable","39":"Jigglypuff","40":"Wigglytuff","41":"Zubat","42":"Golbat","52":"Meowth","53":"Persian","56":"Mankey","57":"Primeape","63":"Abra","64":"Kadabra","65":"Alakazam","66":"Machop","67":"Machoke","68":"Machamp","69":"Bellsprout","70":"Weepinbell","71":"Victreebel","79":"Slowpoke","80":"Slowbro","83":"Farfetch’d","92":"Gastly","93":"Haunter","94":"Gengar","95":"Onix","104":"Cubone","105":"Marowak","115":"Kangaskhan","120":"Staryu","121":"Starmie","122":"Mr. Mime","123":"Scyther","127":"Pinsir","129":"Magikarp","130":"Gyarados","133":"Eevee","134":"Vaporeon","135":"Jolteon","136":"Flareon","137":"Porygon","142":"Aerodactyl","147":"Dratini","148":"Dragonair","149":"Dragonite","150":"Mewtwo","152":"Chikorita","153":"Bayleef","154":"Meganium","158":"Totodile","159":"Croconaw","160":"Feraligatr","167":"Spinarak","168":"Ariados","169":"Crobat","172":"Pichu","173":"Cleffa","174":"Igglybuff","179":"Mareep","180":"Flaaffy","181":"Ampharos","196":"Espeon","197":"Umbreon","199":"Slowking","208":"Steelix","211":"Qwilfish","212":"Scizor","214":"Heracross","225":"Delibird","227":"Skarmory","228":"Houndour","229":"Houndoom","233":"Porygon2","246":"Larvitar","247":"Pupitar","248":"Tyranitar","252":"Treecko","253":"Grovyle","254":"Sceptile","255":"Torchic","256":"Combusken","257":"Blaziken","258":"Mudkip","259":"Marshtomp","260":"Swampert","280":"Ralts","281":"Kirlia","282":"Gardevoir","302":"Sableye","303":"Mawile","304":"Aron","305":"Lairon","306":"Aggron","307":"Meditite","308":"Medicham","309":"Electrike","310":"Manectric","315":"Roselia","316":"Gulpin","317":"Swalot","318":"Carvanha","319":"Sharpedo","322":"Numel","323":"Camerupt","325":"Spoink","326":"Grumpig","333":"Swablu","334":"Altaria","335":"Zangoose","336":"Seviper","349":"Feebas","350":"Milotic","352":"Kecleon","353":"Shuppet","354":"Banette","358":"Chimecho","359":"Absol","361":"Snorunt","362":"Glalie","371":"Bagon","372":"Shelgon","373":"Salamence","374":"Beldum","375":"Metang","376":"Metagross","380":"Latias","381":"Latios","382":"Kyogre","383":"Groudon","384":"Rayquaza","396":"Starly","397":"Staravia","398":"Staraptor","406":"Budew","407":"Roserade","427":"Buneary","428":"Lopunny","433":"Chingling","439":"Mime Jr.","443":"Gible","444":"Gabite","445":"Garchomp","447":"Riolu","448":"Lucario","449":"Hippopotas","450":"Hippowdon","459":"Snover","460":"Abomasnow","470":"Leafeon","471":"Glaceon","474":"Porygon-Z","475":"Gallade","478":"Froslass","479":"Rotom","485":"Heatran","491":"Darkrai","498":"Tepig","499":"Pignite","500":"Emboar","504":"Patrat","505":"Watchog","509":"Purrloin","510":"Liepard","511":"Pansage","512":"Simisage","513":"Pansear","514":"Simisear","515":"Panpour","516":"Simipour","517":"Munna","518":"Musharna","529":"Drilbur","530":"Excadrill","531":"Audino","538":"Throh","539":"Sawk","543":"Venipede","544":"Whirlipede","545":"Scolipede","551":"Sandile","552":"Krokorok","553":"Krookodile","559":"Scraggy","560":"Scrafty","562":"Yamask","563":"Cofagrigus","568":"Trubbish","569":"Garbodor","582":"Vanillite","583":"Vanillish","584":"Vanilluxe","587":"Emolga","590":"Foongus","591":"Amoonguss","602":"Tynamo","603":"Eelektrik","604":"Eelektross","607":"Litwick","608":"Lampent","609":"Chandelure","615":"Cryogonal","618":"Stunfisk","622":"Golett","623":"Golurk","638":"Cobalion","639":"Terrakion","640":"Virizion","647":"Keldeo","648":"Meloetta","649":"Genesect","650":"Chespin","651":"Quilladin","652":"Chesnaught","653":"Fennekin","654":"Braixen","655":"Delphox","656":"Froakie","657":"Frogadier","658":"Greninja","659":"Bunnelby","660":"Diggersby","661":"Fletchling","662":"Fletchinder","663":"Talonflame","664":"Scatterbug","665":"Spewpa","666":"Vivillon","667":"Litleo","668":"Pyroar","669":"Flabébé","670":"Floette","671":"Florges","672":"Skiddo","673":"Gogoat","674":"Pancham","675":"Pangoro","676":"Furfrou","677":"Espurr","678":"Meowstic","679":"Honedge","680":"Doublade","681":"Aegislash","682":"Spritzee","683":"Aromatisse","684":"Swirlix","685":"Slurpuff","686":"Inkay","687":"Malamar","688":"Binacle","689":"Barbaracle","690":"Skrelp","691":"Dragalge","692":"Clauncher","693":"Clawitzer","694":"Helioptile","695":"Heliolisk","696":"Tyrunt","697":"Tyrantrum","698":"Amaura","699":"Aurorus","700":"Sylveon","701":"Hawlucha","702":"Dedenne","703":"Carbink","704":"Goomy","705":"Sliggoo","706":"Goodra","707":"Klefki","708":"Phantump","709":"Trevenant","710":"Pumpkaboo","711":"Gourgeist","712":"Bergmite","713":"Avalugg","714":"Noibat","715":"Noivern","716":"Xerneas","717":"Yveltal","718":"Zygarde","719":"Diancie","720":"Hoopa","721":"Volcanion","739":"Crabrawler","740":"Crabominable","767":"Wimpod","768":"Golisopod","769":"Sandygast","770":"Palossand","778":"Mimikyu","780":"Drampa","801":"Magearna","802":"Marshadow","807":"Zeraora","808":"Meltan","809":"Melmetal","821":"Rookidee","822":"Corvisquire","823":"Corviknight","827":"Nickit","828":"Thievul","848":"Toxel","849":"Toxtricity","852":"Clobbopus","853":"Grapploct","863":"Perrserker","865":"Sirfetch’d","866":"Mr. Rime","867":"Runerigus","870":"Falinks","876":"Indeedee","877":"Morpeko","900":"Kleavor","904":"Overqwil","926":"Fidough","927":"Dachsbun","931":"Squawkabilly","932":"Nacli","933":"Naclstack","934":"Garganacl","935":"Charcadet","936":"Armarouge","937":"Ceruledge","942":"Maschiff","943":"Mabosstiff","944":"Shroodle","945":"Grafaiai","951":"Capsakid","952":"Scovillain","957":"Tinkatink","958":"Tinkatuff","959":"Tinkaton","967":"Cyclizar","969":"Glimmet","970":"Glimmora","971":"Greavard","972":"Houndstone","973":"Flamigo","977":"Dondozo","978":"Tatsugiri","979":"Annihilape","996":"Frigibax","997":"Arctibax","998":"Baxcalibur","999":"Gimmighoul","1000":"Gholdengo"},"ja":{"1":"フシギダネ","2":"フシギソウ","3":"フシギバナ","4":"ヒトカゲ","5":"リザード","6":"リザードン","7":"ゼニガメ","8":"カメール","9":"カメックス","13":"ビードル","14":"コクーン","15":"スピアー","16":"ポッポ","17":"ピジョン","18":"ピジョット","23":"アーボ","24":"アーボック","25":"ピカチュウ","26":"ライチュウ","35":"ピッピ","36":"ピクシー","39":"プリン","40":"プクリン","41":"ズバット","42":"ゴルバット","52":"ニャース","53":"ペルシアン","56":"マンキー","57":"オコリザル","63":"ケーシィ","64":"ユンゲラー","65":"フーディン","66":"ワンリキー","67":"ゴーリキー","68":"カイリキー","69":"マダツボミ","70":"ウツドン","71":"ウツボット","79":"ヤドン","80":"ヤドラン","83":"カモネギ","92":"ゴース","93":"ゴースト","94":"ゲンガー","95":"イワーク","104":"カラカラ","105":"ガラガラ","115":"ガルーラ","120":"ヒトデマン","121":"スターミー","122":"バリヤード","123":"ストライク","127":"カイロス","129":"コイキング","130":"ギャラドス","133":"イーブイ","134":"シャワーズ","135":"サンダース","136":"ブースター","137":"ポリゴン","142":"プテラ","147":"ミニリュウ","148":"ハクリュー","149":"カイリュー","150":"ミュウツー","152":"チコリータ","153":"ベイリーフ","154":"メガニウム","158":"ワニノコ","159":"アリゲイツ","160":"オーダイル","167":"イトマル","168":"アリアドス","169":"クロバット","172":"ピチュー","173":"ピィ","174":"ププリン","179":"メリープ","180":"モココ","181":"デンリュウ","196":"エーフィ","197":"ブラッキー","199":"ヤドキング","208":"ハガネール","211":"ハリーセン","212":"ハッサム","214":"ヘラクロス","225":"デリバード","227":"エアームド","228":"デルビル","229":"ヘルガー","233":"ポリゴン２","246":"ヨーギラス","247":"サナギラス","248":"バンギラス","252":"キモリ","253":"ジュプトル","254":"ジュカイン","255":"アチャモ","256":"ワカシャモ","257":"バシャーモ","258":"ミズゴロウ","259":"ヌマクロー","260":"ラグラージ","280":"ラルトス","281":"キルリア","282":"サーナイト","302":"ヤミラミ","303":"クチート","304":"ココドラ","305":"コドラ","306":"ボスゴドラ","307":"アサナン","308":"チャーレム","309":"ラクライ","310":"ライボルト","315":"ロゼリア","316":"ゴクリン","317":"マルノーム","318":"キバニア","319":"サメハダー","322":"ドンメル","323":"バクーダ","325":"バネブー","326":"ブーピッグ","333":"チルット","334":"チルタリス","335":"ザングース","336":"ハブネーク","349":"ヒンバス","350":"ミロカロス","352":"カクレオン","353":"カゲボウズ","354":"ジュペッタ","358":"チリーン","359":"アブソル","361":"ユキワラシ","362":"オニゴーリ","371":"タツベイ","372":"コモルー","373":"ボーマンダ","374":"ダンバル","375":"メタング","376":"メタグロス","380":"ラティアス","381":"ラティオス","382":"カイオーガ","383":"グラードン","384":"レックウザ","396":"ムックル","397":"ムクバード","398":"ムクホーク","406":"スボミー","407":"ロズレイド","427":"ミミロル","428":"ミミロップ","433":"リーシャン","439":"マネネ","443":"フカマル","444":"ガバイト","445":"ガブリアス","447":"リオル","448":"ルカリオ","449":"ヒポポタス","450":"カバルドン","459":"ユキカブリ","460":"ユキノオー","470":"リーフィア","471":"グレイシア","474":"ポリゴンＺ","475":"エルレイド","478":"ユキメノコ","479":"ロトム","485":"ヒードラン","491":"ダークライ","498":"ポカブ","499":"チャオブー","500":"エンブオー","504":"ミネズミ","505":"ミルホッグ","509":"チョロネコ","510":"レパルダス","511":"ヤナップ","512":"ヤナッキー","513":"バオップ","514":"バオッキー","515":"ヒヤップ","516":"ヒヤッキー","517":"ムンナ","518":"ムシャーナ","529":"モグリュー","530":"ドリュウズ","531":"タブンネ","538":"ナゲキ","539":"ダゲキ","543":"フシデ","544":"ホイーガ","545":"ペンドラー","551":"メグロコ","552":"ワルビル","553":"ワルビアル","559":"ズルッグ","560":"ズルズキン","562":"デスマス","563":"デスカーン","568":"ヤブクロン","569":"ダストダス","582":"バニプッチ","583":"バニリッチ","584":"バイバニラ","587":"エモンガ","590":"タマゲタケ","591":"モロバレル","602":"シビシラス","603":"シビビール","604":"シビルドン","607":"ヒトモシ","608":"ランプラー","609":"シャンデラ","615":"フリージオ","618":"マッギョ","622":"ゴビット","623":"ゴルーグ","638":"コバルオン","639":"テラキオン","640":"ビリジオン","647":"ケルディオ","648":"メロエッタ","649":"ゲノセクト","650":"ハリマロン","651":"ハリボーグ","652":"ブリガロン","653":"フォッコ","654":"テールナー","655":"マフォクシー","656":"ケロマツ","657":"ゲコガシラ","658":"ゲッコウガ","659":"ホルビー","660":"ホルード","661":"ヤヤコマ","662":"ヒノヤコマ","663":"ファイアロー","664":"コフキムシ","665":"コフーライ","666":"ビビヨン","667":"シシコ","668":"カエンジシ","669":"フラベベ","670":"フラエッテ","671":"フラージェス","672":"メェークル","673":"ゴーゴート","674":"ヤンチャム","675":"ゴロンダ","676":"トリミアン","677":"ニャスパー","678":"ニャオニクス","679":"ヒトツキ","680":"ニダンギル","681":"ギルガルド","682":"シュシュプ","683":"フレフワン","684":"ペロッパフ","685":"ペロリーム","686":"マーイーカ","687":"カラマネロ","688":"カメテテ","689":"ガメノデス","690":"クズモー","691":"ドラミドロ","692":"ウデッポウ","693":"ブロスター","694":"エリキテル","695":"エレザード","696":"チゴラス","697":"ガチゴラス","698":"アマルス","699":"アマルルガ","700":"ニンフィア","701":"ルチャブル","702":"デデンネ","703":"メレシー","704":"ヌメラ","705":"ヌメイル","706":"ヌメルゴン","707":"クレッフィ","708":"ボクレー","709":"オーロット","710":"バケッチャ","711":"パンプジン","712":"カチコール","713":"クレベース","714":"オンバット","715":"オンバーン","716":"ゼルネアス","717":"イベルタル","718":"ジガルデ","719":"ディアンシー","720":"フーパ","721":"ボルケニオン","739":"マケンカニ","740":"ケケンカニ","767":"コソクムシ","768":"グソクムシャ","769":"スナバァ","770":"シロデスナ","778":"ミミッキュ","780":"ジジーロン","801":"マギアナ","802":"マーシャドー","807":"ゼラオラ","808":"メルタン","809":"メルメタル","821":"ココガラ","822":"アオガラス","823":"アーマーガア","827":"クスネ","828":"フォクスライ","848":"エレズン","849":"ストリンダー","852":"タタッコ","853":"オトスパス","863":"ニャイキング","865":"ネギガナイト","866":"バリコオル","867":"デスバーン","870":"タイレーツ","876":"イエッサン","877":"モルペコ","900":"バサギリ","904":"ハリーマン","926":"パピモッチ","927":"バウッツェル","931":"イキリンコ","932":"コジオ","933":"ジオヅム","934":"キョジオーン","935":"カルボウ","936":"グレンアルマ","937":"ソウブレイズ","942":"オラチフ","943":"マフィティフ","944":"シルシュルー","945":"タギングル","951":"カプサイジ","952":"スコヴィラン","957":"カヌチャン","958":"ナカヌチャン","959":"デカヌチャン","967":"モトトカゲ","969":"キラーメ","970":"キラフロル","971":"ボチ","972":"ハカドッグ","973":"カラミンゴ","977":"ヘイラッシャ","978":"シャリタツ","979":"コノヨザル","996":"セビエ","997":"セゴール","998":"セグレイブ","999":"コレクレー","1000":"サーフゴー"},"fr":{"1":"Bulbizarre","2":"Herbizarre","3":"Florizarre","4":"Salamèche","5":"Reptincel","6":"Dracaufeu","7":"Carapuce","8":"Carabaffe","9":"Tortank","13":"Aspicot","14":"Coconfort","15":"Dardargnan","16":"Roucool","17":"Roucoups","18":"Roucarnage","23":"Abo","24":"Arbok","25":"Pikachu","26":"Raichu","35":"Mélofée","36":"Mélodelfe","39":"Rondoudou","40":"Grodoudou","41":"Nosferapti","42":"Nosferalto","52":"Miaouss","53":"Persian","56":"Férosinge","57":"Colossinge","63":"Abra","64":"Kadabra","65":"Alakazam","66":"Machoc","67":"Machopeur","68":"Mackogneur","69":"Chétiflor","70":"Boustiflor","71":"Empiflor","79":"Ramoloss","80":"Flagadoss","83":"Canarticho","92":"Fantominus","93":"Spectrum","94":"Ectoplasma","95":"Onix","104":"Osselait","105":"Ossatueur","115":"Kangourex","120":"Stari","121":"Staross","122":"M. Mime","123":"Insécateur","127":"Scarabrute","129":"Magicarpe","130":"Léviator","133":"Évoli","134":"Aquali","135":"Voltali","136":"Pyroli","137":"Porygon","142":"Ptéra","147":"Minidraco","148":"Draco","149":"Dracolosse","150":"Mewtwo","152":"Germignon","153":"Macronium","154":"Méganium","158":"Kaiminus","159":"Crocrodil","160":"Aligatueur","167":"Mimigal","168":"Migalos","169":"Nostenfer","172":"Pichu","173":"Mélo","174":"Toudoudou","179":"Wattouat","180":"Lainergie","181":"Pharamp","196":"Mentali","197":"Noctali","199":"Roigada","208":"Steelix","211":"Qwilfish","212":"Cizayox","214":"Scarhino","225":"Cadoizo","227":"Airmure","228":"Malosse","229":"Démolosse","233":"Porygon2","246":"Embrylex","247":"Ymphect","248":"Tyranocif","252":"Arcko","253":"Massko","254":"Jungko","255":"Poussifeu","256":"Galifeu","257":"Braségali","258":"Gobou","259":"Flobio","260":"Laggron","280":"Tarsal","281":"Kirlia","282":"Gardevoir","302":"Ténéfix","303":"Mysdibule","304":"Galekid","305":"Galegon","306":"Galeking","307":"Méditikka","308":"Charmina","309":"Dynavolt","310":"Élecsprint","315":"Rosélia","316":"Gloupti","317":"Avaltout","318":"Carvanha","319":"Sharpedo","322":"Chamallot","323":"Camérupt","325":"Spoink","326":"Groret","333":"Tylton","334":"Altaria","335":"Mangriff","336":"Séviper","349":"Barpau","350":"Milobellus","352":"Kecleon","353":"Polichombr","354":"Branette","358":"Éoko","359":"Absol","361":"Stalgamin","362":"Oniglali","371":"Draby","372":"Drackhaus","373":"Drattak","374":"Terhal","375":"Métang","376":"Métalosse","380":"Latias","381":"Latios","382":"Kyogre","383":"Groudon","384":"Rayquaza","396":"Étourmi","397":"Étourvol","398":"Étouraptor","406":"Rozbouton","407":"Roserade","427":"Laporeille","428":"Lockpin","433":"Korillon","439":"Mime Jr.","443":"Griknot","444":"Carmache","445":"Carchacrok","447":"Riolu","448":"Lucario","449":"Hippopotas","450":"Hippodocus","459":"Blizzi","460":"Blizzaroi","470":"Phyllali","471":"Givrali","474":"Porygon-Z","475":"Gallame","478":"Momartik","479":"Motisma","485":"Heatran","491":"Darkrai","498":"Gruikui","499":"Grotichon","500":"Roitiflam","504":"Ratentif","505":"Miradar","509":"Chacripan","510":"Léopardus","511":"Feuillajou","512":"Feuiloutan","513":"Flamajou","514":"Flamoutan","515":"Flotajou","516":"Flotoutan","517":"Munna","518":"Mushana","529":"Rototaupe","530":"Minotaupe","531":"Nanméouïe","538":"Judokrak","539":"Karaclée","543":"Venipatte","544":"Scobolide","545":"Brutapode","551":"Mascaïman","552":"Escroco","553":"Crocorible","559":"Baggiguane","560":"Baggaïd","562":"Tutafeh","563":"Tutankafer","568":"Miamiasme","569":"Miasmax","582":"Sorbébé","583":"Sorboul","584":"Sorbouboul","587":"Emolga","590":"Trompignon","591":"Gaulet","602":"Anchwatt","603":"Lampéroie","604":"Ohmassacre","607":"Funécire","608":"Mélancolux","609":"Lugulabre","615":"Hexagel","618":"Limonde","622":"Gringolem","623":"Golemastoc","638":"Cobaltium","639":"Terrakium","640":"Viridium","647":"Keldeo","648":"Meloetta","649":"Genesect","650":"Marisson","651":"Boguérisse","652":"Blindépique","653":"Feunnec","654":"Roussil","655":"Goupelin","656":"Grenousse","657":"Croâporal","658":"Amphinobi","659":"Sapereau","660":"Excavarenne","661":"Passerouge","662":"Braisillon","663":"Flambusard","664":"Lépidonille","665":"Pérégrain","666":"Prismillon","667":"Hélionceau","668":"Némélios","669":"Flabébé","670":"Floette","671":"Florges","672":"Cabriolaine","673":"Chevroum","674":"Pandespiègle","675":"Pandarbare","676":"Couafarel","677":"Psystigri","678":"Mistigrix","679":"Monorpale","680":"Dimoclès","681":"Exagide","682":"Fluvetin","683":"Cocotine","684":"Sucroquin","685":"Cupcanaille","686":"Sepiatop","687":"Sepiatroce","688":"Opermine","689":"Golgopathe","690":"Venalgue","691":"Kravarech","692":"Flingouste","693":"Gamblast","694":"Galvaran","695":"Iguolta","696":"Ptyranidur","697":"Rexillius","698":"Amagara","699":"Dragmara","700":"Nymphali","701":"Brutalibré","702":"Dedenne","703":"Strassie","704":"Mucuscule","705":"Colimucus","706":"Muplodocus","707":"Trousselin","708":"Brocélôme","709":"Desséliande","710":"Pitrouille","711":"Banshitrouye","712":"Grelaçon","713":"Séracrawl","714":"Sonistrelle","715":"Bruyverne","716":"Xerneas","717":"Yveltal","718":"Zygarde","719":"Diancie","720":"Hoopa","721":"Volcanion","739":"Crabagarre","740":"Crabominable","767":"Sovkipou","768":"Sarmuraï","769":"Bacabouh","770":"Trépassable","778":"Mimiqui","780":"Draïeul","801":"Magearna","802":"Marshadow","807":"Zeraora","808":"Meltan","809":"Melmetal","821":"Minisange","822":"Bleuseille","823":"Corvaillus","827":"Goupilou","828":"Roublenard","848":"Toxizap","849":"Salarsen","852":"Poulpaf","853":"Krakos","863":"Berserkatt","865":"Palarticho","866":"M. Glaquette","867":"Tutétékri","870":"Hexadron","876":"Wimessir","877":"Morpeko","900":"Hachécateur","904":"Qwilpik","926":"Pâtachiot","927":"Briochien","931":"Tapatoès","932":"Selutin","933":"Amassel","934":"Gigansel","935":"Charbambin","936":"Carmadura","937":"Malvalame","942":"Grondogue","943":"Dogrino","944":"Gribouraigne","945":"Tag-Tag","951":"Pimito","952":"Scovilain","957":"Forgerette","958":"Forgella","959":"Forgelina","967":"Motorizard","969":"Germéclat","970":"Floréclat","971":"Toutombe","972":"Tomberro","973":"Flamenroule","977":"Oyacata","978":"Nigirigon","979":"Courrousinge","996":"Frigodo","997":"Cryodo","998":"Glaivodo","999":"Mordudor","1000":"Gromago"},"de":{"1":"Bisasam","2":"Bisaknosp","3":"Bisaflor","4":"Glumanda","5":"Glutexo","6":"Glurak","7":"Schiggy","8":"Schillok","9":"Turtok","13":"Hornliu","14":"Kokuna","15":"Bibor","16":"Taubsi","17":"Tauboga","18":"Tauboss","23":"Rettan","24":"Arbok","25":"Pikachu","26":"Raichu","35":"Piepi","36":"Pixi","39":"Pummeluff","40":"Knuddeluff","41":"Zubat","42":"Golbat","52":"Mauzi","53":"Snobilikat","56":"Menki","57":"Rasaff","63":"Abra","64":"Kadabra","65":"Simsala","66":"Machollo","67":"Maschock","68":"Machomei","69":"Knofensa","70":"Ultrigaria","71":"Sarzenia","79":"Flegmon","80":"Lahmus","83":"Porenta","92":"Nebulak","93":"Alpollo","94":"Gengar","95":"Onix","104":"Tragosso","105":"Knogga","115":"Kangama","120":"Sterndu","121":"Starmie","122":"Pantimos","123":"Sichlor","127":"Pinsir","129":"Karpador","130":"Garados","133":"Evoli","134":"Aquana","135":"Blitza","136":"Flamara","137":"Porygon","142":"Aerodactyl","147":"Dratini","148":"Dragonir","149":"Dragoran","150":"Mewtu","152":"Endivie","153":"Lorblatt","154":"Meganie","158":"Karnimani","159":"Tyracroc","160":"Impergator","167":"Webarak","168":"Ariados","169":"Iksbat","172":"Pichu","173":"Pii","174":"Fluffeluff","179":"Voltilamm","180":"Waaty","181":"Ampharos","196":"Psiana","197":"Nachtara","199":"Laschoking","208":"Stahlos","211":"Baldorfish","212":"Scherox","214":"Skaraborn","225":"Botogel","227":"Panzaeron","228":"Hunduster","229":"Hundemon","233":"Porygon2","246":"Larvitar","247":"Pupitar","248":"Despotar","252":"Geckarbor","253":"Reptain","254":"Gewaldro","255":"Flemmli","256":"Jungglut","257":"Lohgock","258":"Hydropi","259":"Moorabbel","260":"Sumpex","280":"Trasla","281":"Kirlia","282":"Guardevoir","302":"Zobiris","303":"Flunkifer","304":"Stollunior","305":"Stollrak","306":"Stolloss","307":"Meditie","308":"Meditalis","309":"Frizelbliz","310":"Voltenso","315":"Roselia","316":"Schluppuck","317":"Schlukwech","318":"Kanivanha","319":"Tohaido","322":"Camaub","323":"Camerupt","325":"Spoink","326":"Groink","333":"Wablu","334":"Altaria","335":"Sengo","336":"Vipitis","349":"Barschwa","350":"Milotic","352":"Kecleon","353":"Shuppet","354":"Banette","358":"Palimpalim","359":"Absol","361":"Schneppke","362":"Firnontor","371":"Kindwurm","372":"Draschel","373":"Brutalanda","374":"Tanhel","375":"Metang","376":"Metagross","380":"Latias","381":"Latios","382":"Kyogre","383":"Groudon","384":"Rayquaza","396":"Staralili","397":"Staravia","398":"Staraptor","406":"Knospi","407":"Roserade","427":"Haspiror","428":"Schlapor","433":"Klingplim","439":"Pantimimi","443":"Kaumalat","444":"Knarksel","445":"Knakrack","447":"Riolu","448":"Lucario","449":"Hippopotas","450":"Hippoterus","459":"Shnebedeck","460":"Rexblisar","470":"Folipurba","471":"Glaziola","474":"Porygon-Z","475":"Galagladi","478":"Frosdedje","479":"Rotom","485":"Heatran","491":"Darkrai","498":"Floink","499":"Ferkokel","500":"Flambirex","504":"Nagelotz","505":"Kukmarda","509":"Felilou","510":"Kleoparda","511":"Vegimak","512":"Vegichita","513":"Grillmak","514":"Grillchita","515":"Sodamak","516":"Sodachita","517":"Somniam","518":"Somnivora","529":"Rotomurf","530":"Stalobor","531":"Ohrdoch","538":"Jiutesto","539":"Karadonis","543":"Toxiped","544":"Rollum","545":"Cerapendra","551":"Ganovil","552":"Rokkaiman","553":"Rabigator","559":"Zurrokex","560":"Irokex","562":"Makabaja","563":"Echnatoll","568":"Unratütox","569":"Deponitox","582":"Gelatini","583":"Gelatroppo","584":"Gelatwino","587":"Emolga","590":"Tarnpignon","591":"Hutsassa","602":"Zapplardin","603":"Zapplalek","604":"Zapplarang","607":"Lichtel","608":"Laternecto","609":"Skelabra","615":"Frigometri","618":"Flunschlik","622":"Golbit","623":"Golgantes","638":"Kobalium","639":"Terrakium","640":"Viridium","647":"Keldeo","648":"Meloetta","649":"Genesect","650":"Igamaro","651":"Igastarnish","652":"Brigaron","653":"Fynx","654":"Rutena","655":"Fennexis","656":"Froxy","657":"Amphizel","658":"Quajutsu","659":"Scoppel","660":"Grebbit","661":"Dartiri","662":"Dartignis","663":"Fiaro","664":"Purmel","665":"Puponcho","666":"Vivillon","667":"Leufeo","668":"Pyroleo","669":"Flabébé","670":"Floette","671":"Florges","672":"Mähikel","673":"Chevrumm","674":"Pam-Pam","675":"Pandagro","676":"Coiffwaff","677":"Psiau","678":"Psiaugon","679":"Gramokles","680":"Duokles","681":"Durengard","682":"Parfi","683":"Parfinesse","684":"Flauschling","685":"Sabbaione","686":"Iscalar","687":"Calamanero","688":"Bithora","689":"Thanathora","690":"Algitt","691":"Tandrak","692":"Scampisto","693":"Wummer","694":"Eguana","695":"Elezard","696":"Balgoras","697":"Monargoras","698":"Amarino","699":"Amagarga","700":"Feelinara","701":"Resladero","702":"Dedenne","703":"Rocara","704":"Viscora","705":"Viscargot","706":"Viscogon","707":"Clavion","708":"Paragoni","709":"Trombork","710":"Irrbis","711":"Pumpdjinn","712":"Arktip","713":"Arktilas","714":"eF-eM","715":"UHaFnir","716":"Xerneas","717":"Yveltal","718":"Zygarde","719":"Diancie","720":"Hoopa","721":"Volcanion","739":"Krabbox","740":"Krawell","767":"Reißlaus","768":"Tectass","769":"Sankabuh","770":"Colossand","778":"Mimigma","780":"Sen-Long","801":"Magearna","802":"Marshadow","807":"Zeraora","808":"Meltan","809":"Melmetal","821":"Meikro","822":"Kranoviz","823":"Krarmor","827":"Kleptifux","828":"Gaunux","848":"Toxel","849":"Riffex","852":"Klopptopus","853":"Kaocto","863":"Mauzinger","865":"Lauchzelot","866":"Pantifrost","867":"Oghnatoll","870":"Legios","876":"Servol","877":"Morpeko","900":"Axantor","904":"Myriador","926":"Hefel","927":"Backel","931":"Krawalloro","932":"Geosali","933":"Sedisal","934":"Saltigant","935":"Knarbon","936":"Crimanzo","937":"Azugladis","942":"Mobtiff","943":"Mastifioso","944":"Sproxi","945":"Affiti","951":"Chilingel","952":"Halupenjo","957":"Forgita","958":"Tafforgita","959":"Granforgita","967":"Mopex","969":"Lumispross","970":"Lumiflora","971":"Gruff","972":"Friedwuff","973":"Flaminkno","977":"Heerashai","978":"Nigiragi","979":"Epitaff","996":"Frospino","997":"Cryospino","998":"Espinodon","999":"Gierspenst","1000":"Monetigo"},"ko":{"1":"이상해씨","2":"이상해풀","3":"이상해꽃","4":"파이리","5":"리자드","6":"리자몽","7":"꼬부기","8":"어니부기","9":"거북왕","13":"뿔충이","14":"딱충이","15":"독침붕","16":"구구","17":"피죤","18":"피죤투","23":"아보","24":"아보크","25":"피카츄","26":"라이츄","35":"삐삐","36":"픽시","39":"푸린","40":"푸크린","41":"주뱃","42":"골뱃","52":"나옹","53":"페르시온","56":"망키","57":"성원숭","63":"캐이시","64":"윤겔라","65":"후딘","66":"알통몬","67":"근육몬","68":"괴력몬","69":"모다피","70":"우츠동","71":"우츠보트","79":"야돈","80":"야도란","83":"파오리","92":"고오스","93":"고우스트","94":"팬텀","95":"롱스톤","104":"탕구리","105":"텅구리","115":"캥카","120":"별가사리","121":"아쿠스타","122":"마임맨","123":"스라크","127":"쁘사이저","129":"잉어킹","130":"갸라도스","133":"이브이","134":"샤미드","135":"쥬피썬더","136":"부스터","137":"폴리곤","142":"프테라","147":"미뇽","148":"신뇽","149":"망나뇽","150":"뮤츠","152":"치코리타","153":"베이리프","154":"메가니움","158":"리아코","159":"엘리게이","160":"장크로다일","167":"페이검","168":"아리아도스","169":"크로뱃","172":"피츄","173":"삐","174":"푸푸린","179":"메리프","180":"보송송","181":"전룡","196":"에브이","197":"블래키","199":"야도킹","208":"강철톤","211":"침바루","212":"핫삼","214":"헤라크로스","225":"딜리버드","227":"무장조","228":"델빌","229":"헬가","233":"폴리곤2","246":"애버라스","247":"데기라스","248":"마기라스","252":"나무지기","253":"나무돌이","254":"나무킹","255":"아차모","256":"영치코","257":"번치코","258":"물짱이","259":"늪짱이","260":"대짱이","280":"랄토스","281":"킬리아","282":"가디안","302":"깜까미","303":"입치트","304":"가보리","305":"갱도라","306":"보스로라","307":"요가랑","308":"요가램","309":"썬더라이","310":"썬더볼트","315":"로젤리아","316":"꼴깍몬","317":"꿀꺽몬","318":"샤프니아","319":"샤크니아","322":"둔타","323":"폭타","325":"피그점프","326":"피그킹","333":"파비코","334":"파비코리","335":"쟝고","336":"세비퍼","349":"빈티나","350":"밀로틱","352":"켈리몬","353":"어둠대신","354":"다크펫","358":"치렁","359":"앱솔","361":"눈꼬마","362":"얼음귀신","371":"아공이","372":"쉘곤","373":"보만다","374":"메탕","375":"메탕구","376":"메타그로스","380":"라티아스","381":"라티오스","382":"가이오가","383":"그란돈","384":"레쿠쟈","396":"찌르꼬","397":"찌르버드","398":"찌르호크","406":"꼬몽울","407":"로즈레이드","427":"이어롤","428":"이어롭","433":"랑딸랑","439":"흉내내","443":"딥상어동","444":"한바이트","445":"한카리아스","447":"리오르","448":"루카리오","449":"히포포타스","450":"하마돈","459":"눈쓰개","460":"눈설왕","470":"리피아","471":"글레이시아","474":"폴리곤Z","475":"엘레이드","478":"눈여아","479":"로토무","485":"히드런","491":"다크라이","498":"뚜꾸리","499":"차오꿀","500":"염무왕","504":"보르쥐","505":"보르그","509":"쌔비냥","510":"레파르다스","511":"야나프","512":"야나키","513":"바오프","514":"바오키","515":"앗차프","516":"앗차키","517":"몽나","518":"몽얌나","529":"두더류","530":"몰드류","531":"다부니","538":"던지미","539":"타격귀","543":"마디네","544":"휠구","545":"펜드라","551":"깜눈크","552":"악비르","553":"악비아르","559":"곤율랭","560":"곤율거니","562":"데스마스","563":"데스니칸","568":"깨봉이","569":"더스트나","582":"바닐프티","583":"바닐리치","584":"배바닐라","587":"에몽가","590":"깜놀버슬","591":"뽀록나","602":"저리어","603":"저리릴","604":"저리더프","607":"불켜미","608":"램프라","609":"샹델라","615":"프리지오","618":"메더","622":"골비람","623":"골루그","638":"코바르온","639":"테라키온","640":"비리디온","647":"케르디오","648":"메로엣타","649":"게노세크트","650":"도치마론","651":"도치보구","652":"브리가론","653":"푸호꼬","654":"테르나","655":"마폭시","656":"개구마르","657":"개굴반장","658":"개굴닌자","659":"파르빗","660":"파르토","661":"화살꼬빈","662":"불화살빈","663":"파이어로","664":"분이벌레","665":"분떠도리","666":"비비용","667":"레오꼬","668":"화염레오","669":"플라베베","670":"플라엣테","671":"플라제스","672":"메이클","673":"고고트","674":"판짱","675":"부란다","676":"트리미앙","677":"냐스퍼","678":"냐오닉스","679":"단칼빙","680":"쌍검킬","681":"킬가르도","682":"슈쁘","683":"프레프티르","684":"나룸퍼프","685":"나루림","686":"오케이징","687":"칼라마네로","688":"거북손손","689":"거북손데스","690":"수레기","691":"드래캄","692":"완철포","693":"블로스터","694":"목도리키텔","695":"일레도리자드","696":"티고라스","697":"견고라스","698":"아마루스","699":"아마루르가","700":"님피아","701":"루차불","702":"데덴네","703":"멜리시","704":"미끄메라","705":"미끄네일","706":"미끄래곤","707":"클레피","708":"나목령","709":"대로트","710":"호바귀","711":"펌킨인","712":"꽁어름","713":"크레베이스","714":"음뱃","715":"음번","716":"제르네아스","717":"이벨타르","718":"지가르데","719":"디안시","720":"후파","721":"볼케니온","739":"오기지게","740":"모단단게","767":"꼬시레","768":"갑주무사","769":"모래꿍","770":"모래성이당","778":"따라큐","780":"할비롱","801":"마기아나","802":"마샤도","807":"제라오라","808":"멜탄","809":"멜메탈","821":"파라꼬","822":"파크로우","823":"아머까오","827":"훔처우","828":"폭슬라이","848":"일레즌","849":"스트린더","852":"때때무노","853":"케오퍼스","863":"나이킹","865":"창파나이트","866":"마임꽁꽁","867":"데스판","870":"대여르","876":"에써르","877":"모르페코","900":"사마자르","904":"장침바루","926":"쫀도기","927":"바우첼","931":"시비꼬","932":"베베솔트","933":"스태솔트","934":"콜로솔트","935":"카르본","936":"카디나르마","937":"파라블레이즈","942":"오라티프","943":"마피티프","944":"땃쭈르","945":"태깅구르","951":"캡싸이","952":"스코빌런","957":"어리짱","958":"벼리짱","959":"두드리짱","967":"모토마","969":"초롱순","970":"킬라플로르","971":"망망이","972":"묘두기","973":"꼬이밍고","977":"어써러셔","978":"싸리용","979":"저승갓숭","996":"드니차","997":"드니꽁","998":"드닐레이브","999":"모으령","1000":"타부자고"},"zh-Hant":{"1":"妙蛙種子","2":"妙蛙草","3":"妙蛙花","4":"小火龍","5":"火恐龍","6":"噴火龍","7":"傑尼龜","8":"卡咪龜","9":"水箭龜","13":"獨角蟲","14":"鐵殼蛹","15":"大針蜂","16":"波波","17":"比比鳥","18":"大比鳥","23":"阿柏蛇","24":"阿柏怪","25":"皮卡丘","26":"雷丘","35":"皮皮","36":"皮可西","39":"胖丁","40":"胖可丁","41":"超音蝠","42":"大嘴蝠","52":"喵喵","53":"貓老大","56":"猴怪","57":"火爆猴","63":"凱西","64":"勇基拉","65":"胡地","66":"腕力","67":"豪力","68":"怪力","69":"喇叭芽","70":"口呆花","71":"大食花","79":"呆呆獸","80":"呆殼獸","83":"大蔥鴨","92":"鬼斯","93":"鬼斯通","94":"耿鬼","95":"大岩蛇","104":"卡拉卡拉","105":"嘎啦嘎啦","115":"袋獸","120":"海星星","121":"寶石海星","122":"魔牆人偶","123":"飛天螳螂","127":"凱羅斯","129":"鯉魚王","130":"暴鯉龍","133":"伊布","134":"水伊布","135":"雷伊布","136":"火伊布","137":"多邊獸","142":"化石翼龍","147":"迷你龍","148":"哈克龍","149":"快龍","150":"超夢","152":"菊草葉","153":"月桂葉","154":"大竺葵","158":"小鋸鱷","159":"藍鱷","160":"大力鱷","167":"圓絲蛛","168":"阿利多斯","169":"叉字蝠","172":"皮丘","173":"皮寶寶","174":"寶寶丁","179":"咩利羊","180":"茸茸羊","181":"電龍","196":"太陽伊布","197":"月亮伊布","199":"呆呆王","208":"大鋼蛇","211":"千針魚","212":"巨鉗螳螂","214":"赫拉克羅斯","225":"信使鳥","227":"盔甲鳥","228":"戴魯比","229":"黑魯加","233":"多邊獸Ⅱ","246":"幼基拉斯","247":"沙基拉斯","248":"班基拉斯","252":"木守宮","253":"森林蜥蜴","254":"蜥蜴王","255":"火稚雞","256":"力壯雞","257":"火焰雞","258":"水躍魚","259":"沼躍魚","260":"巨沼怪","280":"拉魯拉絲","281":"奇魯莉安","282":"沙奈朵","302":"勾魂眼","303":"大嘴娃","304":"可可多拉","305":"可多拉","306":"波士可多拉","307":"瑪沙那","308":"恰雷姆","309":"落雷獸","310":"雷電獸","315":"毒薔薇","316":"溶食獸","317":"吞食獸","318":"利牙魚","319":"巨牙鯊","322":"呆火駝","323":"噴火駝","325":"跳跳豬","326":"噗噗豬","333":"青綿鳥","334":"七夕青鳥","335":"貓鼬斬","336":"飯匙蛇","349":"醜醜魚","350":"美納斯","352":"變隱龍","353":"怨影娃娃","354":"詛咒娃娃","358":"風鈴鈴","359":"阿勃梭魯","361":"雪童子","362":"冰鬼護","371":"寶貝龍","372":"甲殼龍","373":"暴飛龍","374":"鐵啞鈴","375":"金屬怪","376":"巨金怪","380":"拉帝亞斯","381":"拉帝歐斯","382":"蓋歐卡","383":"固拉多","384":"烈空坐","396":"姆克兒","397":"姆克鳥","398":"姆克鷹","406":"含羞苞","407":"羅絲雷朵","427":"捲捲耳","428":"長耳兔","433":"鈴鐺響","439":"魔尼尼","443":"圓陸鯊","444":"尖牙陸鯊","445":"烈咬陸鯊","447":"利歐路","448":"路卡利歐","449":"沙河馬","450":"河馬獸","459":"雪笠怪","460":"暴雪王","470":"葉伊布","471":"冰伊布","474":"多邊獸Ｚ","475":"艾路雷朵","478":"雪妖女","479":"洛托姆","485":"席多藍恩","491":"達克萊伊","498":"暖暖豬","499":"炒炒豬","500":"炎武王","504":"探探鼠","505":"步哨鼠","509":"扒手貓","510":"酷豹","511":"花椰猴","512":"花椰猿","513":"爆香猴","514":"爆香猿","515":"冷水猴","516":"冷水猿","517":"食夢夢","518":"夢夢蝕","529":"螺釘地鼠","530":"龍頭地鼠","531":"差不多娃娃","538":"投摔鬼","539":"打擊鬼","543":"百足蜈蚣","544":"車輪毬","545":"蜈蚣王","551":"黑眼鱷","552":"混混鱷","553":"流氓鱷","559":"滑滑小子","560":"頭巾混混","562":"哭哭面具","563":"死神棺","568":"破破袋","569":"灰塵山","582":"迷你冰","583":"多多冰","584":"雙倍多多冰","587":"電飛鼠","590":"哎呀球菇","591":"敗露球菇","602":"麻麻小魚","603":"麻麻鰻","604":"麻麻鰻魚王","607":"燭光靈","608":"燈火幽靈","609":"水晶燈火靈","615":"幾何雪花","618":"泥巴魚","622":"泥偶小人","623":"泥偶巨人","638":"勾帕路翁","639":"代拉基翁","640":"畢力吉翁","647":"凱路迪歐","648":"美洛耶塔","649":"蓋諾賽克特","650":"哈力栗","651":"胖胖哈力","652":"布里卡隆","653":"火狐狸","654":"長尾火狐","655":"妖火紅狐","656":"呱呱泡蛙","657":"呱頭蛙","658":"甲賀忍蛙","659":"掘掘兔","660":"掘地兔","661":"小箭雀","662":"火箭雀","663":"烈箭鷹","664":"粉蝶蟲","665":"粉蝶蛹","666":"彩粉蝶","667":"小獅獅","668":"火炎獅","669":"花蓓蓓","670":"花葉蒂","671":"花潔夫人","672":"坐騎小羊","673":"坐騎山羊","674":"頑皮熊貓","675":"流氓熊貓","676":"多麗米亞","677":"妙喵","678":"超能妙喵","679":"獨劍鞘","680":"雙劍鞘","681":"堅盾劍怪","682":"粉香香","683":"芳香精","684":"綿綿泡芙","685":"胖甜妮","686":"好啦魷","687":"烏賊王","688":"龜腳腳","689":"龜足巨鎧","690":"垃垃藻","691":"毒藻龍","692":"鐵臂槍蝦","693":"鋼炮臂蝦","694":"傘電蜥","695":"光電傘蜥","696":"寶寶暴龍","697":"怪顎龍","698":"冰雪龍","699":"冰雪巨龍","700":"仙子伊布","701":"摔角鷹人","702":"咚咚鼠","703":"小碎鑽","704":"黏黏寶","705":"黏美兒","706":"黏美龍","707":"鑰圈兒","708":"小木靈","709":"朽木妖","710":"南瓜精","711":"南瓜怪人","712":"冰寶","713":"冰岩怪","714":"嗡蝠","715":"音波龍","716":"哲爾尼亞斯","717":"伊裴爾塔爾","718":"基格爾德","719":"蒂安希","720":"胡帕","721":"波爾凱尼恩","739":"好勝蟹","740":"好勝毛蟹","767":"膽小蟲","768":"具甲武者","769":"沙丘娃","770":"噬沙堡爺","778":"謎擬Ｑ","780":"老翁龍","801":"瑪機雅娜","802":"瑪夏多","807":"捷拉奧拉","808":"美錄坦","809":"美錄梅塔","821":"稚山雀","822":"藍鴉","823":"鋼鎧鴉","827":"偷兒狐","828":"狐大盜","848":"毒電嬰","849":"顫弦蠑螈","852":"拳拳蛸","853":"八爪武師","863":"喵頭目","865":"蔥遊兵","866":"踏冰人偶","867":"死神板","870":"列陣兵","876":"愛管侍","877":"莫魯貝可","900":"劈斧螳螂","904":"萬針魚","926":"狗仔包","927":"麻花犬","931":"怒鸚哥","932":"鹽石寶","933":"鹽石壘","934":"鹽石巨靈","935":"炭小侍","936":"紅蓮鎧騎","937":"蒼炎刃鬼","942":"偶叫獒","943":"獒教父","944":"滋汁鼴","945":"塗標客","951":"熱辣娃","952":"狠辣椒","957":"小鍛匠","958":"巧鍛匠","959":"巨鍛匠","967":"摩托蜥","969":"晶光芽","970":"晶光花","971":"墓仔狗","972":"墓揚犬","973":"纏紅鶴","977":"吃吼霸","978":"米立龍","979":"棄世猴","996":"涼脊龍","997":"凍脊龍","998":"戟脊龍","999":"索財靈","1000":"賽富豪"},"zh-Hans":{"1":"妙蛙种子","2":"妙蛙草","3":"妙蛙花","4":"小火龙","5":"火恐龙","6":"喷火龙","7":"杰尼龟","8":"卡咪龟","9":"水箭龟","13":"独角虫","14":"铁壳蛹","15":"大针蜂","16":"波波","17":"比比鸟","18":"大比鸟","23":"阿柏蛇","24":"阿柏怪","25":"皮卡丘","26":"雷丘","35":"皮皮","36":"皮可西","39":"胖丁","40":"胖可丁","41":"超音蝠","42":"大嘴蝠","52":"喵喵","53":"猫老大","56":"猴怪","57":"火暴猴","63":"凯西","64":"勇基拉","65":"胡地","66":"腕力","67":"豪力","68":"怪力","69":"喇叭芽","70":"口呆花","71":"大食花","79":"呆呆兽","80":"呆壳兽","83":"大葱鸭","92":"鬼斯","93":"鬼斯通","94":"耿鬼","95":"大岩蛇","104":"卡拉卡拉","105":"嘎啦嘎啦","115":"袋兽","120":"海星星","121":"宝石海星","122":"魔墙人偶","123":"飞天螳螂","127":"凯罗斯","129":"鲤鱼王","130":"暴鲤龙","133":"伊布","134":"水伊布","135":"雷伊布","136":"火伊布","137":"多边兽","142":"化石翼龙","147":"迷你龙","148":"哈克龙","149":"快龙","150":"超梦","152":"菊草叶","153":"月桂叶","154":"大竺葵","158":"小锯鳄","159":"蓝鳄","160":"大力鳄","167":"圆丝蛛","168":"阿利多斯","169":"叉字蝠","172":"皮丘","173":"皮宝宝","174":"宝宝丁","179":"咩利羊","180":"茸茸羊","181":"电龙","196":"太阳伊布","197":"月亮伊布","199":"呆呆王","208":"大钢蛇","211":"千针鱼","212":"巨钳螳螂","214":"赫拉克罗斯","225":"信使鸟","227":"盔甲鸟","228":"戴鲁比","229":"黑鲁加","233":"多边兽２型","246":"幼基拉斯","247":"沙基拉斯","248":"班基拉斯","252":"木守宫","253":"森林蜥蜴","254":"蜥蜴王","255":"火稚鸡","256":"力壮鸡","257":"火焰鸡","258":"水跃鱼","259":"沼跃鱼","260":"巨沼怪","280":"拉鲁拉丝","281":"奇鲁莉安","282":"沙奈朵","302":"勾魂眼","303":"大嘴娃","304":"可可多拉","305":"可多拉","306":"波士可多拉","307":"玛沙那","308":"恰雷姆","309":"落雷兽","310":"雷电兽","315":"毒蔷薇","316":"溶食兽","317":"吞食兽","318":"利牙鱼","319":"巨牙鲨","322":"呆火驼","323":"喷火驼","325":"跳跳猪","326":"噗噗猪","333":"青绵鸟","334":"七夕青鸟","335":"猫鼬斩","336":"饭匙蛇","349":"丑丑鱼","350":"美纳斯","352":"变隐龙","353":"怨影娃娃","354":"诅咒娃娃","358":"风铃铃","359":"阿勃梭鲁","361":"雪童子","362":"冰鬼护","371":"宝贝龙","372":"甲壳龙","373":"暴飞龙","374":"铁哑铃","375":"金属怪","376":"巨金怪","380":"拉帝亚斯","381":"拉帝欧斯","382":"盖欧卡","383":"固拉多","384":"烈空坐","396":"姆克儿","397":"姆克鸟","398":"姆克鹰","406":"含羞苞","407":"罗丝雷朵","427":"卷卷耳","428":"长耳兔","433":"铃铛响","439":"魔尼尼","443":"圆陆鲨","444":"尖牙陆鲨","445":"烈咬陆鲨","447":"利欧路","448":"路卡利欧","449":"沙河马","450":"河马兽","459":"雪笠怪","460":"暴雪王","470":"叶伊布","471":"冰伊布","474":"多边兽乙型","475":"艾路雷朵","478":"雪妖女","479":"洛托姆","485":"席多蓝恩","491":"达克莱伊","498":"暖暖猪","499":"炒炒猪","500":"炎武王","504":"探探鼠","505":"步哨鼠","509":"扒手猫","510":"酷豹","511":"花椰猴","512":"花椰猿","513":"爆香猴","514":"爆香猿","515":"冷水猴","516":"冷水猿","517":"食梦梦","518":"梦梦蚀","529":"螺钉地鼠","530":"龙头地鼠","531":"差不多娃娃","538":"投摔鬼","539":"打击鬼","543":"百足蜈蚣","544":"车轮球","545":"蜈蚣王","551":"黑眼鳄","552":"混混鳄","553":"流氓鳄","559":"滑滑小子","560":"头巾混混","562":"哭哭面具","563":"迭失棺","568":"破破袋","569":"灰尘山","582":"迷你冰","583":"多多冰","584":"双倍多多冰","587":"电飞鼠","590":"哎呀球菇","591":"败露球菇","602":"麻麻小鱼","603":"麻麻鳗","604":"麻麻鳗鱼王","607":"烛光灵","608":"灯火幽灵","609":"水晶灯火灵","615":"几何雪花","618":"泥巴鱼","622":"泥偶小人","623":"泥偶巨人","638":"勾帕路翁","639":"代拉基翁","640":"毕力吉翁","647":"凯路迪欧","648":"美洛耶塔","649":"盖诺赛克特","650":"哈力栗","651":"胖胖哈力","652":"布里卡隆","653":"火狐狸","654":"长尾火狐","655":"妖火红狐","656":"呱呱泡蛙","657":"呱头蛙","658":"甲贺忍蛙","659":"掘掘兔","660":"掘地兔","661":"小箭雀","662":"火箭雀","663":"烈箭鹰","664":"粉蝶虫","665":"粉蝶蛹","666":"彩粉蝶","667":"小狮狮","668":"火炎狮","669":"花蓓蓓","670":"花叶蒂","671":"花洁夫人","672":"坐骑小羊","673":"坐骑山羊","674":"顽皮熊猫","675":"霸道熊猫","676":"多丽米亚","677":"妙喵","678":"超能妙喵","679":"独剑鞘","680":"双剑鞘","681":"坚盾剑怪","682":"粉香香","683":"芳香精","684":"绵绵泡芙","685":"胖甜妮","686":"好啦鱿","687":"乌贼王","688":"龟脚脚","689":"龟足巨铠","690":"垃垃藻","691":"毒藻龙","692":"铁臂枪虾","693":"钢炮臂虾","694":"伞电蜥","695":"光电伞蜥","696":"宝宝暴龙","697":"怪颚龙","698":"冰雪龙","699":"冰雪巨龙","700":"仙子伊布","701":"摔角鹰人","702":"咚咚鼠","703":"小碎钻","704":"黏黏宝","705":"黏美儿","706":"黏美龙","707":"钥圈儿","708":"小木灵","709":"朽木妖","710":"南瓜精","711":"南瓜怪人","712":"冰宝","713":"冰岩怪","714":"嗡蝠","715":"音波龙","716":"哲尔尼亚斯","717":"伊裴尔塔尔","718":"基格尔德","719":"蒂安希","720":"胡帕","721":"波尔凯尼恩","739":"好胜蟹","740":"好胜毛蟹","767":"胆小虫","768":"具甲武者","769":"沙丘娃","770":"噬沙堡爷","778":"谜拟丘","780":"老翁龙","801":"玛机雅娜","802":"玛夏多","807":"捷拉奥拉","808":"美录坦","809":"美录梅塔","821":"稚山雀","822":"蓝鸦","823":"钢铠鸦","827":"狡小狐","828":"猾大狐","848":"电音婴","849":"颤弦蝾螈","852":"拳拳蛸","853":"八爪武师","863":"喵头目","865":"葱游兵","866":"踏冰人偶","867":"迭失板","870":"列阵兵","876":"爱管侍","877":"莫鲁贝可","900":"劈斧螳螂","904":"万针鱼","926":"狗仔包","927":"麻花犬","931":"怒鹦哥","932":"盐石宝","933":"盐石垒","934":"盐石巨灵","935":"炭小侍","936":"红莲铠骑","937":"苍炎刃鬼","942":"偶叫獒","943":"獒教父","944":"滋汁鼹","945":"涂标客","951":"热辣娃","952":"狠辣椒","957":"小锻匠","958":"巧锻匠","959":"巨锻匠","967":"摩托蜥","969":"晶光芽","970":"晶光花","971":"墓仔狗","972":"墓扬犬","973":"纏红鹤","977":"吃吼霸","978":"米立龙","979":"弃世猴","996":"凉脊龙","997":"冻脊龙","998":"戟脊龙","999":"索财灵","1000":"赛富豪"}},"ITEMS":{"en":{"dusk-stone":"Dusk Stone","fire-stone":"Fire Stone","ice-stone":"Ice Stone","leaf-stone":"Leaf Stone","moon-stone":"Moon Stone","shiny-stone":"Shiny Stone","sun-stone":"Sun Stone","thunder-stone":"Thunder Stone","water-stone":"Water Stone","dawn-stone":"Dawn Stone","black-augurite":"Black Augurite","galarica-cuff":"Galarica Cuff","galarica-wreath":"Galarica Wreath","auspicious-armor":"Auspicious Armor","malicious-armor":"Malicious Armor","kings-rock":"King’s Rock","metal-coat":"Metal Coat","sachet":"Sachet","upgrade":"Upgrade","whipped-dream":"Whipped Dream","dubious-disc":"Dubious Disc"},"ja":{"dusk-stone":"やみのいし","fire-stone":"ほのおのいし","ice-stone":"こおりのいし","leaf-stone":"リーフのいし","moon-stone":"つきのいし","shiny-stone":"ひかりのいし","sun-stone":"たいようのいし","thunder-stone":"かみなりのいし","water-stone":"みずのいし","dawn-stone":"めざめいし","black-augurite":"くろのきせき","galarica-cuff":"ガラナツブレス","galarica-wreath":"ガラナツリース","auspicious-armor":"イワイノヨロイ","malicious-armor":"ノロイノヨロイ","kings-rock":"おうじゃのしるし","metal-coat":"メタルコート","sachet":"においぶくろ","upgrade":"アップグレード","whipped-dream":"ホイップポップ","dubious-disc":"あやしいパッチ"},"fr":{"dusk-stone":"Pierre Nuit","fire-stone":"Pierre Feu","ice-stone":"Pierre Glace","leaf-stone":"Pierre Plante","moon-stone":"Pierre Lune","shiny-stone":"Pierre Éclat","sun-stone":"Pierre Soleil","thunder-stone":"Pierre Foudre","water-stone":"Pierre Eau","dawn-stone":"Pierre Aube","black-augurite":"Obsidienne","galarica-cuff":"Bracelet Galanoa","galarica-wreath":"Couronne Galanoa","auspicious-armor":"Armure de la Fortune","malicious-armor":"Armure de la Rancune","kings-rock":"Roche Royale","metal-coat":"Peau Métal","sachet":"Sachet Senteur","upgrade":"Améliorator","whipped-dream":"Chantibonbon","dubious-disc":"CD Douteux"},"de":{"dusk-stone":"Finsterstein","fire-stone":"Feuerstein","ice-stone":"Eisstein","leaf-stone":"Blattstein","moon-stone":"Mondstein","shiny-stone":"Leuchtstein","sun-stone":"Sonnenstein","thunder-stone":"Donnerstein","water-stone":"Wasserstein","dawn-stone":"Funkelstein","black-augurite":"Schwarzaugit","galarica-cuff":"Galarnuss-Reif","galarica-wreath":"Galarnuss-Kranz","auspicious-armor":"Glorienrüstung","malicious-armor":"Fluchrüstung","kings-rock":"King-Stein","metal-coat":"Metallmantel","sachet":"Duftbeutel","upgrade":"Upgrade","whipped-dream":"Sahnehäubchen","dubious-disc":"Dubiosdisc"},"ko":{"dusk-stone":"어둠의돌","fire-stone":"불꽃의돌","ice-stone":"얼음의돌","leaf-stone":"리프의돌","moon-stone":"달의돌","shiny-stone":"빛의돌","sun-stone":"태양의돌","thunder-stone":"천둥의돌","water-stone":"물의돌","dawn-stone":"각성의돌","black-augurite":"검은휘석","galarica-cuff":"가라두구팔찌","galarica-wreath":"가라두구머리장식","auspicious-armor":"축복받은갑옷","malicious-armor":"저주받은갑옷","kings-rock":"왕의징표석","metal-coat":"금속코트","sachet":"향기주머니","upgrade":"업그레이드","whipped-dream":"휘핑팝","dubious-disc":"괴상한패치"},"zh-Hant":{"dusk-stone":"暗之石","fire-stone":"火之石","ice-stone":"冰之石","leaf-stone":"葉之石","moon-stone":"月之石","shiny-stone":"光之石","sun-stone":"日之石","thunder-stone":"雷之石","water-stone":"水之石","dawn-stone":"覺醒之石","black-augurite":"黑奇石","galarica-cuff":"伽勒荳蔻手環","galarica-wreath":"伽勒荳蔻花圈","auspicious-armor":"慶祝之鎧","malicious-armor":"詛咒之鎧","kings-rock":"王者之證","metal-coat":"金屬膜","sachet":"香袋","upgrade":"升級資料","whipped-dream":"泡沫奶油","dubious-disc":"可疑修正檔"},"zh-Hans":{"dusk-stone":"暗之石","fire-stone":"火之石","ice-stone":"冰之石","leaf-stone":"叶之石","moon-stone":"月之石","shiny-stone":"光之石","sun-stone":"日之石","thunder-stone":"雷之石","water-stone":"水之石","dawn-stone":"觉醒之石","black-augurite":"黑奇石","galarica-cuff":"伽勒豆蔻手环","galarica-wreath":"伽勒豆蔻花圈","auspicious-armor":"庆祝之铠","malicious-armor":"咒术之铠","kings-rock":"王者之证","metal-coat":"金属膜","sachet":"香袋","upgrade":"升级数据","whipped-dream":"泡沫奶油","dubious-disc":"可疑补丁"}},"STN":{"en":["Abomasite","Absolite","Absolite Z","Aerodactylite","Aggronite","Alakazite","Altarianite","Ampharosite","Audinite","Banettite","Barbaracite","Baxcalibrite","Beedrillite","Blastoisinite","Blazikenite","Cameruptite","Chandelurite","Charizardite X","Charizardite Y","Chesnaughtite","Chimechite","Clefablite","Crabominite","Darkranite","Delphoxite","Diancite","Dragalgite","Dragoninite","Drampanite","Eelektrossite","Emboarite","Excadrite","Falinksite","Feraligite","Floettite","Froslassite","Galladite","Garchompite","Garchompite Z","Gardevoirite","Gengarite","Glalitite","Glimmoranite","Golisopite","Golurkite","Greninjite","Gyaradosite","Hawluchanite","Heatranite","Heracronite","Houndoominite","Kangaskhanite","Latiasite","Latiosite","Lopunnite","Lucarionite","Lucarionite Z","Magearnite","Malamarite","Manectite","Mawilite","Medichamite","Meganiumite","Meowsticite","Metagrossite","Mewtwonite X","Mewtwonite Y","Pidgeotite","Pinsirite","Pyroarite","Raichunite X","Raichunite Y","Sablenite","Salamencite","Sceptilite","Scizorite","Scolipite","Scovillainite","Scraftinite","Sharpedonite","Skarmorite","Slowbronite","Staraptite","Starminite","Steelixite","Swampertite","Tatsugirinite","Tyranitarite","Venusaurite","Victreebelite","Zeraorite","Zygardite"],"ja":["ユキノオナイト","アブソルナイト","アブソルナイトZ","プテラナイト","ボスゴドラナイト","フーディナイト","チルタリスナイト","デンリュウナイト","タブンネナイト","ジュペッタナイト","ガメノデスナイト","セグレイブナイト","スピアナイト","カメックスナイト","バシャーモナイト","バクーダナイト","シャンデラナイト","リザードナイトＸ","リザードナイトＹ","ブリガロナイト","チリーンナイト","ピクシナイト","ケケンカニナイト","ダークライナイト","マフォクシナイト","ディアンシナイト","ドラミドナイト","カイリュナイト","ジジーロナイト","シビルドナイト","エンブオナイト","ドリュウズナイト","タイレーツナイト","オーダイルナイト","フラエッテナイト","ユキメノコナイト","エルレイドナイト","ガブリアスナイト","ガブリアスナイトZ","サーナイトナイト","ゲンガナイト","オニゴーリナイト","キラフロルナイト","グソクムシャナイト","ゴルーグナイト","ゲッコウガナイト","ギャラドスナイト","ルチャブルナイト","ヒードラナイト","ヘラクロスナイト","ヘルガナイト","ガルーラナイト","ラティアスナイト","ラティオスナイト","ミミロップナイト","ルカリオナイト","ルカリオナイトZ","マギアナイト","カラマネナイト","ライボルトナイト","クチートナイト","チャーレムナイト","メガニウムナイト","ニャオニクスナイト","メタグロスナイト","ミュウツナイトＸ","ミュウツナイトＹ","ピジョットナイト","カイロスナイト","カエンジシナイト","ライチュウナイトＸ","ライチュウナイトＹ","ヤミラミナイト","ボーマンダナイト","ジュカインナイト","ハッサムナイト","ペンドラナイト","スコヴィラナイト","ズルズキナイト","サメハダナイト","エアームドナイト","ヤドランナイト","ムクホークナイト","スターミナイト","ハガネールナイト","ラグラージナイト","シャリタツナイト","バンギラスナイト","フシギバナイト","ウツボットナイト","ゼラオラナイト","ジガルデナイト"],"fr":["Blizzarite","Absolite","Absolite Z","Ptéraïte","Galekingite","Alakazamite","Altarite","Pharampite","Nanméouïte","Branettite","Golgopathite","Glaivodite","Dardargnite","Tortankite","Braségalite","Caméruptite","Lugulabrite","Dracaufite X","Dracaufite Y","Blindépiquite","Éokite","Mélodelfite","Crabominablite","Darkraïte","Goupelinite","Diancite","Kravarekite","Dracolossite","Draïeulite","Ohmassacrite","Roitiflamite","Minotaupite","Hexadronite","Aligatueurite","Floettite","Momartikite","Gallamite","Carchacrokite","Carchacrokite Z","Gardevoirite","Ectoplasmite","Oniglalite","Floréclatite","Sarmuraïte","Golemastokite","Amphinolite","Léviatorite","Brutalibrite","Heatranite","Scarhinoïte","Démolossite","Kangourexite","Latiasite","Latiosite","Lockpinite","Lucarite","Lucarite Z","Magearnite","Sepiatrocite","Élecsprintite","Mysdibulite","Charminite","Méganiumite","Mistigrixite","Métalossite","Mewtwoïte X","Mewtwoïte Y","Roucarnagite","Scarabruite","Néméliosite","Raichuïte X","Raichuïte Y","Ténéfixite","Drattakite","Jungkite","Cizayoxite","Brutapodite","Scovilainite","Baggaïdite","Sharpedite","Airmurite","Flagadossite","Étouraptorite","Starossite","Steelixite","Laggronite","Nigirigonite","Tyranocivite","Florizarrite","Empiflorite","Zeraorite","Zygardite"],"de":["Rexblisarnit","Absolnit","Absolnit Z","Aerodactylonit","Stollossnit","Simsalanit","Altarianit","Ampharosnit","Ohrdochnit","Banetteonit","Thanathoranit","Espinodonit","Bibornit","Turtoknit","Lohgocknit","Cameruptnit","Skelabranit","Gluraknit X","Gluraknit Y","Brigaronit","Palimpalimonit","Pixinit","Krawellonit","Darkrainit","Fennexisnit","Diancienit","Tandraknit","Dragoranit","Sen-Longnit","Zapplarangonit","Flambirexonit","Stalobornit","Legiosnit","Impergatornit","Floetteonit","Frosdedjenit","Galagladinit","Knakracknit","Knakracknit Z","Guardevoirnit","Gengarnit","Firnontornit","Lumifloranit","Tectassnit","Golgantesnit","Quajutsunit","Garadosnit","Resladeronit","Heatranit","Skarabornit","Hundemonit","Kangamanit","Latiasnit","Latiosnit","Schlapornit","Lucarionit","Lucarionit Z","Magearnanit","Calamaneronit","Voltensonit","Flunkifernit","Meditalisnit","Meganienit","Psiaugonit","Metagrossnit","Mewtunit X","Mewtunit Y","Taubossnit","Pinsirnit","Pyroleonit","Raichunit X","Raichunit Y","Zobirisnit","Brutalandanit","Gewaldronit","Scheroxnit","Cerapendranit","Halupenjonit","Irokexonit","Tohaidonit","Panzaeronit","Lahmusnit","Staraptornit","Starmienit","Stahlosnit","Sumpexnit","Nigiraginit","Despotarnit","Bisaflornit","Sarzenianit","Zeraoranit","Zygardenit"],"ko":["눈설왕나이트","앱솔나이트","앱솔나이트Z","프테라나이트","보스로라나이트","후디나이트","파비코리나이트","전룡나이트","다부니나이트","다크펫나이트","거북손데스나이트","드닐레이브나이트","독침붕나이트","거북왕나이트","번치코나이트","폭타나이트","샹델라나이트","리자몽나이트X","리자몽나이트Y","브리가론나이트","치렁나이트","픽시나이트","모단단게나이트","다크라이나이트","마폭시나이트","디안시나이트","드래캄나이트","망나뇽나이트","할비롱나이트","저리더프나이트","염무왕나이트","몰드류나이트","대여르나이트","장크로다일나이트","플라베베나이트","눈여아나이트","엘레이드나이트","한카리아스나이트","한카리아스나이트Z","가디안나이트","팬텀나이트","얼음귀신나이트","킬라플로르나이트","갑주무사나이트","골루그나이트","개굴닌자나이트","갸라도스나이트","루차불나이트","히드런나이트","헤라크로스나이트","헬가나이트","캥카나이트","라티아스나이트","라티오스나이트","이어롭나이트","루카리오나이트","루카리오나이트Z","마기아나이트","칼라마네로나이트","썬더볼트나이트","입치트나이트","요가램나이트","메가니움나이트","냐오닉스나이트","메타그로스나이트","뮤츠나이트X","뮤츠나이트Y","피죤투나이트","쁘사이저나이트","화염레오나이트","라이츄나이트X","라이츄나이트Y","깜까미나이트","보만다나이트","나무킹나이트","핫삼나이트","펜드라나이트","스코빌런나이트","곤율거니나이트","샤크니아나이트","무장조나이트","야도란나이트","찌르호크나이트","아쿠스타나이트","강철톤나이트","대짱이나이트","싸리용나이트","마기라스나이트","이상해꽃나이트","우츠보트나이트","제라오라나이트","지가르데나이트"],"zh-Hant":["暴雪王進化石","阿勃梭魯進化石","阿勃梭魯進化石Z","化石翼龍進化石","波士可多拉進化石","胡地進化石","七夕青鳥進化石","電龍進化石","差不多娃娃進化石","詛咒娃娃進化石","龜足巨鎧進化石","戟脊龍進化石","大針蜂進化石","水箭龜進化石","火焰雞進化石","噴火駝進化石","水晶燈火靈進化石","噴火龍進化石Ｘ","噴火龍進化石Ｙ","布里卡隆進化石","風鈴鈴進化石","皮可西進化石","好勝毛蟹進化石","達克萊伊進化石","妖火紅狐進化石","蒂安希進化石","毒藻龍進化石","快龍進化石","老翁龍進化石","麻麻鰻魚王進化石","炎武王進化石","龍頭地鼠進化石","列陣兵進化石","大力鱷進化石","花葉蒂進化石","雪妖女進化石","艾路雷朵進化石","烈咬陸鯊進化石","烈咬陸鯊進化石Z","沙奈朵進化石","耿鬼進化石","冰鬼護進化石","晶光花進化石","具甲武者進化石","泥偶巨人進化石","甲賀忍蛙進化石","暴鯉龍進化石","摔角鷹人進化石","席多藍恩進化石","赫拉克羅斯進化石","黑魯加進化石","袋獸進化石","拉帝亞斯進化石","拉帝歐斯進化石","長耳兔進化石","路卡利歐進化石","路卡利歐進化石Z","瑪機雅娜進化石","烏賊王進化石","雷電獸進化石","大嘴娃進化石","恰雷姆進化石","大竺葵進化石","超能妙喵進化石","巨金怪進化石","超夢進化石Ｘ","超夢進化石Ｙ","大比鳥進化石","凱羅斯進化石","火炎獅進化石","雷丘進化石Ｘ","雷丘進化石Ｙ","勾魂眼進化石","暴飛龍進化石","蜥蜴王進化石","巨鉗螳螂進化石","蜈蚣王進化石","狠辣椒進化石","頭巾混混進化石","巨牙鯊進化石","盔甲鳥進化石","呆殼獸進化石","姆克鷹進化石","寶石海星進化石","大鋼蛇進化石","巨沼怪進化石","米立龍進化石","班基拉斯進化石","妙蛙花進化石","大食花進化石","捷拉奧拉進化石","基格爾德進化石"],"zh-Hans":["暴雪王进化石","阿勃梭鲁进化石","阿勃梭鲁进化石Z","化石翼龙进化石","波士可多拉进化石","胡地进化石","七夕青鸟进化石","电龙进化石","差不多娃娃进化石","诅咒娃娃进化石","龟足巨铠进化石","戟脊龙进化石","大针蜂进化石","水箭龟进化石","火焰鸡进化石","喷火驼进化石","水晶灯火灵进化石","喷火龙进化石Ｘ","喷火龙进化石Ｙ","布里卡隆进化石","风铃铃进化石","皮可西进化石","好胜毛蟹进化石","达克莱伊进化石","妖火红狐进化石","蒂安希进化石","毒藻龙进化石","快龙进化石","老翁龙进化石","麻麻鳗鱼王进化石","炎武王进化石","龙头地鼠进化石","列阵兵进化石","大力鳄进化石","花叶蒂进化石","雪妖女进化石","艾路雷朵进化石","烈咬陆鲨进化石","烈咬陆鲨进化石Z","沙奈朵进化石","耿鬼进化石","冰鬼护进化石","晶光花进化石","具甲武者进化石","泥偶巨人进化石","甲贺忍蛙进化石","暴鲤龙进化石","摔角鹰人进化石","席多蓝恩进化石","赫拉克罗斯进化石","黑鲁加进化石","袋兽进化石","拉帝亚斯进化石","拉帝欧斯进化石","长耳兔进化石","路卡利欧进化石","路卡利欧进化石Z","玛机雅娜进化石","乌贼王进化石","雷电兽进化石","大嘴娃进化石","恰雷姆进化石","大竺葵进化石","超能妙喵进化石","巨金怪进化石","超梦进化石Ｘ","超梦进化石Ｙ","大比鸟进化石","凯罗斯进化石","火炎狮进化石","雷丘进化石X","雷丘进化石Y","勾魂眼进化石","暴飞龙进化石","蜥蜴王进化石","巨钳螳螂进化石","蜈蚣王进化石","狠辣椒进化石","头巾混混进化石","巨牙鲨进化石","盔甲鸟进化石","呆壳兽进化石","姆克鹰进化石","宝石海星进化石","大钢蛇进化石","巨沼怪进化石","米立龙进化石","班基拉斯进化石","妙蛙花进化石","大食花进化石","捷拉奥拉进化石","基格尔德进化石"]},"TYPES":{"en":{"Normal":"Normal","Fighting":"Fighting","Flying":"Flying","Poison":"Poison","Ground":"Ground","Rock":"Rock","Bug":"Bug","Ghost":"Ghost","Steel":"Steel","Fire":"Fire","Water":"Water","Grass":"Grass","Electric":"Electric","Psychic":"Psychic","Ice":"Ice","Dragon":"Dragon","Dark":"Dark","Fairy":"Fairy"},"ja":{"Normal":"ノーマル","Fighting":"かくとう","Flying":"ひこう","Poison":"どく","Ground":"じめん","Rock":"いわ","Bug":"むし","Ghost":"ゴースト","Steel":"はがね","Fire":"ほのお","Water":"みず","Grass":"くさ","Electric":"でんき","Psychic":"エスパー","Ice":"こおり","Dragon":"ドラゴン","Dark":"あく","Fairy":"フェアリー"},"fr":{"Normal":"Normal","Fighting":"Combat","Flying":"Vol","Poison":"Poison","Ground":"Sol","Rock":"Roche","Bug":"Insecte","Ghost":"Spectre","Steel":"Acier","Fire":"Feu","Water":"Eau","Grass":"Plante","Electric":"Électrik","Psychic":"Psy","Ice":"Glace","Dragon":"Dragon","Dark":"Ténèbres","Fairy":"Fée"},"de":{"Normal":"Normal","Fighting":"Kampf","Flying":"Flug","Poison":"Gift","Ground":"Boden","Rock":"Gestein","Bug":"Käfer","Ghost":"Geist","Steel":"Stahl","Fire":"Feuer","Water":"Wasser","Grass":"Pflanze","Electric":"Elektro","Psychic":"Psycho","Ice":"Eis","Dragon":"Drache","Dark":"Unlicht","Fairy":"Fee"},"ko":{"Normal":"노말","Fighting":"격투","Flying":"비행","Poison":"독","Ground":"땅","Rock":"바위","Bug":"벌레","Ghost":"고스트","Steel":"강철","Fire":"불꽃","Water":"물","Grass":"풀","Electric":"전기","Psychic":"에스퍼","Ice":"얼음","Dragon":"드래곤","Dark":"악","Fairy":"페어리"},"zh-Hant":{"Normal":"一般","Fighting":"格鬥","Flying":"飛行","Poison":"毒","Ground":"地面","Rock":"岩石","Bug":"蟲","Ghost":"幽靈","Steel":"鋼","Fire":"火","Water":"水","Grass":"草","Electric":"電","Psychic":"超能力","Ice":"冰","Dragon":"龍","Dark":"惡","Fairy":"妖精"},"zh-Hans":{"Normal":"一般","Fighting":"格斗","Flying":"飞行","Poison":"毒","Ground":"地面","Rock":"岩石","Bug":"虫","Ghost":"幽灵","Steel":"钢","Fire":"火","Water":"水","Grass":"草","Electric":"电","Psychic":"超能力","Ice":"冰","Dragon":"龙","Dark":"恶","Fairy":"妖精"}}};
+/* ---------- i18n ----------
+   Static English text lives in the HTML; dynamic English and every other language are below.
+   Pokémon, item and type names come from PokeAPI (N). Lumiose district names stay in English. */
+const LANGS = [["en","English"],["ja","日本語"],["fr","Français"],["de","Deutsch"],["ko","한국어"],["zh-Hant","繁體中文"],["zh-Hans","简体中文"]];
+const I18N = {
+en:{ lv:"Lv {n}", sep:", ",
+ wz:zs=>zs.length>1 ? "Wild Zones "+zs.join(", ") : "Wild Zone "+zs[0],
+ ui:{colDex:"No.",colMon:"Pokémon",colHow:"How to get",colEvo:"Evolves into",tagDLC:"DLC",stopN:"Stop {n}",
+  badge:"{n} / {t} Mega Stones",won:"★ Every Mega Stone collected!",locLeft:" · {n} left",locDone:" · ✓ all done",warn:"Catch one first",
+  tCopied:"Code copied. Paste it into your notes.",tSel:"Selected. Press Copy (⌘C / Ctrl+C).",
+  tRest:"Restored: {d} Pokédex, {m} Mega Stones",tBad:"That code doesn't look right. Check you copied all of it."},
+ how:{streets:"City streets",streetsSome:"City streets ({d})",sewers:"The Sewers",labs:"Lysandre Labs",oldhouse:"Old House",
+  hs:"Hyperspace",colon:": ",special:"Special",evolve:"Evolve {p} ({c})",sm:"Gift from Side Mission {n}",trade:"Trade a {p} (Side Mission {n})",join:"; ",
+  g_streets:"City streets",g_sewers:"The Sewers",g_labs:"Lysandre Labs",g_oldhouse:"Old House",g_gift:"Gifts, trades and special encounters",g_evo:"Evolution only",
+  shop:"{p} shop",quasar:"Quasartico Inc.",hotelz:"Hotel Z shop (Vernal Avenue)",smName:"Side Mission {n}: {name}",event:" (event)",
+  s_quasartico:"Quasartico Inc.",s_vernal:"Vernal Avenue",s_other:"Other places",s_sm:"Side missions",s_hyper:"Hyperspace (Mega Dimension)",
+  s_online:"Online ranked battles",s_gift:"Mystery Gift (event)",s_ranked:"Ranked Battles rank-up reward",s_club:"Z-A Battle Club ranked reward"},
+ cond:{day:", day",night:", night",dark:", Dark-type in party",rain:", in rain",nature:", form depends on Nature",trade:"Trade",tradeItem:"Trade holding {i}",
+  friend:"High friendship",monamie:"High friendship + a Fairy move",coins:"999 Gimmighoul Coins",ragefist:"Use Rage Fist 20 times",
+  barb:"Use Barb Barrage 20 times",crits:"3 critical hits in one battle",taunt:"Level up knowing Taunt",mimic:"Level up knowing Mimic",special:"Special condition"},
+ x:{starter:"Choose one as your partner (Main Mission 1)",
+  fossil:"Restore a Jaw or Sail Fossil at the Pokémon Research Lab (Side Mission 27)",
+  xerneas:"Post-game: beat the Anomalous Alphas in Wild Zones 3, 5 and 9, then find it in Wild Zone 11",
+  yveltal:"Post-game: win Vinnie's Rogue Mega rematches, then find it on the roof in Rouge Sector 2",
+  zygarde:"Post-game: after Xerneas and Yveltal, beat L, then battle it at Prism Tower (Wild Zone 20)",
+  diancie:"Needs the Diancite (Mystery Gift event): follow Mimi from the Looker Bureau to a Magenta Sector 8 rooftop",
+  mewtwo:"Needs Mewtwonite X and Y (Mystery Gift event): Lysandre Labs B3F",
+  heatran:"DLC story: Rogue Mega Heatran in the Infernal Arena",
+  darkrai:"DLC story: the Newmoon Nightmare (needs a Bad Dreams Cruller donut)",
+  kyogre:"DLC story: the Primordial Sea, through the Sapphire Distortion",
+  groudon:"DLC story: the Desolate Land, through the Ruby Distortion",
+  rayquaza:"DLC story: the Sky Pillar, after Groudon and Kyogre",
+  meltan:"After Rayquaza: side mission in Rouge Sector 1",
+  melmetal:"After catching Meltan: follow the Hyperspace portal, where Meltan evolves",
+  magearna:"After Rayquaza: bring Jett 999 Mega Shards (Quasartico Inc.)",
+  hoopa:"After Rayquaza: the Prison Bottle distortion (talk to Taunie/Urbain at Hotel Z)",
+  volcanion:"After Rayquaza: Mable's task at the Pokémon Research Lab",
+  genesect:"After Rayquaza: buy all four drives (540 Mega Shards each) in Vert Sector 7",
+  marshadow:"After Rayquaza: the Lumiose Safety Group's ghost-child task on North Boulevard",
+  zeraora:"After Rayquaza, Diancie and Mewtwo: trade Canari Bread on the Vert Sector 3 roof, then calm Rogue Mega Zeraora",
+  scan:"After Rayquaza: Special Scan in Hyperspace (Corbeau's task, 25,000 survey points)",
+  gimmighoul:"Gift in Rouge Sector 1 (Mega Dimension)"},
+ stops:D.stops,
+ tips:{1:"Street spawns change with the time of day. Check alleys and, once you can climb, rooftops.",
+  8:"These areas open up as the story goes on.",9:"Wild Zone 20 opens at the start of the post-game.",
+  11:"Needs the Mega Dimension DLC. Open Hyperspace portals with Ansha's donuts; a donut with fewer stars than the portal lowers your catch rate.",
+  16:"Most of these open up after you defeat Rayquaza."}},
+ja:{ lv:"Lv.{n}", sep:"、", wz:zs=>"ワイルドゾーン"+zs.join("・"),
+ ui:{title:"Legends Z-A 図鑑トラッカー",
+  sub:"『Pokémon LEGENDS Z-A』（追加コンテンツ「M次元ラッシュ」を含む）の図鑑をストーリー順に効率よく埋めるルートと、すべてのメガストーンのチェックリストです。",
+  kDex:"ポケモン図鑑",kMeg:"メガストーン",kStop:"クリアした地点",tabDex:"図鑑ルート",tabMeg:"メガストーン",
+  search:"ポケモン名、ワイルドゾーン、メガストーンで検索…",searchA:"検索",dlc:"M次元ラッシュ（DLC）",dlcT:"追加コンテンツの図鑑とメガストーンを表示",
+  hide:"完了を隠す",theme:"テーマ切り替え",lang:"言語",
+  intro:"上から順に進めてください。各ポケモンは、メインミッションでワイルドゾーンが開放される順番をもとに、最も早く手に入る地点に載っています。行をタップするとチェックできます。<b>進化先</b>には以降の進化と進化方法を表示しています。",
+  shiny:"<b>ひかるおまもり：</b>『Z-A』では図鑑完成のごほうびではありません。ポケモン図鑑の研究レベル50で手に入ります。研究レベルは捕獲やバトルなどの調査で上がり、図鑑を埋めることも大きなポイントになります。",
+  viewBy:"表示",viewRoute:"ルート順",viewNum:"図鑑番号順",viewZone:"ワイルドゾーン別",
+  colDex:"No.",colMon:"ポケモン",colHow:"入手方法",colEvo:"進化先",tagDLC:"DLC",stopN:"地点{n}",
+  megH:"メガストーン",
+  megP:"メガストーンを持たせると、そのポケモンがメガシンカできます。メインストーリーでメガリングを手に入れてから使えます（メインミッション10）。どのストーンも一度きりの入手なので、手に入れたらチェックしましょう。",
+  megL0:"ほとんどのストーンはショップで買うか、街の各地区で見つかります。異次元ミアレのストーンには<b>追加コンテンツ「M次元ラッシュ」</b>が必要です。",
+  megL1:"一部はオンラインのランクバトルやふしぎなおくりもののイベントで手に入り、期間限定の場合があります。",
+  megL2:"<b>先に1匹捕まえよう</b>は、そのポケモンを図鑑タブでまだチェックしていないという意味です。",
+  badge:"メガストーン {n} / {t}",won:"★ すべてのメガストーンを集めました！",sortBy:"並び順",sortDex:"ポケモン",sortLoc:"入手場所",
+  locLeft:" · 残り{n}",locDone:" · ✓ 完了",warn:"先に1匹捕まえよう",
+  footer:"出現場所・進化・メガストーンは {serebii} を参照しました。図鑑の順番と各言語の名前は {pokeapi} より。ファンが作った非公式ツールで、任天堂・ゲームフリーク・株式会社ポケモンとは関係ありません。",
+  save:"セーブコード",codeT:"メモアプリにコピーしておきましょう",copy:"コピー",load:"読み込む",loadPh:"保存したコードを貼り付け（PLZA1-…）",loadA:"保存したコード",restore:"復元",
+  tCopied:"コードをコピーしました。メモに貼り付けてください。",tSel:"選択しました。⌘C / Ctrl+C でコピーしてください。",
+  tRest:"復元しました: 図鑑 {d}、メガストーン {m}",tBad:"コードが正しくないようです。すべてコピーできているか確認してください。",
+  brand:"ポケモン図鑑トラッカー",gZa:"レジェンズZ-A"},
+ how:{streets:"街なか",streetsSome:"街なか（{d}）",sewers:"下水道",labs:"フラダリラボ",oldhouse:"古い家",
+  hs:"異次元ミアレ",colon:"：",special:"スペシャル",evolve:"{p}を進化（{c}）",sm:"サイドミッション{n}でもらう",trade:"{p}と交換（サイドミッション{n}）",join:"／",
+  g_streets:"街なか",g_sewers:"下水道",g_labs:"フラダリラボ",g_oldhouse:"古い家",g_gift:"もらう・交換・特別な出会い",g_evo:"進化のみ",
+  shop:"{p}のショップ",quasar:"クエーサー社",hotelz:"ホテルZのショップ（Vernal Avenue）",smName:"サイドミッション{n}：{name}",event:"（イベント）",
+  s_quasartico:"クエーサー社",s_vernal:"Vernal Avenue",s_other:"その他の場所",s_sm:"サイドミッション",s_hyper:"異次元ミアレ（M次元ラッシュ）",
+  s_online:"オンラインのランクバトル",s_gift:"ふしぎなおくりもの（イベント）",s_ranked:"ランクバトルのランクアップ報酬",s_club:"Z-Aバトルクラブのランク報酬"},
+ cond:{day:"・昼",night:"・夜",dark:"・あくタイプが手持ちにいる",rain:"・雨",nature:"・せいかくで姿が変わる",trade:"通信交換",tradeItem:"{i}を持たせて通信交換",
+  friend:"なつき度が高い",monamie:"なつき度が高い＋フェアリー技",coins:"コレクレーのコイン999枚",ragefist:"ふんどのこぶしを20回使う",
+  barb:"どくばりセンボンを20回使う",crits:"1回のバトルで急所に3回当てる",taunt:"ちょうはつを覚えてレベルアップ",mimic:"ものまねを覚えてレベルアップ",special:"特別な条件"},
+ x:{starter:"パートナーとして1匹選ぶ（メインミッション1）",
+  fossil:"ポケモン研究所でアゴのカセキかヒレのカセキを復元（サイドミッション27）",
+  xerneas:"クリア後：ワイルドゾーン3・5・9の異常なオヤブンを倒すと、ワイルドゾーン11に現れる",
+  yveltal:"クリア後：暴走メガシンカとの再戦に勝つと、Rouge Sector 2の屋上に現れる",
+  zygarde:"クリア後：ゼルネアスとイベルタルの後、プリズムタワー（ワイルドゾーン20）でバトル",
+  diancie:"ディアンシナイト（ふしぎなおくりもの）が必要：Magenta Sector 8の屋上で出会う",
+  mewtwo:"ミュウツナイトX・Y（ふしぎなおくりもの）が必要：フラダリラボ B3F",
+  heatran:"DLCストーリー：異次元の闘技場で暴走メガヒードランとバトル",
+  darkrai:"DLCストーリー：新月の悪夢の空間（専用のドーナツが必要）",
+  kyogre:"DLCストーリー：サファイアのひずみの先",
+  groudon:"DLCストーリー：ルビーのひずみの先",
+  rayquaza:"DLCストーリー：グラードンとカイオーガの後",
+  meltan:"レックウザの後：Rouge Sector 1のサイドミッション",
+  melmetal:"メルタンを捕まえた後：異次元ミアレの入口の先でメルタンが進化",
+  magearna:"レックウザの後：メガのかけら999個を届ける（クエーサー社）",
+  hoopa:"レックウザの後：いましめのツボのひずみ（ホテルZ）",
+  volcanion:"レックウザの後：ポケモン研究所での依頼",
+  genesect:"レックウザの後：Vert Sector 7でカセット4種を買う（メガのかけら各540個）",
+  marshadow:"レックウザの後：North Boulevardで幽霊の子どものうわさを調査",
+  zeraora:"レックウザ、ディアンシー、ミュウツーの後：Vert Sector 3の屋上での交換から暴走メガゼラオラとバトル",
+  scan:"レックウザの後：異次元ミアレのスペシャルスキャン（調査ポイント25,000）",
+  gimmighoul:"Rouge Sector 1でもらう（M次元ラッシュ）"},
+ stops:["メインミッション1〜2：ミアレシティに到着","メインミッション3：ワイルドゾーン1と街なか","メインミッション5：ワイルドゾーン2〜6",
+  "メインミッション10：ワイルドゾーン7〜10","メインミッション15：ワイルドゾーン11〜13","メインミッション20：ワイルドゾーン14〜15",
+  "メインミッション25：ワイルドゾーン16〜17","メインミッション30：ワイルドゾーン18〜19","下水道・フラダリラボ・古い家",
+  "クリア後：ワイルドゾーン20（メインミッション39）","クリア後：伝説のポケモン","M次元ラッシュ：異次元ミアレ ★1","M次元ラッシュ：異次元ミアレ ★2",
+  "M次元ラッシュ：異次元ミアレ ★3","M次元ラッシュ：異次元ミアレ ★4","M次元ラッシュ：異次元ミアレ ★5","M次元ラッシュ：ストーリーと特別な出会い"],
+ tips:{1:"街なかの出現は時間帯で変わります。路地や、登れるようになったら屋上も探しましょう。",8:"これらの場所はストーリーの進行で行けるようになります。",
+  9:"ワイルドゾーン20はクリア後すぐに開放されます。",
+  11:"追加コンテンツ「M次元ラッシュ」が必要です。ドーナツで異次元ミアレへの入口を開きます。入口より星の少ないドーナツだと捕まえにくくなります。",
+  16:"ほとんどはレックウザを倒した後に開放されます。"}},
+
+fr:{ lv:"N.{n}", sep:", ", wz:zs=>zs.length>1 ? "Zones sauvages n° "+zs.join(", ") : "Zone sauvage n° "+zs[0],
+ ui:{title:"Suivi du Pokédex Légendes Z-A",
+  sub:"Un itinéraire efficace, dans l'ordre de l'histoire, pour compléter le Pokédex de Légendes Pokémon : Z-A, avec le DLC Méga-Dimension, et la liste de toutes les Méga-Gemmes.",
+  kDex:"Pokédex",kMeg:"Méga-Gemmes",kStop:"Étapes terminées",tabDex:"Itinéraire Pokédex",tabMeg:"Méga-Gemmes",
+  search:"Rechercher un Pokémon, une zone sauvage ou une Méga-Gemme…",searchA:"Rechercher",dlc:"DLC Méga-Dimension",dlcT:"Afficher le Pokédex et les Méga-Gemmes du DLC",
+  hide:"Masquer les terminés",theme:"Changer de thème",lang:"Langue",
+  intro:"Suivez les étapes dans l'ordre. Chaque Pokémon est indiqué au premier endroit où vous pouvez l'obtenir, selon le moment où sa zone sauvage s'ouvre dans les missions principales. Touchez une ligne pour la cocher. <b>Évolue en</b> indique les stades suivants et leur mode d'évolution.",
+  shiny:"<b>Charme Chroma :</b> dans Légendes Z-A, il ne récompense pas un Pokédex complet. Vous l'obtenez au niveau de recherche 50 du Pokédex, qui compte les captures, les combats et d'autres tâches de recherche. Remplir le Pokédex rapporte une grande partie de ces points.",
+  viewBy:"Affichage",viewRoute:"Ordre de l'itinéraire",viewNum:"Numéro du Pokédex",viewZone:"Zone sauvage",
+  colDex:"N°",colMon:"Pokémon",colHow:"Obtention",colEvo:"Évolue en",tagDLC:"DLC",stopN:"Étape {n}",
+  megH:"Méga-Gemmes",
+  megP:"Chaque Méga-Gemme permet à un Pokémon de méga-évoluer. Vous pouvez les utiliser une fois le Méga-Anneau obtenu dans l'histoire principale (mission principale 10). Chaque gemme ne s'obtient qu'une fois : cochez-la dès que vous l'avez.",
+  megL0:"La plupart s'achètent en boutique ou se trouvent dans les quartiers de la ville. Celles de l'hyperespace demandent le <b>DLC Méga-Dimension</b>.",
+  megL1:"Quelques-unes viennent des combats classés en ligne ou d'événements Cadeau Mystère, parfois limités dans le temps.",
+  megL2:"<b>Attrapez-en un d'abord</b> signifie que ce Pokémon n'est pas encore coché dans l'onglet Pokédex.",
+  badge:"{n} / {t} Méga-Gemmes",won:"★ Toutes les Méga-Gemmes obtenues !",sortBy:"Trier par",sortDex:"Pokémon",sortLoc:"Où l'obtenir",
+  locLeft:" · {n} restante(s)",locDone:" · ✓ terminé",warn:"Attrapez-en un d'abord",
+  footer:"Lieux, évolutions et Méga-Gemmes d'après {serebii}. Ordre du Pokédex et noms traduits : {pokeapi}. Outil créé par un fan, sans lien avec Nintendo, Game Freak ou The Pokémon Company.",
+  save:"Code de sauvegarde",codeT:"Copiez-le dans votre app de notes",copy:"Copier",load:"Charger",loadPh:"Collez un code sauvegardé (PLZA1-…)",loadA:"Code sauvegardé",restore:"Restaurer",
+  tCopied:"Code copié. Collez-le dans vos notes.",tSel:"Sélectionné. Copiez avec ⌘C / Ctrl+C.",
+  tRest:"Restauré : {d} Pokédex, {m} Méga-Gemmes",tBad:"Ce code semble incorrect. Vérifiez que vous l'avez copié en entier.",
+  brand:"Suivi de Pokédex",gZa:"Légendes Z-A"},
+ how:{streets:"Rues de la ville",streetsSome:"Rues de la ville ({d})",sewers:"Égouts",labs:"Labo Lysandre",oldhouse:"Vieille maison",
+  hs:"Hyperespace",colon:" : ",special:"Spécial",evolve:"Faire évoluer {p} ({c})",sm:"Cadeau de la mission secondaire {n}",trade:"Échanger un {p} (mission secondaire {n})",join:" ; ",
+  g_streets:"Rues de la ville",g_sewers:"Égouts",g_labs:"Labo Lysandre",g_oldhouse:"Vieille maison",g_gift:"Cadeaux, échanges et rencontres spéciales",g_evo:"Uniquement par évolution",
+  shop:"Boutique : {p}",quasar:"Quasartico Inc.",hotelz:"Boutique de l'Hôtel Z (Vernal Avenue)",smName:"Mission secondaire {n} : {name}",event:" (événement)",
+  s_quasartico:"Quasartico Inc.",s_vernal:"Vernal Avenue",s_other:"Autres lieux",s_sm:"Missions secondaires",s_hyper:"Hyperespace (Méga-Dimension)",
+  s_online:"Combats classés en ligne",s_gift:"Cadeau Mystère (événement)",s_ranked:"Récompense de rang (combats classés)",s_club:"Récompense de rang du Club de combat Z-A"},
+ cond:{day:", le jour",night:", la nuit",dark:", avec un Pokémon Ténèbres dans l'équipe",rain:", sous la pluie",nature:", forme selon la nature",trade:"Échange",tradeItem:"Échange en tenant {i}",
+  friend:"Grande amitié",monamie:"Grande amitié + une capacité Fée",coins:"999 Pièces de Mordudor",ragefist:"Utiliser Poing Colère 20 fois",
+  barb:"Utiliser Multitoxik 20 fois",crits:"3 coups critiques en un combat",taunt:"Monter de niveau en connaissant Provoc",mimic:"Monter de niveau en connaissant Copie",special:"Condition spéciale"},
+ x:{starter:"Choisissez-en un comme partenaire (mission principale 1)",
+  fossil:"Faites restaurer un Fossile Mâchoire ou Nageoire au laboratoire Pokémon (mission secondaire 27)",
+  xerneas:"Après le jeu : battez les Barons anormaux des zones sauvages n° 3, 5 et 9, puis trouvez-le dans la zone sauvage n° 11",
+  yveltal:"Après le jeu : gagnez les revanches contre les Méga-Évolutions incontrôlées, puis trouvez-le sur un toit du secteur Rouge 2",
+  zygarde:"Après le jeu : après Xerneas et Yveltal, affrontez-le à la Tour Prismatique (zone sauvage n° 20)",
+  diancie:"Nécessite la Diancite (Cadeau Mystère) : suivez la piste jusqu'à un toit du secteur Magenta 8",
+  mewtwo:"Nécessite les Mewtwoïte X et Y (Cadeau Mystère) : Labo Lysandre, sous-sol 3",
+  heatran:"Histoire du DLC : Méga-Heatran incontrôlé dans une arène de l'hyperespace",
+  darkrai:"Histoire du DLC : le cauchemar de la nouvelle lune (beignet spécial requis)",
+  kyogre:"Histoire du DLC : derrière la distorsion Saphir",
+  groudon:"Histoire du DLC : derrière la distorsion Rubis",
+  rayquaza:"Histoire du DLC : après Groudon et Kyogre",
+  meltan:"Après Rayquaza : mission secondaire dans le secteur Rouge 1",
+  melmetal:"Après avoir capturé Meltan : suivez le portail de l'hyperespace, où Meltan évolue",
+  magearna:"Après Rayquaza : apportez 999 Méga-Éclats (Quasartico Inc.)",
+  hoopa:"Après Rayquaza : la distorsion de la Vase Scellée (Hôtel Z)",
+  volcanion:"Après Rayquaza : demande au laboratoire Pokémon",
+  genesect:"Après Rayquaza : achetez les quatre modules (540 Méga-Éclats chacun) dans le secteur Vert 7",
+  marshadow:"Après Rayquaza : enquête sur l'enfant fantôme, North Boulevard",
+  zeraora:"Après Rayquaza, Diancie et Mewtwo : un échange sur le toit du secteur Vert 3 mène au Méga-Zeraora incontrôlé",
+  scan:"Après Rayquaza : scan spécial dans l'hyperespace (25 000 points d'enquête)",
+  gimmighoul:"Cadeau dans le secteur Rouge 1 (Méga-Dimension)"},
+ stops:["Missions principales 1–2 : arrivée à Illumis","Mission principale 3 : zone sauvage n° 1 et rues de la ville","Mission principale 5 : zones sauvages n° 2 à 6",
+  "Mission principale 10 : zones sauvages n° 7 à 10","Mission principale 15 : zones sauvages n° 11 à 13","Mission principale 20 : zones sauvages n° 14 et 15",
+  "Mission principale 25 : zones sauvages n° 16 et 17","Mission principale 30 : zones sauvages n° 18 et 19","Égouts, Labo Lysandre et vieille maison",
+  "Après le jeu : zone sauvage n° 20 (mission principale 39)","Après le jeu : Pokémon légendaires","Méga-Dimension : hyperespace ★1","Méga-Dimension : hyperespace ★2",
+  "Méga-Dimension : hyperespace ★3","Méga-Dimension : hyperespace ★4","Méga-Dimension : hyperespace ★5","Méga-Dimension : histoire et rencontres spéciales"],
+ tips:{1:"Les apparitions en ville changent selon l'heure. Fouillez les ruelles et, quand vous pouvez grimper, les toits.",8:"Ces lieux s'ouvrent au fil de l'histoire.",
+  9:"La zone sauvage n° 20 s'ouvre au début de l'après-jeu.",
+  11:"Nécessite le DLC Méga-Dimension. Ouvrez les portails de l'hyperespace avec des beignets ; un beignet avec moins d'étoiles que le portail réduit le taux de capture.",
+  16:"La plupart s'ouvrent après avoir vaincu Rayquaza."}},
+de:{ lv:"Lv. {n}", sep:", ", wz:zs=>zs.length>1 ? "Wildsektoren "+zs.join(", ") : "Wildsektor "+zs[0],
+ ui:{title:"Legenden Z-A Pokédex-Tracker",
+  sub:"Eine effiziente Route in Story-Reihenfolge, um den Pokédex in Pokémon-Legenden: Z-A samt Mega-Dimension-DLC zu füllen, plus eine Checkliste aller Mega-Steine.",
+  kDex:"Pokédex",kMeg:"Mega-Steine",kStop:"Abgeschlossene Etappen",tabDex:"Pokédex-Route",tabMeg:"Mega-Steine",
+  search:"Pokémon, Wildsektor oder Mega-Stein suchen …",searchA:"Suche",dlc:"Mega-Dimension-DLC",dlcT:"Pokédex und Mega-Steine des DLC anzeigen",
+  hide:"Erledigte ausblenden",theme:"Design wechseln",lang:"Sprache",
+  intro:"Folge den Etappen der Reihe nach. Jedes Pokémon steht beim frühesten Ort, an dem du es bekommen kannst, je nachdem, wann sein Wildsektor in den Hauptmissionen freigeschaltet wird. Tippe auf eine Zeile, um sie abzuhaken. <b>Entwickelt sich zu</b> zeigt spätere Stufen und wie sie sich entwickeln.",
+  shiny:"<b>Schillerpin:</b> In Legenden: Z-A ist er keine Belohnung für den vollständigen Pokédex. Du bekommst ihn auf Forschungsstufe 50 der Pokédex-Forschung, die Fänge, Kämpfe und andere Aufgaben zählt. Den Pokédex zu füllen bringt einen großen Teil dieser Punkte.",
+  viewBy:"Ansicht",viewRoute:"Routen-Reihenfolge",viewNum:"Pokédex-Nummer",viewZone:"Wildsektor",
+  colDex:"Nr.",colMon:"Pokémon",colHow:"Fundort / Erhalt",colEvo:"Entwickelt sich zu",tagDLC:"DLC",stopN:"Etappe {n}",
+  megH:"Mega-Steine",
+  megP:"Jeder Mega-Stein lässt ein Pokémon die Mega-Entwicklung durchführen. Nutzen kannst du sie, sobald du in der Hauptgeschichte den Mega-Ring erhältst (Hauptmission 10). Jeden Stein bekommst du nur einmal, also hak ihn ab, sobald du ihn hast.",
+  megL0:"Die meisten gibt es in Shops oder in den Vierteln der Stadt. Steine aus Dimensions-Illumina brauchen das <b>Mega-Dimension-DLC</b>.",
+  megL1:"Einige gibt es nur über Ranglistenkämpfe online oder Geheimgeschenk-Events, die zeitlich begrenzt sein können.",
+  megL2:"<b>Erst eins fangen</b> heißt, dass du dieses Pokémon im Pokédex-Tab noch nicht abgehakt hast.",
+  badge:"{n} / {t} Mega-Steine",won:"★ Alle Mega-Steine gesammelt!",sortBy:"Sortieren nach",sortDex:"Pokémon",sortLoc:"Fundort",
+  locLeft:" · noch {n}",locDone:" · ✓ erledigt",warn:"Erst eins fangen",
+  footer:"Fundorte, Entwicklungen und Mega-Steine nach {serebii}. Pokédex-Reihenfolge und übersetzte Namen von {pokeapi}. Fan-Projekt, nicht verbunden mit Nintendo, Game Freak oder The Pokémon Company.",
+  save:"Speichercode",codeT:"Kopiere ihn in deine Notizen-App",copy:"Kopieren",load:"Laden",loadPh:"Gespeicherten Code einfügen (PLZA1-…)",loadA:"Gespeicherter Code",restore:"Wiederherstellen",
+  tCopied:"Code kopiert. Füge ihn in deine Notizen ein.",tSel:"Markiert. Kopieren mit ⌘C / Strg+C.",
+  tRest:"Wiederhergestellt: {d} Pokédex, {m} Mega-Steine",tBad:"Dieser Code scheint falsch zu sein. Prüfe, ob du ihn vollständig kopiert hast.",
+  brand:"Pokédex-Tracker",gZa:"Legenden Z-A"},
+ how:{streets:"Straßen der Stadt",streetsSome:"Straßen der Stadt ({d})",sewers:"Kanalisation",labs:"Flordelis-Labor",oldhouse:"Altes Haus",
+  hs:"Dimensions-Illumina",colon:": ",special:"Spezial",evolve:"{p} entwickeln ({c})",sm:"Geschenk aus Nebenmission {n}",trade:"Tausch gegen {p} (Nebenmission {n})",join:"; ",
+  g_streets:"Straßen der Stadt",g_sewers:"Kanalisation",g_labs:"Flordelis-Labor",g_oldhouse:"Altes Haus",g_gift:"Geschenke, Tausch und besondere Begegnungen",g_evo:"Nur durch Entwicklung",
+  shop:"Shop: {p}",quasar:"Quasartico Inc.",hotelz:"Shop im Hotel Z (Vernal Avenue)",smName:"Nebenmission {n}: {name}",event:" (Event)",
+  s_quasartico:"Quasartico Inc.",s_vernal:"Vernal Avenue",s_other:"Andere Orte",s_sm:"Nebenmissionen",s_hyper:"Dimensions-Illumina (Mega-Dimension)",
+  s_online:"Ranglistenkämpfe online",s_gift:"Geheimgeschenk (Event)",s_ranked:"Belohnung für Rangaufstieg (Ranglistenkämpfe)",s_club:"Ranglisten-Belohnung im Z-A-Kampfklub"},
+ cond:{day:", tagsüber",night:", nachts",dark:", mit einem Unlicht-Pokémon im Team",rain:", bei Regen",nature:", Form hängt vom Wesen ab",trade:"Tausch",tradeItem:"Tausch mit {i}",
+  friend:"Hohe Freundschaft",monamie:"Hohe Freundschaft + eine Feen-Attacke",coins:"999 Gierspenst-Münzen",ragefist:"20-mal Zornesfaust einsetzen",
+  barb:"Seine Giftstachel-Attacke 20-mal einsetzen",crits:"3 Volltreffer in einem Kampf",taunt:"Level-Aufstieg mit Verhöhner",mimic:"Level-Aufstieg mit Mimikry",special:"Besondere Bedingung"},
+ x:{starter:"Wähle eins als Partner (Hauptmission 1)",
+  fossil:"Kieferfossil oder Flossenfossil im Pokémon-Forschungslabor wiederbeleben (Nebenmission 27)",
+  xerneas:"Nach dem Spiel: Besiege die anomalen Alpha-Pokémon in den Wildsektoren 3, 5 und 9, dann findest du es in Wildsektor 11",
+  yveltal:"Nach dem Spiel: Gewinne die Revanchen gegen entfesselte Mega-Pokémon, dann findest du es auf einem Dach in Rouge-Sektor 2",
+  zygarde:"Nach dem Spiel: Nach Xerneas und Yveltal kämpfst du am Prismaturm (Wildsektor 20) gegen es",
+  diancie:"Braucht den Diancienit (Geheimgeschenk-Event): Die Spur führt zu einem Dach in Magenta-Sektor 8",
+  mewtwo:"Braucht Mewtunit X und Y (Geheimgeschenk-Event): Flordelis-Labor, UG3",
+  heatran:"DLC-Geschichte: entfesseltes Mega-Heatran in einer Arena von Dimensions-Illumina",
+  darkrai:"DLC-Geschichte: der Neumond-Albtraum (spezieller Donut nötig)",
+  kyogre:"DLC-Geschichte: hinter der Saphir-Verzerrung",
+  groudon:"DLC-Geschichte: hinter der Rubin-Verzerrung",
+  rayquaza:"DLC-Geschichte: nach Groudon und Kyogre",
+  meltan:"Nach Rayquaza: Nebenmission in Rouge-Sektor 1",
+  melmetal:"Nach dem Fang von Meltan: Folge dem Portal nach Dimensions-Illumina, wo sich Meltan entwickelt",
+  magearna:"Nach Rayquaza: 999 Mega-Splitter abgeben (Quasartico Inc.)",
+  hoopa:"Nach Rayquaza: die Verzerrung der Fluchurne (Hotel Z)",
+  volcanion:"Nach Rayquaza: Auftrag im Pokémon-Forschungslabor",
+  genesect:"Nach Rayquaza: Alle vier Module kaufen (je 540 Mega-Splitter) in Vert-Sektor 7",
+  marshadow:"Nach Rayquaza: Gerüchte über ein Geisterkind auf dem North Boulevard untersuchen",
+  zeraora:"Nach Rayquaza, Diancie und Mewtu: Ein Tausch auf dem Dach von Vert-Sektor 3 führt zum entfesselten Mega-Zeraora",
+  scan:"Nach Rayquaza: Spezial-Scan in Dimensions-Illumina (25.000 Forschungspunkte)",
+  gimmighoul:"Geschenk in Rouge-Sektor 1 (Mega-Dimension)"},
+ stops:["Hauptmissionen 1–2: Ankunft in Illumina City","Hauptmission 3: Wildsektor 1 und die Straßen der Stadt","Hauptmission 5: Wildsektoren 2–6",
+  "Hauptmission 10: Wildsektoren 7–10","Hauptmission 15: Wildsektoren 11–13","Hauptmission 20: Wildsektoren 14–15",
+  "Hauptmission 25: Wildsektoren 16–17","Hauptmission 30: Wildsektoren 18–19","Kanalisation, Flordelis-Labor und Altes Haus",
+  "Nach dem Spiel: Wildsektor 20 (Hauptmission 39)","Nach dem Spiel: Legendäre Pokémon","Mega-Dimension: Dimensions-Illumina ★1","Mega-Dimension: Dimensions-Illumina ★2",
+  "Mega-Dimension: Dimensions-Illumina ★3","Mega-Dimension: Dimensions-Illumina ★4","Mega-Dimension: Dimensions-Illumina ★5","Mega-Dimension: Geschichte und besondere Begegnungen"],
+ tips:{1:"Was in den Straßen erscheint, hängt von der Tageszeit ab. Schau in Gassen und, sobald du klettern kannst, auf Dächern nach.",8:"Diese Orte werden im Lauf der Geschichte zugänglich.",
+  9:"Wildsektor 20 öffnet sich zu Beginn des Postgames.",
+  11:"Braucht das Mega-Dimension-DLC. Portale öffnest du mit Donuts; ein Donut mit weniger Sternen als das Portal senkt die Fangchance.",
+  16:"Das meiste davon wird nach dem Sieg über Rayquaza freigeschaltet."}},
+
+ko:{ lv:"Lv.{n}", sep:", ", wz:zs=>"와일드존 "+zs.join("·"),
+ ui:{title:"레전즈 Z-A 도감 트래커",
+  sub:"Pokémon LEGENDS Z-A(DLC 메가 차원 러시 포함)의 도감을 스토리 순서대로 효율적으로 채우는 루트와, 모든 메가스톤 체크리스트입니다.",
+  kDex:"포켓몬 도감",kMeg:"메가스톤",kStop:"완료한 지점",tabDex:"도감 루트",tabMeg:"메가스톤",
+  search:"포켓몬, 와일드존, 메가스톤 검색…",searchA:"검색",dlc:"메가 차원 러시 DLC",dlcT:"DLC 도감과 메가스톤 표시",
+  hide:"완료 숨기기",theme:"테마 전환",lang:"언어",
+  intro:"순서대로 진행하세요. 각 포켓몬은 메인 미션에서 와일드존이 열리는 시점을 기준으로, 가장 먼저 얻을 수 있는 지점에 적혀 있습니다. 줄을 탭하면 체크됩니다. <b>진화</b> 칸에는 이후 단계와 진화 방법이 나옵니다.",
+  shiny:"<b>빛나는부적:</b> 레전즈 Z-A에서는 도감 완성 보상이 아닙니다. 포켓몬 도감 연구 레벨 50에서 받을 수 있으며, 연구 레벨은 포획, 배틀 등 여러 조사로 오릅니다. 도감을 채우는 것도 큰 점수가 됩니다.",
+  viewBy:"보기",viewRoute:"루트 순서",viewNum:"도감 번호순",viewZone:"와일드존별",
+  colDex:"No.",colMon:"포켓몬",colHow:"입수 방법",colEvo:"진화",tagDLC:"DLC",stopN:"{n}번 지점",
+  megH:"메가스톤",
+  megP:"메가스톤을 지니게 하면 그 포켓몬이 메가진화할 수 있습니다. 메인 스토리에서 메가링을 받은 뒤(메인 미션 10)부터 쓸 수 있습니다. 모든 스톤은 한 번만 얻을 수 있으니 얻으면 체크하세요.",
+  megL0:"대부분은 상점에서 사거나 도시의 각 지구에서 찾을 수 있습니다. 이차원 미르의 스톤은 <b>메가 차원 러시 DLC</b>가 필요합니다.",
+  megL1:"일부는 온라인 랭크배틀이나 이상한 소포 이벤트로 얻으며, 기간 한정일 수 있습니다.",
+  megL2:"<b>먼저 한 마리 잡기</b>는 그 포켓몬을 도감 탭에서 아직 체크하지 않았다는 뜻입니다.",
+  badge:"메가스톤 {n} / {t}",won:"★ 모든 메가스톤을 모았습니다!",sortBy:"정렬",sortDex:"포켓몬",sortLoc:"입수 장소",
+  locLeft:" · {n}개 남음",locDone:" · ✓ 완료",warn:"먼저 한 마리 잡기",
+  footer:"출현 장소, 진화, 메가스톤은 {serebii} 자료를 참고했습니다. 도감 순서와 각 언어 이름: {pokeapi}. 팬이 만든 비공식 도구로 닌텐도, 게임프리크, 포켓몬 컴퍼니와 관계없습니다.",
+  save:"세이브 코드",codeT:"메모 앱에 복사해 두세요",copy:"복사",load:"불러오기",loadPh:"저장한 코드 붙여넣기 (PLZA1-…)",loadA:"저장한 코드",restore:"복원",
+  tCopied:"코드를 복사했습니다. 메모에 붙여 넣으세요.",tSel:"선택했습니다. ⌘C / Ctrl+C로 복사하세요.",
+  tRest:"복원 완료: 도감 {d}, 메가스톤 {m}",tBad:"코드가 올바르지 않은 것 같습니다. 전부 복사했는지 확인하세요.",
+  brand:"포켓몬 도감 트래커",gLetsgo:"레츠고",gZa:"레전즈 Z-A"},
+ how:{streets:"거리",streetsSome:"거리 ({d})",sewers:"하수도",labs:"플라드리 연구소",oldhouse:"오래된 집",
+  hs:"이차원 미르",colon:": ",special:"스페셜",evolve:"{p} 진화 ({c})",sm:"사이드 미션 {n} 보상",trade:"{p}와 교환 (사이드 미션 {n})",join:"; ",
+  g_streets:"거리",g_sewers:"하수도",g_labs:"플라드리 연구소",g_oldhouse:"오래된 집",g_gift:"선물, 교환, 특별한 만남",g_evo:"진화로만 입수",
+  shop:"{p} 상점",quasar:"Quasartico Inc.",hotelz:"호텔 Z 상점 (Vernal Avenue)",smName:"사이드 미션 {n}: {name}",event:" (이벤트)",
+  s_quasartico:"Quasartico Inc.",s_vernal:"Vernal Avenue",s_other:"기타 장소",s_sm:"사이드 미션",s_hyper:"이차원 미르 (메가 차원 러시)",
+  s_online:"온라인 랭크배틀",s_gift:"이상한 소포 (이벤트)",s_ranked:"랭크배틀 랭크업 보상",s_club:"Z-A 배틀클럽 랭크 보상"},
+ cond:{day:", 낮",night:", 밤",dark:", 지닌 포켓몬에 악타입이 있을 때",rain:", 비",nature:", 성격에 따라 모습이 달라짐",trade:"통신교환",tradeItem:"{i}를 지니게 하고 통신교환",
+  friend:"친밀도가 높음",monamie:"친밀도가 높음 + 페어리 기술",coins:"모으령의 코인 999개",ragefist:"분노의주먹 20번 사용",
+  barb:"독침천발 20번 사용",crits:"한 배틀에서 급소 3번",taunt:"도발을 배운 상태로 레벨업",mimic:"흉내내기를 배운 상태로 레벨업",special:"특별한 조건"},
+ x:{starter:"파트너로 한 마리 선택 (메인 미션 1)",
+  fossil:"포켓몬 연구소에서 턱화석이나 지느러미화석 복원 (사이드 미션 27)",
+  xerneas:"엔딩 후: 와일드존 3·5·9의 이상한 우두머리를 쓰러뜨리면 와일드존 11에 나타남",
+  yveltal:"엔딩 후: 폭주 메가진화와의 재대결에서 이기면 Rouge Sector 2의 옥상에 나타남",
+  zygarde:"엔딩 후: 제르네아스와 이벨타르 다음, 프리즘타워(와일드존 20)에서 배틀",
+  diancie:"디안시나이트(이상한 소포 이벤트) 필요: Magenta Sector 8의 옥상에서 만남",
+  mewtwo:"뮤츠나이트 X·Y(이상한 소포 이벤트) 필요: 플라드리 연구소 B3F",
+  heatran:"DLC 스토리: 이차원 투기장의 폭주 메가히드런",
+  darkrai:"DLC 스토리: 그믐밤의 악몽 (전용 도넛 필요)",
+  kyogre:"DLC 스토리: 사파이어 일그러짐 너머",
+  groudon:"DLC 스토리: 루비 일그러짐 너머",
+  rayquaza:"DLC 스토리: 그란돈과 가이오가 다음",
+  meltan:"레쿠쟈 이후: Rouge Sector 1의 사이드 미션",
+  melmetal:"멜탄을 잡은 뒤: 이차원 미르 입구 너머에서 멜탄이 진화",
+  magearna:"레쿠쟈 이후: 메가 조각 999개 전달 (Quasartico Inc.)",
+  hoopa:"레쿠쟈 이후: 굴레의 항아리 일그러짐 (호텔 Z)",
+  volcanion:"레쿠쟈 이후: 포켓몬 연구소의 의뢰",
+  genesect:"레쿠쟈 이후: Vert Sector 7에서 카세트 4종 구입 (각 메가 조각 540개)",
+  marshadow:"레쿠쟈 이후: North Boulevard의 유령 아이 소문 조사",
+  zeraora:"레쿠쟈, 디안시, 뮤츠 이후: Vert Sector 3 옥상의 교환을 계기로 폭주 메가제라오라와 배틀",
+  scan:"레쿠쟈 이후: 이차원 미르의 스페셜 스캔 (조사 포인트 25,000)",
+  gimmighoul:"Rouge Sector 1에서 선물 (메가 차원 러시)"},
+ stops:["메인 미션 1~2: 미르시티 도착","메인 미션 3: 와일드존 1과 거리","메인 미션 5: 와일드존 2~6",
+  "메인 미션 10: 와일드존 7~10","메인 미션 15: 와일드존 11~13","메인 미션 20: 와일드존 14~15",
+  "메인 미션 25: 와일드존 16~17","메인 미션 30: 와일드존 18~19","하수도, 플라드리 연구소, 오래된 집",
+  "엔딩 후: 와일드존 20 (메인 미션 39)","엔딩 후: 전설의 포켓몬","메가 차원 러시: 이차원 미르 ★1","메가 차원 러시: 이차원 미르 ★2",
+  "메가 차원 러시: 이차원 미르 ★3","메가 차원 러시: 이차원 미르 ★4","메가 차원 러시: 이차원 미르 ★5","메가 차원 러시: 스토리와 특별한 만남"],
+ tips:{1:"거리의 출현은 시간대에 따라 바뀝니다. 골목과, 오를 수 있게 되면 옥상도 살펴보세요.",8:"이 장소들은 스토리가 진행되면 갈 수 있습니다.",
+  9:"와일드존 20은 엔딩 직후 열립니다.",
+  11:"메가 차원 러시 DLC가 필요합니다. 도넛으로 이차원 입구를 엽니다. 입구보다 별이 적은 도넛이면 포획률이 떨어집니다.",
+  16:"대부분 레쿠쟈를 쓰러뜨린 뒤 열립니다."}},
+"zh-Hant":{ lv:"Lv.{n}", sep:"、", wz:zs=>"野生特區"+zs.join("、"),
+ ui:{title:"傳說 Z-A 圖鑑追蹤",
+  sub:"依照劇情順序、有效率地完成《寶可夢傳說 Z-A》（含追加內容「超次元爆湧」）圖鑑的路線，以及所有超級石的檢查清單。",
+  kDex:"寶可夢圖鑑",kMeg:"超級石",kStop:"已完成的地點",tabDex:"圖鑑路線",tabMeg:"超級石",
+  search:"搜尋寶可夢、野生特區或超級石…",searchA:"搜尋",dlc:"超次元爆湧 DLC",dlcT:"顯示追加內容的圖鑑與超級石",
+  hide:"隱藏已完成",theme:"切換主題",lang:"語言",
+  intro:"依序前往各地點。每隻寶可夢都列在最早能取得的地方，依據主線任務中野生特區開放的順序。點一下該列即可勾選。<b>進化</b>欄顯示之後的進化階段與進化方式。",
+  shiny:"<b>閃耀護符：</b>在《傳說 Z-A》中，它不是完成圖鑑的獎勵，而是在寶可夢圖鑑研究等級達到50時獲得。研究等級會隨捕捉、對戰等調查提升，填滿圖鑑也能拿到大量點數。",
+  viewBy:"顯示",viewRoute:"路線順序",viewNum:"圖鑑編號",viewZone:"依野生特區",
+  colDex:"編號",colMon:"寶可夢",colHow:"取得方式",colEvo:"進化",tagDLC:"DLC",stopN:"第{n}站",
+  megH:"超級石",
+  megP:"讓寶可夢攜帶超級石就能進行超級進化。在主線劇情取得超級環（主線任務10）後即可使用。每顆超級石都只能取得一次，拿到後就勾選吧。",
+  megL0:"大多數可在商店購買或在城市各區找到。異次元密阿雷的超級石需要<b>追加內容「超次元爆湧」</b>。",
+  megL1:"少數來自線上排名對戰或神秘禮物活動，可能有期間限制。",
+  megL2:"<b>請先捕捉一隻</b>表示你還沒在圖鑑分頁勾選該寶可夢。",
+  badge:"超級石 {n} / {t}",won:"★ 已收集所有超級石！",sortBy:"排序",sortDex:"寶可夢",sortLoc:"取得地點",
+  locLeft:" · 剩餘{n}",locDone:" · ✓ 完成",warn:"請先捕捉一隻",
+  footer:"出現地點、進化與超級石參照 {serebii}。圖鑑順序與各語言名稱來自 {pokeapi}。粉絲製作的非官方工具，與任天堂、Game Freak 及寶可夢公司無關。",
+  save:"存檔代碼",codeT:"複製到你的記事本App",copy:"複製",load:"讀取",loadPh:"貼上已儲存的代碼（PLZA1-…）",loadA:"已儲存的代碼",restore:"還原",
+  tCopied:"已複製代碼，請貼到記事本中。",tSel:"已選取，請按 ⌘C / Ctrl+C 複製。",
+  tRest:"已還原：圖鑑 {d}、超級石 {m}",tBad:"這個代碼似乎不正確，請確認是否完整複製。",
+  brand:"寶可夢圖鑑追蹤",gZa:"傳說 Z-A"},
+ how:{streets:"城市街道",streetsSome:"城市街道（{d}）",sewers:"下水道",labs:"弗拉達利研究所",oldhouse:"舊房子",
+  hs:"異次元密阿雷",colon:"：",special:"特殊",evolve:"{p}進化（{c}）",sm:"支線任務{n}獲贈",trade:"用{p}交換（支線任務{n}）",join:"；",
+  g_streets:"城市街道",g_sewers:"下水道",g_labs:"弗拉達利研究所",g_oldhouse:"舊房子",g_gift:"獲贈、交換與特殊相遇",g_evo:"僅能透過進化取得",
+  shop:"{p}的商店",quasar:"Quasartico Inc.",hotelz:"Z酒店的商店（Vernal Avenue）",smName:"支線任務{n}：{name}",event:"（活動）",
+  s_quasartico:"Quasartico Inc.",s_vernal:"Vernal Avenue",s_other:"其他地點",s_sm:"支線任務",s_hyper:"異次元密阿雷（超次元爆湧）",
+  s_online:"線上排名對戰",s_gift:"神秘禮物（活動）",s_ranked:"排名對戰升級獎勵",s_club:"Z-A對戰俱樂部排名獎勵"},
+ cond:{day:"，白天",night:"，夜晚",dark:"，隊伍中有惡屬性寶可夢",rain:"，下雨時",nature:"，樣子依性格而定",trade:"連線交換",tradeItem:"攜帶{i}連線交換",
+  friend:"親密度高",monamie:"親密度高＋妖精屬性招式",coins:"索財靈的硬幣999枚",ragefist:"使用憤怒之拳20次",
+  barb:"使用毒千針20次",crits:"一場對戰中擊中要害3次",taunt:"學會挑釁後升級",mimic:"學會模仿後升級",special:"特殊條件"},
+ x:{starter:"選一隻作為搭檔（主線任務1）",
+  fossil:"在寶可夢研究所復原顎之化石或鰭之化石（支線任務27）",
+  xerneas:"通關後：打倒野生特區3、5、9的異常頭目後，在野生特區11出現",
+  yveltal:"通關後：在失控超級進化的再戰中獲勝後，出現在Rouge Sector 2的屋頂",
+  zygarde:"通關後：收服哲爾尼亞斯與伊裴爾塔爾後，在稜鏡塔（野生特區20）對戰",
+  diancie:"需要蒂安希進化石（神秘禮物活動）：在Magenta Sector 8的屋頂相遇",
+  mewtwo:"需要超夢進化石X與Y（神秘禮物活動）：弗拉達利研究所 B3F",
+  heatran:"DLC劇情：在異次元的競技場與失控的超級席多藍恩對戰",
+  darkrai:"DLC劇情：新月的惡夢（需要專用甜甜圈）",
+  kyogre:"DLC劇情：藍寶石扭曲的另一端",
+  groudon:"DLC劇情：紅寶石扭曲的另一端",
+  rayquaza:"DLC劇情：固拉多與蓋歐卡之後",
+  meltan:"烈空坐之後：Rouge Sector 1的支線任務",
+  melmetal:"收服美錄坦後：穿過異次元密阿雷的入口，美錄坦會進化",
+  magearna:"烈空坐之後：交出999個超級碎片（Quasartico Inc.）",
+  hoopa:"烈空坐之後：懲戒之壺的扭曲（Z酒店）",
+  volcanion:"烈空坐之後：寶可夢研究所的委託",
+  genesect:"烈空坐之後：在Vert Sector 7買齊四種卡帶（各540個超級碎片）",
+  marshadow:"烈空坐之後：調查North Boulevard的幽靈小孩傳聞",
+  zeraora:"烈空坐、蒂安希與超夢之後：在Vert Sector 3屋頂交換後，與失控的超級捷拉奧拉對戰",
+  scan:"烈空坐之後：異次元密阿雷的特別掃描（調查點數25,000）",
+  gimmighoul:"在Rouge Sector 1獲贈（超次元爆湧）"},
+ stops:["主線任務1～2：抵達密阿雷市","主線任務3：野生特區1與城市街道","主線任務5：野生特區2～6",
+  "主線任務10：野生特區7～10","主線任務15：野生特區11～13","主線任務20：野生特區14～15",
+  "主線任務25：野生特區16～17","主線任務30：野生特區18～19","下水道、弗拉達利研究所與舊房子",
+  "通關後：野生特區20（主線任務39）","通關後：傳說的寶可夢","超次元爆湧：異次元密阿雷 ★1","超次元爆湧：異次元密阿雷 ★2",
+  "超次元爆湧：異次元密阿雷 ★3","超次元爆湧：異次元密阿雷 ★4","超次元爆湧：異次元密阿雷 ★5","超次元爆湧：劇情與特殊相遇"],
+ tips:{1:"街道上出現的寶可夢會隨時段改變。看看小巷，能攀爬後也別忘了屋頂。",8:"這些地點會隨劇情推進開放。",
+  9:"野生特區20在通關後立即開放。",
+  11:"需要追加內容「超次元爆湧」。用甜甜圈打開異次元入口；甜甜圈的星數比入口少時，捕捉率會下降。",
+  16:"大多在打倒烈空坐後開放。"}},
+
+"zh-Hans":{ lv:"Lv.{n}", sep:"、", wz:zs=>"野生特区"+zs.join("、"),
+ ui:{title:"传说 Z-A 图鉴追踪",
+  sub:"按照剧情顺序、高效完成《宝可梦传说 Z-A》（含追加内容“超次元爆涌”）图鉴的路线，以及所有超级石的检查清单。",
+  kDex:"宝可梦图鉴",kMeg:"超级石",kStop:"已完成的地点",tabDex:"图鉴路线",tabMeg:"超级石",
+  search:"搜索宝可梦、野生特区或超级石…",searchA:"搜索",dlc:"超次元爆涌 DLC",dlcT:"显示追加内容的图鉴与超级石",
+  hide:"隐藏已完成",theme:"切换主题",lang:"语言",
+  intro:"按顺序前往各地点。每只宝可梦都列在最早能获得的地方，依据主线任务中野生特区开放的顺序。点一下该行即可勾选。<b>进化</b>栏显示之后的进化阶段与进化方式。",
+  shiny:"<b>闪耀护符：</b>在《传说 Z-A》中，它不是完成图鉴的奖励，而是在宝可梦图鉴研究等级达到50时获得。研究等级会随捕捉、对战等调查提升，填满图鉴也能拿到大量点数。",
+  viewBy:"显示",viewRoute:"路线顺序",viewNum:"图鉴编号",viewZone:"按野生特区",
+  colDex:"编号",colMon:"宝可梦",colHow:"获得方式",colEvo:"进化",tagDLC:"DLC",stopN:"第{n}站",
+  megH:"超级石",
+  megP:"让宝可梦携带超级石就能进行超级进化。在主线剧情获得超级环（主线任务10）后即可使用。每颗超级石都只能获得一次，拿到后就勾选吧。",
+  megL0:"大多数可在商店购买或在城市各区找到。异次元密阿雷的超级石需要<b>追加内容“超次元爆涌”</b>。",
+  megL1:"少数来自在线排名对战或神秘礼物活动，可能有期间限制。",
+  megL2:"<b>请先捕捉一只</b>表示你还没在图鉴页勾选该宝可梦。",
+  badge:"超级石 {n} / {t}",won:"★ 已收集所有超级石！",sortBy:"排序",sortDex:"宝可梦",sortLoc:"获得地点",
+  locLeft:" · 剩余{n}",locDone:" · ✓ 完成",warn:"请先捕捉一只",
+  footer:"出现地点、进化与超级石参照 {serebii}。图鉴顺序与各语言名称来自 {pokeapi}。粉丝制作的非官方工具，与任天堂、Game Freak 及宝可梦公司无关。",
+  save:"存档代码",codeT:"复制到你的备忘录App",copy:"复制",load:"读取",loadPh:"粘贴已保存的代码（PLZA1-…）",loadA:"已保存的代码",restore:"还原",
+  tCopied:"已复制代码，请粘贴到备忘录中。",tSel:"已选中，请按 ⌘C / Ctrl+C 复制。",
+  tRest:"已还原：图鉴 {d}、超级石 {m}",tBad:"这个代码似乎不正确，请确认是否完整复制。",
+  brand:"宝可梦图鉴追踪",gZa:"传说 Z-A"},
+ how:{streets:"城市街道",streetsSome:"城市街道（{d}）",sewers:"下水道",labs:"弗拉达利研究所",oldhouse:"旧房子",
+  hs:"异次元密阿雷",colon:"：",special:"特殊",evolve:"{p}进化（{c}）",sm:"支线任务{n}获赠",trade:"用{p}交换（支线任务{n}）",join:"；",
+  g_streets:"城市街道",g_sewers:"下水道",g_labs:"弗拉达利研究所",g_oldhouse:"旧房子",g_gift:"获赠、交换与特殊相遇",g_evo:"仅能通过进化获得",
+  shop:"{p}的商店",quasar:"Quasartico Inc.",hotelz:"Z酒店的商店（Vernal Avenue）",smName:"支线任务{n}：{name}",event:"（活动）",
+  s_quasartico:"Quasartico Inc.",s_vernal:"Vernal Avenue",s_other:"其他地点",s_sm:"支线任务",s_hyper:"异次元密阿雷（超次元爆涌）",
+  s_online:"在线排名对战",s_gift:"神秘礼物（活动）",s_ranked:"排名对战升级奖励",s_club:"Z-A对战俱乐部排名奖励"},
+ cond:{day:"，白天",night:"，夜晚",dark:"，队伍中有恶属性宝可梦",rain:"，下雨时",nature:"，样子依性格而定",trade:"连线交换",tradeItem:"携带{i}连线交换",
+  friend:"亲密度高",monamie:"亲密度高＋妖精属性招式",coins:"索财灵的硬币999枚",ragefist:"使用愤怒之拳20次",
+  barb:"使用毒千针20次",crits:"一场对战中击中要害3次",taunt:"学会挑衅后升级",mimic:"学会模仿后升级",special:"特殊条件"},
+ x:{starter:"选一只作为搭档（主线任务1）",
+  fossil:"在宝可梦研究所复原颚之化石或鳍之化石（支线任务27）",
+  xerneas:"通关后：打倒野生特区3、5、9的异常头目后，在野生特区11出现",
+  yveltal:"通关后：在失控超级进化的再战中获胜后，出现在Rouge Sector 2的屋顶",
+  zygarde:"通关后：收服哲尔尼亚斯与伊裴尔塔尔后，在棱镜塔（野生特区20）对战",
+  diancie:"需要蒂安希进化石（神秘礼物活动）：在Magenta Sector 8的屋顶相遇",
+  mewtwo:"需要超梦进化石X与Y（神秘礼物活动）：弗拉达利研究所 B3F",
+  heatran:"DLC剧情：在异次元的竞技场与失控的超级席多蓝恩对战",
+  darkrai:"DLC剧情：新月的噩梦（需要专用甜甜圈）",
+  kyogre:"DLC剧情：蓝宝石扭曲的另一端",
+  groudon:"DLC剧情：红宝石扭曲的另一端",
+  rayquaza:"DLC剧情：固拉多与盖欧卡之后",
+  meltan:"烈空坐之后：Rouge Sector 1的支线任务",
+  melmetal:"收服美录坦后：穿过异次元密阿雷的入口，美录坦会进化",
+  magearna:"烈空坐之后：交出999个超级碎片（Quasartico Inc.）",
+  hoopa:"烈空坐之后：惩戒之壶的扭曲（Z酒店）",
+  volcanion:"烈空坐之后：宝可梦研究所的委托",
+  genesect:"烈空坐之后：在Vert Sector 7买齐四种卡带（各540个超级碎片）",
+  marshadow:"烈空坐之后：调查North Boulevard的幽灵小孩传闻",
+  zeraora:"烈空坐、蒂安希与超梦之后：在Vert Sector 3屋顶交换后，与失控的超级捷拉奥拉对战",
+  scan:"烈空坐之后：异次元密阿雷的特别扫描（调查点数25,000）",
+  gimmighoul:"在Rouge Sector 1获赠（超次元爆涌）"},
+ stops:["主线任务1～2：抵达密阿雷市","主线任务3：野生特区1与城市街道","主线任务5：野生特区2～6",
+  "主线任务10：野生特区7～10","主线任务15：野生特区11～13","主线任务20：野生特区14～15",
+  "主线任务25：野生特区16～17","主线任务30：野生特区18～19","下水道、弗拉达利研究所与旧房子",
+  "通关后：野生特区20（主线任务39）","通关后：传说的宝可梦","超次元爆涌：异次元密阿雷 ★1","超次元爆涌：异次元密阿雷 ★2",
+  "超次元爆涌：异次元密阿雷 ★3","超次元爆涌：异次元密阿雷 ★4","超次元爆涌：异次元密阿雷 ★5","超次元爆涌：剧情与特殊相遇"],
+ tips:{1:"街道上出现的宝可梦会随时段改变。看看小巷，能攀爬后也别忘了屋顶。",8:"这些地点会随剧情推进开放。",
+  9:"野生特区20在通关后立即开放。",
+  11:"需要追加内容“超次元爆涌”。用甜甜圈打开异次元入口；甜甜圈的星数比入口少时，捕捉率会下降。",
+  16:"大多在打倒烈空坐后开放。"}}
+};
+
+/* ---------- data helpers ---------- */
+const ORDER = D.entries.slice().sort((a,b)=>(a.dlc-b.dlc)||a.id.localeCompare(b.id)); // save-code bit order: L001…L232, H001…H132 (never reorder)
+const IDX = new Map(ORDER.map((e,i)=>[e.id,i]));
+const BYN = {}; D.entries.forEach(e=>BYN[e.n]=e);
+const STONES = D.stones; // save-code bit order (never reorder; append new stones at the end)
+const LUMIOSE = ORDER.filter(e=>!e.dlc).length, DLC_STOP = 11;
+const state = {dex:new Set(), meg:new Set(), dlc:true};
+const $ = s=>document.querySelector(s);
+const show = e=>state.dlc || !e.dlc;
+const visStops = ()=>D.stops.map((_,i)=>i).filter(i=>state.dlc || i<DLC_STOP);
+
+/* ---------- i18n ---------- */
+let LANG = "en";
+const T = ()=>I18N[LANG];
+const EN = I18N.en;
+function fill(str,p){ return String(str).replace(/\{([a-z0-9]+)\}/gi,(all,k)=>p && k in p ? p[k] : all); }
+function t(key,p){ const v=(T().ui||{})[key]; return fill(v!=null ? v : EN.ui[key], p); }
+const nm = n=>N.NAMES[LANG][n] || N.NAMES.en[n];
+const item = id=>N.ITEMS[LANG][id] || N.ITEMS.en[id];
+const typeName = ty=>ty==="Special" ? (T().how.special||EN.how.special) : (N.TYPES[LANG][ty] || ty);
+const lv = n=>fill(T().lv||EN.lv,{n});
+const H = k=>{ const v=(T().how||{})[k]; return v!=null ? v : EN.how[k]; };
+const C = k=>{ const v=(T().cond||{})[k]; return v!=null ? v : EN.cond[k]; };
+const sep = ()=>T().sep||EN.sep;
+
+const STONE_ITEM = {duskstone:"dusk-stone",firestone:"fire-stone",icestone:"ice-stone",leafstone:"leaf-stone",moonstone:"moon-stone",
+  shinystone:"shiny-stone",sunstone:"sun-stone",thunderstone:"thunder-stone",waterstone:"water-stone",blackaugurite:"black-augurite",
+  galaricacuff:"galarica-cuff",galaricawreath:"galarica-wreath",auspiciousarmor:"auspicious-armor",maliciousarmor:"malicious-armor"};
+const TRADE_ITEM = {tradeupgrade:"upgrade",tradedubiousdisc:"dubious-disc","tradeking'srock":"kings-rock",trademetalcoat:"metal-coat",
+  tradesachet:"sachet",tradewhippeddream:"whipped-dream"};
+function cond(m){
+  let r;
+  if(!m) return C("special");
+  if((r=m.match(/^l(\d+)$/))) return lv(r[1]);
+  if((r=m.match(/^l(day|night)(\d+)$/))) return lv(r[2])+C(r[1]);
+  if(m==="l30night") return lv(30)+C("night");
+  if(m==="l32dark") return lv(32)+C("dark");
+  if(m==="l50rain") return lv(50)+C("rain");
+  if(m==="nature30") return lv(30)+C("nature");
+  if(m==="trade") return C("trade");
+  if(TRADE_ITEM[m]) return fill(C("tradeItem"),{i:item(TRADE_ITEM[m])});
+  if(STONE_ITEM[m]) return item(STONE_ITEM[m]);
+  if(m==="maledawnstone") return item("dawn-stone")+" ♂";
+  if(m==="femaledawnstone") return item("dawn-stone")+" ♀";
+  if(m==="happiness") return C("friend");
+  if(m==="happinessday") return C("friend")+C("day");
+  if(m==="happinessnight") return C("friend")+C("night");
+  const k={monamie:"monamie",gimmighoulcoin:"coins",ragefist:"ragefist",barbbarrge:"barb",lbattles:"crits",leveltaunt:"taunt",levelmimic:"mimic"}[m];
+  return C(k||"special");
+}
+const wz = zs=>(T().wz||EN.wz)(zs);
+function tokText(k){
+  const a=k.slice(1);
+  switch(k[0]){
+    case "wz": return wz(a[0]);
+    case "streets": return a[0]===1 ? H("streets") : fill(H("streetsSome"),{d:a[0].join(sep())});
+    case "sewers": case "labs": case "oldhouse": return H(k[0]);
+    case "hs": return H("hs")+H("colon")+a[0].map(([ty,ss])=>typeName(ty)+" "+ss.map(s=>"★"+s).join(" ")).join(sep());
+    case "evo": return fill(H("evolve"),{p:nm(a[0]),c:cond(a[1])});
+    case "sm": return fill(H("sm"),{n:a[0]});
+    case "trade": return fill(H("trade"),{p:nm(a[0]),n:a[1]});
+    case "x": { const v=(T().x||{})[a[0]]; return v!=null ? v : EN.x[a[0]]; }
+  }
+  return "";
+}
+function howText(e){ // base-game Pokémon's Hyperspace spawns only show in the Wild Zone view
+  let toks=e.tok.slice(); if(state.dlc && e.hs && $("#dview").value==="zone") toks=toks.concat(e.hs);
+  return toks.map(tokText).join(H("join"));
+}
+function evoText(e){
+  return e.evo.map(stage=>stage.filter(([n])=>show(BYN[n])).map(([n,m])=>nm(n)+" ("+cond(m)+")").join(" / ")).filter(Boolean).join("  →  ");
+}
+const stopTitle = i=>{ const s=(T().stops||[])[i]; return s ? s : EN.stops[i]; };
+const stopTip = i=>{ const s=(T().tips||{})[i]; return s!=null ? s : (EN.tips[i]||""); };
+const dexLabel = e=>(e.dlc?"H":"#")+e.id.slice(1);
+
+/* ---------- encode / decode ---------- */
+const DEX_BYTES = Math.ceil(ORDER.length/8), MEG_BYTES = Math.ceil(STONES.length/8), LEN = 1+DEX_BYTES+MEG_BYTES;
+function encode(){
+  const b=new Uint8Array(LEN);
+  state.dex.forEach(id=>{ const i=IDX.get(id); b[1+(i>>3)]|=1<<(i&7); });
+  STONES.forEach((s,i)=>{ if(state.meg.has(s.id)) b[1+DEX_BYTES+(i>>3)]|=1<<(i&7); });
+  let bin=""; b.forEach(x=>bin+=String.fromCharCode(x));
+  return "PLZA1-"+btoa(bin).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
+}
+function decode(str){
+  str=(str||"").trim().replace(/^#/,"");
+  if(!str.startsWith("PLZA1-")) throw new Error("bad prefix");
+  let s=str.slice(6).replace(/-/g,"+").replace(/_/g,"/"); while(s.length%4) s+="=";
+  const bin=atob(s); if(bin.length!==LEN) throw new Error("bad length");
+  const dex=new Set(), meg=new Set();
+  ORDER.forEach((e,i)=>{ if(bin.charCodeAt(1+(i>>3))&(1<<(i&7))) dex.add(e.id); });
+  STONES.forEach((st,i)=>{ if(bin.charCodeAt(1+DEX_BYTES+(i>>3))&(1<<(i&7))) meg.add(st.id); });
+  return {dex,meg};
+}
+
+/* ---------- render: Pokédex ---------- */
+function esc(s){ return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+const evoHTML = s=>s ? esc(s).replace(/\(([^)]*)\)/g,'<span style="color:var(--muted)">($1)</span>').split("  →  ").join('<span class="arr">→</span>') : "";
+const headHTML = ()=>`<div class="head"><span></span><span>${esc(t("colDex"))}</span><span>${esc(t("colMon"))}</span><span>${esc(t("colHow"))}</span><span>${esc(t("colEvo"))}</span></div>`;
+function rowHTML(e,withStop){
+  const name=nm(e.n), how=howText(e), title=stopTitle(e.stop);
+  const q=norm([N.NAMES.en[e.n],name,how,EN.stops[e.stop],title].join(" "));
+  return `<div class="row" data-id="${e.id}" data-q="${esc(q)}">
+    <span class="cbw"><input type="checkbox" class="cb" data-dex="${e.id}" aria-label="${esc(name)}"></span>
+    <span class="dex">${dexLabel(e)}</span>
+    <span class="main"><span class="nm">${esc(name)}${e.dlc?`<span class="tag T">${esc(t("tagDLC"))}</span>`:""}</span>
+    <span class="how">${esc(how)}${withStop?`<span class="tag T" title="${esc(title)}">${esc(t("stopN",{n:e.stop+1}))}</span>`:""}</span>
+    <span class="evo">${evoHTML(evoText(e))}</span></span>
+  </div>`;
+}
+function card(key,num,title,tip,rows,open){
+  return `<details class="stop" data-k="${key}" ${open?"open":""}>
+    <summary><span class="num">${num}</span><h2>${esc(title)}</h2><span class="count"></span><span class="chev">›</span></summary>
+    ${tip?`<p class="tip">${esc(tip)}</p>`:""}
+    <div class="rows">${headHTML()}${rows}</div></details>`;
+}
+const GROUP_ORDER = [...Array(20)].map((_,i)=>"wz"+(i+1)).concat(["streets","sewers","labs","oldhouse","gift"],
+  ["Normal","Fighting","Flying","Poison","Ground","Rock","Bug","Ghost","Steel","Fire","Water","Grass","Electric","Psychic","Ice","Dragon","Dark","Fairy","Special"].map(x=>"hs-"+x),["evo"]);
+function groupLabel(g){
+  if(g.startsWith("wz")) return wz([+g.slice(2)]);
+  if(g.startsWith("hs-")) return H("hs")+H("colon")+typeName(g.slice(3));
+  return H("g_"+g);
+}
+function renderStops(){
+  const view=$("#dview").value;
+  const open=new Set([...document.querySelectorAll(".stop[open]")].map(d=>d.dataset.k));
+  const first=!document.querySelector(".stop") || $("#stops").dataset.view!==view;
+  let html="";
+  if(view==="num"){
+    html=`<div class="stop"><div class="rows">${headHTML()}${ORDER.filter(show).map(e=>rowHTML(e,true)).join("")}</div></div>`;
+  } else if(view==="zone"){
+    const groups={};
+    D.entries.filter(show).forEach(e=>{
+      let g=e.g.slice(); if(state.dlc && e.hs) e.hs.forEach(h=>h[1].forEach(([ty])=>g.push("hs-"+ty)));
+      [...new Set(g)].forEach(k=>(groups[k]=groups[k]||[]).push(e));
+    });
+    let n=0;
+    GROUP_ORDER.forEach(g=>{ if(!groups[g]) return; n++;
+      const list=groups[g].slice().sort((a,b)=>IDX.get(a.id)-IDX.get(b.id));
+      html+=card(g,n,groupLabel(g),"",list.map(e=>rowHTML(e,true)).join(""),first?n===1:open.has(g));
+    });
+  } else {
+    visStops().forEach((s,k)=>{
+      const list=D.entries.filter(e=>e.stop===s && show(e));
+      html+=card("s"+s,s+1,stopTitle(s),stopTip(s),list.map(e=>rowHTML(e,false)).join(""),first?k===0:open.has("s"+s));
+    });
+  }
+  $("#stops").innerHTML=html; $("#stops").dataset.view=view;
+}
+
+/* ---------- render: Mega Stones ---------- */
+function stoneCat(loc){
+  if(/^Shop Quasartico|^Quasartico/.test(loc)) return "quasartico";
+  if(/Vernal Avenue/.test(loc)) return "vernal";
+  if(/^(Vert|Bleu|Magenta|Rouge|Jaune) District/.test(loc)) return "d:"+loc.split(" ")[0];
+  if(/^Hyperspace/.test(loc)) return "hyper";
+  if(/^Side Mission/.test(loc)) return "sm";
+  if(/Ranked|Battle Club/.test(loc)) return "online";
+  if(/Mystery Gift/.test(loc)) return "gift";
+  return "other";
+}
+const SCAT_ORDER = ["quasartico","vernal","d:Vert","d:Bleu","d:Magenta","d:Rouge","d:Jaune","other","sm","hyper","online","gift"];
+function scatLabel(c){ return c.startsWith("d:") ? c.slice(2)+" District" : H("s_"+c); }
+function stoneLoc(loc){
+  let r;
+  if((r=loc.match(/^Shop (.+)$/))) return fill(H("shop"),{p:r[1]==="Vernal Avenue"?r[1]:H("quasar")});
+  if(loc==="Hotel Z Shop Vernal Avenue") return H("hotelz");
+  if(loc==="Quasartico Inc.") return H("quasar");
+  if((r=loc.match(/^Side Mission (\d+): (.+)$/))) return fill(H("smName"),{n:r[1],name:r[2]});
+  if(loc==="Ranked Battle Rank-up reward") return H("s_ranked");
+  if(loc==="Z-A Battle Club Ranked Reward") return H("s_club");
+  if(loc==="Mystery Gift") return H("s_gift");
+  if((r=loc.match(/^Hyperspace Lumiose( \(Event\))?$/))) return H("hs")+(r[1]?H("event"):"");
+  if((r=loc.match(/^Hyperspace (.+)$/))) return H("hs")+H("colon")+r[1];
+  return loc;
+}
+function renderMega(){
+  const sort=$("#msort").value;
+  const list=STONES.map((s,i)=>({...s,i})).filter(s=>state.dlc || !s.dlc);
+  const key=s=>IDX.get(BYN[s.n].id);
+  let html="";
+  const cardHTML=s=>{ const holder=nm(s.n), sn=N.STN[LANG][s.i]||N.STN.en[s.i];
+    return `<label class="mcard" data-m="${s.id}" data-q="${esc(norm([s.name,sn,N.NAMES.en[s.n],holder,s.loc,stoneLoc(s.loc)].join(" ")))}">
+      <input type="checkbox" class="cb" data-meg="${s.id}" aria-label="${esc(sn)}">
+      <span><span class="t">${esc(sn)}</span>${s.dlc?`<span class="pill opt">${esc(t("tagDLC"))}</span>`:""}
+      <div class="s">${esc(holder)} · ${esc(stoneLoc(s.loc))}</div>
+      <div class="w" data-warn="${BYN[s.n].id}">${esc(t("warn"))}</div></span></label>`; };
+  if(sort==="loc"){
+    const cats={}; list.forEach(s=>(cats[stoneCat(s.loc)]=cats[stoneCat(s.loc)]||[]).push(s));
+    SCAT_ORDER.forEach(c=>{ if(!cats[c]) return;
+      html+=`<div class="loc-h">${esc(scatLabel(c))}<span class="loc-left"></span></div>`;
+      cats[c].sort((a,b)=>key(a)-key(b)).forEach(s=>html+=cardHTML(s));
+    });
+  } else list.sort((a,b)=>key(a)-key(b)||a.i-b.i).forEach(s=>html+=cardHTML(s));
+  $("#mgrid").innerHTML=html;
+}
+
+/* ---------- sync UI with state ---------- */
+function sync(){
+  document.querySelectorAll("[data-dex]").forEach(cb=>{ const on=state.dex.has(cb.dataset.dex); cb.checked=on; cb.closest(".row").classList.toggle("caught",on); });
+  document.querySelectorAll("[data-meg]").forEach(cb=>{ const on=state.meg.has(cb.dataset.meg); cb.checked=on; cb.closest(".mcard").classList.toggle("done",on); });
+  document.querySelectorAll("[data-warn]").forEach(w=>w.hidden=state.dex.has(w.dataset.warn));
+  document.querySelectorAll(".stop[data-k]").forEach(d=>{
+    const ids=[...new Set([...d.querySelectorAll(".row")].map(r=>r.dataset.id))], got=ids.filter(id=>state.dex.has(id)).length;
+    d.querySelector(".count").textContent=`${got} / ${ids.length}`; d.classList.toggle("done",got===ids.length);
+  });
+  document.querySelectorAll(".loc-h").forEach(h=>{
+    let el=h.nextElementSibling, left=0;
+    while(el&&el.matches(".mcard")){ if(!state.meg.has(el.dataset.m)) left++; el=el.nextElementSibling; }
+    h.querySelector(".loc-left").textContent = left ? t("locLeft",{n:left}) : t("locDone");
+  });
+  const dexAll=ORDER.filter(show), got=dexAll.filter(e=>state.dex.has(e.id)).length;
+  const stones=STONES.filter(s=>state.dlc||!s.dlc), sgot=stones.filter(s=>state.meg.has(s.id)).length;
+  const stops=visStops(), sdone=stops.filter(s=>D.entries.filter(e=>e.stop===s&&show(e)).every(e=>state.dex.has(e.id))).length;
+  $("#sDex").innerHTML=`${got} <small>/ ${dexAll.length}</small>`; $("#bDex").style.width=got/dexAll.length*100+"%";
+  $("#sMeg").innerHTML=`${sgot} <small>/ ${stones.length}</small>`; $("#bMeg").style.width=sgot/stones.length*100+"%";
+  $("#sStop").innerHTML=`${sdone} <small>/ ${stops.length}</small>`; $("#bStop").style.width=sdone/stops.length*100+"%";
+  const b=$("#megBadge"); b.classList.toggle("won",sgot===stones.length);
+  b.textContent = sgot===stones.length ? t("won") : t("badge",{n:sgot,t:stones.length});
+  applyFilter();
+  const code=encode(); $("#code").textContent=code;
+  try{ history.replaceState(null,"","#"+code); }catch(e){}
+  try{ localStorage.setItem("plza-code",code); }catch(e){}
+}
+function applyFilter(){
+  const q=norm($("#q").value.trim()), hide=$("#hide").checked;
+  document.querySelectorAll(".row").forEach(r=>{ r.hidden=(q&&!r.dataset.q.includes(q))||(hide&&state.dex.has(r.dataset.id)); });
+  document.querySelectorAll(".stop").forEach(d=>{ const any=[...d.querySelectorAll(".row")].some(r=>!r.hidden); d.hidden=!any; if(q&&any&&d.tagName==="DETAILS") d.open=true; });
+  document.querySelectorAll(".mcard").forEach(c=>{ c.hidden=(q&&!c.dataset.q.includes(q))||(hide&&state.meg.has(c.dataset.m)); });
+  document.querySelectorAll(".loc-h").forEach(h=>{
+    let el=h.nextElementSibling, any=false;
+    while(el&&!el.matches(".loc-h")){ if(el.matches(".mcard")&&!el.hidden) any=true; el=el.nextElementSibling; }
+    h.hidden=!any;
+  });
+}
+
+/* ---------- events ---------- */
+document.addEventListener("click",e=>{
+  const row=e.target.closest(".row");
+  if(row && !e.target.matches(".cb")){ const id=row.dataset.id; state.dex.has(id)?state.dex.delete(id):state.dex.add(id); sync(); }
+});
+document.addEventListener("change",e=>{
+  const x=e.target;
+  if(x.dataset.dex){ x.checked?state.dex.add(x.dataset.dex):state.dex.delete(x.dataset.dex); sync(); }
+  if(x.dataset.meg){ x.checked?state.meg.add(x.dataset.meg):state.meg.delete(x.dataset.meg); sync(); }
+});
+document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll(".tabs button").forEach(x=>x.setAttribute("aria-selected",x===b));
+  $("#tab-dex").hidden=b.dataset.tab!=="dex"; $("#tab-meg").hidden=b.dataset.tab!=="meg";
+  try{localStorage.setItem("plza-tab",b.dataset.tab)}catch(e){}
+});
+$("#q").oninput=applyFilter; $("#hide").onchange=applyFilter;
+$("#dlc").onchange=e=>{ state.dlc=e.target.checked; try{localStorage.setItem("plza-dlc",state.dlc?"1":"0")}catch(err){} renderStops(); renderMega(); sync(); };
+$("#dview").onchange=()=>{ renderStops(); sync(); };
+$("#msort").onchange=()=>{ renderMega(); sync(); };
+$("#copy").onclick=async()=>{
+  const code=encode();
+  try{ await navigator.clipboard.writeText(code); toast(t("tCopied")); }
+  catch(e){ const r=document.createRange(); r.selectNodeContents($("#code")); const s=getSelection(); s.removeAllRanges(); s.addRange(r); toast(t("tSel")); }
+};
+$("#loadBtn").onclick=()=>{ $("#loadRow").classList.toggle("show"); $("#loadIn").focus(); };
+$("#loadGo").onclick=()=>{
+  try{ const d=decode($("#loadIn").value); Object.assign(state,d); renderStops(); renderMega(); sync(); $("#loadIn").value=""; $("#loadRow").classList.remove("show"); toast(t("tRest",{d:d.dex.size,m:d.meg.size})); }
+  catch(e){ toast(t("tBad")); }
+};
+$("#loadIn").onkeydown=e=>{ if(e.key==="Enter") $("#loadGo").click(); };
+$("#theme").onclick=()=>{
+  const cur=document.documentElement.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");
+  const nxt=cur==="dark"?"light":"dark"; document.documentElement.dataset.theme=nxt;
+  try{localStorage.setItem("dex-theme",nxt)}catch(e){}
+};
+let tt; function toast(m){ const x=$("#toast"); x.textContent=m; x.classList.add("show"); clearTimeout(tt); tt=setTimeout(()=>x.classList.remove("show"),2200); }
+const norm = s=>String(s).toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g,"").replace(/[ぁ-ゖ]/g,c=>String.fromCharCode(c.charCodeAt(0)+0x60));
+
+/* static text: English comes from the HTML itself, saved on first run */
+const LINKS={}, I18N_ATTR={i18n:"textContent","i18n-html":"innerHTML","i18n-ph":"placeholder","i18n-aria":"aria-label","i18n-title":"title"};
+function applyLang(){
+  document.documentElement.lang=LANG;
+  Object.entries(I18N_ATTR).forEach(([a,prop])=>document.querySelectorAll(`[data-${a}]`).forEach(el=>{
+    const k=el.getAttribute("data-"+a), attr=prop!=="textContent"&&prop!=="innerHTML";
+    if(!(k in EN.ui)) EN.ui[k]=attr?el.getAttribute(prop):el[prop];
+    const v=LANG==="en"?EN.ui[k]:t(k,LINKS);
+    if(attr) el.setAttribute(prop,v); else el[prop]=v;
+  }));
+  document.title=t("title"); $("#lang").value=LANG;
+}
+$("#lang").innerHTML=LANGS.map(([k,n])=>`<option value="${k}">${n}</option>`).join("");
+$("#lang").onchange=e=>{ LANG=e.target.value; try{localStorage.setItem("dex-lang",LANG)}catch(err){} applyLang(); renderStops(); renderMega(); sync(); };
+
+/* ---------- boot ---------- */
+(function(){
+  try{ const th=localStorage.getItem("dex-theme")||localStorage.getItem("lgpe-theme"); if(th) document.documentElement.dataset.theme=th; }catch(e){}
+  try{ if(localStorage.getItem("plza-dlc")==="0") state.dlc=false; }catch(e){}
+  $("#dlc").checked=state.dlc;
+  let src=location.hash.slice(1);
+  if(!src){ try{ src=localStorage.getItem("plza-code")||""; }catch(e){} }
+  if(src){ try{ Object.assign(state,decode(src)); }catch(e){} }
+  ["serebii","pokeapi"].forEach((k,i)=>LINKS[k]=document.querySelectorAll("footer.src a")[i].outerHTML);
+  try{ const lg=localStorage.getItem("dex-lang")||localStorage.getItem("lgpe-lang"); if(I18N[lg]) LANG=lg; }catch(e){}
+  applyLang(); renderStops(); renderMega(); sync();
+  try{ if(localStorage.getItem("plza-tab")==="meg") document.querySelector('[data-tab="meg"]').click(); }catch(e){}
+})();
+
+</script>
+</body>
+</html>
