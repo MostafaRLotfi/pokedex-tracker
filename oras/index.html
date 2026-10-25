@@ -1,0 +1,844 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Omega Ruby & Alpha Sapphire Dex Tracker</title>
+<meta name="description" content="Story-ordered Hoenn Pokédex checklist for Pokémon Omega Ruby and Alpha Sapphire, plus legendary and Mega Stone trackers.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f3ee; --surface:#ffffff; --surface-2:#faf8f5; --ink:#1d1f23; --muted:#6b6f78; --line:#e7e2da;
+  --red:#d6332b; --red-ink:#ffffff; --red-soft:#fbe9e7; --blue:#2f5d8a; --gold:#b27b0e; --brown:#8a5a2b;
+  --ok:#2e8b57; --ok-soft:#e5f3eb; --shadow:0 1px 2px rgba(0,0,0,.05),0 4px 16px rgba(0,0,0,.05);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#15171b; --surface:#1e2127; --surface-2:#23272e; --ink:#eceef1; --muted:#9aa0aa; --line:#30353d;
+    --red:#e5483f; --red-soft:#3a1f1e; --blue:#8bb6e0; --gold:#e0b04a; --brown:#d39a63;
+    --ok:#5cc28a; --ok-soft:#1c3328; --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 16px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15171b; --surface:#1e2127; --surface-2:#23272e; --ink:#eceef1; --muted:#9aa0aa; --line:#30353d;
+  --red:#e5483f; --red-soft:#3a1f1e; --blue:#8bb6e0; --gold:#e0b04a; --brown:#d39a63;
+  --ok:#5cc28a; --ok-soft:#1c3328; --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 16px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.45 Inter,system-ui,-apple-system,sans-serif;padding-bottom:120px}
+button,input,select{font:inherit;color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px}
+
+/* game bar (shared across all game pages) */
+.gamebar{background:#121418;color:#fff;font-size:14px}
+.gamebar .wrap{display:flex;align-items:center;gap:14px;min-height:42px;overflow-x:auto;white-space:nowrap}
+.gamebar a{color:rgba(255,255,255,.72);text-decoration:none;font-weight:600}
+.gamebar a.brand{color:#fff;font-weight:800;margin-right:4px}
+.gamebar select{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:5px 12px;font:inherit;font-weight:600;cursor:pointer;max-width:60vw}
+.gamebar select option{color:#1d1f23;background:#fff}
+
+/* header */
+header.hero{background:var(--red);color:#fff;position:relative;overflow:hidden}
+header.hero .wrap{padding-top:28px;padding-bottom:24px;position:relative}
+.ball{position:absolute;right:-60px;top:-60px;width:260px;height:260px;border-radius:50%;border:26px solid rgba(255,255,255,.12)}
+.ball::after{content:"";position:absolute;left:-26px;right:-26px;top:calc(50% - 13px);height:26px;background:rgba(255,255,255,.12)}
+.ball::before{content:"";position:absolute;width:60px;height:60px;border-radius:50%;left:calc(50% - 30px);top:calc(50% - 30px);border:16px solid rgba(255,255,255,.12);background:var(--red);z-index:1}
+.hero h1,.hero .sub,.stats{position:relative;z-index:2}
+h1{margin:0;font-size:clamp(24px,4vw,34px);font-weight:800;letter-spacing:-.02em}
+.sub{margin:6px 0 0;opacity:.9;max-width:640px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:20px}
+.stat{background:rgba(255,255,255,.14);border-radius:14px;padding:12px 14px}
+.stat .k{font-size:12px;text-transform:uppercase;letter-spacing:.08em;opacity:.85;font-weight:600}
+.stat .v{font-size:24px;font-weight:800;margin-top:2px}
+.stat .v small{font-size:14px;font-weight:600;opacity:.8}
+.bar{height:6px;background:rgba(255,255,255,.25);border-radius:6px;margin-top:8px;overflow:hidden}
+.bar i{display:block;height:100%;background:#fff;border-radius:6px;width:0;transition:width .3s}
+
+/* toolbar */
+.toolbar{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.toolbar .wrap{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding-top:10px;padding-bottom:10px}
+.tabs{display:flex;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:3px}
+.tabs button{border:0;background:none;padding:7px 14px;border-radius:999px;font-weight:600;cursor:pointer;color:var(--muted)}
+.tabs button[aria-selected="true"]{background:var(--red);color:#fff}
+.search{flex:1;min-width:160px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:8px 14px}
+.ctl{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 12px;cursor:pointer}
+label.tog{display:flex;align-items:center;gap:6px;font-size:14px;color:var(--muted);cursor:pointer;white-space:nowrap}
+
+/* stops */
+main{padding-top:18px}
+.intro{color:var(--muted);font-size:14px;margin:0 0 14px}
+.stop{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);margin-bottom:16px;overflow:hidden}
+.stop>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:14px 16px}
+.stop>summary::-webkit-details-marker{display:none}
+.num{flex:none;width:32px;height:32px;border-radius:50%;background:var(--red-soft);color:var(--red);font-weight:800;display:grid;place-items:center;font-size:14px}
+.stop.done .num{background:var(--ok-soft);color:var(--ok)}
+.stop h2{margin:0;font-size:17px;font-weight:700;flex:1}
+.stop .count{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.chev{transition:transform .2s;color:var(--muted)}
+.stop[open] .chev{transform:rotate(90deg)}
+.tip{margin:0;padding:0 16px 10px 60px;color:var(--muted);font-size:13.5px}
+.rows{border-top:1px solid var(--line)}
+.head,.row{display:grid;grid-template-columns:36px 52px minmax(130px,1.1fr) minmax(150px,1.3fr) minmax(170px,1.5fr);gap:10px;align-items:center;padding:8px 16px}
+.head{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700;background:var(--surface-2)}
+.row{border-top:1px solid var(--line);cursor:pointer}
+.row:hover{background:var(--surface-2)}
+.row.caught .nm{color:var(--muted);text-decoration:line-through;text-decoration-color:color-mix(in srgb,var(--muted) 60%,transparent)}
+.row.offver{opacity:.55}
+.dex{font-family:"JetBrains Mono",monospace;font-size:12.5px;color:var(--muted)}
+.nm{font-weight:600}
+.how{font-size:13.5px;color:var(--muted)}
+.evo{font-size:13px;color:var(--blue)}
+.evo .arr{color:var(--muted);margin:0 4px}
+.tag{display:inline-block;font-size:10.5px;font-weight:700;padding:1px 6px;border-radius:6px;margin-left:6px;vertical-align:1px;white-space:nowrap}
+.tag.P{background:color-mix(in srgb,var(--gold) 16%,transparent);color:var(--gold)}
+.tag.E{background:color-mix(in srgb,var(--brown) 16%,transparent);color:var(--brown)}
+.tag.T{background:var(--surface-2);color:var(--muted);border:1px solid var(--line)}
+
+/* custom checkbox */
+.cb{appearance:none;-webkit-appearance:none;width:22px;height:22px;border:2px solid color-mix(in srgb,var(--muted) 60%,transparent);border-radius:50%;display:grid;place-items:center;cursor:pointer;margin:0;background:var(--surface);transition:all .15s;position:relative;overflow:hidden}
+.cb::before{content:"";position:absolute;inset:0;background:linear-gradient(var(--red) 0 46%,transparent 46% 54%,#fff 54%);opacity:0;transition:opacity .15s}
+.cb::after{content:"";width:6px;height:6px;border-radius:50%;background:#fff;border:2px solid #222;opacity:0;z-index:1;transition:opacity .15s}
+.cb:checked{border-color:#222}
+.cb:checked::before,.cb:checked::after{opacity:1}
+.cb:focus-visible{outline:3px solid color-mix(in srgb,var(--red) 40%,transparent);outline-offset:2px}
+
+/* masters */
+.gm{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:16px 18px;margin-bottom:16px}
+.gm h2{margin:0 0 6px;font-size:18px}
+.gm p{margin:4px 0;color:var(--muted);font-size:14px}
+.gm ul{margin:8px 0 0;padding-left:18px;color:var(--muted);font-size:14px}
+.gm .badge{display:inline-flex;align-items:center;gap:8px;margin-top:10px;padding:6px 12px;border-radius:999px;font-weight:700;font-size:14px;background:var(--red-soft);color:var(--red)}
+.gm .badge.won{background:var(--ok-soft);color:var(--ok)}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+.loc-left{text-transform:none;letter-spacing:0;font-weight:600}
+.loc-h{grid-column:1/-1;margin:14px 0 2px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.sec-h{grid-column:1/-1;margin:18px 0 0;padding-bottom:6px;border-bottom:1px solid var(--line);font-size:16px;font-weight:700}
+.sec-h:first-child{margin-top:0}
+.sec-p{display:block;font-size:13px;font-weight:400;color:var(--muted);margin-top:2px}
+.mcard{display:flex;gap:10px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;cursor:pointer}
+.mcard:hover{border-color:color-mix(in srgb,var(--red) 40%,var(--line))}
+.mcard.done{background:var(--ok-soft);border-color:color-mix(in srgb,var(--ok) 35%,var(--line))}
+.mcard .cb{margin-top:1px;flex:none}
+.mcard .t{font-weight:600}
+.mcard .s{font-size:12.5px;color:var(--muted)}
+.mcard .w{font-size:12px;color:var(--muted);font-style:italic}
+.pill{font-size:10.5px;font-weight:700;border-radius:6px;padding:1px 6px;margin-left:6px;background:color-mix(in srgb,var(--blue) 15%,transparent);color:var(--blue);white-space:nowrap}
+.pill.opt{background:var(--surface-2);color:var(--muted);border:1px solid var(--line)}
+
+/* save bar */
+.savebar{position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--surface);border-top:1px solid var(--line);box-shadow:0 -6px 24px rgba(0,0,0,.08)}
+.savebar .wrap{display:flex;gap:10px;align-items:center;padding-top:10px;padding-bottom:10px;flex-wrap:wrap}
+.savebar .lbl{font-size:12px;text-transform:uppercase;letter-spacing:.08em;font-weight:700;color:var(--muted)}
+.code{flex:1;min-width:200px;font-family:"JetBrains Mono",monospace;font-size:13px;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:9px 12px;white-space:nowrap;overflow-x:auto;user-select:all}
+.btn{border:0;border-radius:10px;padding:9px 14px;font-weight:700;cursor:pointer;background:var(--red);color:#fff}
+.btn.ghost{background:var(--surface-2);color:var(--ink);border:1px solid var(--line)}
+.loadrow{display:none;width:100%;gap:8px}
+.loadrow.show{display:flex}
+.loadrow input{flex:1;min-width:0;border:1px solid var(--line);background:var(--surface-2);border-radius:10px;padding:9px 12px;font-family:"JetBrains Mono",monospace;font-size:13px}
+.toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:10px;font-weight:600;font-size:14px;opacity:0;pointer-events:none;transition:all .2s;z-index:20}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+footer.src{color:var(--muted);font-size:12.5px;padding:10px 0 30px}
+footer.src a{color:inherit}
+[hidden]{display:none!important}
+
+@media (max-width:760px){
+  .stats{grid-template-columns:repeat(3,1fr);gap:8px}.stat{padding:10px}.stat .v{font-size:19px}.stat .k{font-size:10px}.stat .v small{font-size:12px}
+  .ball{opacity:.6}
+  .head{display:none}
+  .row{grid-template-columns:30px 1fr;grid-template-areas:"cb main";gap:4px 10px;padding:10px 14px}
+  .row .cbw{grid-area:cb;align-self:start;padding-top:2px}
+  .row .dex{display:none}
+  .row .main{grid-area:main}
+  .row .how,.row .evo{display:block;margin-top:2px}
+  .tip{padding-left:16px}
+  .savebar .lbl{display:none}
+}
+@media (min-width:761px){ .row .main{display:contents} }
+.note{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin:0 0 14px;font-size:14px;color:var(--muted)}
+.note b{color:var(--ink)}
+.tag.R{background:color-mix(in srgb,var(--red) 16%,transparent);color:var(--red)}
+.tag.S{background:color-mix(in srgb,#2f6fd0 16%,transparent);color:#3d7fe0}
+.gm ol{margin:8px 0 0;padding-left:0;list-style:none;display:flex;flex-wrap:wrap;gap:6px 14px;color:var(--muted);font-size:14px}
+.gm ol b{color:var(--ink)}
+</style>
+</head>
+<body>
+<nav class="gamebar" aria-label="Games">
+  <div class="wrap">
+    <a class="brand" href="../" data-i18n="brand">Pokédex Tracker</a>
+    <select id="gamesel" aria-label="Game" data-i18n-aria="gameA"><option value="../za/" data-i18n="gZa">Legends Z-A</option><option value="../sv/" data-i18n="gSv">Scarlet & Violet</option><option value="../la/" data-i18n="gLa">Legends: Arceus</option><option value="../bdsp/" data-i18n="gBd">Brilliant Diamond & Shining Pearl</option><option value="../swsh/" data-i18n="gSw">Sword & Shield</option><option value="../letsgo/" data-i18n="gLetsgo">Let's Go</option><option value="../usum/" data-i18n="gUs">Ultra Sun & Ultra Moon</option><option value="../sm/" data-i18n="gSm">Sun & Moon</option><option value="../oras/" data-i18n="gOr" selected>Omega Ruby & Alpha Sapphire</option></select>
+  </div>
+</nav>
+<header class="hero">
+  <div class="wrap">
+    <div class="ball" aria-hidden="true"></div>
+    <h1 data-i18n="title">Omega Ruby & Alpha Sapphire Dex Tracker</h1>
+    <p class="sub" data-i18n="sub">An efficient, story-ordered route to fill the Hoenn Pokédex in Pokémon Omega Ruby and Alpha Sapphire, plus checklists of every catchable legendary and all 46 Mega Stones.</p>
+    <div class="stats">
+      <div class="stat"><div class="k" data-i18n="kDex">Hoenn Pokédex</div><div class="v" id="sDex">0</div><div class="bar"><i id="bDex"></i></div></div>
+      <div class="stat"><div class="k" data-i18n="kLeg">Legendaries</div><div class="v" id="sLeg">0</div><div class="bar"><i id="bLeg"></i></div></div>
+      <div class="stat"><div class="k" data-i18n="kMeg">Mega Stones</div><div class="v" id="sMeg">0</div><div class="bar"><i id="bMeg"></i></div></div>
+    </div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="wrap">
+    <div class="tabs" role="tablist">
+      <button role="tab" aria-selected="true" data-tab="dex" data-i18n="tabDex">Pokédex route</button>
+      <button role="tab" aria-selected="false" data-tab="leg" data-i18n="tabLeg">Legendaries</button>
+      <button role="tab" aria-selected="false" data-tab="meg" data-i18n="tabMeg">Mega Stones</button>
+    </div>
+    <input class="search" id="q" type="search" placeholder="Search Pokémon or area…" aria-label="Search" data-i18n-ph="search" data-i18n-aria="searchA">
+    <select class="ctl" id="ver" aria-label="Game version" data-i18n-aria="verA">
+      <option value="0" data-i18n="verBoth">Both versions</option>
+      <option value="1" data-i18n="verR">Omega Ruby</option>
+      <option value="2" data-i18n="verS">Alpha Sapphire</option>
+    </select>
+    <label class="tog"><input type="checkbox" id="hide"> <span data-i18n="hide">Hide done</span></label>
+    <select class="ctl" id="lang" aria-label="Language" data-i18n-aria="lang"></select>
+    <button class="ctl" style="font-size:17px;line-height:1" id="theme" title="Toggle theme" aria-label="Toggle theme" data-i18n-title="theme" data-i18n-aria="theme">◐</button>
+  </div>
+</div>
+
+<main class="wrap">
+  <section id="tab-dex">
+    <p class="intro" data-i18n-html="intro">Follow the stops in order, from Littleroot Town through the eight Gyms to the post-game and the Delta Episode. Each Pokémon is listed at the first point you can reach a place where it appears; surfing, fishing and Rock Smash spots count from when you can use them. Tap a row to check it off. <b>Evolves into</b> shows later stages and how they evolve.</p>
+    <p class="note" data-i18n-html="shiny"><b>Oval Charm:</b> complete the Hoenn Pokédex, then visit the game director at the motel in Lilycove City. <b>Shiny Charm:</b> it needs the full National Pokédex, which takes trades and transfers from other games.</p>
+    <div style="display:flex;gap:10px;align-items:center;margin:0 0 12px;flex-wrap:wrap">
+      <label class="tog"><span data-i18n="viewBy">View</span>
+        <select class="ctl" id="dview"><option value="route" data-i18n="viewRoute">Route order</option><option value="num" data-i18n="viewNum">Dex number</option><option value="zone" data-i18n="viewZone">Area</option></select>
+      </label>
+    </div>
+    <div id="stops"></div>
+  </section>
+
+  <section id="tab-leg" hidden>
+    <div class="gm">
+      <h2 data-i18n="legH">Legendary Pokémon</h2>
+      <p data-i18n-html="legP">These games have more catchable legendaries than any other. The Hoenn ones are checked off together with the Pokédex. Most of the rest appear after the story at Mirage spots you reach by soaring in the sky, and each needs something special in your party.</p>
+      <div class="badge" id="legBadge">0</div>
+    </div>
+    <div class="mgrid" id="legGrid"></div>
+  </section>
+
+  <section id="tab-meg" hidden>
+    <div class="gm">
+      <h2 data-i18n="megH">Mega Stones</h2>
+      <p data-i18n-html="megP">Every Mega Stone is a one-time pickup or gift. Many glitter on the ground and only appear after the Primal Groudon/Kyogre story or the Delta Episode.</p>
+      <div class="badge" id="megBadge">0</div>
+    </div>
+    <div class="mgrid" id="megGrid"></div>
+  </section>
+
+  <footer class="src" data-i18n-html="footer">
+    Locations, wild encounters, evolutions, legendaries and Mega Stones from <a href="https://www.serebii.net/omegarubyalphasapphire/">Serebii</a>. Pokédex order and localized names from <a href="https://pokeapi.co/">PokeAPI</a>. Fan-made tracker, not affiliated with Nintendo, Game Freak or The Pokémon Company.
+  </footer>
+</main>
+
+<div class="savebar">
+  <div class="wrap">
+    <span class="lbl" data-i18n="save">Save code</span>
+    <div class="code" id="code" title="Copy this into your notes app" data-i18n-title="codeT"></div>
+    <button class="btn" id="copy" data-i18n="copy">Copy</button>
+    <button class="btn ghost" id="loadBtn" data-i18n="load">Load</button>
+    <button class="btn ghost" id="copyAll" data-i18n="copyAll" title="Copy the save codes of every game you track here, to paste into your notes" data-i18n-title="copyAllT">Copy all games</button>
+    <div class="loadrow" id="loadRow">
+      <input id="loadIn" placeholder="Paste a saved code (PORAS1-…)" aria-label="Saved code" data-i18n-ph="loadPh" data-i18n-aria="loadA">
+      <button class="btn" id="loadGo" data-i18n="restore">Restore</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const D = {"entries":[{"id":"001","n":252,"dex":1,"stop":0,"tok":[["x","starter"]],"g":[],"evo":[[[253,"l16"]],[[254,"l36"]]],"ex":null},{"id":"004","n":255,"dex":4,"stop":0,"tok":[["x","starter"]],"g":[],"evo":[[[256,"l16"]],[[257,"l36"]]],"ex":null},{"id":"007","n":258,"dex":7,"stop":0,"tok":[["x","starter"]],"g":[],"evo":[[[259,"l16"]],[[260,"l36"]]],"ex":null},{"id":"010","n":261,"dex":10,"stop":0,"tok":[["area",["route101","route103","route102"]]],"g":["route101","route102","route103"],"evo":[[[262,"l18"]]],"ex":null},{"id":"012","n":263,"dex":12,"stop":0,"tok":[["area",["route101","route102","route103","route104","petalburgwoods","route116","route117","route110"]]],"g":["petalburgwoods","route101","route102","route103","route104","route110","route116","route117"],"evo":[[[264,"l20"]]],"ex":null},{"id":"014","n":265,"dex":14,"stop":0,"tok":[["area",["petalburgwoods","route101","route102","route104"]]],"g":["petalburgwoods","route101","route102","route104"],"evo":[[[266,"p5level7"],[268,"p4level7"]]],"ex":null},{"id":"019","n":270,"dex":19,"stop":0,"tok":[["area",["route102","route114"]]],"g":["route102","route114"],"evo":[[[271,"l14"]],[[272,"waterstone"]]],"ex":"S"},{"id":"022","n":273,"dex":22,"stop":0,"tok":[["area",["route102","route114"]]],"g":["route102","route114"],"evo":[[[274,"l14"]],[[275,"leafstone"]]],"ex":"R"},{"id":"025","n":276,"dex":25,"stop":0,"tok":[["area",["route104","petalburgwoods","route116","route115","soaringinthesky"]]],"g":["petalburgwoods","route104","route115","route116","soaringinthesky"],"evo":[[[277,"l22"]]],"ex":null},{"id":"027","n":278,"dex":27,"stop":0,"tok":[["area",["route103","route104","route118","route110","route115","seamauville","route105","route106","route107","route108","route109","route119","slateportcity","route121","route123","magmahideout","lilycovecity","route122","mt.pyre","soaringinthesky"]]],"g":["lilycovecity","magmahideout","mt.pyre","route103","route104","route105","route106","route107","route108","route109","route110","route115","route118","route119","route121","route122","route123","seamauville","slateportcity","soaringinthesky"],"evo":[[[279,"l25"]]],"ex":null},{"id":"029","n":280,"dex":29,"stop":0,"tok":[["area",["route102"]]],"g":["route102"],"evo":[[[281,"l20"]],[[282,"l30"],[475,"maledawnstone"]]],"ex":null},{"id":"033","n":283,"dex":33,"stop":0,"tok":[["area",["route102","route117","route114","petalburgcity","route111","route120","route123"]]],"g":["petalburgcity","route102","route111","route114","route117","route120","route123"],"evo":[[[284,"l22"]]],"ex":null},{"id":"035","n":285,"dex":35,"stop":0,"tok":[["area",["petalburgwoods"]]],"g":["petalburgwoods"],"evo":[[[286,"l23"]]],"ex":null},{"id":"015","n":266,"dex":15,"stop":0,"tok":[["area",["petalburgwoods"]],["evo",265,"p5level7"]],"g":["petalburgwoods"],"evo":[[[267,"l10"]]],"ex":null},{"id":"017","n":268,"dex":17,"stop":0,"tok":[["area",["petalburgwoods"]],["evo",265,"p4level7"]],"g":["petalburgwoods"],"evo":[[[269,"l10"]]],"ex":null},{"id":"037","n":287,"dex":37,"stop":0,"tok":[["area",["petalburgwoods"]]],"g":["petalburgwoods"],"evo":[[[288,"l18"]],[[289,"l36"]]],"ex":null},{"id":"034","n":284,"dex":34,"stop":0,"tok":[["area",["petalburgcity","route102","route111","route114","route117","route120","route123"]],["evo",283,"l22"]],"g":["petalburgcity","route102","route111","route114","route117","route120","route123"],"evo":[],"ex":null},{"id":"020","n":271,"dex":20,"stop":0,"tok":[["area",["route114"]],["evo",270,"l14"]],"g":["route114"],"evo":[[[272,"waterstone"]]],"ex":"S"},{"id":"023","n":274,"dex":23,"stop":0,"tok":[["area",["route114"]],["evo",273,"l14"]],"g":["route114"],"evo":[[[275,"leafstone"]]],"ex":"R"},{"id":"013","n":264,"dex":13,"stop":0,"tok":[["area",["route118","route119","route120","route121","route123"]],["evo",263,"l20"]],"g":["route118","route119","route120","route121","route123"],"evo":[],"ex":null},{"id":"028","n":279,"dex":28,"stop":0,"tok":[["area",["route118","seamauville","route104","route103","route105","route106","route107","route108","route109","route110","route115","route119","slateportcity","magmahideout","lilycovecity","route122","mossdeepcity","route124","route125","route127","route128","route121","route123","soaringinthesky","pacifidlogtown","route126","route129","route130","route131","route132","route133","route134","evergrandecity","battleresort"]],["evo",278,"l25"]],"g":["battleresort","evergrandecity","lilycovecity","magmahideout","mossdeepcity","pacifidlogtown","route103","route104","route105","route106","route107","route108","route109","route110","route115","route118","route119","route121","route122","route123","route124","route125","route126","route127","route128","route129","route130","route131","route132","route133","route134","seamauville","slateportcity","soaringinthesky"],"evo":[],"ex":null},{"id":"002","n":253,"dex":2,"stop":0,"tok":[["evo",252,"l16"]],"g":[],"evo":[[[254,"l36"]]],"ex":null},{"id":"003","n":254,"dex":3,"stop":0,"tok":[["evo",253,"l36"]],"g":[],"evo":[],"ex":null},{"id":"005","n":256,"dex":5,"stop":0,"tok":[["evo",255,"l16"]],"g":[],"evo":[[[257,"l36"]]],"ex":null},{"id":"006","n":257,"dex":6,"stop":0,"tok":[["evo",256,"l36"]],"g":[],"evo":[],"ex":null},{"id":"008","n":259,"dex":8,"stop":0,"tok":[["evo",258,"l16"]],"g":[],"evo":[[[260,"l36"]]],"ex":null},{"id":"009","n":260,"dex":9,"stop":0,"tok":[["evo",259,"l36"]],"g":[],"evo":[],"ex":null},{"id":"011","n":262,"dex":11,"stop":0,"tok":[["evo",261,"l18"]],"g":[],"evo":[],"ex":null},{"id":"016","n":267,"dex":16,"stop":0,"tok":[["evo",266,"l10"]],"g":[],"evo":[],"ex":null},{"id":"018","n":269,"dex":18,"stop":0,"tok":[["evo",268,"l10"]],"g":[],"evo":[],"ex":null},{"id":"021","n":272,"dex":21,"stop":0,"tok":[["evo",271,"waterstone"]],"g":[],"evo":[],"ex":"S"},{"id":"024","n":275,"dex":24,"stop":0,"tok":[["evo",274,"leafstone"]],"g":[],"evo":[],"ex":"R"},{"id":"026","n":277,"dex":26,"stop":0,"tok":[["evo",276,"l22"]],"g":[],"evo":[],"ex":null},{"id":"030","n":281,"dex":30,"stop":0,"tok":[["evo",280,"l20"]],"g":[],"evo":[[[282,"l30"],[475,"maledawnstone"]]],"ex":null},{"id":"031","n":282,"dex":31,"stop":0,"tok":[["evo",281,"l30"]],"g":[],"evo":[],"ex":null},{"id":"032","n":475,"dex":32,"stop":0,"tok":[["evo",281,"maledawnstone"]],"g":[],"evo":[],"ex":null},{"id":"036","n":286,"dex":36,"stop":0,"tok":[["evo",285,"l23"]],"g":[],"evo":[],"ex":null},{"id":"038","n":288,"dex":38,"stop":0,"tok":[["evo",287,"l18"]],"g":[],"evo":[[[289,"l36"]]],"ex":null},{"id":"039","n":289,"dex":39,"stop":0,"tok":[["evo",288,"l36"]],"g":[],"evo":[],"ex":null},{"id":"043","n":290,"dex":43,"stop":1,"tok":[["area",["route116"]]],"g":["route116"],"evo":[[[291,"l20"],[292,"levelpokeball20"]]],"ex":null},{"id":"063","n":300,"dex":63,"stop":1,"tok":[["area",["route116"]]],"g":["route116"],"evo":[[[301,"moonstone"]]],"ex":null},{"id":"046","n":293,"dex":46,"stop":1,"tok":[["area",["rusturftunnel","route116"]]],"g":["route116","rusturftunnel"],"evo":[[[294,"l20"]],[[295,"l40"]]],"ex":null},{"id":"051","n":118,"dex":51,"stop":1,"tok":[["area",["petalburgcity","route102","route111","route117","meteorfalls","route114","route123","safarizone","scorchedslab","victoryroad","route120"]]],"g":["meteorfalls","petalburgcity","route102","route111","route114","route117","route120","route123","safarizone","scorchedslab","victoryroad"],"evo":[[[119,"l33"]]],"ex":null},{"id":"053","n":129,"dex":53,"stop":1,"tok":[["area",["petalburgcity","route102","route103","route104","route106","route109","route110","route111","route117","route118","slateportcity","meteorfalls","route114","route115","route105","route107","route108","route119","route120","seamauville","lilycovecity","mossdeepcity","route122","route123","route124","route125","route127","route128","safarizone","scorchedslab","shoalcave","pacifidlogtown","route126","route129","route130","route131","route132","route133","route134","seafloorcavern","sootopoliscity","evergrandecity","victoryroad","battleresort"]]],"g":["battleresort","evergrandecity","lilycovecity","meteorfalls","mossdeepcity","pacifidlogtown","petalburgcity","route102","route103","route104","route105","route106","route107","route108","route109","route110","route111","route114","route115","route117","route118","route119","route120","route122","route123","route124","route125","route126","route127","route128","route129","route130","route131","route132","route133","route134","safarizone","scorchedslab","seafloorcavern","seamauville","shoalcave","slateportcity","sootopoliscity","victoryroad"],"evo":[[[130,"l20"]]],"ex":null},{"id":"068","n":72,"dex":68,"stop":1,"tok":[["area",["route103","route106","route109","route110","route118","slateportcity","route115","route105","route107","route108","route120","seamauville","route119","lilycovecity","mossdeepcity","route122","route124","route125","route127","shoalcave","route128","magmahideout","pacifidlogtown","route126","route129","route130","route131","route132","route133","route134","seafloorcavern","sealedchamber","evergrandecity","victoryroad","battleresort"]]],"g":["battleresort","evergrandecity","lilycovecity","magmahideout","mossdeepcity","pacifidlogtown","route103","route105","route106","route107","route108","route109","route110","route115","route118","route119","route120","route122","route124","route125","route126","route127","route128","route129","route130","route131","route132","route133","route134","seafloorcavern","sealedchamber","seamauville","shoalcave","slateportcity","victoryroad"],"evo":[[[73,"l30"]]],"ex":null},{"id":"049","n":296,"dex":49,"stop":1,"tok":[["area",["granitecave"]]],"g":["granitecave"],"evo":[[[297,"l24"]]],"ex":null},{"id":"058","n":74,"dex":58,"stop":1,"tok":[["area",["granitecave","route114","shoalcave"]]],"g":["granitecave","route114","shoalcave"],"evo":[[[75,"l25"]],[[76,"trade"]]],"ex":null},{"id":"065","n":41,"dex":65,"stop":1,"tok":[["area",["granitecave","meteorfalls","scorchedslab","shoalcave","caveoforigin","seafloorcavern","sealedchamber","victoryroad"]]],"g":["caveoforigin","granitecave","meteorfalls","scorchedslab","seafloorcavern","sealedchamber","shoalcave","victoryroad"],"evo":[[[42,"l22"]],[[169,"happiness"]]],"ex":null},{"id":"070","n":302,"dex":70,"stop":1,"tok":[["area",["granitecave","caveoforigin","skypillar","victoryroad"]]],"g":["caveoforigin","granitecave","skypillar","victoryroad"],"evo":[],"ex":"S"},{"id":"071","n":303,"dex":71,"stop":1,"tok":[["area",["granitecave","caveoforigin","skypillar","victoryroad"]]],"g":["caveoforigin","granitecave","skypillar","victoryroad"],"evo":[],"ex":"R"},{"id":"072","n":304,"dex":72,"stop":1,"tok":[["area",["granitecave","victoryroad"]]],"g":["granitecave","victoryroad"],"evo":[[[305,"l32"]],[[306,"l42"]]],"ex":null},{"id":"040","n":63,"dex":40,"stop":1,"tok":[["area",["granitecave"]]],"g":["granitecave"],"evo":[[[64,"l16"]],[[65,"trade"]]],"ex":null},{"id":"047","n":294,"dex":47,"stop":1,"tok":[["area",["victoryroad"]],["evo",293,"l20"]],"g":["victoryroad"],"evo":[[[295,"l40"]]],"ex":null},{"id":"069","n":73,"dex":69,"stop":1,"tok":[["area",["mossdeepcity","route124","route125","route127","route128","shoalcave","pacifidlogtown","route126","route129","route130","route131","route132","route133","route134","seafloorcavern","evergrandecity","victoryroad","battleresort"]],["evo",72,"l30"]],"g":["battleresort","evergrandecity","mossdeepcity","pacifidlogtown","route124","route125","route126","route127","route128","route129","route130","route131","route132","route133","route134","seafloorcavern","shoalcave","victoryroad"],"evo":[],"ex":null},{"id":"052","n":119,"dex":52,"stop":1,"tok":[["area",["safarizone"]],["evo",118,"l33"]],"g":["safarizone"],"evo":[],"ex":null},{"id":"054","n":130,"dex":54,"stop":1,"tok":[["area",["sootopoliscity"]],["evo",129,"l20"]],"g":["sootopoliscity"],"evo":[],"ex":null},{"id":"059","n":75,"dex":59,"stop":1,"tok":[["area",["shoalcave","miragecave","mirageforest","mirageisland","miragemountain"]],["evo",74,"l25"]],"g":["miragecave","mirageforest","mirageisland","miragemountain","shoalcave"],"evo":[[[76,"trade"]]],"ex":null},{"id":"050","n":297,"dex":50,"stop":1,"tok":[["area",["victoryroad"]],["evo",296,"l24"]],"g":["victoryroad"],"evo":[],"ex":null},{"id":"066","n":42,"dex":66,"stop":1,"tok":[["area",["meteorfalls","scorchedslab","shoalcave","skypillar","sealedchamber","seafloorcavern","caveoforigin","victoryroad"]],["evo",41,"l22"]],"g":["caveoforigin","meteorfalls","scorchedslab","seafloorcavern","sealedchamber","shoalcave","skypillar","victoryroad"],"evo":[[[169,"happiness"]]],"ex":null},{"id":"073","n":305,"dex":73,"stop":1,"tok":[["area",["victoryroad"]],["evo",304,"l32"]],"g":["victoryroad"],"evo":[[[306,"l42"]]],"ex":null},{"id":"041","n":64,"dex":41,"stop":1,"tok":[["evo",63,"l16"]],"g":[],"evo":[[[65,"trade"]]],"ex":null},{"id":"042","n":65,"dex":42,"stop":1,"tok":[["evo",64,"trade"]],"g":[],"evo":[],"ex":null},{"id":"044","n":291,"dex":44,"stop":1,"tok":[["evo",290,"l20"]],"g":[],"evo":[],"ex":null},{"id":"045","n":292,"dex":45,"stop":1,"tok":[["evo",290,"levelpokeball20"]],"g":[],"evo":[],"ex":null},{"id":"048","n":295,"dex":48,"stop":1,"tok":[["evo",294,"l40"]],"g":[],"evo":[],"ex":null},{"id":"060","n":76,"dex":60,"stop":1,"tok":[["evo",75,"trade"]],"g":[],"evo":[],"ex":null},{"id":"064","n":301,"dex":64,"stop":1,"tok":[["evo",300,"moonstone"]],"g":[],"evo":[],"ex":null},{"id":"067","n":169,"dex":67,"stop":1,"tok":[["evo",42,"happiness"]],"g":[],"evo":[],"ex":null},{"id":"074","n":306,"dex":74,"stop":1,"tok":[["evo",305,"l42"]],"g":[],"evo":[],"ex":null},{"id":"082","n":311,"dex":82,"stop":2,"tok":[["area",["route110"]]],"g":["route110"],"evo":[],"ex":null},{"id":"083","n":312,"dex":83,"stop":2,"tok":[["area",["route110"]]],"g":["route110"],"evo":[],"ex":null},{"id":"084","n":81,"dex":84,"stop":2,"tok":[["area",["route110","newmauville"]]],"g":["newmauville","route110"],"evo":[[[82,"l30"]],[[462,"levelcoronet"]]],"ex":null},{"id":"056","n":183,"dex":56,"stop":2,"tok":[["area",["route117","route120","petalburgcity","route102","route111","route114","route123"]],["evo",298,"happiness"]],"g":["petalburgcity","route102","route111","route114","route117","route120","route123"],"evo":[[[184,"l18"]]],"ex":null},{"id":"091","n":43,"dex":91,"stop":2,"tok":[["area",["route117","route110","route119","route120","safarizone"]]],"g":["route110","route117","route119","route120","safarizone"],"evo":[[[44,"l21"]],[[45,"leafstone"],[182,"sunstone"]]],"ex":null},{"id":"098","n":315,"dex":98,"stop":2,"tok":[["area",["route117"]],["evo",406,"happinessday"]],"g":["route117"],"evo":[[[407,"shinystone"]]],"ex":null},{"id":"075","n":66,"dex":75,"stop":2,"tok":[["area",["route112","jaggedpass","fierypath"]]],"g":["fierypath","jaggedpass","route112"],"evo":[[[67,"l28"]],[[68,"trade"]]],"ex":null},{"id":"106","n":322,"dex":106,"stop":2,"tok":[["area",["route112","fierypath","jaggedpass","magmahideout"]]],"g":["fierypath","jaggedpass","magmahideout","route112"],"evo":[[[323,"l33"]]],"ex":null},{"id":"080","n":309,"dex":80,"stop":2,"tok":[["area",["route118","route110"]]],"g":["route110","route118"],"evo":[[[310,"l26"]]],"ex":null},{"id":"087","n":100,"dex":87,"stop":2,"tok":[["area",["route110","newmauville"]]],"g":["newmauville","route110"],"evo":[[[101,"l30"]]],"ex":null},{"id":"100","n":316,"dex":100,"stop":2,"tok":[["area",["route110"]]],"g":["route110"],"evo":[[[317,"l26"]]],"ex":null},{"id":"089","n":313,"dex":89,"stop":2,"tok":[["area",["route117"]]],"g":["route117"],"evo":[],"ex":null},{"id":"090","n":314,"dex":90,"stop":2,"tok":[["area",["route117"]]],"g":["route117"],"evo":[],"ex":null},{"id":"150","n":352,"dex":150,"stop":2,"tok":[["area",["route118","lavaridgetown","route120","route119","route121","route123","mossdeepcity"]]],"g":["lavaridgetown","mossdeepcity","route118","route119","route120","route121","route123"],"evo":[],"ex":null},{"id":"057","n":184,"dex":57,"stop":2,"tok":[["area",["petalburgcity","route102","route111","route114","route117","route120","route123"]],["evo",183,"l18"]],"g":["petalburgcity","route102","route111","route114","route117","route120","route123"],"evo":[],"ex":null},{"id":"092","n":44,"dex":92,"stop":2,"tok":[["area",["route119","route120","route121","safarizone","route123"]],["evo",43,"l21"]],"g":["route119","route120","route121","route123","safarizone"],"evo":[[[45,"leafstone"],[182,"sunstone"]]],"ex":null},{"id":"102","n":318,"dex":102,"stop":2,"tok":[["area",["route118","route119"]]],"g":["route118","route119"],"evo":[[[319,"l30"]]],"ex":null},{"id":"104","n":320,"dex":104,"stop":2,"tok":[["area",["route103","route106","route109","route110","slateportcity","route115","route105","route107","route108","seamauville","lilycovecity","mossdeepcity","route122","route124","route125","route127","route128","shoalcave","pacifidlogtown","route126","route129","route130","route131","route132","route133","route134","seafloorcavern","evergrandecity","victoryroad"]]],"g":["evergrandecity","lilycovecity","mossdeepcity","pacifidlogtown","route103","route105","route106","route107","route108","route109","route110","route115","route122","route124","route125","route126","route127","route128","route129","route130","route131","route132","route133","route134","seafloorcavern","seamauville","shoalcave","slateportcity","victoryroad"],"evo":[[[321,"l40"]]],"ex":null},{"id":"132","n":339,"dex":132,"stop":2,"tok":[["area",["route111","meteorfalls","route114","route120","scorchedslab","victoryroad"]]],"g":["meteorfalls","route111","route114","route120","scorchedslab","victoryroad"],"evo":[[[340,"l30"]]],"ex":null},{"id":"134","n":341,"dex":134,"stop":2,"tok":[["area",["petalburgcity","route102","route117","route123","evergrandecity"]]],"g":["evergrandecity","petalburgcity","route102","route117","route123"],"evo":[[[342,"l30"]]],"ex":null},{"id":"103","n":319,"dex":103,"stop":2,"tok":[["area",["route118","route119"]],["evo",318,"l30"]],"g":["route118","route119"],"evo":[],"ex":null},{"id":"133","n":340,"dex":133,"stop":2,"tok":[["area",["meteorfalls"]],["evo",339,"l30"]],"g":["meteorfalls"],"evo":[],"ex":null},{"id":"135","n":342,"dex":135,"stop":2,"tok":[["area",["route117","route123"]],["evo",341,"l30"]],"g":["route117","route123"],"evo":[],"ex":null},{"id":"137","n":344,"dex":137,"stop":2,"tok":[["area",["skypillar"]],["evo",343,"l36"]],"g":["skypillar"],"evo":[],"ex":null},{"id":"088","n":101,"dex":88,"stop":2,"tok":[["area",["magmahideout"]],["evo",100,"l30"]],"g":["magmahideout"],"evo":[],"ex":null},{"id":"055","n":298,"dex":55,"stop":2,"tok":[["breed",183]],"g":[],"evo":[[[183,"happiness"]],[[184,"l18"]]],"ex":null},{"id":"076","n":67,"dex":76,"stop":2,"tok":[["evo",66,"l28"]],"g":[],"evo":[[[68,"trade"]]],"ex":null},{"id":"077","n":68,"dex":77,"stop":2,"tok":[["evo",67,"trade"]],"g":[],"evo":[],"ex":null},{"id":"081","n":310,"dex":81,"stop":2,"tok":[["evo",309,"l26"]],"g":[],"evo":[],"ex":null},{"id":"085","n":82,"dex":85,"stop":2,"tok":[["evo",81,"l30"]],"g":[],"evo":[[[462,"levelcoronet"]]],"ex":null},{"id":"086","n":462,"dex":86,"stop":2,"tok":[["evo",82,"levelcoronet"]],"g":[],"evo":[],"ex":null},{"id":"093","n":45,"dex":93,"stop":2,"tok":[["evo",44,"leafstone"]],"g":[],"evo":[],"ex":null},{"id":"094","n":182,"dex":94,"stop":2,"tok":[["evo",44,"sunstone"]],"g":[],"evo":[],"ex":null},{"id":"097","n":406,"dex":97,"stop":2,"tok":[["breed",315]],"g":[],"evo":[[[315,"happinessday"]],[[407,"shinystone"]]],"ex":null},{"id":"099","n":407,"dex":99,"stop":2,"tok":[["evo",315,"shinystone"]],"g":[],"evo":[],"ex":null},{"id":"101","n":317,"dex":101,"stop":2,"tok":[["evo",316,"l26"]],"g":[],"evo":[],"ex":null},{"id":"105","n":321,"dex":105,"stop":2,"tok":[["evo",320,"l40"]],"g":[],"evo":[],"ex":null},{"id":"107","n":323,"dex":107,"stop":2,"tok":[["evo",322,"l33"]],"g":[],"evo":[],"ex":null},{"id":"167","n":360,"dex":167,"stop":3,"tok":[["x","wynaut"]],"g":[],"evo":[[[202,"l15"]]],"ex":null},{"id":"108","n":218,"dex":108,"stop":3,"tok":[["area",["fierypath"]]],"g":["fierypath"],"evo":[[[219,"l38"]]],"ex":null},{"id":"111","n":88,"dex":111,"stop":3,"tok":[["area",["fierypath"]]],"g":["fierypath"],"evo":[[[89,"l38"]]],"ex":null},{"id":"113","n":109,"dex":113,"stop":3,"tok":[["area",["fierypath","magmahideout"]]],"g":["fierypath","magmahideout"],"evo":[[[110,"l35"]]],"ex":null},{"id":"119","n":327,"dex":119,"stop":3,"tok":[["area",["route113"]]],"g":["route113"],"evo":[],"ex":null},{"id":"120","n":227,"dex":120,"stop":3,"tok":[["area",["route113"]]],"g":["route113"],"evo":[],"ex":null},{"id":"126","n":333,"dex":126,"stop":3,"tok":[["area",["route114","route115","skypillar","soaringinthesky"]]],"g":["route114","route115","skypillar","soaringinthesky"],"evo":[[[334,"l35"]]],"ex":null},{"id":"061","n":299,"dex":61,"stop":3,"tok":[["area",["granitecave"]]],"g":["granitecave"],"evo":[[[476,"levelcoronet"]]],"ex":null},{"id":"115","n":325,"dex":115,"stop":3,"tok":[["area",["jaggedpass"]]],"g":["jaggedpass"],"evo":[[[326,"l32"]]],"ex":null},{"id":"110","n":324,"dex":110,"stop":3,"tok":[["area",["fierypath"]]],"g":["fierypath"],"evo":[],"ex":null},{"id":"128","n":335,"dex":128,"stop":3,"tok":[["area",["route114"]]],"g":["route114"],"evo":[],"ex":"R"},{"id":"129","n":336,"dex":129,"stop":3,"tok":[["area",["route114"]]],"g":["route114"],"evo":[],"ex":"S"},{"id":"130","n":337,"dex":130,"stop":3,"tok":[["area",["meteorfalls"]]],"g":["meteorfalls"],"evo":[],"ex":"S"},{"id":"131","n":338,"dex":131,"stop":3,"tok":[["area",["meteorfalls"]]],"g":["meteorfalls"],"evo":[],"ex":"R"},{"id":"143","n":39,"dex":143,"stop":3,"tok":[["area",["route115"]],["evo",174,"happiness"]],"g":["route115"],"evo":[[[40,"moonstone"]]],"ex":null},{"id":"196","n":371,"dex":196,"stop":3,"tok":[["area",["meteorfalls"]]],"g":["meteorfalls"],"evo":[[[372,"l30"]],[[373,"l50"]]],"ex":null},{"id":"168","n":202,"dex":168,"stop":3,"tok":[["area",["safarizone"]],["evo",360,"l15"]],"g":["safarizone"],"evo":[],"ex":null},{"id":"062","n":476,"dex":62,"stop":3,"tok":[["evo",299,"levelcoronet"]],"g":[],"evo":[],"ex":null},{"id":"109","n":219,"dex":109,"stop":3,"tok":[["evo",218,"l38"]],"g":[],"evo":[],"ex":null},{"id":"112","n":89,"dex":112,"stop":3,"tok":[["evo",88,"l38"]],"g":[],"evo":[],"ex":null},{"id":"114","n":110,"dex":114,"stop":3,"tok":[["evo",109,"l35"]],"g":[],"evo":[],"ex":null},{"id":"116","n":326,"dex":116,"stop":3,"tok":[["evo",325,"l32"]],"g":[],"evo":[],"ex":null},{"id":"127","n":334,"dex":127,"stop":3,"tok":[["evo",333,"l35"]],"g":[],"evo":[],"ex":null},{"id":"142","n":174,"dex":142,"stop":3,"tok":[["breed",39]],"g":[],"evo":[[[39,"happiness"]],[[40,"moonstone"]]],"ex":null},{"id":"144","n":40,"dex":144,"stop":3,"tok":[["evo",39,"moonstone"]],"g":[],"evo":[],"ex":null},{"id":"197","n":372,"dex":197,"stop":3,"tok":[["evo",371,"l30"]],"g":[],"evo":[[[373,"l50"]]],"ex":null},{"id":"198","n":373,"dex":198,"stop":3,"tok":[["evo",372,"l50"]],"g":[],"evo":[],"ex":null},{"id":"138","n":345,"dex":138,"stop":4,"tok":[["x","fossil"]],"g":[],"evo":[[[346,"l40"]]],"ex":null},{"id":"140","n":347,"dex":140,"stop":4,"tok":[["x","fossil"]],"g":[],"evo":[[[348,"l40"]]],"ex":null},{"id":"117","n":27,"dex":117,"stop":4,"tok":[["area",["route111","route113"]]],"g":["route111","route113"],"evo":[[[28,"l22"]]],"ex":null},{"id":"121","n":328,"dex":121,"stop":4,"tok":[["area",["route111"]]],"g":["route111"],"evo":[[[329,"l35"]],[[330,"l45"]]],"ex":null},{"id":"124","n":331,"dex":124,"stop":4,"tok":[["area",["route111"]]],"g":["route111"],"evo":[[[332,"l32"]]],"ex":null},{"id":"136","n":343,"dex":136,"stop":4,"tok":[["area",["route111"]]],"g":["route111"],"evo":[[[344,"l36"]]],"ex":null},{"id":"118","n":28,"dex":118,"stop":4,"tok":[["evo",27,"l22"]],"g":[],"evo":[],"ex":null},{"id":"122","n":329,"dex":122,"stop":4,"tok":[["evo",328,"l35"]],"g":[],"evo":[[[330,"l45"]]],"ex":null},{"id":"123","n":330,"dex":123,"stop":4,"tok":[["evo",329,"l45"]],"g":[],"evo":[],"ex":null},{"id":"125","n":332,"dex":125,"stop":4,"tok":[["evo",331,"l32"]],"g":[],"evo":[],"ex":null},{"id":"139","n":346,"dex":139,"stop":4,"tok":[["evo",345,"l40"]],"g":[],"evo":[],"ex":null},{"id":"141","n":348,"dex":141,"stop":4,"tok":[["evo",347,"l40"]],"g":[],"evo":[],"ex":null},{"id":"147","n":351,"dex":147,"stop":5,"tok":[["x","castform"]],"g":[],"evo":[],"ex":null},{"id":"145","n":349,"dex":145,"stop":5,"tok":[["area",["route119"]]],"g":["route119"],"evo":[[[350,"levelpokeblock"]]],"ex":null},{"id":"156","n":357,"dex":156,"stop":5,"tok":[["area",["route119","route120"]]],"g":["route119","route120"],"evo":[],"ex":null},{"id":"159","n":359,"dex":159,"stop":5,"tok":[["area",["route120"]]],"g":["route120"],"evo":[],"ex":null},{"id":"185","n":366,"dex":185,"stop":5,"tok":[["area",["route107","route124","route128","route126","route129","route130"]]],"g":["route107","route124","route126","route128","route129","route130"],"evo":[[[367,"tradedeepseatooth"],[368,"tradedeepseascale"]]],"ex":null},{"id":"188","n":369,"dex":188,"stop":5,"tok":[["area",["route107","route124","route128","route126","route129","route130"]]],"g":["route107","route124","route126","route128","route129","route130"],"evo":[],"ex":null},{"id":"190","n":170,"dex":190,"stop":5,"tok":[["area",["route107","route124","route128","route126","route129","route130"]]],"g":["route107","route124","route126","route128","route129","route130"],"evo":[[[171,"l27"]]],"ex":null},{"id":"191","n":171,"dex":191,"stop":5,"tok":[["area",["route107","route124","route128","route126","route129","route130"]],["evo",170,"l27"]],"g":["route107","route124","route126","route128","route129","route130"],"evo":[],"ex":null},{"id":"146","n":350,"dex":146,"stop":5,"tok":[["evo",349,"levelpokeblock"]],"g":[],"evo":[],"ex":null},{"id":"186","n":367,"dex":186,"stop":5,"tok":[["evo",366,"tradedeepseatooth"]],"g":[],"evo":[],"ex":null},{"id":"187","n":368,"dex":187,"stop":5,"tok":[["evo",366,"tradedeepseascale"]],"g":[],"evo":[],"ex":null},{"id":"078","n":307,"dex":78,"stop":6,"tok":[["area",["mt.pyre"]]],"g":["mt.pyre"],"evo":[[[308,"l37"]]],"ex":null},{"id":"095","n":84,"dex":95,"stop":6,"tok":[["area",["safarizone"]]],"g":["safarizone"],"evo":[[[85,"l31"]]],"ex":null},{"id":"151","n":353,"dex":151,"stop":6,"tok":[["area",["mt.pyre","route121","route123"]]],"g":["mt.pyre","route121","route123"],"evo":[[[354,"l37"]]],"ex":null},{"id":"160","n":37,"dex":160,"stop":6,"tok":[["area",["mt.pyre","mirageforest"]]],"g":["mirageforest","mt.pyre"],"evo":[[[38,"firestone"]]],"ex":null},{"id":"165","n":54,"dex":165,"stop":6,"tok":[["area",["safarizone"]]],"g":["safarizone"],"evo":[[[55,"l33"]]],"ex":null},{"id":"179","n":361,"dex":179,"stop":6,"tok":[["area",["shoalcave"]]],"g":["shoalcave"],"evo":[[[362,"l42"],[478,"femaledawnstone"]]],"ex":null},{"id":"182","n":363,"dex":182,"stop":6,"tok":[["area",["shoalcave"]]],"g":["shoalcave"],"evo":[[[364,"l32"]],[[365,"l44"]]],"ex":null},{"id":"189","n":222,"dex":189,"stop":6,"tok":[["area",["route128","evergrandecity"]]],"g":["evergrandecity","route128"],"evo":[],"ex":null},{"id":"192","n":370,"dex":192,"stop":6,"tok":[["area",["route128","evergrandecity","victoryroad"]]],"g":["evergrandecity","route128","victoryroad"],"evo":[],"ex":null},{"id":"163","n":25,"dex":163,"stop":6,"tok":[["area",["safarizone"]],["evo",172,"happiness"]],"g":["safarizone"],"evo":[[[26,"thunderstone"]]],"ex":null},{"id":"170","n":178,"dex":170,"stop":6,"tok":[["area",["safarizone","mirageisland","miragemountain"]],["evo",177,"l25"]],"g":["mirageisland","miragemountain","safarizone"],"evo":[],"ex":null},{"id":"171","n":203,"dex":171,"stop":6,"tok":[["area",["safarizone","miragemountain"]]],"g":["miragemountain","safarizone"],"evo":[],"ex":null},{"id":"173","n":232,"dex":173,"stop":6,"tok":[["area",["safarizone","miragemountain","miragecave"]],["evo",231,"l25"]],"g":["miragecave","miragemountain","safarizone"],"evo":[],"ex":null},{"id":"174","n":127,"dex":174,"stop":6,"tok":[["area",["safarizone"]]],"g":["safarizone"],"evo":[],"ex":null},{"id":"175","n":214,"dex":175,"stop":6,"tok":[["area",["safarizone"]]],"g":["safarizone"],"evo":[],"ex":null},{"id":"176","n":111,"dex":176,"stop":6,"tok":[["area",["safarizone"]]],"g":["safarizone"],"evo":[[[112,"l42"]],[[464,"tradeprotector"]]],"ex":null},{"id":"153","n":355,"dex":153,"stop":6,"tok":[["area",["mt.pyre"]]],"g":["mt.pyre"],"evo":[[[356,"l37"]],[[477,"tradereapercloth"]]],"ex":null},{"id":"158","n":358,"dex":158,"stop":6,"tok":[["area",["mt.pyre"]],["evo",433,"happinessnight"]],"g":["mt.pyre"],"evo":[],"ex":null},{"id":"148","n":120,"dex":148,"stop":6,"tok":[["area",["lilycovecity","magmahideout"]]],"g":["lilycovecity","magmahideout"],"evo":[[[121,"waterstone"]]],"ex":null},{"id":"183","n":364,"dex":183,"stop":6,"tok":[["area",["shoalcave"]],["evo",363,"l32"]],"g":["shoalcave"],"evo":[[[365,"l44"]]],"ex":null},{"id":"079","n":308,"dex":79,"stop":6,"tok":[["area",["victoryroad"]],["evo",307,"l37"]],"g":["victoryroad"],"evo":[],"ex":null},{"id":"096","n":85,"dex":96,"stop":6,"tok":[["evo",84,"l31"]],"g":[],"evo":[],"ex":null},{"id":"149","n":121,"dex":149,"stop":6,"tok":[["evo",120,"waterstone"]],"g":[],"evo":[],"ex":null},{"id":"152","n":354,"dex":152,"stop":6,"tok":[["evo",353,"l37"]],"g":[],"evo":[],"ex":null},{"id":"154","n":356,"dex":154,"stop":6,"tok":[["evo",355,"l37"]],"g":[],"evo":[[[477,"tradereapercloth"]]],"ex":null},{"id":"155","n":477,"dex":155,"stop":6,"tok":[["evo",356,"tradereapercloth"]],"g":[],"evo":[],"ex":null},{"id":"157","n":433,"dex":157,"stop":6,"tok":[["breed",358]],"g":[],"evo":[[[358,"happinessnight"]]],"ex":null},{"id":"161","n":38,"dex":161,"stop":6,"tok":[["evo",37,"firestone"]],"g":[],"evo":[],"ex":null},{"id":"162","n":172,"dex":162,"stop":6,"tok":[["breed",25]],"g":[],"evo":[[[25,"happiness"]],[[26,"thunderstone"]]],"ex":null},{"id":"164","n":26,"dex":164,"stop":6,"tok":[["evo",25,"thunderstone"]],"g":[],"evo":[],"ex":null},{"id":"166","n":55,"dex":166,"stop":6,"tok":[["evo",54,"l33"]],"g":[],"evo":[],"ex":null},{"id":"169","n":177,"dex":169,"stop":6,"tok":[["breed",178]],"g":[],"evo":[[[178,"l25"]]],"ex":null},{"id":"172","n":231,"dex":172,"stop":6,"tok":[["breed",232]],"g":[],"evo":[[[232,"l25"]]],"ex":null},{"id":"177","n":112,"dex":177,"stop":6,"tok":[["evo",111,"l42"]],"g":[],"evo":[[[464,"tradeprotector"]]],"ex":null},{"id":"178","n":464,"dex":178,"stop":6,"tok":[["evo",112,"tradeprotector"]],"g":[],"evo":[],"ex":null},{"id":"180","n":362,"dex":180,"stop":6,"tok":[["evo",361,"l42"]],"g":[],"evo":[],"ex":null},{"id":"181","n":478,"dex":181,"stop":6,"tok":[["evo",361,"femaledawnstone"]],"g":[],"evo":[],"ex":null},{"id":"184","n":365,"dex":184,"stop":6,"tok":[["evo",364,"l44"]],"g":[],"evo":[],"ex":null},{"id":"205","n":380,"dex":205,"stop":7,"tok":[["x","eon"],["area",["southernisland"]]],"g":["southernisland"],"evo":[],"ex":"S"},{"id":"206","n":381,"dex":206,"stop":7,"tok":[["x","eon"],["area",["southernisland"]]],"g":["southernisland"],"evo":[],"ex":"R"},{"id":"207","n":382,"dex":207,"stop":7,"tok":[["x","kyogre"],["area",["caveoforigin"]]],"g":["caveoforigin"],"evo":[],"ex":"S"},{"id":"208","n":383,"dex":208,"stop":7,"tok":[["x","groudon"],["area",["caveoforigin"]]],"g":["caveoforigin"],"evo":[],"ex":"R"},{"id":"193","n":116,"dex":193,"stop":7,"tok":[["area",["route130","route131","route132","route133","route134"]]],"g":["route130","route131","route132","route133","route134"],"evo":[[[117,"l32"]],[[230,"tradedragonscale"]]],"ex":null},{"id":"194","n":117,"dex":194,"stop":7,"tok":[["area",["route130","route131","route132","route133","route134"]],["evo",116,"l32"]],"g":["route130","route131","route132","route133","route134"],"evo":[[[230,"tradedragonscale"]]],"ex":null},{"id":"195","n":230,"dex":195,"stop":7,"tok":[["evo",117,"tradedragonscale"]],"g":[],"evo":[],"ex":null},{"id":"204","n":379,"dex":204,"stop":9,"tok":[["x","regi"],["area",["route120"]]],"g":["route120"],"evo":[],"ex":null},{"id":"202","n":377,"dex":202,"stop":9,"tok":[["x","regi"],["area",["route111"]]],"g":["route111"],"evo":[],"ex":null},{"id":"203","n":378,"dex":203,"stop":9,"tok":[["x","regi"],["area",["route105"]]],"g":["route105"],"evo":[],"ex":null},{"id":"209","n":384,"dex":209,"stop":9,"tok":[["x","rayquaza"],["area",["skypillar"]]],"g":["skypillar"],"evo":[],"ex":null},{"id":"211","n":386,"dex":211,"stop":9,"tok":[["x","deoxys"],["area",["skypillar"]]],"g":["skypillar"],"evo":[],"ex":null},{"id":"199","n":374,"dex":199,"stop":9,"tok":[["x","beldum"]],"g":[],"evo":[[[375,"l20"]],[[376,"l45"]]],"ex":null},{"id":"200","n":375,"dex":200,"stop":9,"tok":[["evo",374,"l20"]],"g":[],"evo":[[[376,"l45"]]],"ex":null},{"id":"201","n":376,"dex":201,"stop":9,"tok":[["evo",375,"l45"]],"g":[],"evo":[],"ex":null},{"id":"210","n":385,"dex":210,"stop":10,"tok":[["x","jirachi"]],"g":[],"evo":[],"ex":null}],"stops":["start","roxanne","brawly","wattson","flannery","norman","winona","tateliza","wallace","post","special"],"legs":[{"id":"L01","n":250,"ex":"R","area":"seamauville","req":"bell"},{"id":"L02","n":249,"ex":"S","area":"seamauville","req":"bell"},{"id":"L03","n":485,"ex":null,"area":"scorchedslab","req":"heatran"},{"id":"L04","n":486,"ex":null,"area":"islandcave","req":"regigigas"},{"id":"L05","n":480,"ex":null,"area":"namelesscavern","req":"lake"},{"id":"L06","n":481,"ex":null,"area":"namelesscavern","req":"lake"},{"id":"L07","n":482,"ex":null,"area":"namelesscavern","req":"lake"},{"id":"L08","n":484,"ex":"R","area":"soaringinthesky","req":"palkia"},{"id":"L09","n":483,"ex":"S","area":"soaringinthesky","req":"palkia"},{"id":"L10","n":487,"ex":null,"area":"soaringinthesky","req":"giratina"},{"id":"L11","n":638,"ex":null,"area":"pathlessplain","req":"swords"},{"id":"L12","n":639,"ex":null,"area":"pathlessplain","req":"swords"},{"id":"L13","n":640,"ex":null,"area":"pathlessplain","req":"swords"},{"id":"L14","n":643,"ex":"R","area":"fabledcave","req":"tao"},{"id":"L15","n":644,"ex":"S","area":"fabledcave","req":"tao"},{"id":"L16","n":646,"ex":null,"area":"gnarledden","req":"kyurem"},{"id":"L17","n":243,"ex":null,"area":"tracklessforest","req":"beasts"},{"id":"L18","n":244,"ex":null,"area":"tracklessforest","req":"beasts"},{"id":"L19","n":245,"ex":null,"area":"tracklessforest","req":"beasts"},{"id":"L20","n":641,"ex":"R","area":"soaringinthesky","req":"forces"},{"id":"L21","n":642,"ex":"S","area":"soaringinthesky","req":"forces"},{"id":"L22","n":645,"ex":null,"area":"soaringinthesky","req":"landorus"},{"id":"L23","n":488,"ex":null,"area":"crescentisle","req":"cresselia"}],"megas":[{"id":"M01","n":15,"form":"","item":"beedrillite","how":[{"v":"","area":"seamauville","when":"start","note":""}]},{"id":"M02","n":18,"form":"","item":"pidgeotite","how":[{"v":"","area":"rustborocity","when":"start","note":"mrstone"}]},{"id":"M03","n":80,"form":"","item":"slowbronite","how":[{"v":"","area":"shoalcave","when":"start","note":"shoal"}]},{"id":"M04","n":208,"form":"","item":"steelixite","how":[{"v":"","area":"granitecave","when":"start","note":""}]},{"id":"M05","n":254,"form":"","item":"sceptilite","how":[{"v":"","area":"route120","when":"start","note":"starter"},{"v":"","area":"route114","when":"start","note":"salesman"}]},{"id":"M06","n":260,"form":"","item":"swampertite","how":[{"v":"","area":"route120","when":"start","note":"starter"},{"v":"","area":"route114","when":"start","note":"salesman"}]},{"id":"M07","n":302,"form":"","item":"sablenite","how":[{"v":"","area":"sootopoliscity","when":"start","note":""}]},{"id":"M08","n":319,"form":"","item":"sharpedonite","how":[{"v":"R","area":"battleresort","when":"start","note":""},{"v":"S","area":"aquahideout","when":"delta","note":""}]},{"id":"M09","n":323,"form":"","item":"cameruptite","how":[{"v":"R","area":"aquahideout","when":"delta","note":""},{"v":"S","area":"battleresort","when":"start","note":""}]},{"id":"M10","n":334,"form":"","item":"altarianite","how":[{"v":"","area":"lilycovecity","when":"start","note":"altaria"}]},{"id":"M11","n":362,"form":"","item":"glalitite","how":[{"v":"","area":"shoalcave","when":"start","note":"basement"}]},{"id":"M12","n":373,"form":"","item":"salamencite","how":[{"v":"","area":"meteorfalls","when":"afterdelta","note":"zinnia"}]},{"id":"M13","n":376,"form":"","item":"metagrossite","how":[{"v":"","area":"pokemonleague","when":"delta","note":"steven"}]},{"id":"M14","n":380,"form":"","item":"latiasite","how":[{"v":"R","area":"littleroottown","when":"delta","note":"mother"},{"v":"S","area":"onlati","when":"start","note":""}]},{"id":"M15","n":381,"form":"","item":"latiosite","how":[{"v":"R","area":"onlati","when":"start","note":""},{"v":"S","area":"littleroottown","when":"delta","note":"mother"}]},{"id":"M16","n":428,"form":"","item":"lopunnite","how":[{"v":"","area":"mauvillecity","when":"primal","note":"mauvillehills"}]},{"id":"M17","n":475,"form":"","item":"galladite","how":[{"v":"","area":"","when":"delta","note":"cozmo"}]},{"id":"M18","n":531,"form":"","item":"audinite","how":[{"v":"","area":"battleresort","when":"delta","note":"looker"}]},{"id":"M19","n":3,"form":"","item":"venusaurite","how":[{"v":"","area":"route119","when":"primal","note":""}]},{"id":"M20","n":6,"form":"X","item":"charizardite-x","how":[{"v":"","area":"fierypath","when":"primal","note":""}]},{"id":"M21","n":6,"form":"Y","item":"charizardite-y","how":[{"v":"","area":"scorchedslab","when":"primal","note":""}]},{"id":"M22","n":9,"form":"","item":"blastoisinite","how":[{"v":"","area":"sstidal","when":"delta","note":""}]},{"id":"M23","n":65,"form":"","item":"alakazite","how":[{"v":"","area":"slateportcity","when":"start","note":"market"}]},{"id":"M24","n":94,"form":"","item":"gengarite","how":[{"v":"","area":"battleresort","when":"afterdelta","note":""}]},{"id":"M25","n":115,"form":"","item":"kangaskhanite","how":[{"v":"","area":"pacifidlogtown","when":"primal","note":""}]},{"id":"M26","n":127,"form":"","item":"pinsirite","how":[{"v":"","area":"route124","when":"start","note":""}]},{"id":"M27","n":130,"form":"","item":"gyaradosite","how":[{"v":"","area":"route123","when":"start","note":"poochyena"}]},{"id":"M28","n":142,"form":"","item":"aerodactylite","how":[{"v":"","area":"meteorfalls","when":"primal","note":""}]},{"id":"M29","n":150,"form":"X","item":"mewtwonite-x","how":[{"v":"","area":"littleroottown","when":"primal","note":""}]},{"id":"M30","n":150,"form":"Y","item":"mewtwonite-y","how":[{"v":"","area":"pokemonleague","when":"primal","note":""}]},{"id":"M31","n":181,"form":"","item":"ampharosite","how":[{"v":"","area":"newmauville","when":"primal","note":""}]},{"id":"M32","n":212,"form":"","item":"scizorite","how":[{"v":"","area":"petalburgwoods","when":"primal","note":""}]},{"id":"M33","n":214,"form":"","item":"heracronite","how":[{"v":"","area":"route127","when":"start","note":""}]},{"id":"M34","n":229,"form":"","item":"houndoominite","how":[{"v":"","area":"lavaridgetown","when":"primal","note":""}]},{"id":"M35","n":248,"form":"","item":"tyranitarite","how":[{"v":"","area":"jaggedpass","when":"primal","note":""}]},{"id":"M36","n":257,"form":"","item":"blazikenite","how":[{"v":"","area":"route120","when":"start","note":"starter"},{"v":"","area":"route114","when":"start","note":"salesman"}]},{"id":"M37","n":282,"form":"","item":"gardevoirite","how":[{"v":"","area":"verdanturftown","when":"primal","note":"wanda"}]},{"id":"M38","n":303,"form":"","item":"mawilite","how":[{"v":"","area":"verdanturftown","when":"start","note":""}]},{"id":"M39","n":306,"form":"","item":"aggronite","how":[{"v":"","area":"rusturftunnel","when":"start","note":""}]},{"id":"M40","n":308,"form":"","item":"medichamite","how":[{"v":"","area":"mt.pyre","when":"start","note":""}]},{"id":"M41","n":310,"form":"","item":"manectite","how":[{"v":"","area":"route110","when":"start","note":"cycling"}]},{"id":"M42","n":354,"form":"","item":"banettite","how":[{"v":"","area":"mt.pyre","when":"start","note":""}]},{"id":"M43","n":359,"form":"","item":"absolite","how":[{"v":"","area":"safarizone","when":"start","note":""}]},{"id":"M44","n":445,"form":"","item":"garchompite","how":[{"v":"","area":"","when":"start","note":"aarune"}]},{"id":"M45","n":448,"form":"","item":"lucarionite","how":[{"v":"","area":"","when":"start","note":"lisia"}]},{"id":"M46","n":460,"form":"","item":"abomasite","how":[{"v":"","area":"route123","when":"primal","note":"berry"}]}],"areas":{"aquahideout":{"en":"Aqua/Magma Hideout"},"battleresort":{"en":"Battle Resort","fr":"Atoll de Combat","de":"Kampfresort","ja":"バトルリゾート","ko":"배틀리조트"},"caveoforigin":{"en":"Cave of Origin","fr":"Grotte Origine","de":"Urzeithöhle","ja":"目覚めのほこら","ko":"각성의 사당"},"crescentisle":{"en":"Crescent Isle","fr":"Île de l'Arc","de":"Sichelinsel","ja":"弓形の島","ko":"궁형의 섬"},"dewfordtown":{"en":"Dewford Town","fr":"Myokara","de":"Faustauhaven","ja":"ムロタウン","ko":"무로마을"},"evergrandecity":{"en":"Evergrande City","fr":"Éternara","de":"Prachtpolis City","ja":"サイユウシティ","ko":"그랜드시티"},"fabledcave":{"en":"Fabled Cave","fr":"Grotte Évanescente","de":"Rätselhafte Höhle","ja":"おぼろの洞窟","ko":"희미한 동굴"},"fierypath":{"en":"Fiery Path","fr":"Chemin Ardent","de":"Feuriger Pfad","ja":"炎の抜け道","ko":"불꽃샛길"},"fortreecity":{"en":"Fortree City","fr":"Cimetronelle","de":"Baumhausen City","ja":"ヒワマキシティ","ko":"검방울시티"},"gnarledden":{"en":"Gnarled Den","fr":"Gouffre Informe","de":"Höhle der Spaltung","ja":"いびつな穴","ko":"비틀린 굴"},"granitecave":{"en":"Granite Cave","fr":"Grotte Granite","de":"Granithöhle","ja":"石の洞窟","ko":"바위 동굴"},"islandcave":{"en":"Island Cave","fr":"Grotte de l'Îlot","de":"Inselhöhle","ja":"小島の横穴","ko":"작은 섬 옆굴"},"jaggedpass":{"en":"Jagged Pass","fr":"Sentier Sinuroc","de":"Steilpass","ja":"デコボコ山道","ko":"울퉁불퉁 산길"},"lavaridgetown":{"en":"Lavaridge Town","fr":"Vermilava","de":"Bad Lavastadt","ja":"フエンタウン","ko":"용암마을"},"lilycovecity":{"en":"Lilycove City","fr":"Nénucrique","de":"Seegrasulb City","ja":"ミナモシティ","ko":"해안시티"},"littleroottown":{"en":"Littleroot Town","fr":"Bourg-en-Vol","de":"Wurzelheim","ja":"ミシロタウン","ko":"미로마을"},"magmahideout":{"en":"Magma Hideout","fr":"Planque Magma","de":"Team Magmas Versteck"},"mauvillecity":{"en":"Mauville City","fr":"Lavandia","de":"Malvenfroh City","ja":"キンセツシティ","ko":"보라시티"},"meteorfalls":{"en":"Meteor Falls","fr":"Site Météore","de":"Meteorfälle","ja":"流星の滝","ko":"유성의 폭포"},"miragecave":{"en":"Mirage Cave","fr":"Grotte Mirage","de":"Wunderhöhle","ja":"マボロシ洞窟","ko":"환상동굴"},"mirageforest":{"en":"Mirage Forest","fr":"Forêt Mirage","de":"Wunderwald","ja":"マボロシ森","ko":"환상숲"},"mirageisland":{"en":"Mirage Island","fr":"Île Mirage","de":"Wundereiland","ja":"マボロシ島","ko":"환상섬"},"miragemountain":{"en":"Mirage Mountain","fr":"Mont Mirage","de":"Wunderberg","ja":"マボロシ山","ko":"환상산"},"mossdeepcity":{"en":"Mossdeep City","fr":"Algatia","de":"Moosbach City","ja":"トクサネシティ","ko":"이끼시티"},"mt.pyre":{"en":"Mt. Pyre","fr":"Mont Mémoria","de":"Pyroberg","ja":"おくりび山","ko":"송화산"},"namelesscavern":{"en":"Nameless Cavern","fr":"Grotte Oubliée","de":"Unerforschte Höhle","ja":"未知の洞窟","ko":"미지의 동굴"},"newmauville":{"en":"New Mauville","fr":"New Lavandia","de":"Neu Malvenfroh","ja":"ニューキンセツ","ko":"뉴보라"},"pacifidlogtown":{"en":"Pacifidlog Town","fr":"Pacifiville","de":"Floßbrunn","ja":"キナギタウン","ko":"황금마을"},"pathlessplain":{"en":"Pathless Plain","fr":"Plaine Sans Nom","de":"Namenlose Ebene","ja":"名もなき平原","ko":"이름없는 평원"},"petalburgcity":{"en":"Petalburg City","fr":"Clémenti-Ville","de":"Blütenburg City","ja":"トウカシティ","ko":"등화도시"},"petalburgwoods":{"en":"Petalburg Woods","fr":"Bois Clémenti","de":"Blütenburgwald","ja":"トウカの森","ko":"등화숲"},"pokemonleague":{"en":"Pokémon League","fr":"Ligue Pokémon","de":"Pokémon Liga","ja":"ポケモンリーグ","ko":"포켓몬리그"},"route101":{"en":"Route 101","fr":"Route 101","de":"Route 101","ja":"１０１番道路","ko":"101번도로"},"route102":{"en":"Route 102","fr":"Route 102","de":"Route 102","ja":"１０２番道路","ko":"102번도로"},"route103":{"en":"Route 103","fr":"Route 103","de":"Route 103","ja":"１０３番道路","ko":"103번도로"},"route104":{"en":"Route 104","fr":"Route 104","de":"Route 104","ja":"１０４番道路","ko":"104번도로"},"route105":{"en":"Route 105","fr":"Chenal 105","de":"Route 105","ja":"１０５番水道","ko":"105번수로"},"route106":{"en":"Route 106","fr":"Chenal 106","de":"Route 106","ja":"１０６番水道","ko":"106번수로"},"route107":{"en":"Route 107","fr":"Chenal 107","de":"Route 107","ja":"１０７番水道","ko":"107번수로"},"route108":{"en":"Route 108","fr":"Chenal 108","de":"Route 108","ja":"１０８番水道","ko":"108번수로"},"route109":{"en":"Route 109","fr":"Chenal 109","de":"Route 109","ja":"１０９番水道","ko":"109번수로"},"route110":{"en":"Route 110","fr":"Route 110","de":"Route 110","ja":"１１０番道路","ko":"110번도로"},"route111":{"en":"Route 111","fr":"Route 111","de":"Route 111","ja":"１１１番道路","ko":"111번도로"},"route112":{"en":"Route 112","fr":"Route 112","de":"Route 112","ja":"１１２番道路","ko":"112번도로"},"route113":{"en":"Route 113","fr":"Route 113","de":"Route 113","ja":"１１３番道路","ko":"113번도로"},"route114":{"en":"Route 114","fr":"Route 114","de":"Route 114","ja":"１１４番道路","ko":"114번도로"},"route115":{"en":"Route 115","fr":"Route 115","de":"Route 115","ja":"１１５番道路","ko":"115번도로"},"route116":{"en":"Route 116","fr":"Route 116","de":"Route 116","ja":"１１６番道路","ko":"116번도로"},"route117":{"en":"Route 117","fr":"Route 117","de":"Route 117","ja":"１１７番道路","ko":"117번도로"},"route118":{"en":"Route 118","fr":"Route 118","de":"Route 118","ja":"１１８番道路","ko":"118번도로"},"route119":{"en":"Route 119","fr":"Route 119","de":"Route 119","ja":"１１９番道路","ko":"119번도로"},"route120":{"en":"Route 120","fr":"Route 120","de":"Route 120","ja":"１２０番道路","ko":"120번도로"},"route121":{"en":"Route 121","fr":"Route 121","de":"Route 121","ja":"１２１番道路","ko":"121번도로"},"route122":{"en":"Route 122","fr":"Chenal 122","de":"Route 122","ja":"１２２番水道","ko":"122번수로"},"route123":{"en":"Route 123","fr":"Route 123","de":"Route 123","ja":"１２３番道路","ko":"123번도로"},"route124":{"en":"Route 124","fr":"Chenal 124","de":"Route 124","ja":"１２４番水道","ko":"124번수로"},"route125":{"en":"Route 125","fr":"Chenal 125","de":"Route 125","ja":"１２５番水道","ko":"125번수로"},"route126":{"en":"Route 126","fr":"Chenal 126","de":"Route 126","ja":"１２６番水道","ko":"126번수로"},"route127":{"en":"Route 127","fr":"Chenal 127","de":"Route 127","ja":"１２７番水道","ko":"127번수로"},"route128":{"en":"Route 128","fr":"Chenal 128","de":"Route 128","ja":"１２８番水道","ko":"128번수로"},"route129":{"en":"Route 129","fr":"Chenal 129","de":"Route 129","ja":"１２９番水道","ko":"129번수로"},"route130":{"en":"Route 130","fr":"Chenal 130","de":"Route 130","ja":"１３０番水道","ko":"130번수로"},"route131":{"en":"Route 131","fr":"Chenal 131","de":"Route 131","ja":"１３１番水道","ko":"131번수로"},"route132":{"en":"Route 132","fr":"Chenal 132","de":"Route 132","ja":"１３２番水道","ko":"132번수로"},"route133":{"en":"Route 133","fr":"Chenal 133","de":"Route 133","ja":"１３３番水道","ko":"133번수로"},"route134":{"en":"Route 134","fr":"Chenal 134","de":"Route 134","ja":"１３４番水道","ko":"134번수로"},"rustborocity":{"en":"Rustboro City","fr":"Mérouville","de":"Metarost City","ja":"カナズミシティ","ko":"금탄도시"},"rusturftunnel":{"en":"Rusturf Tunnel","fr":"Tunnel Mérazon","de":"Metaflurtunnel","ja":"カナシダトンネル","ko":"금잔터널"},"safarizone":{"en":"Safari Zone","fr":"Parc Safari","de":"Safari-Zone","ja":"サファリゾーン","ko":"사파리존"},"scorchedslab":{"en":"Scorched Slab","fr":"Grotte Zénith","de":"Sonnengrotte","ja":"日照りの岩戸","ko":"가뭄의 암굴"},"seafloorcavern":{"en":"Seafloor Cavern","fr":"Caverne Fondmer","de":"Tiefseehöhle","ja":"海底洞窟","ko":"해저동굴"},"sealedchamber":{"en":"Sealed Chamber","fr":"Sanctuaire","de":"Siegelkammer","ja":"おふれの石室","ko":"고시의 석실"},"seamauville":{"en":"Sea Mauville","fr":"Lavandia Sea","de":"Seewoge Malvenfroh","ja":"シーキンセツ","ko":"씨보라"},"shoalcave":{"en":"Shoal Cave","fr":"Grotte Tréfonds","de":"Küstenhöhle","ja":"浅瀬の洞穴","ko":"여울의 동굴"},"skypillar":{"en":"Sky Pillar","fr":"Pilier Céleste","de":"Himmelturm","ja":"空の柱","ko":"하늘기둥"},"slateportcity":{"en":"Slateport City","fr":"Poivressel","de":"Graphitport City","ja":"カイナシティ","ko":"잿빛도시"},"soaringinthesky":{"en":"Soaring in the Sky","ja":"大空","ko":"하늘","zh-Hant":"天空","zh-Hans":"天空"},"sootopoliscity":{"en":"Sootopolis City","fr":"Atalanopolis","de":"Xeneroville","ja":"ルネシティ","ko":"루네시티"},"southernisland":{"en":"Southern Island","fr":"Île du Sud","de":"Insel im Süden","ja":"南の孤島","ko":"남쪽의 외딴섬"},"sstidal":{"en":"SS Tidal","fr":"Le Marina","de":"MS Tide","ja":"タイドリップ号","ko":"타이드립호"},"tracklessforest":{"en":"Trackless Forest","fr":"Forêt Impénétrable","de":"Wilder Wald","ja":"未開の森","ko":"미개척의 숲"},"verdanturftown":{"en":"Verdanturf Town","fr":"Vergazon","de":"Wiesenflur","ja":"シダケタウン","ko":"잔디마을"},"victoryroad":{"en":"Victory Road","fr":"Route Victoire","de":"Siegesstraße","ja":"チャンピオンロード","ko":"챔피언로드"}}};
+const N = {"NAMES":{"en":{"3":"Venusaur","6":"Charizard","9":"Blastoise","15":"Beedrill","18":"Pidgeot","25":"Pikachu","26":"Raichu","27":"Sandshrew","28":"Sandslash","37":"Vulpix","38":"Ninetales","39":"Jigglypuff","40":"Wigglytuff","41":"Zubat","42":"Golbat","43":"Oddish","44":"Gloom","45":"Vileplume","54":"Psyduck","55":"Golduck","63":"Abra","64":"Kadabra","65":"Alakazam","66":"Machop","67":"Machoke","68":"Machamp","72":"Tentacool","73":"Tentacruel","74":"Geodude","75":"Graveler","76":"Golem","80":"Slowbro","81":"Magnemite","82":"Magneton","84":"Doduo","85":"Dodrio","88":"Grimer","89":"Muk","94":"Gengar","100":"Voltorb","101":"Electrode","109":"Koffing","110":"Weezing","111":"Rhyhorn","112":"Rhydon","115":"Kangaskhan","116":"Horsea","117":"Seadra","118":"Goldeen","119":"Seaking","120":"Staryu","121":"Starmie","127":"Pinsir","129":"Magikarp","130":"Gyarados","142":"Aerodactyl","150":"Mewtwo","169":"Crobat","170":"Chinchou","171":"Lanturn","172":"Pichu","174":"Igglybuff","177":"Natu","178":"Xatu","181":"Ampharos","182":"Bellossom","183":"Marill","184":"Azumarill","202":"Wobbuffet","203":"Girafarig","208":"Steelix","212":"Scizor","214":"Heracross","218":"Slugma","219":"Magcargo","222":"Corsola","227":"Skarmory","229":"Houndoom","230":"Kingdra","231":"Phanpy","232":"Donphan","243":"Raikou","244":"Entei","245":"Suicune","248":"Tyranitar","249":"Lugia","250":"Ho-Oh","252":"Treecko","253":"Grovyle","254":"Sceptile","255":"Torchic","256":"Combusken","257":"Blaziken","258":"Mudkip","259":"Marshtomp","260":"Swampert","261":"Poochyena","262":"Mightyena","263":"Zigzagoon","264":"Linoone","265":"Wurmple","266":"Silcoon","267":"Beautifly","268":"Cascoon","269":"Dustox","270":"Lotad","271":"Lombre","272":"Ludicolo","273":"Seedot","274":"Nuzleaf","275":"Shiftry","276":"Taillow","277":"Swellow","278":"Wingull","279":"Pelipper","280":"Ralts","281":"Kirlia","282":"Gardevoir","283":"Surskit","284":"Masquerain","285":"Shroomish","286":"Breloom","287":"Slakoth","288":"Vigoroth","289":"Slaking","290":"Nincada","291":"Ninjask","292":"Shedinja","293":"Whismur","294":"Loudred","295":"Exploud","296":"Makuhita","297":"Hariyama","298":"Azurill","299":"Nosepass","300":"Skitty","301":"Delcatty","302":"Sableye","303":"Mawile","304":"Aron","305":"Lairon","306":"Aggron","307":"Meditite","308":"Medicham","309":"Electrike","310":"Manectric","311":"Plusle","312":"Minun","313":"Volbeat","314":"Illumise","315":"Roselia","316":"Gulpin","317":"Swalot","318":"Carvanha","319":"Sharpedo","320":"Wailmer","321":"Wailord","322":"Numel","323":"Camerupt","324":"Torkoal","325":"Spoink","326":"Grumpig","327":"Spinda","328":"Trapinch","329":"Vibrava","330":"Flygon","331":"Cacnea","332":"Cacturne","333":"Swablu","334":"Altaria","335":"Zangoose","336":"Seviper","337":"Lunatone","338":"Solrock","339":"Barboach","340":"Whiscash","341":"Corphish","342":"Crawdaunt","343":"Baltoy","344":"Claydol","345":"Lileep","346":"Cradily","347":"Anorith","348":"Armaldo","349":"Feebas","350":"Milotic","351":"Castform","352":"Kecleon","353":"Shuppet","354":"Banette","355":"Duskull","356":"Dusclops","357":"Tropius","358":"Chimecho","359":"Absol","360":"Wynaut","361":"Snorunt","362":"Glalie","363":"Spheal","364":"Sealeo","365":"Walrein","366":"Clamperl","367":"Huntail","368":"Gorebyss","369":"Relicanth","370":"Luvdisc","371":"Bagon","372":"Shelgon","373":"Salamence","374":"Beldum","375":"Metang","376":"Metagross","377":"Regirock","378":"Regice","379":"Registeel","380":"Latias","381":"Latios","382":"Kyogre","383":"Groudon","384":"Rayquaza","385":"Jirachi","386":"Deoxys","406":"Budew","407":"Roserade","428":"Lopunny","433":"Chingling","445":"Garchomp","448":"Lucario","460":"Abomasnow","462":"Magnezone","464":"Rhyperior","475":"Gallade","476":"Probopass","477":"Dusknoir","478":"Froslass","480":"Uxie","481":"Mesprit","482":"Azelf","483":"Dialga","484":"Palkia","485":"Heatran","486":"Regigigas","487":"Giratina","488":"Cresselia","531":"Audino","638":"Cobalion","639":"Terrakion","640":"Virizion","641":"Tornadus","642":"Thundurus","643":"Reshiram","644":"Zekrom","645":"Landorus","646":"Kyurem"},"ja":{"3":"フシギバナ","6":"リザードン","9":"カメックス","15":"スピアー","18":"ピジョット","25":"ピカチュウ","26":"ライチュウ","27":"サンド","28":"サンドパン","37":"ロコン","38":"キュウコン","39":"プリン","40":"プクリン","41":"ズバット","42":"ゴルバット","43":"ナゾノクサ","44":"クサイハナ","45":"ラフレシア","54":"コダック","55":"ゴルダック","63":"ケーシィ","64":"ユンゲラー","65":"フーディン","66":"ワンリキー","67":"ゴーリキー","68":"カイリキー","72":"メノクラゲ","73":"ドククラゲ","74":"イシツブテ","75":"ゴローン","76":"ゴローニャ","80":"ヤドラン","81":"コイル","82":"レアコイル","84":"ドードー","85":"ドードリオ","88":"ベトベター","89":"ベトベトン","94":"ゲンガー","100":"ビリリダマ","101":"マルマイン","109":"ドガース","110":"マタドガス","111":"サイホーン","112":"サイドン","115":"ガルーラ","116":"タッツー","117":"シードラ","118":"トサキント","119":"アズマオウ","120":"ヒトデマン","121":"スターミー","127":"カイロス","129":"コイキング","130":"ギャラドス","142":"プテラ","150":"ミュウツー","169":"クロバット","170":"チョンチー","171":"ランターン","172":"ピチュー","174":"ププリン","177":"ネイティ","178":"ネイティオ","181":"デンリュウ","182":"キレイハナ","183":"マリル","184":"マリルリ","202":"ソーナンス","203":"キリンリキ","208":"ハガネール","212":"ハッサム","214":"ヘラクロス","218":"マグマッグ","219":"マグカルゴ","222":"サニーゴ","227":"エアームド","229":"ヘルガー","230":"キングドラ","231":"ゴマゾウ","232":"ドンファン","243":"ライコウ","244":"エンテイ","245":"スイクン","248":"バンギラス","249":"ルギア","250":"ホウオウ","252":"キモリ","253":"ジュプトル","254":"ジュカイン","255":"アチャモ","256":"ワカシャモ","257":"バシャーモ","258":"ミズゴロウ","259":"ヌマクロー","260":"ラグラージ","261":"ポチエナ","262":"グラエナ","263":"ジグザグマ","264":"マッスグマ","265":"ケムッソ","266":"カラサリス","267":"アゲハント","268":"マユルド","269":"ドクケイル","270":"ハスボー","271":"ハスブレロ","272":"ルンパッパ","273":"タネボー","274":"コノハナ","275":"ダーテング","276":"スバメ","277":"オオスバメ","278":"キャモメ","279":"ペリッパー","280":"ラルトス","281":"キルリア","282":"サーナイト","283":"アメタマ","284":"アメモース","285":"キノココ","286":"キノガッサ","287":"ナマケロ","288":"ヤルキモノ","289":"ケッキング","290":"ツチニン","291":"テッカニン","292":"ヌケニン","293":"ゴニョニョ","294":"ドゴーム","295":"バクオング","296":"マクノシタ","297":"ハリテヤマ","298":"ルリリ","299":"ノズパス","300":"エネコ","301":"エネコロロ","302":"ヤミラミ","303":"クチート","304":"ココドラ","305":"コドラ","306":"ボスゴドラ","307":"アサナン","308":"チャーレム","309":"ラクライ","310":"ライボルト","311":"プラスル","312":"マイナン","313":"バルビート","314":"イルミーゼ","315":"ロゼリア","316":"ゴクリン","317":"マルノーム","318":"キバニア","319":"サメハダー","320":"ホエルコ","321":"ホエルオー","322":"ドンメル","323":"バクーダ","324":"コータス","325":"バネブー","326":"ブーピッグ","327":"パッチール","328":"ナックラー","329":"ビブラーバ","330":"フライゴン","331":"サボネア","332":"ノクタス","333":"チルット","334":"チルタリス","335":"ザングース","336":"ハブネーク","337":"ルナトーン","338":"ソルロック","339":"ドジョッチ","340":"ナマズン","341":"ヘイガニ","342":"シザリガー","343":"ヤジロン","344":"ネンドール","345":"リリーラ","346":"ユレイドル","347":"アノプス","348":"アーマルド","349":"ヒンバス","350":"ミロカロス","351":"ポワルン","352":"カクレオン","353":"カゲボウズ","354":"ジュペッタ","355":"ヨマワル","356":"サマヨール","357":"トロピウス","358":"チリーン","359":"アブソル","360":"ソーナノ","361":"ユキワラシ","362":"オニゴーリ","363":"タマザラシ","364":"トドグラー","365":"トドゼルガ","366":"パールル","367":"ハンテール","368":"サクラビス","369":"ジーランス","370":"ラブカス","371":"タツベイ","372":"コモルー","373":"ボーマンダ","374":"ダンバル","375":"メタング","376":"メタグロス","377":"レジロック","378":"レジアイス","379":"レジスチル","380":"ラティアス","381":"ラティオス","382":"カイオーガ","383":"グラードン","384":"レックウザ","385":"ジラーチ","386":"デオキシス","406":"スボミー","407":"ロズレイド","428":"ミミロップ","433":"リーシャン","445":"ガブリアス","448":"ルカリオ","460":"ユキノオー","462":"ジバコイル","464":"ドサイドン","475":"エルレイド","476":"ダイノーズ","477":"ヨノワール","478":"ユキメノコ","480":"ユクシー","481":"エムリット","482":"アグノム","483":"ディアルガ","484":"パルキア","485":"ヒードラン","486":"レジギガス","487":"ギラティナ","488":"クレセリア","531":"タブンネ","638":"コバルオン","639":"テラキオン","640":"ビリジオン","641":"トルネロス","642":"ボルトロス","643":"レシラム","644":"ゼクロム","645":"ランドロス","646":"キュレム"},"fr":{"3":"Florizarre","6":"Dracaufeu","9":"Tortank","15":"Dardargnan","18":"Roucarnage","25":"Pikachu","26":"Raichu","27":"Sabelette","28":"Sablaireau","37":"Goupix","38":"Feunard","39":"Rondoudou","40":"Grodoudou","41":"Nosferapti","42":"Nosferalto","43":"Mystherbe","44":"Ortide","45":"Rafflesia","54":"Psykokwak","55":"Akwakwak","63":"Abra","64":"Kadabra","65":"Alakazam","66":"Machoc","67":"Machopeur","68":"Mackogneur","72":"Tentacool","73":"Tentacruel","74":"Racaillou","75":"Gravalanch","76":"Grolem","80":"Flagadoss","81":"Magnéti","82":"Magnéton","84":"Doduo","85":"Dodrio","88":"Tadmorv","89":"Grotadmorv","94":"Ectoplasma","100":"Voltorbe","101":"Électrode","109":"Smogo","110":"Smogogo","111":"Rhinocorne","112":"Rhinoféros","115":"Kangourex","116":"Hypotrempe","117":"Hypocéan","118":"Poissirène","119":"Poissoroy","120":"Stari","121":"Staross","127":"Scarabrute","129":"Magicarpe","130":"Léviator","142":"Ptéra","150":"Mewtwo","169":"Nostenfer","170":"Loupio","171":"Lanturn","172":"Pichu","174":"Toudoudou","177":"Natu","178":"Xatu","181":"Pharamp","182":"Joliflor","183":"Marill","184":"Azumarill","202":"Qulbutoké","203":"Girafarig","208":"Steelix","212":"Cizayox","214":"Scarhino","218":"Limagma","219":"Volcaropod","222":"Corayon","227":"Airmure","229":"Démolosse","230":"Hyporoi","231":"Phanpy","232":"Donphan","243":"Raikou","244":"Entei","245":"Suicune","248":"Tyranocif","249":"Lugia","250":"Ho-Oh","252":"Arcko","253":"Massko","254":"Jungko","255":"Poussifeu","256":"Galifeu","257":"Braségali","258":"Gobou","259":"Flobio","260":"Laggron","261":"Medhyèna","262":"Grahyèna","263":"Zigzaton","264":"Linéon","265":"Chenipotte","266":"Armulys","267":"Charmillon","268":"Blindalys","269":"Papinox","270":"Nénupiot","271":"Lombre","272":"Ludicolo","273":"Grainipiot","274":"Pifeuil","275":"Tengalice","276":"Nirondelle","277":"Hélédelle","278":"Goélise","279":"Bekipan","280":"Tarsal","281":"Kirlia","282":"Gardevoir","283":"Arakdo","284":"Maskadra","285":"Balignon","286":"Chapignon","287":"Parecool","288":"Vigoroth","289":"Monaflèmit","290":"Ningale","291":"Ninjask","292":"Munja","293":"Chuchmur","294":"Ramboum","295":"Brouhabam","296":"Makuhita","297":"Hariyama","298":"Azurill","299":"Tarinor","300":"Skitty","301":"Delcatty","302":"Ténéfix","303":"Mysdibule","304":"Galekid","305":"Galegon","306":"Galeking","307":"Méditikka","308":"Charmina","309":"Dynavolt","310":"Élecsprint","311":"Posipi","312":"Négapi","313":"Muciole","314":"Lumivole","315":"Rosélia","316":"Gloupti","317":"Avaltout","318":"Carvanha","319":"Sharpedo","320":"Wailmer","321":"Wailord","322":"Chamallot","323":"Camérupt","324":"Chartor","325":"Spoink","326":"Groret","327":"Spinda","328":"Kraknoix","329":"Vibraninf","330":"Libégon","331":"Cacnea","332":"Cacturne","333":"Tylton","334":"Altaria","335":"Mangriff","336":"Séviper","337":"Séléroc","338":"Solaroc","339":"Barloche","340":"Barbicha","341":"Écrapince","342":"Colhomard","343":"Balbuto","344":"Kaorine","345":"Lilia","346":"Vacilys","347":"Anorith","348":"Armaldo","349":"Barpau","350":"Milobellus","351":"Morphéo","352":"Kecleon","353":"Polichombr","354":"Branette","355":"Skelénox","356":"Téraclope","357":"Tropius","358":"Éoko","359":"Absol","360":"Okéoké","361":"Stalgamin","362":"Oniglali","363":"Obalie","364":"Phogleur","365":"Kaimorse","366":"Coquiperl","367":"Serpang","368":"Rosabyss","369":"Relicanth","370":"Lovdisc","371":"Draby","372":"Drackhaus","373":"Drattak","374":"Terhal","375":"Métang","376":"Métalosse","377":"Regirock","378":"Regice","379":"Registeel","380":"Latias","381":"Latios","382":"Kyogre","383":"Groudon","384":"Rayquaza","385":"Jirachi","386":"Deoxys","406":"Rozbouton","407":"Roserade","428":"Lockpin","433":"Korillon","445":"Carchacrok","448":"Lucario","460":"Blizzaroi","462":"Magnézone","464":"Rhinastoc","475":"Gallame","476":"Tarinorme","477":"Noctunoir","478":"Momartik","480":"Créhelf","481":"Créfollet","482":"Créfadet","483":"Dialga","484":"Palkia","485":"Heatran","486":"Regigigas","487":"Giratina","488":"Cresselia","531":"Nanméouïe","638":"Cobaltium","639":"Terrakium","640":"Viridium","641":"Boréas","642":"Fulguris","643":"Reshiram","644":"Zekrom","645":"Démétéros","646":"Kyurem"},"de":{"3":"Bisaflor","6":"Glurak","9":"Turtok","15":"Bibor","18":"Tauboss","25":"Pikachu","26":"Raichu","27":"Sandan","28":"Sandamer","37":"Vulpix","38":"Vulnona","39":"Pummeluff","40":"Knuddeluff","41":"Zubat","42":"Golbat","43":"Myrapla","44":"Duflor","45":"Giflor","54":"Enton","55":"Entoron","63":"Abra","64":"Kadabra","65":"Simsala","66":"Machollo","67":"Maschock","68":"Machomei","72":"Tentacha","73":"Tentoxa","74":"Kleinstein","75":"Georok","76":"Geowaz","80":"Lahmus","81":"Magnetilo","82":"Magneton","84":"Dodu","85":"Dodri","88":"Sleima","89":"Sleimok","94":"Gengar","100":"Voltobal","101":"Lektrobal","109":"Smogon","110":"Smogmog","111":"Rihorn","112":"Rizeros","115":"Kangama","116":"Seeper","117":"Seemon","118":"Goldini","119":"Golking","120":"Sterndu","121":"Starmie","127":"Pinsir","129":"Karpador","130":"Garados","142":"Aerodactyl","150":"Mewtu","169":"Iksbat","170":"Lampi","171":"Lanturn","172":"Pichu","174":"Fluffeluff","177":"Natu","178":"Xatu","181":"Ampharos","182":"Blubella","183":"Marill","184":"Azumarill","202":"Woingenau","203":"Girafarig","208":"Stahlos","212":"Scherox","214":"Skaraborn","218":"Schneckmag","219":"Magcargo","222":"Corasonn","227":"Panzaeron","229":"Hundemon","230":"Seedraking","231":"Phanpy","232":"Donphan","243":"Raikou","244":"Entei","245":"Suicune","248":"Despotar","249":"Lugia","250":"Ho-Oh","252":"Geckarbor","253":"Reptain","254":"Gewaldro","255":"Flemmli","256":"Jungglut","257":"Lohgock","258":"Hydropi","259":"Moorabbel","260":"Sumpex","261":"Fiffyen","262":"Magnayen","263":"Zigzachs","264":"Geradaks","265":"Waumpel","266":"Schaloko","267":"Papinella","268":"Panekon","269":"Pudox","270":"Loturzel","271":"Lombrero","272":"Kappalores","273":"Samurzel","274":"Blanas","275":"Tengulist","276":"Schwalbini","277":"Schwalboss","278":"Wingull","279":"Pelipper","280":"Trasla","281":"Kirlia","282":"Guardevoir","283":"Gehweiher","284":"Maskeregen","285":"Knilz","286":"Kapilz","287":"Bummelz","288":"Muntier","289":"Letarking","290":"Nincada","291":"Ninjask","292":"Ninjatom","293":"Flurmel","294":"Krakeelo","295":"Krawumms","296":"Makuhita","297":"Hariyama","298":"Azurill","299":"Nasgnet","300":"Eneco","301":"Enekoro","302":"Zobiris","303":"Flunkifer","304":"Stollunior","305":"Stollrak","306":"Stolloss","307":"Meditie","308":"Meditalis","309":"Frizelbliz","310":"Voltenso","311":"Plusle","312":"Minun","313":"Volbeat","314":"Illumise","315":"Roselia","316":"Schluppuck","317":"Schlukwech","318":"Kanivanha","319":"Tohaido","320":"Wailmer","321":"Wailord","322":"Camaub","323":"Camerupt","324":"Qurtel","325":"Spoink","326":"Groink","327":"Pandir","328":"Knacklion","329":"Vibrava","330":"Libelldra","331":"Tuska","332":"Noktuska","333":"Wablu","334":"Altaria","335":"Sengo","336":"Vipitis","337":"Lunastein","338":"Sonnfel","339":"Schmerbe","340":"Welsar","341":"Krebscorps","342":"Krebutack","343":"Puppance","344":"Lepumentas","345":"Liliep","346":"Wielie","347":"Anorith","348":"Armaldo","349":"Barschwa","350":"Milotic","351":"Formeo","352":"Kecleon","353":"Shuppet","354":"Banette","355":"Zwirrlicht","356":"Zwirrklop","357":"Tropius","358":"Palimpalim","359":"Absol","360":"Isso","361":"Schneppke","362":"Firnontor","363":"Seemops","364":"Seejong","365":"Walraisa","366":"Perlu","367":"Aalabyss","368":"Saganabyss","369":"Relicanth","370":"Liebiskus","371":"Kindwurm","372":"Draschel","373":"Brutalanda","374":"Tanhel","375":"Metang","376":"Metagross","377":"Regirock","378":"Regice","379":"Registeel","380":"Latias","381":"Latios","382":"Kyogre","383":"Groudon","384":"Rayquaza","385":"Jirachi","386":"Deoxys","406":"Knospi","407":"Roserade","428":"Schlapor","433":"Klingplim","445":"Knakrack","448":"Lucario","460":"Rexblisar","462":"Magnezone","464":"Rihornior","475":"Galagladi","476":"Voluminas","477":"Zwirrfinst","478":"Frosdedje","480":"Selfe","481":"Vesprit","482":"Tobutz","483":"Dialga","484":"Palkia","485":"Heatran","486":"Regigigas","487":"Giratina","488":"Cresselia","531":"Ohrdoch","638":"Kobalium","639":"Terrakium","640":"Viridium","641":"Boreos","642":"Voltolos","643":"Reshiram","644":"Zekrom","645":"Demeteros","646":"Kyurem"},"ko":{"3":"이상해꽃","6":"리자몽","9":"거북왕","15":"독침붕","18":"피죤투","25":"피카츄","26":"라이츄","27":"모래두지","28":"고지","37":"식스테일","38":"나인테일","39":"푸린","40":"푸크린","41":"주뱃","42":"골뱃","43":"뚜벅쵸","44":"냄새꼬","45":"라플레시아","54":"고라파덕","55":"골덕","63":"캐이시","64":"윤겔라","65":"후딘","66":"알통몬","67":"근육몬","68":"괴력몬","72":"왕눈해","73":"독파리","74":"꼬마돌","75":"데구리","76":"딱구리","80":"야도란","81":"코일","82":"레어코일","84":"두두","85":"두트리오","88":"질퍽이","89":"질뻐기","94":"팬텀","100":"찌리리공","101":"붐볼","109":"또가스","110":"또도가스","111":"뿔카노","112":"코뿌리","115":"캥카","116":"쏘드라","117":"시드라","118":"콘치","119":"왕콘치","120":"별가사리","121":"아쿠스타","127":"쁘사이저","129":"잉어킹","130":"갸라도스","142":"프테라","150":"뮤츠","169":"크로뱃","170":"초라기","171":"랜턴","172":"피츄","174":"푸푸린","177":"네이티","178":"네이티오","181":"전룡","182":"아르코","183":"마릴","184":"마릴리","202":"마자용","203":"키링키","208":"강철톤","212":"핫삼","214":"헤라크로스","218":"마그마그","219":"마그카르고","222":"코산호","227":"무장조","229":"헬가","230":"킹드라","231":"코코리","232":"코리갑","243":"라이코","244":"앤테이","245":"스이쿤","248":"마기라스","249":"루기아","250":"칠색조","252":"나무지기","253":"나무돌이","254":"나무킹","255":"아차모","256":"영치코","257":"번치코","258":"물짱이","259":"늪짱이","260":"대짱이","261":"포챠나","262":"그라에나","263":"지그제구리","264":"직구리","265":"개무소","266":"실쿤","267":"뷰티플라이","268":"카스쿤","269":"독케일","270":"연꽃몬","271":"로토스","272":"로파파","273":"도토링","274":"잎새코","275":"다탱구","276":"테일로","277":"스왈로","278":"갈모매","279":"패리퍼","280":"랄토스","281":"킬리아","282":"가디안","283":"비구술","284":"비나방","285":"버섯꼬","286":"버섯모","287":"게을로","288":"발바로","289":"게을킹","290":"토중몬","291":"아이스크","292":"껍질몬","293":"소곤룡","294":"노공룡","295":"폭음룡","296":"마크탕","297":"하리뭉","298":"루리리","299":"코코파스","300":"에나비","301":"델케티","302":"깜까미","303":"입치트","304":"가보리","305":"갱도라","306":"보스로라","307":"요가랑","308":"요가램","309":"썬더라이","310":"썬더볼트","311":"플러시","312":"마이농","313":"볼비트","314":"네오비트","315":"로젤리아","316":"꼴깍몬","317":"꿀꺽몬","318":"샤프니아","319":"샤크니아","320":"고래왕자","321":"고래왕","322":"둔타","323":"폭타","324":"코터스","325":"피그점프","326":"피그킹","327":"얼루기","328":"톱치","329":"비브라바","330":"플라이곤","331":"선인왕","332":"밤선인","333":"파비코","334":"파비코리","335":"쟝고","336":"세비퍼","337":"루나톤","338":"솔록","339":"미꾸리","340":"메깅","341":"가재군","342":"가재장군","343":"오뚝군","344":"점토도리","345":"릴링","346":"릴리요","347":"아노딥스","348":"아말도","349":"빈티나","350":"밀로틱","351":"캐스퐁","352":"켈리몬","353":"어둠대신","354":"다크펫","355":"해골몽","356":"미라몽","357":"트로피우스","358":"치렁","359":"앱솔","360":"마자","361":"눈꼬마","362":"얼음귀신","363":"대굴레오","364":"씨레오","365":"씨카이저","366":"진주몽","367":"헌테일","368":"분홍장이","369":"시라칸","370":"사랑동이","371":"아공이","372":"쉘곤","373":"보만다","374":"메탕","375":"메탕구","376":"메타그로스","377":"레지락","378":"레지아이스","379":"레지스틸","380":"라티아스","381":"라티오스","382":"가이오가","383":"그란돈","384":"레쿠쟈","385":"지라치","386":"테오키스","406":"꼬몽울","407":"로즈레이드","428":"이어롭","433":"랑딸랑","445":"한카리아스","448":"루카리오","460":"눈설왕","462":"자포코일","464":"거대코뿌리","475":"엘레이드","476":"대코파스","477":"야느와르몽","478":"눈여아","480":"유크시","481":"엠라이트","482":"아그놈","483":"디아루가","484":"펄기아","485":"히드런","486":"레지기가스","487":"기라티나","488":"크레세리아","531":"다부니","638":"코바르온","639":"테라키온","640":"비리디온","641":"토네로스","642":"볼트로스","643":"레시라무","644":"제크로무","645":"랜드로스","646":"큐레무"},"zh-Hant":{"3":"妙蛙花","6":"噴火龍","9":"水箭龜","15":"大針蜂","18":"大比鳥","25":"皮卡丘","26":"雷丘","27":"穿山鼠","28":"穿山王","37":"六尾","38":"九尾","39":"胖丁","40":"胖可丁","41":"超音蝠","42":"大嘴蝠","43":"走路草","44":"臭臭花","45":"霸王花","54":"可達鴨","55":"哥達鴨","63":"凱西","64":"勇基拉","65":"胡地","66":"腕力","67":"豪力","68":"怪力","72":"瑪瑙水母","73":"毒刺水母","74":"小拳石","75":"隆隆石","76":"隆隆岩","80":"呆殼獸","81":"小磁怪","82":"三合一磁怪","84":"嘟嘟","85":"嘟嘟利","88":"臭泥","89":"臭臭泥","94":"耿鬼","100":"霹靂電球","101":"頑皮雷彈","109":"瓦斯彈","110":"雙彈瓦斯","111":"獨角犀牛","112":"鑽角犀獸","115":"袋獸","116":"墨海馬","117":"海刺龍","118":"角金魚","119":"金魚王","120":"海星星","121":"寶石海星","127":"凱羅斯","129":"鯉魚王","130":"暴鯉龍","142":"化石翼龍","150":"超夢","169":"叉字蝠","170":"燈籠魚","171":"電燈怪","172":"皮丘","174":"寶寶丁","177":"天然雀","178":"天然鳥","181":"電龍","182":"美麗花","183":"瑪力露","184":"瑪力露麗","202":"果然翁","203":"麒麟奇","208":"大鋼蛇","212":"巨鉗螳螂","214":"赫拉克羅斯","218":"熔岩蟲","219":"熔岩蝸牛","222":"太陽珊瑚","227":"盔甲鳥","229":"黑魯加","230":"刺龍王","231":"小小象","232":"頓甲","243":"雷公","244":"炎帝","245":"水君","248":"班基拉斯","249":"洛奇亞","250":"鳳王","252":"木守宮","253":"森林蜥蜴","254":"蜥蜴王","255":"火稚雞","256":"力壯雞","257":"火焰雞","258":"水躍魚","259":"沼躍魚","260":"巨沼怪","261":"土狼犬","262":"大狼犬","263":"蛇紋熊","264":"直衝熊","265":"刺尾蟲","266":"甲殼繭","267":"狩獵鳳蝶","268":"盾甲繭","269":"毒粉蛾","270":"蓮葉童子","271":"蓮帽小童","272":"樂天河童","273":"橡實果","274":"長鼻葉","275":"狡猾天狗","276":"傲骨燕","277":"大王燕","278":"長翅鷗","279":"大嘴鷗","280":"拉魯拉絲","281":"奇魯莉安","282":"沙奈朵","283":"溜溜糖球","284":"雨翅蛾","285":"蘑蘑菇","286":"斗笠菇","287":"懶人獺","288":"過動猿","289":"請假王","290":"土居忍士","291":"鐵面忍者","292":"脫殼忍者","293":"咕妞妞","294":"吼爆彈","295":"爆音怪","296":"幕下力士","297":"鐵掌力士","298":"露力麗","299":"朝北鼻","300":"向尾喵","301":"優雅貓","302":"勾魂眼","303":"大嘴娃","304":"可可多拉","305":"可多拉","306":"波士可多拉","307":"瑪沙那","308":"恰雷姆","309":"落雷獸","310":"雷電獸","311":"正電拍拍","312":"負電拍拍","313":"電螢蟲","314":"甜甜螢","315":"毒薔薇","316":"溶食獸","317":"吞食獸","318":"利牙魚","319":"巨牙鯊","320":"吼吼鯨","321":"吼鯨王","322":"呆火駝","323":"噴火駝","324":"煤炭龜","325":"跳跳豬","326":"噗噗豬","327":"晃晃斑","328":"大顎蟻","329":"超音波幼蟲","330":"沙漠蜻蜓","331":"刺球仙人掌","332":"夢歌仙人掌","333":"青綿鳥","334":"七夕青鳥","335":"貓鼬斬","336":"飯匙蛇","337":"月石","338":"太陽岩","339":"泥泥鰍","340":"鯰魚王","341":"龍蝦小兵","342":"鐵螯龍蝦","343":"天秤偶","344":"念力土偶","345":"觸手百合","346":"搖籃百合","347":"太古羽蟲","348":"太古盔甲","349":"醜醜魚","350":"美納斯","351":"飄浮泡泡","352":"變隱龍","353":"怨影娃娃","354":"詛咒娃娃","355":"夜巡靈","356":"彷徨夜靈","357":"熱帶龍","358":"風鈴鈴","359":"阿勃梭魯","360":"小果然","361":"雪童子","362":"冰鬼護","363":"海豹球","364":"海魔獅","365":"帝牙海獅","366":"珍珠貝","367":"獵斑魚","368":"櫻花魚","369":"古空棘魚","370":"愛心魚","371":"寶貝龍","372":"甲殼龍","373":"暴飛龍","374":"鐵啞鈴","375":"金屬怪","376":"巨金怪","377":"雷吉洛克","378":"雷吉艾斯","379":"雷吉斯奇魯","380":"拉帝亞斯","381":"拉帝歐斯","382":"蓋歐卡","383":"固拉多","384":"烈空坐","385":"基拉祈","386":"代歐奇希斯","406":"含羞苞","407":"羅絲雷朵","428":"長耳兔","433":"鈴鐺響","445":"烈咬陸鯊","448":"路卡利歐","460":"暴雪王","462":"自爆磁怪","464":"超甲狂犀","475":"艾路雷朵","476":"大朝北鼻","477":"黑夜魔靈","478":"雪妖女","480":"由克希","481":"艾姆利多","482":"亞克諾姆","483":"帝牙盧卡","484":"帕路奇亞","485":"席多藍恩","486":"雷吉奇卡斯","487":"騎拉帝納","488":"克雷色利亞","531":"差不多娃娃","638":"勾帕路翁","639":"代拉基翁","640":"畢力吉翁","641":"龍捲雲","642":"雷電雲","643":"萊希拉姆","644":"捷克羅姆","645":"土地雲","646":"酋雷姆"},"zh-Hans":{"3":"妙蛙花","6":"喷火龙","9":"水箭龟","15":"大针蜂","18":"大比鸟","25":"皮卡丘","26":"雷丘","27":"穿山鼠","28":"穿山王","37":"六尾","38":"九尾","39":"胖丁","40":"胖可丁","41":"超音蝠","42":"大嘴蝠","43":"走路草","44":"臭臭花","45":"霸王花","54":"可达鸭","55":"哥达鸭","63":"凯西","64":"勇基拉","65":"胡地","66":"腕力","67":"豪力","68":"怪力","72":"玛瑙水母","73":"毒刺水母","74":"小拳石","75":"隆隆石","76":"隆隆岩","80":"呆壳兽","81":"小磁怪","82":"三合一磁怪","84":"嘟嘟","85":"嘟嘟利","88":"臭泥","89":"臭臭泥","94":"耿鬼","100":"霹雳电球","101":"顽皮雷弹","109":"瓦斯弹","110":"双弹瓦斯","111":"独角犀牛","112":"钻角犀兽","115":"袋兽","116":"墨海马","117":"海刺龙","118":"角金鱼","119":"金鱼王","120":"海星星","121":"宝石海星","127":"凯罗斯","129":"鲤鱼王","130":"暴鲤龙","142":"化石翼龙","150":"超梦","169":"叉字蝠","170":"灯笼鱼","171":"电灯怪","172":"皮丘","174":"宝宝丁","177":"天然雀","178":"天然鸟","181":"电龙","182":"美丽花","183":"玛力露","184":"玛力露丽","202":"果然翁","203":"麒麟奇","208":"大钢蛇","212":"巨钳螳螂","214":"赫拉克罗斯","218":"熔岩虫","219":"熔岩蜗牛","222":"太阳珊瑚","227":"盔甲鸟","229":"黑鲁加","230":"刺龙王","231":"小小象","232":"顿甲","243":"雷公","244":"炎帝","245":"水君","248":"班基拉斯","249":"洛奇亚","250":"凤王","252":"木守宫","253":"森林蜥蜴","254":"蜥蜴王","255":"火稚鸡","256":"力壮鸡","257":"火焰鸡","258":"水跃鱼","259":"沼跃鱼","260":"巨沼怪","261":"土狼犬","262":"大狼犬","263":"蛇纹熊","264":"直冲熊","265":"刺尾虫","266":"甲壳茧","267":"狩猎凤蝶","268":"盾甲茧","269":"毒粉蛾","270":"莲叶童子","271":"莲帽小童","272":"乐天河童","273":"橡实果","274":"长鼻叶","275":"狡猾天狗","276":"傲骨燕","277":"大王燕","278":"长翅鸥","279":"大嘴鸥","280":"拉鲁拉丝","281":"奇鲁莉安","282":"沙奈朵","283":"溜溜糖球","284":"雨翅蛾","285":"蘑蘑菇","286":"斗笠菇","287":"懒人獭","288":"过动猿","289":"请假王","290":"土居忍士","291":"铁面忍者","292":"脱壳忍者","293":"咕妞妞","294":"吼爆弹","295":"爆音怪","296":"幕下力士","297":"铁掌力士","298":"露力丽","299":"朝北鼻","300":"向尾喵","301":"优雅猫","302":"勾魂眼","303":"大嘴娃","304":"可可多拉","305":"可多拉","306":"波士可多拉","307":"玛沙那","308":"恰雷姆","309":"落雷兽","310":"雷电兽","311":"正电拍拍","312":"負电拍拍","313":"电萤虫","314":"甜甜萤","315":"毒蔷薇","316":"溶食兽","317":"吞食兽","318":"利牙鱼","319":"巨牙鲨","320":"吼吼鲸","321":"吼鲸王","322":"呆火驼","323":"喷火驼","324":"煤炭龟","325":"跳跳猪","326":"噗噗猪","327":"晃晃斑","328":"大颚蚁","329":"超音波幼虫","330":"沙漠蜻蜓","331":"刺球仙人掌","332":"梦歌仙人掌","333":"青绵鸟","334":"七夕青鸟","335":"猫鼬斩","336":"饭匙蛇","337":"月石","338":"太阳岩","339":"泥泥鳅","340":"鲶鱼王","341":"龙虾小兵","342":"铁螯龙虾","343":"天秤偶","344":"念力土偶","345":"触手百合","346":"摇篮百合","347":"太古羽虫","348":"太古盔甲","349":"丑丑鱼","350":"美纳斯","351":"飘浮泡泡","352":"变隐龙","353":"怨影娃娃","354":"诅咒娃娃","355":"夜巡灵","356":"彷徨夜灵","357":"热带龙","358":"风铃铃","359":"阿勃梭鲁","360":"小果然","361":"雪童子","362":"冰鬼护","363":"海豹球","364":"海魔狮","365":"帝牙海狮","366":"珍珠贝","367":"猎斑鱼","368":"樱花鱼","369":"古空棘鱼","370":"爱心鱼","371":"宝贝龙","372":"甲壳龙","373":"暴飞龙","374":"铁哑铃","375":"金属怪","376":"巨金怪","377":"雷吉洛克","378":"雷吉艾斯","379":"雷吉斯奇鲁","380":"拉帝亚斯","381":"拉帝欧斯","382":"盖欧卡","383":"固拉多","384":"烈空坐","385":"基拉祈","386":"代欧奇希斯","406":"含羞苞","407":"罗丝雷朵","428":"长耳兔","433":"铃铛响","445":"烈咬陆鲨","448":"路卡利欧","460":"暴雪王","462":"自爆磁怪","464":"超甲狂犀","475":"艾路雷朵","476":"大朝北鼻","477":"黑夜魔灵","478":"雪妖女","480":"由克希","481":"艾姆利多","482":"亚克诺姆","483":"帝牙卢卡","484":"帕路奇亚","485":"席多蓝恩","486":"雷吉奇卡斯","487":"骑拉帝纳","488":"克雷色利亚","531":"差不多娃娃","638":"勾帕路翁","639":"代拉基翁","640":"毕力吉翁","641":"龙卷云","642":"雷电云","643":"莱希拉姆","644":"捷克罗姆","645":"土地云","646":"酋雷姆"}},"ITEMS":{"en":{"sun-stone":"Sun Stone","moon-stone":"Moon Stone","fire-stone":"Fire Stone","thunder-stone":"Thunder Stone","water-stone":"Water Stone","leaf-stone":"Leaf Stone","shiny-stone":"Shiny Stone","dusk-stone":"Dusk Stone","dawn-stone":"Dawn Stone","oval-stone":"Oval Stone","kings-rock":"King’s Rock","deep-sea-tooth":"Deep Sea Tooth","deep-sea-scale":"Deep Sea Scale","metal-coat":"Metal Coat","dragon-scale":"Dragon Scale","upgrade":"Upgrade","protector":"Protector","electirizer":"Electirizer","magmarizer":"Magmarizer","dubious-disc":"Dubious Disc","reaper-cloth":"Reaper Cloth","razor-claw":"Razor Claw","razor-fang":"Razor Fang","prism-scale":"Prism Scale","gengarite":"Gengarite","gardevoirite":"Gardevoirite","ampharosite":"Ampharosite","venusaurite":"Venusaurite","charizardite-x":"Charizardite X","blastoisinite":"Blastoisinite","mewtwonite-x":"Mewtwonite X","mewtwonite-y":"Mewtwonite Y","blazikenite":"Blazikenite","medichamite":"Medichamite","houndoominite":"Houndoominite","aggronite":"Aggronite","banettite":"Banettite","tyranitarite":"Tyranitarite","scizorite":"Scizorite","pinsirite":"Pinsirite","aerodactylite":"Aerodactylite","lucarionite":"Lucarionite","abomasite":"Abomasite","kangaskhanite":"Kangaskhanite","gyaradosite":"Gyaradosite","absolite":"Absolite","charizardite-y":"Charizardite Y","alakazite":"Alakazite","heracronite":"Heracronite","mawilite":"Mawilite","manectite":"Manectite","garchompite":"Garchompite","latiasite":"Latiasite","latiosite":"Latiosite","swampertite":"Swampertite","sceptilite":"Sceptilite","sablenite":"Sablenite","altarianite":"Altarianite","galladite":"Galladite","audinite":"Audinite","metagrossite":"Metagrossite","sharpedonite":"Sharpedonite","slowbronite":"Slowbronite","steelixite":"Steelixite","pidgeotite":"Pidgeotite","glalitite":"Glalitite","cameruptite":"Cameruptite","lopunnite":"Lopunnite","salamencite":"Salamencite","beedrillite":"Beedrillite","ice-stone":"Ice Stone"},"ja":{"sun-stone":"たいようのいし","moon-stone":"つきのいし","fire-stone":"ほのおのいし","thunder-stone":"かみなりのいし","water-stone":"みずのいし","leaf-stone":"リーフのいし","shiny-stone":"ひかりのいし","dusk-stone":"やみのいし","dawn-stone":"めざめいし","oval-stone":"まんまるいし","kings-rock":"おうじゃのしるし","deep-sea-tooth":"しんかいのキバ","deep-sea-scale":"しんかいのウロコ","metal-coat":"メタルコート","dragon-scale":"りゅうのウロコ","upgrade":"アップグレード","protector":"プロテクター","electirizer":"エレキブースター","magmarizer":"マグマブースター","dubious-disc":"あやしいパッチ","reaper-cloth":"れいかいのぬの","razor-claw":"するどいツメ","razor-fang":"するどいキバ","prism-scale":"きれいなウロコ","gengarite":"ゲンガナイト","gardevoirite":"サーナイトナイト","ampharosite":"デンリュウナイト","venusaurite":"フシギバナイト","charizardite-x":"リザードナイトＸ","blastoisinite":"カメックスナイト","mewtwonite-x":"ミュウツナイトＸ","mewtwonite-y":"ミュウツナイトＹ","blazikenite":"バシャーモナイト","medichamite":"チャーレムナイト","houndoominite":"ヘルガナイト","aggronite":"ボスゴドラナイト","banettite":"ジュペッタナイト","tyranitarite":"バンギラスナイト","scizorite":"ハッサムナイト","pinsirite":"カイロスナイト","aerodactylite":"プテラナイト","lucarionite":"ルカリオナイト","abomasite":"ユキノオナイト","kangaskhanite":"ガルーラナイト","gyaradosite":"ギャラドスナイト","absolite":"アブソルナイト","charizardite-y":"リザードナイトＹ","alakazite":"フーディナイト","heracronite":"ヘラクロスナイト","mawilite":"クチートナイト","manectite":"ライボルトナイト","garchompite":"ガブリアスナイト","latiasite":"ラティアスナイト","latiosite":"ラティオスナイト","swampertite":"ラグラージナイト","sceptilite":"ジュカインナイト","sablenite":"ヤミラミナイト","altarianite":"チルタリスナイト","galladite":"エルレイドナイト","audinite":"タブンネナイト","metagrossite":"メタグロスナイト","sharpedonite":"サメハダナイト","slowbronite":"ヤドランナイト","steelixite":"ハガネールナイト","pidgeotite":"ピジョットナイト","glalitite":"オニゴーリナイト","cameruptite":"バクーダナイト","lopunnite":"ミミロップナイト","salamencite":"ボーマンダナイト","beedrillite":"スピアナイト","ice-stone":"こおりのいし"},"fr":{"sun-stone":"Pierre Soleil","moon-stone":"Pierre Lune","fire-stone":"Pierre Feu","thunder-stone":"Pierre Foudre","water-stone":"Pierre Eau","leaf-stone":"Pierre Plante","shiny-stone":"Pierre Éclat","dusk-stone":"Pierre Nuit","dawn-stone":"Pierre Aube","oval-stone":"Pierre Ovale","kings-rock":"Roche Royale","deep-sea-tooth":"Dent Océan","deep-sea-scale":"Écaille Océan","metal-coat":"Peau Métal","dragon-scale":"Écaille Draco","upgrade":"Améliorator","protector":"Protecteur","electirizer":"Électriseur","magmarizer":"Magmariseur","dubious-disc":"CD Douteux","reaper-cloth":"Tissu Fauche","razor-claw":"Griffe Rasoir","razor-fang":"Croc Rasoir","prism-scale":"Bel’Écaille","gengarite":"Ectoplasmite","gardevoirite":"Gardevoirite","ampharosite":"Pharampite","venusaurite":"Florizarrite","charizardite-x":"Dracaufite X","blastoisinite":"Tortankite","mewtwonite-x":"Mewtwoïte X","mewtwonite-y":"Mewtwoïte Y","blazikenite":"Braségalite","medichamite":"Charminite","houndoominite":"Démolossite","aggronite":"Galekingite","banettite":"Branettite","tyranitarite":"Tyranocivite","scizorite":"Cizayoxite","pinsirite":"Scarabruite","aerodactylite":"Ptéraïte","lucarionite":"Lucarite","abomasite":"Blizzarite","kangaskhanite":"Kangourexite","gyaradosite":"Léviatorite","absolite":"Absolite","charizardite-y":"Dracaufite Y","alakazite":"Alakazamite","heracronite":"Scarhinoïte","mawilite":"Mysdibulite","manectite":"Élecsprintite","garchompite":"Carchacrokite","latiasite":"Latiasite","latiosite":"Latiosite","swampertite":"Laggronite","sceptilite":"Jungkite","sablenite":"Ténéfixite","altarianite":"Altarite","galladite":"Gallamite","audinite":"Nanméouïte","metagrossite":"Métalossite","sharpedonite":"Sharpedite","slowbronite":"Flagadossite","steelixite":"Steelixite","pidgeotite":"Roucarnagite","glalitite":"Oniglalite","cameruptite":"Caméruptite","lopunnite":"Lockpinite","salamencite":"Drattakite","beedrillite":"Dardargnite","ice-stone":"Pierre Glace"},"de":{"sun-stone":"Sonnenstein","moon-stone":"Mondstein","fire-stone":"Feuerstein","thunder-stone":"Donnerstein","water-stone":"Wasserstein","leaf-stone":"Blattstein","shiny-stone":"Leuchtstein","dusk-stone":"Finsterstein","dawn-stone":"Funkelstein","oval-stone":"Ovaler Stein","kings-rock":"King-Stein","deep-sea-tooth":"Abysszahn","deep-sea-scale":"Abyssschuppe","metal-coat":"Metallmantel","dragon-scale":"Drachenschuppe","upgrade":"Upgrade","protector":"Schützer","electirizer":"Stromisierer","magmarizer":"Magmaisierer","dubious-disc":"Dubiosdisc","reaper-cloth":"Düsterumhang","razor-claw":"Scharfklaue","razor-fang":"Scharfzahn","prism-scale":"Schönschuppe","gengarite":"Gengarnit","gardevoirite":"Guardevoirnit","ampharosite":"Ampharosnit","venusaurite":"Bisaflornit","charizardite-x":"Gluraknit X","blastoisinite":"Turtoknit","mewtwonite-x":"Mewtunit X","mewtwonite-y":"Mewtunit Y","blazikenite":"Lohgocknit","medichamite":"Meditalisnit","houndoominite":"Hundemonit","aggronite":"Stollossnit","banettite":"Banetteonit","tyranitarite":"Despotarnit","scizorite":"Scheroxnit","pinsirite":"Pinsirnit","aerodactylite":"Aerodactylonit","lucarionite":"Lucarionit","abomasite":"Rexblisarnit","kangaskhanite":"Kangamanit","gyaradosite":"Garadosnit","absolite":"Absolnit","charizardite-y":"Gluraknit Y","alakazite":"Simsalanit","heracronite":"Skarabornit","mawilite":"Flunkifernit","manectite":"Voltensonit","garchompite":"Knakracknit","latiasite":"Latiasnit","latiosite":"Latiosnit","swampertite":"Sumpexnit","sceptilite":"Gewaldronit","sablenite":"Zobirisnit","altarianite":"Altarianit","galladite":"Galagladinit","audinite":"Ohrdochnit","metagrossite":"Metagrossnit","sharpedonite":"Tohaidonit","slowbronite":"Lahmusnit","steelixite":"Stahlosnit","pidgeotite":"Taubossnit","glalitite":"Firnontornit","cameruptite":"Cameruptnit","lopunnite":"Schlapornit","salamencite":"Brutalandanit","beedrillite":"Bibornit","ice-stone":"Eisstein"},"ko":{"sun-stone":"태양의돌","moon-stone":"달의돌","fire-stone":"불꽃의돌","thunder-stone":"천둥의돌","water-stone":"물의돌","leaf-stone":"리프의돌","shiny-stone":"빛의돌","dusk-stone":"어둠의돌","dawn-stone":"각성의돌","oval-stone":"동글동글돌","kings-rock":"왕의징표석","deep-sea-tooth":"심해의이빨","deep-sea-scale":"심해의비늘","metal-coat":"금속코트","dragon-scale":"용의비늘","upgrade":"업그레이드","protector":"프로텍터","electirizer":"에레키부스터","magmarizer":"마그마부스터","dubious-disc":"괴상한패치","reaper-cloth":"영계의천","razor-claw":"예리한손톱","razor-fang":"예리한이빨","prism-scale":"고운비늘","gengarite":"팬텀나이트","gardevoirite":"가디안나이트","ampharosite":"전룡나이트","venusaurite":"이상해꽃나이트","charizardite-x":"리자몽나이트X","blastoisinite":"거북왕나이트","mewtwonite-x":"뮤츠나이트X","mewtwonite-y":"뮤츠나이트Y","blazikenite":"번치코나이트","medichamite":"요가램나이트","houndoominite":"헬가나이트","aggronite":"보스로라나이트","banettite":"다크펫나이트","tyranitarite":"마기라스나이트","scizorite":"핫삼나이트","pinsirite":"쁘사이저나이트","aerodactylite":"프테라나이트","lucarionite":"루카리오나이트","abomasite":"눈설왕나이트","kangaskhanite":"캥카나이트","gyaradosite":"갸라도스나이트","absolite":"앱솔나이트","charizardite-y":"리자몽나이트Y","alakazite":"후디나이트","heracronite":"헤라크로스나이트","mawilite":"입치트나이트","manectite":"썬더볼트나이트","garchompite":"한카리아스나이트","latiasite":"라티아스나이트","latiosite":"라티오스나이트","swampertite":"대짱이나이트","sceptilite":"나무킹나이트","sablenite":"깜까미나이트","altarianite":"파비코리나이트","galladite":"엘레이드나이트","audinite":"다부니나이트","metagrossite":"메타그로스나이트","sharpedonite":"샤크니아나이트","slowbronite":"야도란나이트","steelixite":"강철톤나이트","pidgeotite":"피죤투나이트","glalitite":"얼음귀신나이트","cameruptite":"폭타나이트","lopunnite":"이어롭나이트","salamencite":"보만다나이트","beedrillite":"독침붕나이트","ice-stone":"얼음의돌"},"zh-Hant":{"sun-stone":"日之石","moon-stone":"月之石","fire-stone":"火之石","thunder-stone":"雷之石","water-stone":"水之石","leaf-stone":"葉之石","shiny-stone":"光之石","dusk-stone":"暗之石","dawn-stone":"覺醒之石","oval-stone":"渾圓之石","kings-rock":"王者之證","deep-sea-tooth":"深海之牙","deep-sea-scale":"深海鱗片","metal-coat":"金屬膜","dragon-scale":"龍之鱗片","upgrade":"升級資料","protector":"護具","electirizer":"電力增幅器","magmarizer":"熔岩增幅器","dubious-disc":"可疑修正檔","reaper-cloth":"靈界之布","razor-claw":"銳利之爪","razor-fang":"銳利之牙","prism-scale":"美麗鱗片","gengarite":"耿鬼進化石","gardevoirite":"沙奈朵進化石","ampharosite":"電龍進化石","venusaurite":"妙蛙花進化石","charizardite-x":"噴火龍進化石Ｘ","blastoisinite":"水箭龜進化石","mewtwonite-x":"超夢進化石Ｘ","mewtwonite-y":"超夢進化石Ｙ","blazikenite":"火焰雞進化石","medichamite":"恰雷姆進化石","houndoominite":"黑魯加進化石","aggronite":"波士可多拉進化石","banettite":"詛咒娃娃進化石","tyranitarite":"班基拉斯進化石","scizorite":"巨鉗螳螂進化石","pinsirite":"凱羅斯進化石","aerodactylite":"化石翼龍進化石","lucarionite":"路卡利歐進化石","abomasite":"暴雪王進化石","kangaskhanite":"袋獸進化石","gyaradosite":"暴鯉龍進化石","absolite":"阿勃梭魯進化石","charizardite-y":"噴火龍進化石Ｙ","alakazite":"胡地進化石","heracronite":"赫拉克羅斯進化石","mawilite":"大嘴娃進化石","manectite":"雷電獸進化石","garchompite":"烈咬陸鯊進化石","latiasite":"拉帝亞斯進化石","latiosite":"拉帝歐斯進化石","swampertite":"巨沼怪進化石","sceptilite":"蜥蜴王進化石","sablenite":"勾魂眼進化石","altarianite":"七夕青鳥進化石","galladite":"艾路雷朵進化石","audinite":"差不多娃娃進化石","metagrossite":"巨金怪進化石","sharpedonite":"巨牙鯊進化石","slowbronite":"呆殼獸進化石","steelixite":"大鋼蛇進化石","pidgeotite":"大比鳥進化石","glalitite":"冰鬼護進化石","cameruptite":"噴火駝進化石","lopunnite":"長耳兔進化石","salamencite":"暴飛龍進化石","beedrillite":"大針蜂進化石","ice-stone":"冰之石"},"zh-Hans":{"sun-stone":"日之石","moon-stone":"月之石","fire-stone":"火之石","thunder-stone":"雷之石","water-stone":"水之石","leaf-stone":"叶之石","shiny-stone":"光之石","dusk-stone":"暗之石","dawn-stone":"觉醒之石","oval-stone":"浑圆之石","kings-rock":"王者之证","deep-sea-tooth":"深海之牙","deep-sea-scale":"深海鳞片","metal-coat":"金属膜","dragon-scale":"龙之鳞片","upgrade":"升级数据","protector":"护具","electirizer":"电力增幅器","magmarizer":"熔岩增幅器","dubious-disc":"可疑补丁","reaper-cloth":"灵界之布","razor-claw":"锐利之爪","razor-fang":"锐利之牙","prism-scale":"美丽鳞片","gengarite":"耿鬼进化石","gardevoirite":"沙奈朵进化石","ampharosite":"电龙进化石","venusaurite":"妙蛙花进化石","charizardite-x":"喷火龙进化石Ｘ","blastoisinite":"水箭龟进化石","mewtwonite-x":"超梦进化石Ｘ","mewtwonite-y":"超梦进化石Ｙ","blazikenite":"火焰鸡进化石","medichamite":"恰雷姆进化石","houndoominite":"黑鲁加进化石","aggronite":"波士可多拉进化石","banettite":"诅咒娃娃进化石","tyranitarite":"班基拉斯进化石","scizorite":"巨钳螳螂进化石","pinsirite":"凯罗斯进化石","aerodactylite":"化石翼龙进化石","lucarionite":"路卡利欧进化石","abomasite":"暴雪王进化石","kangaskhanite":"袋兽进化石","gyaradosite":"暴鲤龙进化石","absolite":"阿勃梭鲁进化石","charizardite-y":"喷火龙进化石Ｙ","alakazite":"胡地进化石","heracronite":"赫拉克罗斯进化石","mawilite":"大嘴娃进化石","manectite":"雷电兽进化石","garchompite":"烈咬陆鲨进化石","latiasite":"拉帝亚斯进化石","latiosite":"拉帝欧斯进化石","swampertite":"巨沼怪进化石","sceptilite":"蜥蜴王进化石","sablenite":"勾魂眼进化石","altarianite":"七夕青鸟进化石","galladite":"艾路雷朵进化石","audinite":"差不多娃娃进化石","metagrossite":"巨金怪进化石","sharpedonite":"巨牙鲨进化石","slowbronite":"呆壳兽进化石","steelixite":"大钢蛇进化石","pidgeotite":"大比鸟进化石","glalitite":"冰鬼护进化石","cameruptite":"喷火驼进化石","lopunnite":"长耳兔进化石","salamencite":"暴飞龙进化石","beedrillite":"大针蜂进化石","ice-stone":"冰之石"}},"MOVES":{"en":{"stomp":"Stomp","mimic":"Mimic","rollout":"Rollout","taunt":"Taunt","doublehit":"Double Hit"},"ja":{"stomp":"ふみつけ","mimic":"ものまね","rollout":"ころがる","taunt":"ちょうはつ","doublehit":"ダブルアタック"},"fr":{"stomp":"Écrasement","mimic":"Copie","rollout":"Roulade","taunt":"Provoc","doublehit":"Coup Double"},"de":{"stomp":"Stampfer","mimic":"Mimikry","rollout":"Walzer","taunt":"Verhöhner","doublehit":"Doppelschlag"},"ko":{"stomp":"짓밟기","mimic":"흉내내기","rollout":"구르기","taunt":"도발","doublehit":"더블어택"},"zh-Hant":{"stomp":"踩踏","mimic":"模仿","rollout":"滾動","taunt":"挑釁","doublehit":"二連擊"},"zh-Hans":{"stomp":"踩踏","mimic":"模仿","rollout":"滚动","taunt":"挑衅","doublehit":"二连击"}},"TYPES":{"en":{"Normal":"Normal","Fighting":"Fighting","Flying":"Flying","Poison":"Poison","Ground":"Ground","Rock":"Rock","Bug":"Bug","Ghost":"Ghost","Steel":"Steel","Fire":"Fire","Water":"Water","Grass":"Grass","Electric":"Electric","Psychic":"Psychic","Ice":"Ice","Dragon":"Dragon","Dark":"Dark","Fairy":"Fairy"},"ja":{"Normal":"ノーマル","Fighting":"かくとう","Flying":"ひこう","Poison":"どく","Ground":"じめん","Rock":"いわ","Bug":"むし","Ghost":"ゴースト","Steel":"はがね","Fire":"ほのお","Water":"みず","Grass":"くさ","Electric":"でんき","Psychic":"エスパー","Ice":"こおり","Dragon":"ドラゴン","Dark":"あく","Fairy":"フェアリー"},"fr":{"Normal":"Normal","Fighting":"Combat","Flying":"Vol","Poison":"Poison","Ground":"Sol","Rock":"Roche","Bug":"Insecte","Ghost":"Spectre","Steel":"Acier","Fire":"Feu","Water":"Eau","Grass":"Plante","Electric":"Électrik","Psychic":"Psy","Ice":"Glace","Dragon":"Dragon","Dark":"Ténèbres","Fairy":"Fée"},"de":{"Normal":"Normal","Fighting":"Kampf","Flying":"Flug","Poison":"Gift","Ground":"Boden","Rock":"Gestein","Bug":"Käfer","Ghost":"Geist","Steel":"Stahl","Fire":"Feuer","Water":"Wasser","Grass":"Pflanze","Electric":"Elektro","Psychic":"Psycho","Ice":"Eis","Dragon":"Drache","Dark":"Unlicht","Fairy":"Fee"},"ko":{"Normal":"노말","Fighting":"격투","Flying":"비행","Poison":"독","Ground":"땅","Rock":"바위","Bug":"벌레","Ghost":"고스트","Steel":"강철","Fire":"불꽃","Water":"물","Grass":"풀","Electric":"전기","Psychic":"에스퍼","Ice":"얼음","Dragon":"드래곤","Dark":"악","Fairy":"페어리"},"zh-Hant":{"Normal":"一般","Fighting":"格鬥","Flying":"飛行","Poison":"毒","Ground":"地面","Rock":"岩石","Bug":"蟲","Ghost":"幽靈","Steel":"鋼","Fire":"火","Water":"水","Grass":"草","Electric":"電","Psychic":"超能力","Ice":"冰","Dragon":"龍","Dark":"惡","Fairy":"妖精"},"zh-Hans":{"Normal":"一般","Fighting":"格斗","Flying":"飞行","Poison":"毒","Ground":"地面","Rock":"岩石","Bug":"虫","Ghost":"幽灵","Steel":"钢","Fire":"火","Water":"水","Grass":"草","Electric":"电","Psychic":"超能力","Ice":"冰","Dragon":"龙","Dark":"恶","Fairy":"妖精"}}};
+/* ---------- i18n ----------
+   Static English text lives in the HTML; dynamic English and every other language are below.
+   Pokémon, item, type and Hoenn place names come from PokeAPI (N, D.areas). */
+const LANGS = [["en","English"],["ja","日本語"],["fr","Français"],["de","Deutsch"],["ko","한국어"],["zh-Hant","繁體中文"],["zh-Hans","简体中文"]];
+const I18N = {
+en:{ lv:"Lv {n}", sep:", ",
+ stopDefs:[["start"],["gym","rustborocity","Rock"],["gym","dewfordtown","Fighting"],["gym","mauvillecity","Electric"],["gym","lavaridgetown","Fire"],
+  ["gym","petalburgcity","Normal"],["gym","fortreecity","Flying"],["gym","mossdeepcity","Psychic"],["gym","sootopoliscity","Water"],["post"],["special"]],
+ stopT:{gym:"After the {p} Gym ({t})",start:"{a} to {b}",post:"Post-game and the Delta Episode",special:"Events"},
+ tips:{4:"This badge's Go-Goggles let you cross the desert on Route 111.",5:"You can Surf from here, so surfing spots count from this stop.",
+  6:"Super Rod fishing counts from here.",7:"Diving and soaring in the sky open up around here.",
+  9:"Includes the Delta Episode, and DexNav-only Pokémon that need the National Pokédex.",10:"Past event only."},
+ ui:{colDex:"No.",colMon:"Pokémon",colHow:"How to get",colEvo:"Evolves into",stopN:"Stop {n}",
+  tagR:"Omega Ruby only",tagS:"Alpha Sapphire only",tradeR:"Trade from Omega Ruby",tradeS:"Trade from Alpha Sapphire",verR:"Omega Ruby",verS:"Alpha Sapphire",
+  dexA:"Hoenn Pokédex",locLeft:" · {n} left",locDone:" · ✓ all done",legStory:"Hoenn Pokédex legendaries",legPost:"Post-game and Mirage spots",
+  legBadgeT:"{n} / {t} legendaries",legWon:"★ Every legendary caught!",megBadgeT:"{n} / {t} Mega Stones",megWon:"★ Every Mega Stone found!",
+  tCopied:"Code copied. Paste it into your notes.",tSel:"Selected. Press Copy (⌘C / Ctrl+C).",
+  tRest:"Restored: {d} Pokédex, {l} legendaries, {m} Mega Stones",tBad:"That code doesn't look right. Check you copied all of it.",tCopiedAll:"Copied the save codes of {n} games. Paste them into your notes.",tRestAll:"Restored {n} games."},
+ how:{join:"; ",more:" +{n} more",colon:": ",breed:"Breed {p}",evolve:"Evolve {p} ({c})"},
+ cond:{day:", day",night:", night",dark:", Dark-type in party",rain:", in rain",male:", male",female:", female",trade:"Trade",tradeItem:"Trade holding {i}",
+  holdLv:"Level up holding {i}",knows:"Level up knowing {m}",friend:"High friendship",fairy:"High affection + a Fairy move",remoraid:"Level up with a Remoraid in the party",
+  shedinja:" with an empty party slot and a spare Poké Ball",stats:", form depends on stats",random:", form is random",magnetic:"Level up in {a}",beauty:"Level up with high Beauty",special:"Special condition"},
+ x:{starter:"Choose one from Professor Birch's bag",fossil:"Pick the Root or Claw Fossil in the Route 111 desert, then have it revived in Rustboro City",
+  castform:"Gift at the Weather Institute (Route 119)",beldum:"Post-game gift at Steven's house in Mossdeep City",wynaut:"Hatch the Egg from the woman in Lavaridge Town",
+  eon:"Joins you during the story (Eon Flute)",kyogre:"Caught during the story in the Cave of Origin",groudon:"Caught during the story in the Cave of Origin",
+  regi:"Post-game: bring Relicanth and Wailord and follow the braille clues from Route 134",rayquaza:"Delta Episode: Sky Pillar",deoxys:"Delta Episode: at the climax",
+  jirachi:"Past event only",event:"Past event only"},
+ req:{bell:"find the Scanner in Sea Mauville and trade it for a bell",heatran:"after the Primal Groudon/Kyogre story",regigigas:"bring Regirock, Regice and Registeel",
+  lake:"three Pokémon with max friendship in your party",palkia:"Uxie, Mesprit and Azelf in your party",giratina:"Dialga and Palkia in your party",
+  swords:"three Pokémon with maxed EVs in your party",tao:"a level 100 Pokémon in your party",kyurem:"Reshiram and Zekrom in your party",beasts:"Lugia or Ho-Oh in your party",
+  forces:"Castform in your party",landorus:"Tornadus and Thundurus in your party",cresselia:"rare daily Mirage spot south of Ever Grande City"},
+ when:{start:"(from the start)",primal:"(after the Primal story)",delta:"(Delta Episode)",afterdelta:"(after the Delta Episode)",event:"(event Diancie only)"},
+ mnote:{mrstone:"show Mr. Stone the Intriguing Stone",shoal:"trade 4 Shoal Salts and 4 Shoal Shells",starter:"for your starter",salesman:"or buy it from the stone salesman",
+  altaria:"show the collector an Altaria",zinnia:"from Zinnia's grandmother",steven:"from Steven after a rematch",mother:"from Mom",mauvillehills:"from a man in Mauville Hills",
+  cozmo:"from Professor Cozmo",looker:"from Looker",poochyena:"in a Poochyena's mouth",wanda:"from Wanda",aarune:"from Aarune (Platinum Rank)",
+  lisia:"from Lisia after every Master Rank contest",berry:"Berry Garden",cycling:"Cycling Road",market:"market",basement:"basement",onlati:"held by your Latios/Latias"},
+ stops:D.stops},
+ja:{ lv:"Lv.{n}", sep:"、",
+ stopT:{gym:"{p}ジム（{t}）の後",start:"{a}から{b}まで",post:"クリア後とエピソードデルタ",special:"配信"},
+ tips:{4:"このバッジのゴーゴーゴーグルで、111番道路の砂漠を通れます。",5:"ここから なみのりが使えるので、なみのりの場所はこの地点から数えます。",
+  6:"すごいつりざおの釣りはここから数えます。",7:"この辺りで、ダイビングと おおぞらをとぶが使えるようになります。",
+  9:"エピソードデルタと、全国図鑑が必要なずかんナビ限定のポケモンを含みます。",10:"過去の配信のみ。"},
+ ui:{title:"オメガルビー・アルファサファイア 図鑑トラッカー",sub:"『ポケットモンスター オメガルビー・アルファサファイア』のホウエン図鑑を、ストーリー順に効率よく埋めるためのチェックリスト。捕まえられる伝説のポケモンとメガストーン46個にも対応。",
+  kDex:"ホウエン図鑑",kLeg:"伝説のポケモン",kMeg:"メガストーン",tabDex:"図鑑ルート",tabLeg:"伝説のポケモン",tabMeg:"メガストーン",
+  search:"ポケモン名や場所で検索…",searchA:"検索",verA:"ゲームのバージョン",verBoth:"両バージョン",verR:"オメガルビー",verS:"アルファサファイア",hide:"完了を隠す",lang:"言語",theme:"テーマ切り替え",
+  intro:"ミシロタウンから8つのジム、クリア後とエピソードデルタまで、上から順に進めてください。各ポケモンは、出現する場所に最初に行ける地点に載っています。なみのり・釣り・いわくだきの場所は、使えるようになった時点から数えます。行をタップするとチェックできます。<b>進化先</b>には、その先の進化と進化方法が表示されます。",
+  shiny:"<b>まるいおまもり：</b>ホウエン図鑑を完成させて、{lilycove}のモーテルにいるゲームディレクターに会いましょう。<b>ひかるおまもり：</b>全国図鑑の完成が必要で、他のゲームからの交換や連れてくることが必要です。",
+  viewBy:"表示",viewRoute:"ルート順",viewNum:"図鑑番号順",viewZone:"場所別",colDex:"No.",colMon:"ポケモン",colHow:"入手方法",colEvo:"進化先",stopN:"地点{n}",
+  tagR:"オメガルビーのみ",tagS:"アルファサファイアのみ",tradeR:"オメガルビーから交換",tradeS:"アルファサファイアから交換",dexA:"ホウエン図鑑",
+  locLeft:" · 残り{n}",locDone:" · ✓ 完了",legStory:"ホウエン図鑑の伝説のポケモン",legPost:"クリア後とマボロシの場所",
+  legH:"伝説のポケモン",legP:"このゲームは、捕まえられる伝説のポケモンの数がシリーズで最も多い作品です。ホウエンの伝説のポケモンは図鑑と一緒にチェックされます。残りの多くはクリア後、おおぞらをとんで行くマボロシの場所に現れ、それぞれ手持ちに特別な条件が必要です。",
+  legBadgeT:"伝説のポケモン {n} / {t}",legWon:"★ 伝説のポケモンをすべて捕まえた！",
+  megH:"メガストーン",megP:"メガストーンはすべて一度きりの入手です。多くは地面で光っていて、ゲンシカイキの事件やエピソードデルタの後に現れます。",
+  megBadgeT:"メガストーン {n} / {t}",megWon:"★ メガストーンをすべて入手！",
+  footer:"出現場所・野生の出現・進化・伝説のポケモン・メガストーンは {serebii} を参照しました。図鑑の順番と各言語の名前は {pokeapi} より。ファンが作った非公式ツールで、任天堂・ゲームフリーク・株式会社ポケモンとは関係ありません。",
+  save:"セーブコード",codeT:"メモアプリにコピーしておきましょう",copy:"コピー",load:"読み込む",loadPh:"保存したコードを貼り付け（PORAS1-…）",loadA:"保存したコード",restore:"復元",
+  copyAll:"全ゲームをコピー",copyAllT:"ここで記録しているすべてのゲームのセーブコードをまとめてコピーします",
+  tCopied:"コードをコピーしました。メモに貼り付けてください。",tSel:"選択しました。⌘C / Ctrl+C でコピーしてください。",tRest:"復元しました: 図鑑 {d}、伝説 {l}、メガストーン {m}",
+  tBad:"コードが正しくないようです。すべてコピーできているか確認してください。",tCopiedAll:"{n}本のゲームのセーブコードをコピーしました。メモに貼り付けてください。",tRestAll:"{n}本のゲームを復元しました。",
+  brand:"ポケモン図鑑トラッカー",gameA:"ゲーム",gZa:"レジェンズZ-A",gSv:"スカーレット・バイオレット",gLa:"レジェンズ アルセウス",gBd:"ブリリアントダイヤモンド・シャイニングパール",gSw:"ソード・シールド",gUs:"ウルトラサン・ウルトラムーン",gSm:"サン・ムーン",gOr:"オメガルビー・アルファサファイア"},
+ how:{join:"／",more:" ほか{n}か所",colon:"：",breed:"{p}からタマゴ",evolve:"{p}を進化（{c}）"},
+ cond:{day:"・昼",night:"・夜",dark:"・手持ちにあくタイプ",rain:"・雨",male:"・オス",female:"・メス",trade:"通信交換",tradeItem:"{i}を持たせて通信交換",
+  holdLv:"{i}を持たせてレベルアップ",knows:"{m}を覚えてレベルアップ",friend:"なつき度が高い",fairy:"なかよし度が高く、フェアリー技を覚えている",remoraid:"テッポウオを手持ちに入れてレベルアップ",
+  shedinja:"・手持ちに空きがありモンスターボールを持っている",stats:"・能力で姿が変わる",random:"・どちらになるかはランダム",magnetic:"{a}でレベルアップ",beauty:"うつくしさが高い状態でレベルアップ",special:"特別な条件"},
+ x:{starter:"オダマキ博士のバッグから1匹選ぶ",fossil:"111番道路の砂漠で「ねっこのカセキ」か「ツメのカセキ」を選び、カナズミシティで復元",
+  castform:"お天気研究所（119番道路）でもらえる",beldum:"クリア後、トクサネシティのダイゴの家でもらえる",wynaut:"フエンタウンの女性からもらうタマゴをかえす",
+  eon:"ストーリー中に仲間になる（むげんのふえ）",kyogre:"ストーリー中に、目覚めのほこらで捕まえる",groudon:"ストーリー中に、目覚めのほこらで捕まえる",
+  regi:"クリア後：ジーランスとホエルオーを連れて、134番道路の点字の手がかりをたどる",rayquaza:"エピソードデルタ：そらのはしら",deoxys:"エピソードデルタ：クライマックス",
+  jirachi:"過去の配信のみ",event:"過去の配信のみ"},
+ req:{bell:"シーキンセツでスキャナーを見つけ、鈴と交換する",heatran:"ゲンシカイキの事件の後",regigigas:"レジロック・レジアイス・レジスチルを連れていく",
+  lake:"なつき度が最大のポケモン3匹を手持ちに",palkia:"ユクシー・エムリット・アグノムを手持ちに",giratina:"ディアルガとパルキアを手持ちに",
+  swords:"努力値が最大のポケモン3匹を手持ちに",tao:"レベル100のポケモンを手持ちに",kyurem:"レシラムとゼクロムを手持ちに",beasts:"ルギアかホウオウを手持ちに",
+  forces:"ポワルンを手持ちに",landorus:"トルネロスとボルトロスを手持ちに",cresselia:"サイユウシティの南に まれに現れるマボロシの場所"},
+ when:{start:"（最初から）",primal:"（ゲンシカイキの事件の後）",delta:"（エピソードデルタ）",afterdelta:"（エピソードデルタの後）",event:"（配信のディアンシーのみ）"},
+ mnote:{mrstone:"ツワブキ社長に「きになるいし」を見せる",shoal:"「あさせのしお」と「あさせのかいがら」を4つずつ渡す",starter:"最初のパートナー用",salesman:"または石売りから買う",
+  altaria:"コレクターにチルタリスを見せる",zinnia:"ヒガナのおばあさんから",steven:"再戦後のダイゴから",mother:"ママから",mauvillehills:"キンセツヒルズの男性から",
+  cozmo:"ソライシ博士から",looker:"ハンサムから",poochyena:"ポチエナがくわえている",wanda:"ワンダから",aarune:"マスターランク到達後",
+  lisia:"マスターランクのコンテストをすべて制覇した後、ルチアから",berry:"きのみ畑",cycling:"サイクリングロード",market:"市場",basement:"地下",onlati:"ラティオス／ラティアスが持っている"}},
+fr:{ lv:"N.{n}", sep:", ",
+ stopT:{gym:"Après l'Arène de {p} ({t})",start:"De {a} à {b}",post:"Après le jeu et l'Épisode Delta",special:"Événements"},
+ tips:{4:"Les Lunettes Sable de ce badge permettent de traverser le désert de la Route 111.",5:"Vous pouvez surfer à partir d'ici, donc les lieux de Surf comptent dès cette étape.",
+  6:"La pêche à la Super Canne compte à partir d'ici.",7:"La Plongée et le vol dans le ciel deviennent possibles vers ce moment.",
+  9:"Comprend l'Épisode Delta et les Pokémon exclusifs au PokéNav (DexNav), qui demandent le Pokédex National.",10:"Ancien événement uniquement."},
+ ui:{title:"Suivi du Pokédex Rubis Oméga et Saphir Alpha",sub:"Un parcours efficace, dans l'ordre de l'histoire, pour remplir le Pokédex de Hoenn dans Pokémon Rubis Oméga et Saphir Alpha, avec tous les légendaires capturables et les 46 Méga-Gemmes.",
+  kDex:"Pokédex de Hoenn",kLeg:"Légendaires",kMeg:"Méga-Gemmes",tabDex:"Parcours Pokédex",tabLeg:"Légendaires",tabMeg:"Méga-Gemmes",
+  search:"Chercher un Pokémon ou un lieu…",searchA:"Recherche",verA:"Version du jeu",verBoth:"Les deux versions",verR:"Rubis Oméga",verS:"Saphir Alpha",hide:"Masquer les faits",lang:"Langue",theme:"Changer de thème",
+  intro:"Suivez les étapes dans l'ordre, de Bourg-en-Vol aux huit Arènes, puis l'après-jeu et l'Épisode Delta. Chaque Pokémon est listé au premier moment où vous pouvez atteindre un lieu où il apparaît ; les lieux de Surf, de pêche et d'Éclate-Roc comptent à partir du moment où vous pouvez les utiliser. Touchez une ligne pour la cocher. <b>Évolue en</b> montre les évolutions suivantes et comment les obtenir.",
+  shiny:"<b>Charme Ovale :</b> complétez le Pokédex de Hoenn, puis rendez visite au directeur du jeu au motel de {lilycove}. <b>Charme Chroma :</b> il faut le Pokédex National complet, ce qui demande des échanges et des transferts depuis d'autres jeux.",
+  viewBy:"Affichage",viewRoute:"Ordre du parcours",viewNum:"Numéro du Pokédex",viewZone:"Lieu",colDex:"N°",colMon:"Pokémon",colHow:"Comment l'obtenir",colEvo:"Évolue en",stopN:"Étape {n}",
+  tagR:"Rubis Oméga uniquement",tagS:"Saphir Alpha uniquement",tradeR:"Échange depuis Rubis Oméga",tradeS:"Échange depuis Saphir Alpha",dexA:"Pokédex de Hoenn",
+  locLeft:" · encore {n}",locDone:" · ✓ terminé",legStory:"Légendaires du Pokédex de Hoenn",legPost:"Après le jeu et lieux mirages",
+  legH:"Pokémon légendaires",legP:"Ces jeux comptent plus de légendaires capturables que tous les autres. Ceux de Hoenn se cochent avec le Pokédex. La plupart des autres apparaissent après l'histoire dans des lieux mirages que l'on atteint en volant dans le ciel, et chacun demande quelque chose de spécial dans votre équipe.",
+  legBadgeT:"{n} / {t} légendaires",legWon:"★ Tous les légendaires capturés !",
+  megH:"Méga-Gemmes",megP:"Chaque Méga-Gemme s'obtient une seule fois. Beaucoup brillent au sol et n'apparaissent qu'après l'histoire de Primo-Groudon/Kyogre ou l'Épisode Delta.",
+  megBadgeT:"{n} / {t} Méga-Gemmes",megWon:"★ Toutes les Méga-Gemmes !",
+  footer:"Lieux, rencontres sauvages, évolutions, légendaires et Méga-Gemmes d'après {serebii}. Ordre du Pokédex et noms traduits d'après {pokeapi}. Outil de fan, non affilié à Nintendo, Game Freak ou The Pokémon Company.",
+  save:"Code de sauvegarde",codeT:"Copiez-le dans vos notes",copy:"Copier",load:"Charger",loadPh:"Collez un code sauvegardé (PORAS1-…)",loadA:"Code sauvegardé",restore:"Restaurer",
+  copyAll:"Copier tous les jeux",copyAllT:"Copie les codes de sauvegarde de tous les jeux que vous suivez ici",
+  tCopied:"Code copié. Collez-le dans vos notes.",tSel:"Sélectionné. Faites Copier (⌘C / Ctrl+C).",tRest:"Restauré : {d} Pokédex, {l} légendaires, {m} Méga-Gemmes",
+  tBad:"Ce code semble incorrect. Vérifiez que vous l'avez copié en entier.",tCopiedAll:"Codes de {n} jeux copiés. Collez-les dans vos notes.",tRestAll:"{n} jeux restaurés.",
+  brand:"Suivi de Pokédex",gameA:"Jeu",gZa:"Légendes Z-A",gSv:"Écarlate et Violet",gLa:"Légendes Arceus",gBd:"Diamant Étincelant et Perle Scintillante",gSw:"Épée et Bouclier",gUs:"Ultra-Soleil et Ultra-Lune",gSm:"Soleil et Lune",gOr:"Rubis Oméga et Saphir Alpha"},
+ how:{join:" ; ",more:" +{n} autres",colon:" : ",breed:"Élever {p}",evolve:"Faire évoluer {p} ({c})"},
+ cond:{day:", de jour",night:", de nuit",dark:", Pokémon Ténèbres dans l'équipe",rain:", sous la pluie",male:", mâle",female:", femelle",trade:"Échange",tradeItem:"Échange en tenant {i}",
+  holdLv:"Monter de niveau en tenant {i}",knows:"Monter de niveau en connaissant {m}",friend:"Grande amitié",fairy:"Grande affection + une capacité Fée",remoraid:"Monter de niveau avec Rémoraid dans l'équipe",
+  shedinja:" avec une place libre et une Poké Ball en réserve",stats:", forme selon les stats",random:", forme aléatoire",magnetic:"Monter de niveau à {a}",beauty:"Monter de niveau avec une grande Beauté",special:"Condition spéciale"},
+ x:{starter:"Choisissez-en un dans le sac du professeur",fossil:"Choisissez le Fossile Racine ou Griffe dans le désert de la Route 111, puis faites-le ressusciter à Mérouville",
+  castform:"Cadeau à l'Institut Météo (Route 119)",beldum:"Cadeau après le jeu dans une maison d'Algatia",wynaut:"Faites éclore l'Œuf donné par une femme à Vermilava",
+  eon:"Vous rejoint pendant l'histoire (Éon Flûte)",kyogre:"Capturé pendant l'histoire dans la Grotte Origine",groudon:"Capturé pendant l'histoire dans la Grotte Origine",
+  regi:"Après le jeu : emmenez Relicanth et Wailord et suivez les indices en braille depuis la Route 134",rayquaza:"Épisode Delta : Pilier Céleste",deoxys:"Épisode Delta : au point culminant",
+  jirachi:"Ancien événement uniquement",event:"Ancien événement uniquement"},
+ req:{bell:"trouvez le Scanner à Lavandia Sea et échangez-le contre une cloche",heatran:"après l'histoire de Primo-Groudon/Kyogre",regigigas:"emmenez Regirock, Regice et Registeel",
+  lake:"trois Pokémon à l'amitié maximale dans l'équipe",palkia:"Créhelf, Créfollet et Créfadet dans l'équipe",giratina:"Dialga et Palkia dans l'équipe",
+  swords:"trois Pokémon aux EV au maximum dans l'équipe",tao:"un Pokémon de niveau 100 dans l'équipe",kyurem:"Reshiram et Zekrom dans l'équipe",beasts:"Lugia ou Ho-Oh dans l'équipe",
+  forces:"Morphéo dans l'équipe",landorus:"Boréas et Fulguris dans l'équipe",cresselia:"lieu mirage rare au sud d'Éternara"},
+ when:{start:"(dès le début)",primal:"(après l'histoire Primo)",delta:"(Épisode Delta)",afterdelta:"(après l'Épisode Delta)",event:"(Diancie d'événement uniquement)"},
+ mnote:{mrstone:"montrez la Pierre Étrange au président",shoal:"donnez 4 Sels Tréfonds et 4 Coquillages Tréfonds",starter:"pour votre starter",salesman:"ou achetez-la au vendeur de pierres",
+  altaria:"montrez un Altaria au collectionneur",zinnia:"de la grand-mère d'une dresseuse",steven:"du Champion après une revanche",mother:"de maman",mauvillehills:"d'un homme des Résidences Lavandia",
+  cozmo:"du professeur",looker:"de la Police Internationale",poochyena:"dans la gueule d'un Medhyèna",wanda:"d'une habitante",aarune:"au rang Platine",
+  lisia:"après tous les concours de rang Master",berry:"jardin de Baies",cycling:"Piste Cyclable",market:"marché",basement:"sous-sol",onlati:"tenue par votre Latios/Latias"}},
+de:{ lv:"Lv. {n}", sep:", ",
+ stopT:{gym:"Nach der Arena von {p} ({t})",start:"{a} bis {b}",post:"Nach dem Abspann und die Delta-Episode",special:"Events"},
+ tips:{4:"Mit der Wüstenbrille dieses Ordens kannst du die Wüste auf Route 111 durchqueren.",5:"Ab hier kannst du surfen, daher zählen Surfplätze ab dieser Etappe.",
+  6:"Angeln mit der Superangel zählt ab hier.",7:"Tauchen und das Fliegen am Himmel werden etwa hier möglich.",
+  9:"Enthält die Delta-Episode und Pokémon, die nur über den PokéNav-Dex erscheinen und den Nationaldex brauchen.",10:"Nur über frühere Events."},
+ ui:{title:"Omega Rubin & Alpha Saphir Pokédex-Tracker",sub:"Eine effiziente Route in Story-Reihenfolge, um den Hoenn-Pokédex in Pokémon Omega Rubin und Alpha Saphir zu füllen – mit allen fangbaren Legendären und allen 46 Mega-Steinen.",
+  kDex:"Hoenn-Pokédex",kLeg:"Legendäre",kMeg:"Mega-Steine",tabDex:"Pokédex-Route",tabLeg:"Legendäre",tabMeg:"Mega-Steine",
+  search:"Pokémon oder Ort suchen…",searchA:"Suche",verA:"Spielversion",verBoth:"Beide Editionen",verR:"Omega Rubin",verS:"Alpha Saphir",hide:"Erledigte ausblenden",lang:"Sprache",theme:"Design wechseln",
+  intro:"Folge den Etappen der Reihe nach: von Wurzelheim durch die acht Arenen bis nach dem Abspann und zur Delta-Episode. Jedes Pokémon steht an dem Punkt, an dem du zum ersten Mal einen Ort erreichst, wo es vorkommt; Surf-, Angel- und Zertrümmerer-Plätze zählen ab dem Zeitpunkt, an dem du sie nutzen kannst. Tippe auf eine Zeile, um sie abzuhaken. <b>Entwickelt sich zu</b> zeigt spätere Stufen und wie sie sich entwickeln.",
+  shiny:"<b>Ovalpin:</b> Vervollständige den Hoenn-Pokédex und besuche dann den Spieldirektor im Motel in {lilycove}. <b>Schillerpin:</b> Er braucht den vollständigen Nationaldex, wofür du Tausche und Übertragungen aus anderen Spielen brauchst.",
+  viewBy:"Ansicht",viewRoute:"Routen-Reihenfolge",viewNum:"Pokédex-Nummer",viewZone:"Ort",colDex:"Nr.",colMon:"Pokémon",colHow:"Fundort",colEvo:"Entwickelt sich zu",stopN:"Etappe {n}",
+  tagR:"Nur Omega Rubin",tagS:"Nur Alpha Saphir",tradeR:"Tausch aus Omega Rubin",tradeS:"Tausch aus Alpha Saphir",dexA:"Hoenn-Pokédex",
+  locLeft:" · noch {n}",locDone:" · ✓ fertig",legStory:"Legendäre im Hoenn-Pokédex",legPost:"Nach dem Abspann und Illusionsorte",
+  legH:"Legendäre Pokémon",legP:"In diesen Spielen kannst du mehr legendäre Pokémon fangen als in jedem anderen. Die aus Hoenn hakst du zusammen mit dem Pokédex ab. Die meisten anderen erscheinen nach der Story an Illusionsorten, die du beim Fliegen am Himmel erreichst, und jedes braucht etwas Besonderes in deinem Team.",
+  legBadgeT:"{n} / {t} Legendäre",legWon:"★ Alle Legendären gefangen!",
+  megH:"Mega-Steine",megP:"Jeder Mega-Stein ist einmalig. Viele glitzern am Boden und erscheinen erst nach der Proto-Groudon/Kyogre-Story oder der Delta-Episode.",
+  megBadgeT:"{n} / {t} Mega-Steine",megWon:"★ Alle Mega-Steine gefunden!",
+  footer:"Fundorte, wilde Pokémon, Entwicklungen, Legendäre und Mega-Steine von {serebii}. Pokédex-Reihenfolge und übersetzte Namen von {pokeapi}. Fan-Projekt, nicht verbunden mit Nintendo, Game Freak oder The Pokémon Company.",
+  save:"Speichercode",codeT:"Kopiere ihn in deine Notizen",copy:"Kopieren",load:"Laden",loadPh:"Gespeicherten Code einfügen (PORAS1-…)",loadA:"Gespeicherter Code",restore:"Wiederherstellen",
+  copyAll:"Alle Spiele kopieren",copyAllT:"Kopiert die Speichercodes aller Spiele, die du hier verfolgst",
+  tCopied:"Code kopiert. Füge ihn in deine Notizen ein.",tSel:"Markiert. Jetzt kopieren (⌘C / Strg+C).",tRest:"Wiederhergestellt: {d} Pokédex, {l} Legendäre, {m} Mega-Steine",
+  tBad:"Dieser Code scheint falsch zu sein. Prüfe, ob du ihn vollständig kopiert hast.",tCopiedAll:"Speichercodes von {n} Spielen kopiert. Füge sie in deine Notizen ein.",tRestAll:"{n} Spiele wiederhergestellt.",
+  brand:"Pokédex-Tracker",gameA:"Spiel",gZa:"Legenden Z-A",gSv:"Karmesin & Purpur",gLa:"Legenden Arceus",gBd:"Strahlender Diamant & Leuchtende Perle",gSw:"Schwert & Schild",gUs:"Ultrasonne & Ultramond",gSm:"Sonne & Mond",gOr:"Omega Rubin & Alpha Saphir"},
+ how:{join:"; ",more:" +{n} weitere",colon:": ",breed:"{p} züchten",evolve:"{p} entwickeln ({c})"},
+ cond:{day:", tagsüber",night:", nachts",dark:", Unlicht-Pokémon im Team",rain:", bei Regen",male:", männlich",female:", weiblich",trade:"Tausch",tradeItem:"Tausch mit {i}",
+  holdLv:"Level-Aufstieg mit {i}",knows:"Level-Aufstieg mit {m}",friend:"Hohe Freundschaft",fairy:"Hohe Zuneigung + eine Feen-Attacke",remoraid:"Level-Aufstieg mit Remoraid im Team",
+  shedinja:" mit freiem Teamplatz und einem Pokéball",stats:", Form hängt von den Werten ab",random:", Form ist zufällig",magnetic:"Level-Aufstieg in {a}",beauty:"Level-Aufstieg mit hoher Schönheit",special:"Besondere Bedingung"},
+ x:{starter:"Wähle eines aus der Tasche des Professors",fossil:"Wähle in der Wüste auf Route 111 das Wurzel- oder Klauenfossil und lass es in Metarost City wiederbeleben",
+  castform:"Geschenk im Wetterinstitut (Route 119)",beldum:"Geschenk nach dem Abspann in einem Haus in Moosbach City",wynaut:"Brüte das Ei aus, das dir eine Frau in Bad Lavastadt gibt",
+  eon:"Schließt sich dir in der Story an (Äon-Flöte)",kyogre:"Während der Story in der Urzeithöhle gefangen",groudon:"Während der Story in der Urzeithöhle gefangen",
+  regi:"Nach dem Abspann: Relicanth und Wailord mitnehmen und den Blindenschrift-Hinweisen ab Route 134 folgen",rayquaza:"Delta-Episode: Himmelssäule",deoxys:"Delta-Episode: am Höhepunkt",
+  jirachi:"Nur über frühere Events",event:"Nur über frühere Events"},
+ req:{bell:"den Scanner in Seewoge Malvenfroh finden und gegen eine Glocke tauschen",heatran:"nach der Proto-Groudon/Kyogre-Story",regigigas:"Regirock, Regice und Registeel mitnehmen",
+  lake:"drei Pokémon mit maximaler Freundschaft im Team",palkia:"Selfe, Vesprit und Tobutz im Team",giratina:"Dialga und Palkia im Team",
+  swords:"drei Pokémon mit maximalen FP im Team",tao:"ein Pokémon auf Level 100 im Team",kyurem:"Reshiram und Zekrom im Team",beasts:"Lugia oder Ho-Oh im Team",
+  forces:"Formeo im Team",landorus:"Boreos und Voltolos im Team",cresselia:"seltener täglicher Illusionsort südlich von Prachtpolis City"},
+ when:{start:"(von Anfang an)",primal:"(nach der Proto-Story)",delta:"(Delta-Episode)",afterdelta:"(nach der Delta-Episode)",event:"(nur Event-Diancie)"},
+ mnote:{mrstone:"dem Firmenchef den seltsamen Stein zeigen",shoal:"je 4 Küstensalz und Küstenschale abgeben",starter:"für deinen Starter",salesman:"oder beim Steinverkäufer kaufen",
+  altaria:"dem Sammler ein Altaria zeigen",zinnia:"von der Großmutter einer Trainerin",steven:"vom Champ nach einem Rückkampf",mother:"von Mama",mauvillehills:"von einem Mann in einem Wohnhaus",
+  cozmo:"vom Professor",looker:"von der Internationalen Polizei",poochyena:"im Maul eines Fiffyen",wanda:"von einer Bewohnerin",aarune:"im Platin-Rang",
+  lisia:"nach allen Wettbewerben im Meister-Rang",berry:"Beerengarten",cycling:"Radweg",market:"Markt",basement:"Keller",onlati:"von deinem Latios/Latias getragen"}},
+ko:{ lv:"Lv.{n}", sep:", ",
+ stopT:{gym:"{p} 체육관({t}) 이후",start:"{a}부터 {b}까지",post:"클리어 후와 에피소드 델타",special:"배포"},
+ tips:{4:"이 배지로 받는 고글로 111번도로의 사막을 지날 수 있습니다.",5:"여기서부터 파도타기를 쓸 수 있으므로, 파도타기 장소는 이 지점부터 셉니다.",
+  6:"대단한낚싯대 낚시는 여기서부터 셉니다.",7:"이 무렵 다이빙과 하늘을 나는 이동이 가능해집니다.",
+  9:"에피소드 델타와, 전국도감이 필요한 도감내비 한정 포켓몬을 포함합니다.",10:"과거 배포 전용."},
+ ui:{title:"오메가루비·알파사파이어 도감 트래커",sub:"『포켓몬스터 오메가루비·알파사파이어』의 호연도감을 스토리 순서대로 효율적으로 채우기 위한 체크리스트. 잡을 수 있는 전설의 포켓몬과 메가스톤 46개도 함께.",
+  kDex:"호연도감",kLeg:"전설의 포켓몬",kMeg:"메가스톤",tabDex:"도감 루트",tabLeg:"전설의 포켓몬",tabMeg:"메가스톤",
+  search:"포켓몬 또는 장소 검색…",searchA:"검색",verA:"게임 버전",verBoth:"두 버전 모두",verR:"오메가루비",verS:"알파사파이어",hide:"완료 숨기기",lang:"언어",theme:"테마 전환",
+  intro:"시작 마을부터 8개의 체육관, 클리어 후와 에피소드 델타까지 순서대로 진행하세요. 각 포켓몬은 나오는 장소에 처음 갈 수 있게 되는 지점에 실려 있으며, 파도타기·낚시·바위깨기 장소는 쓸 수 있게 된 시점부터 셉니다. 줄을 탭하면 체크됩니다. <b>진화</b>에는 이후 진화와 진화 방법이 표시됩니다.",
+  shiny:"<b>동글동글부적:</b> 호연도감을 완성한 뒤 {lilycove}의 모텔에 있는 게임 디렉터를 찾아가세요. <b>빛나는부적:</b> 전국도감 완성이 필요하며, 다른 게임에서의 교환과 이동이 필요합니다.",
+  viewBy:"보기",viewRoute:"루트 순",viewNum:"도감 번호",viewZone:"장소별",colDex:"No.",colMon:"포켓몬",colHow:"입수 방법",colEvo:"진화",stopN:"지점 {n}",
+  tagR:"오메가루비 전용",tagS:"알파사파이어 전용",tradeR:"오메가루비에서 교환",tradeS:"알파사파이어에서 교환",dexA:"호연도감",
+  locLeft:" · 남은 수 {n}",locDone:" · ✓ 완료",legStory:"호연도감의 전설의 포켓몬",legPost:"클리어 후와 환상의 장소",
+  legH:"전설의 포켓몬",legP:"이 게임은 잡을 수 있는 전설의 포켓몬이 시리즈에서 가장 많습니다. 호연의 전설의 포켓몬은 도감과 함께 체크됩니다. 나머지 대부분은 클리어 후 하늘을 날아 찾아가는 환상의 장소에 나타나며, 각각 지닌 포켓몬에 특별한 조건이 필요합니다.",
+  legBadgeT:"전설의 포켓몬 {n} / {t}",legWon:"★ 전설의 포켓몬을 모두 잡았습니다!",
+  megH:"메가스톤",megP:"메가스톤은 모두 한 번만 얻을 수 있습니다. 많은 메가스톤이 땅에서 반짝이며, 원시회귀 사건이나 에피소드 델타 이후에 나타납니다.",
+  megBadgeT:"메가스톤 {n} / {t}",megWon:"★ 메가스톤을 모두 얻었습니다!",
+  footer:"출현 장소·야생 포켓몬·진화·전설의 포켓몬·메가스톤은 {serebii}를 참고했습니다. 도감 순서와 각 언어 이름은 {pokeapi}에서 가져왔습니다. 팬이 만든 비공식 도구로, 닌텐도·게임프리크·주식회사 포켓몬과 관계없습니다.",
+  save:"세이브 코드",codeT:"메모 앱에 복사해 두세요",copy:"복사",load:"불러오기",loadPh:"저장한 코드 붙여넣기 (PORAS1-…)",loadA:"저장한 코드",restore:"복원",
+  copyAll:"모든 게임 복사",copyAllT:"여기서 기록 중인 모든 게임의 세이브 코드를 한꺼번에 복사합니다",
+  tCopied:"코드를 복사했습니다. 메모에 붙여넣으세요.",tSel:"선택했습니다. ⌘C / Ctrl+C로 복사하세요.",tRest:"복원했습니다: 도감 {d}, 전설 {l}, 메가스톤 {m}",
+  tBad:"코드가 올바르지 않은 것 같습니다. 전부 복사했는지 확인하세요.",tCopiedAll:"게임 {n}개의 세이브 코드를 복사했습니다. 메모에 붙여넣으세요.",tRestAll:"게임 {n}개를 복원했습니다.",
+  brand:"포켓몬 도감 트래커",gameA:"게임",gZa:"레전즈 Z-A",gSv:"스칼렛·바이올렛",gLa:"레전즈 아르세우스",gBd:"브릴리언트 다이아몬드·샤이닝 펄",gSw:"소드·실드",gUs:"울트라썬·울트라문",gSm:"썬·문",gOr:"오메가루비·알파사파이어",gLetsgo:"레츠고"},
+ how:{join:" / ",more:" 외 {n}곳",colon:": ",breed:"{p}에게서 알",evolve:"{p} 진화 ({c})"},
+ cond:{day:", 낮",night:", 밤",dark:", 지닌 포켓몬에 악타입",rain:", 비",male:", 수컷",female:", 암컷",trade:"통신교환",tradeItem:"{i}을(를) 지니게 하고 통신교환",
+  holdLv:"{i}을(를) 지니게 하고 레벨업",knows:"{m}을(를) 배운 상태로 레벨업",friend:"친밀도가 높음",fairy:"사이좋음이 높고 페어리 기술을 배움",remoraid:"지닌 포켓몬에 총어가 있을 때 레벨업",
+  shedinja:", 지닌 포켓몬에 빈자리와 몬스터볼이 있을 때",stats:", 능력치에 따라 모습이 달라짐",random:", 어느 쪽이 될지는 무작위",magnetic:"{a}에서 레벨업",beauty:"아름다움이 높은 상태로 레벨업",special:"특별한 조건"},
+ x:{starter:"박사의 가방에서 1마리 고르기",fossil:"111번도로 사막에서 뿌리화석이나 발톱화석을 골라 금탄시티에서 복원",
+  castform:"기상연구소(119번도로)에서 받기",beldum:"클리어 후 이끼시티의 한 집에서 받기",wynaut:"용암마을의 여성에게서 받은 알을 부화",
+  eon:"스토리 중에 동료가 됨 (무한의 피리)",kyogre:"스토리 중에 각성의 사당에서 잡기",groudon:"스토리 중에 각성의 사당에서 잡기",
+  regi:"클리어 후: 시라칸과 고래왕을 데리고 134번도로의 점자 단서를 따라가기",rayquaza:"에피소드 델타: 하늘기둥",deoxys:"에피소드 델타: 클라이맥스",
+  jirachi:"과거 배포 전용",event:"과거 배포 전용"},
+ req:{bell:"씨보라에서 스캐너를 찾아 방울과 교환",heatran:"원시회귀 사건 이후",regigigas:"레지락·레지아이스·레지스틸을 데려가기",
+  lake:"친밀도가 최대인 포켓몬 3마리를 지닌 상태",palkia:"유크시·엠라이트·아그놈을 지닌 상태",giratina:"디아루가와 펄기아를 지닌 상태",
+  swords:"노력치가 최대인 포켓몬 3마리를 지닌 상태",tao:"레벨 100 포켓몬을 지닌 상태",kyurem:"레시라무와 제크로무를 지닌 상태",beasts:"루기아나 칠색조를 지닌 상태",
+  forces:"캐스퐁을 지닌 상태",landorus:"토네로스와 볼트로스를 지닌 상태",cresselia:"드물게 나타나는 환상의 장소"},
+ when:{start:"(처음부터)",primal:"(원시회귀 사건 이후)",delta:"(에피소드 델타)",afterdelta:"(에피소드 델타 이후)",event:"(배포 디안시만)"},
+ mnote:{mrstone:"사장님께 신기한 돌을 보여 주기",shoal:"여울소금과 여울조개껍질을 4개씩 건네기",starter:"처음 고른 포켓몬용",salesman:"또는 돌 상인에게서 사기",
+  altaria:"수집가에게 파비코리를 보여 주기",zinnia:"한 트레이너의 할머니에게서",steven:"재대결 후 챔피언에게서",mother:"엄마에게서",mauvillehills:"보라시티 맨션의 남성에게서",
+  cozmo:"박사에게서",looker:"국제경찰에게서",poochyena:"포챠나가 물고 있음",wanda:"한 주민에게서",aarune:"플래티넘 랭크 달성 후",
+  lisia:"마스터랭크 콘테스트를 모두 우승한 뒤",berry:"나무열매 밭",cycling:"사이클링로드",market:"시장",basement:"지하",onlati:"라티오스/라티아스가 지니고 있음"}},
+"zh-Hant":{ lv:"Lv.{n}", sep:"、",
+ stopT:{gym:"{p}道館（{t}）之後",start:"從{a}到{b}",post:"通關後與Δ（德爾塔）篇章",special:"配信"},
+ tips:{4:"這枚徽章附帶的護目鏡能讓你穿越111號道路的沙漠。",5:"從這裡開始可以衝浪，所以衝浪地點從這一站開始計算。",
+  6:"使用厲害釣竿的釣魚從這裡開始計算。",7:"大約在這時可以潛水與在天空飛翔。",
+  9:"包含Δ篇章，以及需要全國圖鑑的圖鑑導航限定寶可夢。",10:"僅限過去的配信。"},
+ ui:{title:"終極紅寶石／始源藍寶石 圖鑑追蹤",sub:"依劇情順序、有效率地完成《寶可夢 終極紅寶石／始源藍寶石》豐緣圖鑑的清單，並包含所有可捕捉的傳說寶可夢與全部46顆超級石。",
+  kDex:"豐緣圖鑑",kLeg:"傳說寶可夢",kMeg:"超級石",tabDex:"圖鑑路線",tabLeg:"傳說寶可夢",tabMeg:"超級石",
+  search:"搜尋寶可夢或地點…",searchA:"搜尋",verA:"遊戲版本",verBoth:"兩個版本",verR:"終極紅寶石",verS:"始源藍寶石",hide:"隱藏已完成",lang:"語言",theme:"切換主題",
+  intro:"從起點出發，依序挑戰8座道館，直到通關後與Δ篇章。每隻寶可夢都列在你第一次能抵達牠出現地點的那一站；衝浪、釣魚與碎岩的地點從能使用時開始計算。點一下就能勾選。<b>進化</b>會顯示之後的進化與方法。",
+  shiny:"<b>圓形護符：</b>完成豐緣圖鑑後，到{lilycove}的汽車旅館找遊戲總監。<b>閃耀護符：</b>需要完成全國圖鑑，這需要從其他遊戲交換與傳送。",
+  viewBy:"檢視",viewRoute:"路線順序",viewNum:"圖鑑編號",viewZone:"地點",colDex:"No.",colMon:"寶可夢",colHow:"取得方式",colEvo:"進化",stopN:"第{n}站",
+  tagR:"僅限終極紅寶石",tagS:"僅限始源藍寶石",tradeR:"從終極紅寶石交換",tradeS:"從始源藍寶石交換",dexA:"豐緣圖鑑",
+  locLeft:" · 剩{n}",locDone:" · ✓ 完成",legStory:"豐緣圖鑑中的傳說寶可夢",legPost:"通關後與夢幻地點",
+  legH:"傳說寶可夢",legP:"這兩款遊戲是系列中可捕捉傳說寶可夢最多的作品。豐緣的傳說寶可夢會和圖鑑一起勾選。其餘大多在通關後出現在飛翔天空才能抵達的夢幻地點，而且每一隻都需要隊伍中有特別的條件。",
+  legBadgeT:"傳說寶可夢 {n} / {t}",legWon:"★ 所有傳說寶可夢都已捕捉！",
+  megH:"超級石",megP:"每顆超級石都只能取得一次。很多會在地上發光，並且要在原始回歸事件或Δ篇章之後才會出現。",
+  megBadgeT:"超級石 {n} / {t}",megWon:"★ 所有超級石都已取得！",
+  footer:"出現地點、野生寶可夢、進化、傳說寶可夢與超級石資料參考自 {serebii}。圖鑑順序與各語言名稱來自 {pokeapi}。粉絲製作的非官方工具，與任天堂、Game Freak 及 The Pokémon Company 無關。",
+  save:"存檔代碼",codeT:"複製到你的筆記 App",copy:"複製",load:"載入",loadPh:"貼上存檔代碼（PORAS1-…）",loadA:"存檔代碼",restore:"還原",
+  copyAll:"複製所有遊戲",copyAllT:"一次複製你在這裡追蹤的所有遊戲的存檔代碼",
+  tCopied:"已複製代碼，請貼到筆記中。",tSel:"已選取，請按 ⌘C / Ctrl+C 複製。",tRest:"已還原：圖鑑 {d}、傳說 {l}、超級石 {m}",
+  tBad:"代碼似乎不正確，請確認已完整複製。",tCopiedAll:"已複製 {n} 款遊戲的存檔代碼，請貼到筆記中。",tRestAll:"已還原 {n} 款遊戲。",
+  brand:"寶可夢圖鑑追蹤",gameA:"遊戲",gZa:"傳說 Z-A",gSv:"朱・紫",gLa:"傳說 阿爾宙斯",gBd:"晶燦鑽石・明亮珍珠",gSw:"劍／盾",gUs:"究極之日／究極之月",gSm:"太陽／月亮",gOr:"終極紅寶石／始源藍寶石"},
+ how:{join:"；",more:" 等另{n}處",colon:"：",breed:"由{p}孵蛋",evolve:"由{p}進化（{c}）"},
+ cond:{day:"，白天",night:"，夜晚",dark:"，隊伍中有惡屬性",rain:"，下雨時",male:"，雄性",female:"，雌性",trade:"連線交換",tradeItem:"攜帶{i}連線交換",
+  holdLv:"攜帶{i}升級",knows:"學會{m}後升級",friend:"親密度高",fairy:"友好度高且學會妖精招式",remoraid:"隊伍中有鐵炮魚時升級",
+  shedinja:"，隊伍有空位且持有精靈球",stats:"，樣子依能力而定",random:"，樣子隨機決定",magnetic:"在{a}升級",beauty:"美麗度高時升級",special:"特殊條件"},
+ x:{starter:"從博士的包包裡選1隻",fossil:"在111號道路的沙漠選擇根狀化石或爪子化石，再到卡那茲市復原",
+  castform:"在氣象研究所（119號道路）獲得",beldum:"通關後在綠嶺市的一棟房子獲得",wynaut:"孵化釜炎鎮的女性給的蛋",
+  eon:"在劇情中成為夥伴（夢幻之笛）",kyogre:"在劇情中於覺醒祠堂捕捉",groudon:"在劇情中於覺醒祠堂捕捉",
+  regi:"通關後：帶著古空棘魚與吼鯨王，追蹤134號道路的點字線索",rayquaza:"Δ篇章：天空柱",deoxys:"Δ篇章：最高潮",
+  jirachi:"僅限過去的配信",event:"僅限過去的配信"},
+ req:{bell:"在海上紫堇找到掃描器並換成鈴鐺",heatran:"原始回歸事件之後",regigigas:"帶著雷吉洛克、雷吉艾斯與雷吉斯奇魯",
+  lake:"隊伍中有3隻親密度最高的寶可夢",palkia:"隊伍中有由克希、艾姆利多與亞克諾姆",giratina:"隊伍中有帝牙盧卡與帕路奇亞",
+  swords:"隊伍中有3隻努力值已滿的寶可夢",tao:"隊伍中有100級的寶可夢",kyurem:"隊伍中有萊希拉姆與捷克羅姆",beasts:"隊伍中有洛奇亞或鳳王",
+  forces:"隊伍中有飄浮泡泡",landorus:"隊伍中有龍捲雲與雷電雲",cresselia:"罕見出現的夢幻地點"},
+ when:{start:"（從一開始）",primal:"（原始回歸事件之後）",delta:"（Δ篇章）",afterdelta:"（Δ篇章之後）",event:"（僅限配信的蒂安希）"},
+ mnote:{mrstone:"把奇怪的石頭給社長看",shoal:"交出淺灘海鹽與淺灘貝殼各4個",starter:"給你的御三家",salesman:"或向賣石頭的人購買",
+  altaria:"給收藏家看七夕青鳥",zinnia:"一位訓練家的奶奶給的",steven:"再戰後由冠軍給的",mother:"媽媽給的",mauvillehills:"紫堇市大廈的男性給的",
+  cozmo:"博士給的",looker:"國際警察給的",poochyena:"在土狼犬的嘴裡",wanda:"一位居民給的",aarune:"達到白金等級後",
+  lisia:"在大師等級華麗大賽全部優勝後",berry:"樹果園",cycling:"自行車道",market:"市場",basement:"地下室",onlati:"由你的拉帝歐斯／拉帝亞斯攜帶"}},
+"zh-Hans":{ lv:"Lv.{n}", sep:"、",
+ stopT:{gym:"{p}道馆（{t}）之后",start:"从{a}到{b}",post:"通关后与Δ（德尔塔）篇章",special:"配信"},
+ tips:{4:"这枚徽章附带的护目镜能让你穿越111号道路的沙漠。",5:"从这里开始可以冲浪，所以冲浪地点从这一站开始计算。",
+  6:"使用厉害钓竿的钓鱼从这里开始计算。",7:"大约在这时可以潜水与在天空飞翔。",
+  9:"包含Δ篇章，以及需要全国图鉴的图鉴导航限定宝可梦。",10:"仅限过去的配信。"},
+ ui:{title:"终极红宝石／始源蓝宝石 图鉴追踪",sub:"按剧情顺序、高效完成《宝可梦 终极红宝石／始源蓝宝石》丰缘图鉴的清单，并包含所有可捕捉的传说宝可梦与全部46颗超级石。",
+  kDex:"丰缘图鉴",kLeg:"传说宝可梦",kMeg:"超级石",tabDex:"图鉴路线",tabLeg:"传说宝可梦",tabMeg:"超级石",
+  search:"搜索宝可梦或地点…",searchA:"搜索",verA:"游戏版本",verBoth:"两个版本",verR:"终极红宝石",verS:"始源蓝宝石",hide:"隐藏已完成",lang:"语言",theme:"切换主题",
+  intro:"从起点出发，依次挑战8座道馆，直到通关后与Δ篇章。每只宝可梦都列在你第一次能到达它出现地点的那一站；冲浪、钓鱼与碎岩的地点从能使用时开始计算。点一下就能勾选。<b>进化</b>会显示之后的进化与方法。",
+  shiny:"<b>圆形护符：</b>完成丰缘图鉴后，到{lilycove}的汽车旅馆找游戏总监。<b>闪耀护符：</b>需要完成全国图鉴，这需要从其他游戏交换与传送。",
+  viewBy:"查看",viewRoute:"路线顺序",viewNum:"图鉴编号",viewZone:"地点",colDex:"No.",colMon:"宝可梦",colHow:"获得方式",colEvo:"进化",stopN:"第{n}站",
+  tagR:"仅限终极红宝石",tagS:"仅限始源蓝宝石",tradeR:"从终极红宝石交换",tradeS:"从始源蓝宝石交换",dexA:"丰缘图鉴",
+  locLeft:" · 剩{n}",locDone:" · ✓ 完成",legStory:"丰缘图鉴中的传说宝可梦",legPost:"通关后与梦幻地点",
+  legH:"传说宝可梦",legP:"这两款游戏是系列中可捕捉传说宝可梦最多的作品。丰缘的传说宝可梦会和图鉴一起勾选。其余大多在通关后出现在飞翔天空才能到达的梦幻地点，而且每一只都需要队伍中有特别的条件。",
+  legBadgeT:"传说宝可梦 {n} / {t}",legWon:"★ 所有传说宝可梦都已捕捉！",
+  megH:"超级石",megP:"每颗超级石都只能获得一次。很多会在地上发光，并且要在原始回归事件或Δ篇章之后才会出现。",
+  megBadgeT:"超级石 {n} / {t}",megWon:"★ 所有超级石都已获得！",
+  footer:"出现地点、野生宝可梦、进化、传说宝可梦与超级石资料参考自 {serebii}。图鉴顺序与各语言名称来自 {pokeapi}。粉丝制作的非官方工具，与任天堂、Game Freak 及 The Pokémon Company 无关。",
+  save:"存档代码",codeT:"复制到你的笔记 App",copy:"复制",load:"载入",loadPh:"粘贴存档代码（PORAS1-…）",loadA:"存档代码",restore:"还原",
+  copyAll:"复制所有游戏",copyAllT:"一次复制你在这里追踪的所有游戏的存档代码",
+  tCopied:"已复制代码，请粘贴到笔记中。",tSel:"已选中，请按 ⌘C / Ctrl+C 复制。",tRest:"已还原：图鉴 {d}、传说 {l}、超级石 {m}",
+  tBad:"代码似乎不正确，请确认已完整复制。",tCopiedAll:"已复制 {n} 款游戏的存档代码，请粘贴到笔记中。",tRestAll:"已还原 {n} 款游戏。",
+  brand:"宝可梦图鉴追踪",gameA:"游戏",gZa:"传说 Z-A",gSv:"朱・紫",gLa:"传说 阿尔宙斯",gBd:"晶灿钻石・明亮珍珠",gSw:"剑／盾",gUs:"究极之日／究极之月",gSm:"太阳／月亮",gOr:"终极红宝石／始源蓝宝石"},
+ how:{join:"；",more:" 等另{n}处",colon:"：",breed:"由{p}孵蛋",evolve:"由{p}进化（{c}）"},
+ cond:{day:"，白天",night:"，夜晚",dark:"，队伍中有恶属性",rain:"，下雨时",male:"，雄性",female:"，雌性",trade:"连接交换",tradeItem:"携带{i}连接交换",
+  holdLv:"携带{i}升级",knows:"学会{m}后升级",friend:"亲密度高",fairy:"友好度高且学会妖精招式",remoraid:"队伍中有铁炮鱼时升级",
+  shedinja:"，队伍有空位且持有精灵球",stats:"，样子取决于能力",random:"，样子随机决定",magnetic:"在{a}升级",beauty:"美丽度高时升级",special:"特殊条件"},
+ x:{starter:"从博士的包里选1只",fossil:"在111号道路的沙漠选择根状化石或爪子化石，再到卡那兹市复原",
+  castform:"在气象研究所（119号道路）获得",beldum:"通关后在绿岭市的一栋房子获得",wynaut:"孵化釜炎镇的女性给的蛋",
+  eon:"在剧情中成为伙伴（梦幻之笛）",kyogre:"在剧情中于觉醒祠堂捕捉",groudon:"在剧情中于觉醒祠堂捕捉",
+  regi:"通关后：带着古空棘鱼与吼鲸王，追踪134号道路的点字线索",rayquaza:"Δ篇章：天空柱",deoxys:"Δ篇章：最高潮",
+  jirachi:"仅限过去的配信",event:"仅限过去的配信"},
+ req:{bell:"在海上紫堇找到扫描器并换成铃铛",heatran:"原始回归事件之后",regigigas:"带着雷吉洛克、雷吉艾斯与雷吉斯奇鲁",
+  lake:"队伍中有3只亲密度最高的宝可梦",palkia:"队伍中有由克希、艾姆利多与亚克诺姆",giratina:"队伍中有帝牙卢卡与帕路奇亚",
+  swords:"队伍中有3只努力值已满的宝可梦",tao:"队伍中有100级的宝可梦",kyurem:"队伍中有莱希拉姆与捷克罗姆",beasts:"队伍中有洛奇亚或凤王",
+  forces:"队伍中有飘浮泡泡",landorus:"队伍中有龙卷云与雷电云",cresselia:"罕见出现的梦幻地点"},
+ when:{start:"（从一开始）",primal:"（原始回归事件之后）",delta:"（Δ篇章）",afterdelta:"（Δ篇章之后）",event:"（仅限配信的蒂安希）"},
+ mnote:{mrstone:"把奇怪的石头给社长看",shoal:"交出浅滩海盐与浅滩贝壳各4个",starter:"给你的御三家",salesman:"或向卖石头的人购买",
+  altaria:"给收藏家看七夕青鸟",zinnia:"一位训练家的奶奶给的",steven:"再战后由冠军给的",mother:"妈妈给的",mauvillehills:"紫堇市大厦的男性给的",
+  cozmo:"博士给的",looker:"国际警察给的",poochyena:"在土狼犬的嘴里",wanda:"一位居民给的",aarune:"达到白金等级后",
+  lisia:"在大师等级华丽大赛全部优胜后",berry:"树果园",cycling:"自行车道",market:"市场",basement:"地下室",onlati:"由你的拉帝欧斯／拉帝亚斯携带"}}
+};
+
+/* ---------- data helpers ---------- */
+const ORDER = D.entries.slice().sort((a,b)=>a.dex-b.dex); // save-code bit order: Alola Pokédex number (never reorder)
+const IDX = new Map(ORDER.map((e,i)=>[e.id,i]));
+const LEGS = D.legs, MEGAS = D.megas;                    // bit order: L01–L23, then M01–M46
+const BYN = {}; D.entries.forEach(e=>BYN[e.n]=e);
+const HLEG = [383,382,381,380,377,378,379,384,386].map(n=>BYN[n]); // legendaries in the Hoenn Pokédex: checked off with the Pokédex
+const state = {dex:new Set(), leg:new Set(), meg:new Set(), ver:0};
+const $ = s=>document.querySelector(s);
+const offVer = e=>!!(state.ver && e.ex && ((e.ex==="R"&&state.ver===2)||(e.ex==="S"&&state.ver===1)));
+
+/* ---------- i18n ---------- */
+let LANG = "en";
+const T = ()=>I18N[LANG];
+const EN = I18N.en;
+function fill(str,p){ return String(str).replace(/\{([a-z0-9]+)\}/gi,(all,k)=>p && k in p ? p[k] : all); }
+function t(key,p){ const v=(T().ui||{})[key]; return fill(v!=null ? v : EN.ui[key], p); }
+const nm = n=>N.NAMES[LANG][n] || N.NAMES.en[n];
+const item = id=>N.ITEMS[LANG][id] || N.ITEMS.en[id];
+const move = id=>N.MOVES[LANG][id] || N.MOVES.en[id];
+const lv = n=>fill(T().lv||EN.lv,{n});
+const H = k=>{ const v=(T().how||{})[k]; return v!=null ? v : EN.how[k]; };
+const C = k=>{ const v=(T().cond||{})[k]; return v!=null ? v : EN.cond[k]; };
+const sep = ()=>T().sep||EN.sep;
+const typeName = ty=>N.TYPES[LANG][ty] || ty;
+const area = a=>{ const d=D.areas[a]||{}; return d[LANG]||d.en||a; }; // Serebii area slug -> PokeAPI name in every language
+
+const ITEM = {duskstone:"dusk-stone",firestone:"fire-stone",icestone:"ice-stone",leafstone:"leaf-stone",moonstone:"moon-stone",shinystone:"shiny-stone",
+  sunstone:"sun-stone",thunderstone:"thunder-stone",waterstone:"water-stone",upgrade:"upgrade",dubiousdisc:"dubious-disc",electirizer:"electirizer",
+  magmarizer:"magmarizer",protector:"protector",reapercloth:"reaper-cloth",metalcoat:"metal-coat","king'srock":"kings-rock",dragonscale:"dragon-scale",
+  prismscale:"prism-scale",deepseatooth:"deep-sea-tooth",deepseascale:"deep-sea-scale",sachet:"sachet",whippeddream:"whipped-dream"};
+function cond(m){
+  let r;
+  if(!m) return C("special");
+  if((r=m.match(/^l(\d+)$/))) return lv(r[1]);
+  if((r=m.match(/^l(day|night)(\d+)$/))) return lv(r[2])+C(r[1]);
+  if((r=m.match(/^l(\d+)(night|day|dark|rain|dusk)$/))) return lv(r[1])+C(r[2]);
+  if((r=m.match(/^levelf(\d+)$/))) return lv(r[1])+C("female");
+  if((r=m.match(/^levelm(\d+)$/))) return lv(r[1])+C("male");
+  if(m==="trade") return C("trade");
+  if(m==="trade588"||m==="trade616") return fill(C("tradeFor"),{p:nm(m==="trade588"?616:588)});
+  if((r=m.match(/^trade(.+)$/)) && ITEM[r[1]]) return fill(C("tradeItem"),{i:item(ITEM[r[1]])});
+  if(ITEM[m]) return item(ITEM[m]);
+  if(m==="maledawnstone") return item("dawn-stone")+" ♂";
+  if(m==="femaledawnstone") return item("dawn-stone")+" ♀";
+  if(m==="leveldayovalstone") return fill(C("holdLv"),{i:item("oval-stone")})+C("day");
+  if(m==="levelnightrazorclaw") return fill(C("holdLv"),{i:item("razor-claw")})+C("night");
+  if(m==="levelnightrazorfang") return fill(C("holdLv"),{i:item("razor-fang")})+C("night");
+  if((r=m.match(/^level(ancientpower|doublehit|mimic|rollout|stomp|taunt)$/))) return fill(C("knows"),{m:move(r[1])});
+  if(m==="happiness") return C("friend");
+  if(m==="happinessday") return C("friend")+C("day");
+  if(m==="happinessnight") return C("friend")+C("night");
+  if(m==="fairyfriend") return C("fairy");
+  if(m==="levelremoraid223") return C("remoraid");
+  if(m==="levelpokeball20") return lv(20)+C("shedinja");
+  if(m==="tyrogue20aed") return lv(20)+C("stats");
+  if(m==="l303ds") return lv(30)+C("upside");
+  if(m==="levelcoronet") return fill(C("magnetic"),{a:area("newmauville")});
+  if((r=m.match(/^p[45]level(\d+)$/))) return lv(r[1])+C("random");
+  if(m==="levelbeauty"||m==="levelpokeblock") return C("beauty");
+  return C("special");
+}
+function list(a,full){ const max=full?99:3, s=a.slice(0,max).map(area).join(sep()); return a.length>max ? s+fill(H("more"),{n:a.length-max}) : s; }
+function tokText(k,full){
+  const a=k.slice(1);
+  switch(k[0]){
+    case "area": return list(a[0],full);
+    case "breed": return fill(H("breed"),{p:nm(a[0])});
+    case "evo": return fill(H("evolve"),{p:nm(a[0]),c:cond(a[1])});
+    case "x": { const v=(T().x||{})[a[0]]; return v!=null ? v : EN.x[a[0]]; }
+  }
+  return "";
+}
+const howText = e=>e.tok.map(k=>tokText(k,$("#dview").value==="zone")).join(H("join"));
+const evoText = e=>e.evo.map(stage=>stage.map(([n,m])=>nm(n)+" ("+cond(m)+")").join(" / ")).join("  →  ");
+function stopTitle(i){
+  const d=EN.stopDefs[i], X=T().stopT||EN.stopT;
+  return d[0]==="gym" ? fill(X.gym,{p:area(d[1]),t:typeName(d[2])}) : fill(X[d[0]],{a:area("littleroottown"),b:area("rustborocity")});
+}
+const stopTip = i=>{ const s=(T().tips||{})[i]; return s!=null ? s : (EN.tips[i]||""); };
+const visStops = ()=>D.stops.map((_,i)=>i).filter(i=>D.entries.some(e=>e.stop===i)); // skip stops with no new Pokémon
+function tagHTML(e){
+  if(!e.ex) return "";
+  return verTag(e.ex,offVer(e));
+}
+
+/* ---------- encode / decode ---------- */
+const NB = Math.ceil(ORDER.length/8), LB = Math.ceil(LEGS.length/8), MB = Math.ceil(MEGAS.length/8);
+const LEN = 1+NB+LB+MB;
+function encode(){
+  const b=new Uint8Array(LEN); b[0]=state.ver;
+  state.dex.forEach(id=>{ const i=IDX.get(id); b[1+(i>>3)]|=1<<(i&7); });
+  LEGS.forEach((l,i)=>{ if(state.leg.has(l.id)) b[1+NB+(i>>3)]|=1<<(i&7); });
+  MEGAS.forEach((m,i)=>{ if(state.meg.has(m.id)) b[1+NB+LB+(i>>3)]|=1<<(i&7); });
+  let bin=""; b.forEach(x=>bin+=String.fromCharCode(x));
+  return "PORAS1-"+btoa(bin).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
+}
+function decode(str){
+  str=(str||"").trim().replace(/^#/,"");
+  if(!str.startsWith("PORAS1-")) throw new Error("bad prefix");
+  let s=str.slice(7).replace(/-/g,"+").replace(/_/g,"/"); while(s.length%4) s+="=";
+  const bin=atob(s); if(bin.length!==LEN) throw new Error("bad length");
+  const bit=(o,i)=>bin.charCodeAt(o+(i>>3))&(1<<(i&7));
+  return {ver:Math.min(2,bin.charCodeAt(0)), dex:new Set(ORDER.filter((e,i)=>bit(1,i)).map(e=>e.id)),
+    leg:new Set(LEGS.filter((l,i)=>bit(1+NB,i)).map(l=>l.id)), meg:new Set(MEGAS.filter((m,i)=>bit(1+NB+LB,i)).map(m=>m.id))};
+}
+
+/* ---------- render ---------- */
+function esc(s){ return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+const evoHTML = s=>s ? esc(s).replace(/\(([^)]*)\)/g,'<span style="color:var(--muted)">($1)</span>').split("  →  ").join('<span class="arr">→</span>') : "";
+const headHTML = ()=>`<div class="head"><span></span><span>${esc(t("colDex"))}</span><span>${esc(t("colMon"))}</span><span>${esc(t("colHow"))}</span><span>${esc(t("colEvo"))}</span></div>`;
+function rowHTML(e,withStop){
+  const name=nm(e.n), how=howText(e), title=stopTitle(e.stop);
+  const q=norm([N.NAMES.en[e.n],name,how,title].join(" "));
+  return `<div class="row" data-id="${e.id}" data-q="${esc(q)}">
+    <span class="cbw"><input type="checkbox" class="cb" data-dex="${e.id}" aria-label="${esc(name)}"></span>
+    <span class="dex">#${e.id}</span>
+    <span class="main"><span class="nm">${esc(name)}${tagHTML(e)}</span>
+    <span class="how">${esc(how)}${withStop?`<span class="tag T" title="${esc(title)}">${esc(t("stopN",{n:visStops().indexOf(e.stop)+1}))}</span>`:""}</span>
+    <span class="evo">${evoHTML(evoText(e))}</span></span>
+  </div>`;
+}
+function card(key,num,title,tip,rows,open){
+  return `<details class="stop" data-k="${key}" ${open?"open":""}>
+    <summary><span class="num">${num}</span><h2>${esc(title)}</h2><span class="count"></span><span class="chev">›</span></summary>
+    ${tip?`<p class="tip">${esc(tip)}</p>`:""}
+    <div class="rows">${headHTML()}${rows}</div></details>`;
+}
+function renderStops(){
+  const view=$("#dview").value;
+  const open=new Set([...document.querySelectorAll("#stops .stop[open]")].map(d=>d.dataset.k));
+  const first=!document.querySelector("#stops .stop") || $("#stops").dataset.view!==view;
+  let html="";
+  if(view==="num"){
+    html=card("dA",1,t("dexA"),"",ORDER.map(e=>rowHTML(e,true)).join(""),first||open.has("dA"));
+  } else if(view==="zone"){
+    const groups={}; D.entries.forEach(e=>e.g.forEach(g=>(groups[g]=groups[g]||[]).push(e)));
+    Object.keys(groups).sort((a,b)=>area(a).localeCompare(area(b),LANG,{numeric:true})).forEach((g,i)=>{
+      html+=card("a:"+g,i+1,area(g),"",groups[g].slice().sort((a,b)=>a.dex-b.dex).map(e=>rowHTML(e,true)).join(""),first?i===0:open.has("a:"+g));
+    });
+  } else {
+    visStops().forEach((s,k)=>{
+      html+=card("s"+s,k+1,stopTitle(s),stopTip(s),D.entries.filter(e=>e.stop===s).map(e=>rowHTML(e,false)).join(""),first?k===0:open.has("s"+s));
+    });
+  }
+  $("#stops").innerHTML=html; $("#stops").dataset.view=view;
+}
+function verTag(ex,off){ return ex ? (off ? `<span class="tag T">${esc(t(ex==="R"?"tradeR":"tradeS"))}</span>` : `<span class="tag ${ex}">${esc(t(ex==="R"?"tagR":"tagS"))}</span>`) : ""; }
+function legCard(attr,id,n,ex,where,req){
+  return `<label class="mcard" data-m="${id}" data-q="${esc(norm([N.NAMES.en[n],nm(n),where,req].join(" ")))}">
+    <input type="checkbox" class="cb" data-${attr}="${id}"><span><span class="t">${esc(nm(n))}</span>${verTag(ex,offVer({ex}))}
+    <div class="s">${esc(where)}${req?" · "+esc(req):""}</div></span></label>`;
+}
+function renderLegs(){ // story legendaries share their check-off with the Pokédex; the rest have their own
+  const R=k=>{ const v=(T().req||{})[k]; return v!=null ? v : EN.req[k]; };
+  let html=`<div class="loc-h">${esc(t("legStory"))}<span class="loc-left"></span></div>`;
+  HLEG.forEach(e=>{ html+=legCard("dex",e.id,e.n,e.ex,howText(e).split(H("join"))[0],""); });
+  html+=`<div class="loc-h">${esc(t("legPost"))}<span class="loc-left"></span></div>`;
+  LEGS.forEach(l=>{ html+=legCard("leg",l.id,l.n,l.ex,area(l.area),R(l.req)); });
+  $("#legGrid").innerHTML=html;
+}
+function renderMegas(){
+  const W=k=>{ const v=(T().when||{})[k]; return v!=null ? v : EN.when[k]; }, NO=k=>{ const v=(T().mnote||{})[k]; return v!=null ? v : EN.mnote[k]; };
+  $("#megGrid").innerHTML=MEGAS.map(m=>{
+    const how=m.how.map(h=>[h.v?t(h.v==="R"?"verR":"verS")+":":"", h.area==="onlati"?NO("onlati"):h.area?area(h.area):"", h.note?NO(h.note):"", W(h.when)].filter(Boolean).join(" ")).join(" / ");
+    return `<label class="mcard" data-m="${m.id}" data-q="${esc(norm([N.ITEMS.en[m.item],item(m.item),N.NAMES.en[m.n],nm(m.n),how].join(" ")))}">
+      <input type="checkbox" class="cb" data-meg="${m.id}"><span><span class="t">${esc(item(m.item))}</span>
+      <div class="s">${esc(nm(m.n))} · ${esc(how)}</div></span></label>`; }).join("");
+}
+const renderAll = ()=>{ renderStops(); renderLegs(); renderMegas(); sync(); };
+
+/* ---------- sync UI with state ---------- */
+function stat(id,got,tot){ $("#s"+id).innerHTML=`${got} <small>/ ${tot}</small>`; $("#b"+id).style.width=(tot?got/tot*100:0)+"%"; }
+function sync(){
+  document.querySelectorAll("[data-dex]").forEach(cb=>{ const on=state.dex.has(cb.dataset.dex); cb.checked=on; const r=cb.closest(".row"); if(r) r.classList.toggle("caught",on); else cb.closest(".mcard").classList.toggle("done",on); });
+  ["leg","meg"].forEach(k=>document.querySelectorAll(`[data-${k}]`).forEach(cb=>{ const on=state[k].has(cb.dataset[k]); cb.checked=on; cb.closest(".mcard").classList.toggle("done",on); }));
+  document.querySelectorAll(".row").forEach(r=>r.classList.toggle("offver",offVer(ORDER[IDX.get(r.dataset.id)])));
+  document.querySelectorAll(".stop[data-k]").forEach(d=>{
+    const ids=[...new Set([...d.querySelectorAll(".row")].map(r=>r.dataset.id))], got=ids.filter(id=>state.dex.has(id)).length;
+    d.querySelector(".count").textContent=`${got} / ${ids.length}`; d.classList.toggle("done",got===ids.length);
+  });
+  document.querySelectorAll(".loc-h").forEach(h=>{
+    let el=h.nextElementSibling, left=0;
+    while(el&&el.matches(".mcard")){ if(!el.querySelector(".cb").checked) left++; el=el.nextElementSibling; }
+    h.querySelector(".loc-left").textContent = left ? t("locLeft",{n:left}) : t("locDone");
+  });
+  const lg=HLEG.filter(e=>state.dex.has(e.id)).length+state.leg.size, lt=HLEG.length+LEGS.length;
+  stat("Dex",state.dex.size,ORDER.length); stat("Leg",lg,lt); stat("Meg",state.meg.size,MEGAS.length);
+  [["legBadge",lg,lt,"legBadgeT","legWon"],["megBadge",state.meg.size,MEGAS.length,"megBadgeT","megWon"]].forEach(([id,g,tot,k,w])=>{
+    const b=$("#"+id); b.classList.toggle("won",g===tot); b.textContent = g===tot ? t(w) : t(k,{n:g,t:tot}); });
+  $("#ver").value=String(state.ver);
+  applyFilter();
+  const code=encode(); $("#code").textContent=code;
+  try{ history.replaceState(null,"","#"+code); }catch(e){}
+  try{ localStorage.setItem("poras-code",code); }catch(e){}
+}
+function applyFilter(){
+  const q=norm($("#q").value.trim()), hide=$("#hide").checked;
+  document.querySelectorAll(".row").forEach(r=>{ r.hidden=(q&&!r.dataset.q.includes(q))||(hide&&state.dex.has(r.dataset.id)); });
+  document.querySelectorAll("#stops .stop").forEach(d=>{ const any=[...d.querySelectorAll(".row")].some(r=>!r.hidden); d.hidden=!any; if(q&&any) d.open=true; });
+  document.querySelectorAll(".mcard").forEach(c=>{ c.hidden=(q&&!c.dataset.q.includes(q))||(hide&&c.querySelector(".cb").checked); });
+  document.querySelectorAll(".loc-h").forEach(h=>{
+    let el=h.nextElementSibling, any=false;
+    while(el&&!el.matches(".loc-h")){ if(el.matches(".mcard")&&!el.hidden) any=true; el=el.nextElementSibling; }
+    h.hidden=!any;
+  });
+}
+
+/* ---------- events ---------- */
+document.addEventListener("click",e=>{
+  const row=e.target.closest(".row");
+  if(row && !e.target.matches(".cb")){ const id=row.dataset.id; state.dex.has(id)?state.dex.delete(id):state.dex.add(id); sync(); }
+});
+document.addEventListener("change",e=>{
+  const x=e.target, k=["dex","leg","meg"].find(k=>x.dataset[k]);
+  if(k){ x.checked?state[k].add(x.dataset[k]):state[k].delete(x.dataset[k]); sync(); }
+});
+document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll(".tabs button").forEach(x=>x.setAttribute("aria-selected",x===b));
+  ["dex","leg","meg"].forEach(k=>$("#tab-"+k).hidden=b.dataset.tab!==k);
+  try{localStorage.setItem("poras-tab",b.dataset.tab)}catch(e){}
+});
+$("#q").oninput=applyFilter; $("#hide").onchange=applyFilter;
+$("#ver").onchange=e=>{ state.ver=+e.target.value; renderStops(); renderLegs(); sync(); };
+$("#dview").onchange=()=>{ renderStops(); sync(); };
+$("#copy").onclick=async()=>{
+  const code=encode();
+  try{ await navigator.clipboard.writeText(code); toast(t("tCopied")); }
+  catch(e){ const r=document.createRange(); r.selectNodeContents($("#code")); const s=getSelection(); s.removeAllRanges(); s.addRange(r); toast(t("tSel")); }
+};
+$("#loadBtn").onclick=()=>{ $("#loadRow").classList.toggle("show"); $("#loadIn").focus(); };
+$("#loadGo").onclick=()=>{
+  try{ const d=decode($("#loadIn").value); Object.assign(state,d); renderAll(); $("#loadIn").value=""; $("#loadRow").classList.remove("show"); toast(t("tRest",{d:d.dex.size,l:d.leg.size,m:d.meg.size})); }
+  catch(e){ toast(t("tBad")); }
+};
+$("#loadIn").onkeydown=e=>{ if(e.key==="Enter") $("#loadGo").click(); };
+$("#theme").onclick=()=>{
+  const cur=document.documentElement.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");
+  const nxt=cur==="dark"?"light":"dark"; document.documentElement.dataset.theme=nxt;
+  try{localStorage.setItem("dex-theme",nxt)}catch(e){}
+};
+let tt; function toast(m){ const x=$("#toast"); x.textContent=m; x.classList.add("show"); clearTimeout(tt); tt=setTimeout(()=>x.classList.remove("show"),2200); }
+const norm = s=>String(s).toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g,"").replace(/[ぁ-ゖ]/g,c=>String.fromCharCode(c.charCodeAt(0)+0x60));
+
+/* static text: English comes from the HTML itself, saved on first run */
+const LINKS={}, I18N_ATTR={i18n:"textContent","i18n-html":"innerHTML","i18n-ph":"placeholder","i18n-aria":"aria-label","i18n-title":"title"};
+function applyLang(){
+  document.documentElement.lang=LANG; LINKS.lilycove=area("lilycovecity");
+  Object.entries(I18N_ATTR).forEach(([a,prop])=>document.querySelectorAll(`[data-${a}]`).forEach(el=>{
+    const k=el.getAttribute("data-"+a), attr=prop!=="textContent"&&prop!=="innerHTML";
+    if(!(k in EN.ui)) EN.ui[k]=attr?el.getAttribute(prop):el[prop];
+    const v=LANG==="en"?EN.ui[k]:t(k,LINKS);
+    if(attr) el.setAttribute(prop,v); else el[prop]=v;
+  }));
+  document.title=t("title"); $("#lang").value=LANG;
+}
+/* game picker in the top bar (games listed newest release first) */
+const gamesel=document.getElementById("gamesel"), gameCur=gamesel.value;
+gamesel.onchange=e=>{ if(e.target.value) location.href=e.target.value; };
+addEventListener("pageshow",()=>gamesel.value=gameCur);
+$("#lang").innerHTML=LANGS.map(([k,n])=>`<option value="${k}">${n}</option>`).join("");
+$("#lang").onchange=e=>{ LANG=e.target.value; try{localStorage.setItem("dex-lang",LANG)}catch(err){} applyLang(); renderAll(); };
+
+/* every game: copy all save codes at once; Load also accepts several codes and restores each game */
+const PAGE_PREFIX="PORAS1-", ALL_KEYS=[["PLZA1-","plza-code"],["PSV1-","psv-code"],["PLA1-","pla-code"],["PBDSP1-","pbdsp-code"],["PSWSH1-","pswsh-code"],["LGPE1-","lgpe-code"],["PUSUM1-","pusum-code"],["PSM1-","psm-code"],["PORAS1-","poras-code"]];
+// each game's code has a fixed length, so codes are found even when pasted without separators
+const CODE_RE=/(LGPE1-[A-Za-z0-9_-]{55}|PLZA1-[A-Za-z0-9_-]{79}|PSV1-[A-Za-z0-9_-]{118}|PLA1-[A-Za-z0-9_-]{67}|PBDSP1-[A-Za-z0-9_-]{83}|PSWSH1-[A-Za-z0-9_-]{130}|PUSUM1-[A-Za-z0-9_-]{87}|PSM1-[A-Za-z0-9_-]{70}|PORAS1-[A-Za-z0-9_-]{50})/g;
+function allCodes(){ return ALL_KEYS.map(([,k])=>{ try{ return localStorage.getItem(k)||""; }catch(e){ return ""; } }).filter(Boolean); }
+function storeAll(text){ let n=0; (String(text).match(CODE_RE)||[]).forEach(c=>{ const m=ALL_KEYS.find(([p])=>c.startsWith(p)); if(m){ try{ localStorage.setItem(m[1],c); n++; }catch(e){} } }); return n; }
+$("#copyAll").onclick=async()=>{
+  const codes=allCodes();
+  try{ await navigator.clipboard.writeText(codes.join("\n")); toast(t("tCopiedAll",{n:codes.length})); }
+  catch(e){ $("#loadRow").classList.add("show"); $("#loadIn").value=codes.join(" "); $("#loadIn").select(); toast(t("tSel")); }
+};
+const loadOne=$("#loadGo").onclick;
+$("#loadGo").onclick=()=>{
+  const raw=$("#loadIn").value, codes=raw.match(CODE_RE)||[];
+  if(codes.length>1 || (codes.length===1 && !codes[0].startsWith(PAGE_PREFIX))){
+    const n=storeAll(raw); if(!n){ toast(t("tBad")); return; }
+    try{ sessionStorage.setItem("dex-toast",t("tRestAll",{n})); }catch(e){}
+    const mine=codes.find(c=>c.startsWith(PAGE_PREFIX)); location.hash=mine?mine:""; location.reload(); return;
+  }
+  loadOne();
+};
+try{ const m=sessionStorage.getItem("dex-toast"); if(m){ sessionStorage.removeItem("dex-toast"); setTimeout(()=>toast(m),300); } }catch(e){}
+
+/* ---------- boot ---------- */
+(function(){
+  try{ const th=localStorage.getItem("dex-theme")||localStorage.getItem("lgpe-theme"); if(th) document.documentElement.dataset.theme=th; }catch(e){}
+  let src=location.hash.slice(1);
+  if(!src){ try{ src=localStorage.getItem("poras-code")||""; }catch(e){} }
+  if(src){ try{ Object.assign(state,decode(src)); }catch(e){} }
+  ["serebii","pokeapi"].forEach((k,i)=>LINKS[k]=document.querySelectorAll("footer.src a")[i].outerHTML);
+  try{ const lg=localStorage.getItem("dex-lang")||localStorage.getItem("lgpe-lang"); if(I18N[lg]) LANG=lg; }catch(e){}
+  applyLang(); renderAll();
+  try{ const tb=localStorage.getItem("poras-tab"); if(tb&&tb!=="dex") document.querySelector(`[data-tab="${tb}"]`).click(); }catch(e){}
+})();
+
+</script>
+</body>
+</html>
