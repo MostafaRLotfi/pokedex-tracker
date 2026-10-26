@@ -1,0 +1,98 @@
+/pokearth/alola/aetherhouse.shtml|Aether House
+/pokearth/alola/aetherparadise.shtml|Aether Paradise
+/pokearth/alola/akalaoutskirts.shtml|Akala Outskirts
+/pokearth/alola/altarofthemoone.shtml|Altar of the Moone
+/pokearth/alola/altarofthesunne.shtml|Altar of the Sunne
+/pokearth/alola/ancientponipath.shtml|Ancient Poni Path
+/pokearth/alola/battletree.shtml|Battle Tree
+/pokearth/alola/berryfields.shtml|Berry Fields
+/pokearth/alola/bigwavebeach.shtml|Big Wave Beach
+/pokearth/alola/blushmountain.shtml|Blush Mountain
+/pokearth/alola/brooklethill.shtml|Brooklet Hill
+/pokearth/alola/diglett'stunnel.shtml|Diglett's Tunnel
+/pokearth/alola/dividingpeaktunnel.shtml|Dividing Peak Tunnel
+/pokearth/alola/exeggutorisland.shtml|Exeggutor Island
+/pokearth/alola/hainadesert.shtml|Haina Desert
+/pokearth/alola/hanobeach.shtml|Hano Beach
+/pokearth/alola/hanograndresort.shtml|Hano Grand Resort
+/pokearth/alola/hau'olicemetery.shtml|Hau'oli Cemetery
+/pokearth/alola/hau'olicity.shtml|Hau'oli City
+/pokearth/alola/heaheabeach.shtml|Heahea Beach
+/pokearth/alola/heaheacity.shtml|Heahea City
+/pokearth/alola/hokulaniobservatory.shtml|Hokulani Observatory
+/pokearth/alola/ikitown.shtml|Iki Town 
+/pokearth/alola/index.shtml|Pok
+/pokearth/alola/kala'ebay.shtml|Kala'e Bay
+/pokearth/alola/konikonicity.shtml|Konikoni City
+/pokearth/alola/lakeofthemoone.shtml|Lake of the Moone
+/pokearth/alola/lakeofthesunne.shtml|Lake of the Sunne
+/pokearth/alola/lushjungle.shtml|Lush Jungle
+/pokearth/alola/mahalotrail.shtml|Mahalo Trail
+/pokearth/alola/maliecity.shtml|Malie City
+/pokearth/alola/maliegarden.shtml|Malie Garden
+/pokearth/alola/megalotower.shtml|Megalo Tower
+/pokearth/alola/melemelemeadow.shtml|Melemele Meadow
+/pokearth/alola/melemelesea.shtml|Melemele Sea
+/pokearth/alola/memorialhill.shtml|Memorial Hill
+/pokearth/alola/mounthokulani.shtml|Mount Hokulani
+/pokearth/alola/mountlanakila.shtml|Mount Lanakila
+/pokearth/alola/paniolaranch.shtml|Paniola Ranch
+/pokearth/alola/paniolatown.shtml|Paniola Town
+/pokearth/alola/pikachuvalley.shtml|Pikachu Valley
+/pokearth/alola/plainsgrotto.shtml|Plains Grotto
+/pokearth/alola/pokemonleague.shtml|Pokemon League
+/pokearth/alola/ponibreakercoast.shtml|Poni Breaker Coast
+/pokearth/alola/ponicoast.shtml|Poni Coast
+/pokearth/alola/ponigauntlet.shtml|Poni Gauntlet
+/pokearth/alola/ponigrove.shtml|Poni Grove
+/pokearth/alola/ponimeadow.shtml|Poni Meadow
+/pokearth/alola/poniplains.shtml|Poni Plains
+/pokearth/alola/poniwilds.shtml|Poni Wilds
+/pokearth/alola/potown.shtml|Po Town
+/pokearth/alola/resolutioncave.shtml|Resolution Cave
+/pokearth/alola/route1.shtml|Route 1
+/pokearth/alola/route10.shtml|Route 10
+/pokearth/alola/route11.shtml|Route 11
+/pokearth/alola/route12.shtml|Route 12
+/pokearth/alola/route13.shtml|Route 13
+/pokearth/alola/route14.shtml|Route 14
+/pokearth/alola/route15.shtml|Route 15
+/pokearth/alola/route16.shtml|Route 16
+/pokearth/alola/route17.shtml|Route 17
+/pokearth/alola/route2.shtml|Route 2
+/pokearth/alola/route3.shtml|Route 3
+/pokearth/alola/route4.shtml|Route 4
+/pokearth/alola/route5.shtml|Route 5
+/pokearth/alola/route6.shtml|Route 6
+/pokearth/alola/route7.shtml|Route 7
+/pokearth/alola/route8.shtml|Route 8
+/pokearth/alola/route9.shtml|Route 9
+/pokearth/alola/royalavenue.shtml|Royal Avenue
+/pokearth/alola/ruinsofabundance.shtml|Ruins of Abundance
+/pokearth/alola/ruinsofconflict.shtml|Ruins of Conflict
+/pokearth/alola/ruinsofhope.shtml|Ruins of Hope
+/pokearth/alola/ruinsoflife.shtml|Ruins of Life
+/pokearth/alola/sandycave.shtml|Sandy Cave
+/pokearth/alola/seafolkvillage.shtml|Seafolk Village
+/pokearth/alola/seawardcave.shtml|Seaward Cave
+/pokearth/alola/secludedshore.shtml|Secluded Shore
+/pokearth/alola/shadyhouse.shtml|Shady House
+/pokearth/alola/tapuvillage.shtml|Tapu Village
+/pokearth/alola/teamrocket'scastle.shtml|Team Rocket's Castle
+/pokearth/alola/tencarathill.shtml|Ten Carat Hill
+/pokearth/alola/thriftymegamart.shtml|Thrifty Megamart
+/pokearth/alola/ula'ulabeach.shtml|Ula'ula Beach
+/pokearth/alola/ula'ulameadow.shtml|Ula'ula Meadow
+/pokearth/alola/ultracrater.shtml|Ultra Crater
+/pokearth/alola/ultradeepsea.shtml|Ultra Deep Sea
+/pokearth/alola/ultradesert.shtml|Ultra Desert
+/pokearth/alola/ultraforest.shtml|Ultra Forest
+/pokearth/alola/ultrajungle.shtml|Ultra Jungle
+/pokearth/alola/ultramegalopolis.shtml|Ultra Megalopolis
+/pokearth/alola/ultraplant.shtml|Ultra Plant
+/pokearth/alola/ultraruin.shtml|Ultra Ruin
+/pokearth/alola/ultraspace.shtml|Ultra Space
+/pokearth/alola/ultraspacewilds.shtml|Ultra Space Wilds
+/pokearth/alola/vastponicanyon.shtml|Vast Poni Canyon
+/pokearth/alola/verdantcavern.shtml|Verdant Cavern
+/pokearth/alola/welavolcanopark.shtml|Wela Volcano Park

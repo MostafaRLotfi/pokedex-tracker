@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>X & Y Dex Tracker</title>
+<meta name="description" content="Story-ordered Kalos Pokédex checklist for Pokémon X and Y, plus a Mega Stone tracker.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+__STYLE__
+.note{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin:0 0 14px;font-size:14px;color:var(--muted)}
+.note b{color:var(--ink)}
+.tag.X{background:color-mix(in srgb,#2f6fd0 16%,transparent);color:#3d7fe0}
+.tag.Y{background:color-mix(in srgb,var(--red) 16%,transparent);color:var(--red)}
+.gm ol{margin:8px 0 0;padding-left:0;list-style:none;display:flex;flex-wrap:wrap;gap:6px 14px;color:var(--muted);font-size:14px}
+.gm ol b{color:var(--ink)}
+</style>
+</head>
+<body>
+<nav class="gamebar" aria-label="Games">
+  <div class="wrap">
+    <a class="brand" href="../" data-i18n="brand">Pokédex Tracker</a>
+    __GAMESEL__
+  </div>
+</nav>
+<header class="hero">
+  <div class="wrap">
+    <div class="ball" aria-hidden="true"></div>
+    <h1 data-i18n="title">X & Y Dex Tracker</h1>
+    <p class="sub" data-i18n="sub">An efficient, story-ordered route to fill all three parts of the Kalos Pokédex in Pokémon X and Y, plus a checklist of all 27 Mega Stones you can find in the games.</p>
+    <div class="stats">
+      <div class="stat"><div class="k" data-i18n="kDex">Kalos Pokédex</div><div class="v" id="sDex">0</div><div class="bar"><i id="bDex"></i></div></div>
+      <div class="stat"><div class="k" data-i18n="kMeg">Mega Stones</div><div class="v" id="sMeg">0</div><div class="bar"><i id="bMeg"></i></div></div>
+      <div class="stat"><div class="k" data-i18n="kStop">Route stops cleared</div><div class="v" id="sStop">0</div><div class="bar"><i id="bStop"></i></div></div>
+    </div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="wrap">
+    <div class="tabs" role="tablist">
+      <button role="tab" aria-selected="true" data-tab="dex" data-i18n="tabDex">Pokédex route</button>
+      <button role="tab" aria-selected="false" data-tab="meg" data-i18n="tabMeg">Mega Stones</button>
+    </div>
+    <input class="search" id="q" type="search" placeholder="Search Pokémon or area…" aria-label="Search" data-i18n-ph="search" data-i18n-aria="searchA">
+    <select class="ctl" id="ver" aria-label="Game version" data-i18n-aria="verA">
+      <option value="0" data-i18n="verBoth">Both versions</option>
+      <option value="1" data-i18n="verX">X</option>
+      <option value="2" data-i18n="verY">Y</option>
+    </select>
+    <label class="tog"><input type="checkbox" id="hide"> <span data-i18n="hide">Hide done</span></label>
+    <select class="ctl" id="lang" aria-label="Language" data-i18n-aria="lang"></select>
+    <button class="ctl" style="font-size:17px;line-height:1" id="theme" title="Toggle theme" aria-label="Toggle theme" data-i18n-title="theme" data-i18n-aria="theme">◐</button>
+  </div>
+</div>
+
+<main class="wrap">
+  <section id="tab-dex">
+    <p class="intro" data-i18n-html="intro">Follow the stops in order, from Vaniville Town through the eight Gyms to the post-game. Each Pokémon is listed at the first point you can reach a place where it appears; surfing, fishing and Rock Smash spots count from when you can use them. <b>Dex number</b> shows the Central, Coastal and Mountain Pokédexes separately. Tap a row to check it off. <b>Evolves into</b> shows later stages and how they evolve.</p>
+    <p class="note" data-i18n-html="shiny"><b>Oval Charm:</b> complete all three parts of the Kalos Pokédex, then visit the game director at the Hotel Richissime in Lumiose City. <b>Shiny Charm:</b> it needs the full National Pokédex, which takes trades and transfers from other games.</p>
+    <div style="display:flex;gap:10px;align-items:center;margin:0 0 12px;flex-wrap:wrap">
+      <label class="tog"><span data-i18n="viewBy">View</span>
+        <select class="ctl" id="dview"><option value="route" data-i18n="viewRoute">Route order</option><option value="num" data-i18n="viewNum">Dex number</option><option value="zone" data-i18n="viewZone">Area</option></select>
+      </label>
+    </div>
+    <div id="stops"></div>
+  </section>
+
+  <section id="tab-meg" hidden>
+    <div class="gm">
+      <h2 data-i18n="megH">Mega Stones</h2>
+      <p data-i18n-html="megP">Every Mega Stone is a one-time pickup or gift. Some are given to you during the story; the rest glitter on the ground only between 8 and 9 PM, after Professor Sycamore upgrades your Mega Ring in the post-game. A few are exclusive to X or Y. Blazikenite, Latiasite and Latiosite came only with past events and are left out.</p>
+      <div class="badge" id="megBadge">0</div>
+    </div>
+    <div class="mgrid" id="megGrid"></div>
+  </section>
+
+  <footer class="src" data-i18n-html="footer">
+    Locations, wild encounters, evolutions and Mega Stones from <a href="https://www.serebii.net/xy/">Serebii</a>. Pokédex order and localized names from <a href="https://pokeapi.co/">PokeAPI</a>. Fan-made tracker, not affiliated with Nintendo, Game Freak or The Pokémon Company.
+  </footer>
+</main>
+
+<div class="savebar">
+  <div class="wrap">
+    <span class="lbl" data-i18n="save">Save code</span>
+    <div class="code" id="code" title="Copy this into your notes app" data-i18n-title="codeT"></div>
+    <button class="btn" id="copy" data-i18n="copy">Copy</button>
+    <button class="btn ghost" id="loadBtn" data-i18n="load">Load</button>
+    <button class="btn ghost" id="copyAll" data-i18n="copyAll" title="Copy the save codes of every game you track here, to paste into your notes" data-i18n-title="copyAllT">Copy all games</button>
+    <div class="loadrow" id="loadRow">
+      <input id="loadIn" placeholder="Paste a saved code (PXY1-…)" aria-label="Saved code" data-i18n-ph="loadPh" data-i18n-aria="loadA">
+      <button class="btn" id="loadGo" data-i18n="restore">Restore</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const D = __DATA__;
+const N = __NAMES__;
+__I18N__
+__CORE__
+</script>
+</body>
+</html>

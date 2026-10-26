@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Legends: Arceus Dex Tracker</title>
+<meta name="description" content="Story-ordered Pokédex checklist for Pokémon Legends: Arceus, plus Spiritomb wisp and Unown trackers.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+__STYLE__
+.note{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin:0 0 14px;font-size:14px;color:var(--muted)}
+.note b{color:var(--ink)}
+</style>
+</head>
+<body>
+<nav class="gamebar" aria-label="Games">
+  <div class="wrap">
+    <a class="brand" href="../" data-i18n="brand">Pokédex Tracker</a>
+    __GAMESEL__
+  </div>
+</nav>
+<header class="hero">
+  <div class="wrap">
+    <div class="ball" aria-hidden="true"></div>
+    <h1 data-i18n="title">Legends: Arceus Dex Tracker</h1>
+    <p class="sub" data-i18n="sub">An efficient, story-ordered route to fill the Hisui Pokédex in Pokémon Legends: Arceus, plus checklists of all 107 Spiritomb wisps and all 28 Unown.</p>
+    <div class="stats">
+      <div class="stat"><div class="k" data-i18n="kDex">Pokédex</div><div class="v" id="sDex">0</div><div class="bar"><i id="bDex"></i></div></div>
+      <div class="stat"><div class="k" data-i18n="kWsp">Spiritomb wisps</div><div class="v" id="sWsp">0</div><div class="bar"><i id="bWsp"></i></div></div>
+      <div class="stat"><div class="k" data-i18n="kUnw">Unown</div><div class="v" id="sUnw">0</div><div class="bar"><i id="bUnw"></i></div></div>
+    </div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="wrap">
+    <div class="tabs" role="tablist">
+      <button role="tab" aria-selected="true" data-tab="dex" data-i18n="tabDex">Pokédex route</button>
+      <button role="tab" aria-selected="false" data-tab="wsp" data-i18n="tabWsp">Wisps</button>
+      <button role="tab" aria-selected="false" data-tab="unw" data-i18n="tabUnw">Unown</button>
+    </div>
+    <input class="search" id="q" type="search" placeholder="Search Pokémon or place…" aria-label="Search" data-i18n-ph="search" data-i18n-aria="searchA">
+    <label class="tog"><input type="checkbox" id="hide"> <span data-i18n="hide">Hide done</span></label>
+    <select class="ctl" id="lang" aria-label="Language" data-i18n-aria="lang"></select>
+    <button class="ctl" style="font-size:17px;line-height:1" id="theme" title="Toggle theme" aria-label="Toggle theme" data-i18n-title="theme" data-i18n-aria="theme">◐</button>
+  </div>
+</div>
+
+<main class="wrap">
+  <section id="tab-dex">
+    <p class="intro" data-i18n-html="intro">Follow the stops in order: each area opens up as the main missions progress. Each Pokémon is listed in the first area where you can find it. Tap a row to check it off. <b>Evolves into</b> shows later stages and how they evolve.</p>
+    <p class="note" data-i18n-html="shiny"><b>Shiny Charm:</b> catching isn't enough here. Every non-Mythical Pokémon in the Hisui Pokédex needs Research Level 10 (from its research tasks), then you report to Professor Laventon. Use this route to catch them all first.</p>
+    <div style="display:flex;gap:10px;align-items:center;margin:0 0 12px;flex-wrap:wrap">
+      <label class="tog"><span data-i18n="viewBy">View</span>
+        <select class="ctl" id="dview"><option value="route" data-i18n="viewRoute">Route order</option><option value="num" data-i18n="viewNum">Dex number</option><option value="zone" data-i18n="viewZone">Area</option></select>
+      </label>
+    </div>
+    <div id="stops"></div>
+  </section>
+
+  <section id="tab-wsp" hidden>
+    <div class="gm">
+      <h2 data-i18n="wspH">Spiritomb wisps</h2>
+      <p data-i18n-html="wspP">Request 22 asks you to gather 107 wisps scattered around Hisui. They glow and are easiest to see at night. Once you have them all, visit Vessa at the Shrouded Ruins in the Crimson Mirelands at night to battle and catch Spiritomb (level 60). Every wisp is a one-time pickup.</p>
+      <div class="badge" id="wspBadge">0</div>
+    </div>
+    <div class="mgrid" id="wgrid"></div>
+  </section>
+
+  <section id="tab-unw" hidden>
+    <div class="gm">
+      <h2 data-i18n="unwH">Unown</h2>
+      <p data-i18n-html="unwP">After your first trip to the Solaceon Ruins, the Unown Notes in your Pokédex start giving clues to 28 Unown forms hidden around Hisui. Catch each one where it appears; once you have all 28, more start spawning in the Solaceon Ruins.</p>
+      <div class="badge" id="unwBadge">0</div>
+    </div>
+    <div class="mgrid" id="ugrid"></div>
+  </section>
+
+  <footer class="src" data-i18n-html="footer">
+    Locations, evolutions, wisps and Unown from <a href="https://www.serebii.net/legendsarceus/">Serebii</a>. Pokédex order and localized names from <a href="https://pokeapi.co/">PokeAPI</a>. Fan-made tracker, not affiliated with Nintendo, Game Freak or The Pokémon Company.
+  </footer>
+</main>
+
+<div class="savebar">
+  <div class="wrap">
+    <span class="lbl" data-i18n="save">Save code</span>
+    <div class="code" id="code" title="Copy this into your notes app" data-i18n-title="codeT"></div>
+    <button class="btn" id="copy" data-i18n="copy">Copy</button>
+    <button class="btn ghost" id="loadBtn" data-i18n="load">Load</button>
+    <button class="btn ghost" id="copyAll" data-i18n="copyAll" title="Copy the save codes of every game you track here, to paste into your notes" data-i18n-title="copyAllT">Copy all games</button>
+    <div class="loadrow" id="loadRow">
+      <input id="loadIn" placeholder="Paste a saved code (PLA1-…)" aria-label="Saved code" data-i18n-ph="loadPh" data-i18n-aria="loadA">
+      <button class="btn" id="loadGo" data-i18n="restore">Restore</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const D = __DATA__;
+const N = __NAMES__;
+__I18N__
+__CORE__
+</script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+/pokearth/johto/azaleatown.shtml|Azalea Town
+/pokearth/johto/battlefrontier.shtml|Battle Frontier
+/pokearth/johto/battletower.shtml|Battle Tower
+/pokearth/johto/bellchimetrail.shtml|Bellchime Trail
+/pokearth/johto/belltower.shtml|Bell Tower
+/pokearth/johto/blackthorncity.shtml|Blackthorn City
+/pokearth/johto/burnedtower.shtml|Burned Tower
+/pokearth/johto/cherrygrovecity.shtml|Cherrygrove City
+/pokearth/johto/cianwoodcity.shtml|Cianwood City
+/pokearth/johto/cliffcave.shtml|Cliff Cave
+/pokearth/johto/cliffedgegate.shtml|Cliff Edge Gate
+/pokearth/johto/darkcave.shtml|Dark Cave
+/pokearth/johto/dragon'sden.shtml|Dragon's Den
+/pokearth/johto/ecruteakcity.shtml|Ecruteak City
+/pokearth/johto/embeddedtower.shtml|Embedded Tower
+/pokearth/johto/frontieraccess.shtml|Frontier Access
+/pokearth/johto/goldenrodcity.shtml|Goldenrod City
+/pokearth/johto/goldenrodunderground.shtml|Goldenrod Underground
+/pokearth/johto/icepath.shtml|Ice Path
+/pokearth/johto/ilexforest.shtml|Ilex Forest
+/pokearth/johto/index.shtml|Pok
+/pokearth/johto/lakeofrage.shtml|Lake of Rage
+/pokearth/johto/mahoganytown.shtml|Mahogany Town
+/pokearth/johto/mt.mortar.shtml|Mt. Mortar
+/pokearth/johto/mt.silver.shtml|Mt. Silver
+/pokearth/johto/nationalpark.shtml|National Park
+/pokearth/johto/newbarktown.shtml|New Bark Town
+/pokearth/johto/olivinecity.shtml|Olivine City
+/pokearth/johto/pokeathlondome.shtml|Pok
+/pokearth/johto/radiotower.shtml|Radio Tower
+/pokearth/johto/rockethideout.shtml|Rocket Hideout
+/pokearth/johto/route29.shtml|Route 29
+/pokearth/johto/route30.shtml|Route 30
+/pokearth/johto/route31.shtml|Route 31
+/pokearth/johto/route32.shtml|Route 32
+/pokearth/johto/route33.shtml|Route 33
+/pokearth/johto/route34.shtml|Route 34
+/pokearth/johto/route35.shtml|Route 35
+/pokearth/johto/route36.shtml|Route 36
+/pokearth/johto/route37.shtml|Route 37
+/pokearth/johto/route38.shtml|Route 38
+/pokearth/johto/route39.shtml|Route 39
+/pokearth/johto/route40.shtml|Route 40
+/pokearth/johto/route41.shtml|Route 41
+/pokearth/johto/route42.shtml|Route 42
+/pokearth/johto/route43.shtml|Route 43
+/pokearth/johto/route44.shtml|Route 44
+/pokearth/johto/route45.shtml|Route 45
+/pokearth/johto/route46.shtml|Route 46
+/pokearth/johto/route47.shtml|Route 47
+/pokearth/johto/route48.shtml|Route 48
+/pokearth/johto/ruinsofalph.shtml|Ruins of Alph
+/pokearth/johto/safarizone.shtml|Safari Zone
+/pokearth/johto/safarizonegate.shtml|Safari Zone Gate
+/pokearth/johto/shininglighthouse.shtml|Shining Lighthouse
+/pokearth/johto/sinjohruins.shtml|Sinjoh Ruins
+/pokearth/johto/slowpokewell.shtml|Slowpoke Well
+/pokearth/johto/sprouttower.shtml|Sprout Tower
+/pokearth/johto/ssaqua.shtml|SS Aqua
+/pokearth/johto/tintower.shtml|Tin Tower
+/pokearth/johto/unioncave.shtml|Union Cave
+/pokearth/johto/violetcity.shtml|Violet City
+/pokearth/johto/whirlislands.shtml|Whirl Islands

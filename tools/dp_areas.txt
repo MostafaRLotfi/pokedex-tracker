@@ -1,0 +1,95 @@
+/pokearth/sinnoh/acuitylakefront.shtml|Acuity Lakefront
+/pokearth/sinnoh/amitysquare.shtml|Amity Square
+/pokearth/sinnoh/battlefrontier.shtml|Battle Frontier
+/pokearth/sinnoh/battlepark.shtml|Battle Park
+/pokearth/sinnoh/canalavecity.shtml|Canalave City
+/pokearth/sinnoh/celestictown.shtml|Celestic Town
+/pokearth/sinnoh/distortionworld.shtml|Distortion World
+/pokearth/sinnoh/eternacity.shtml|Eterna City
+/pokearth/sinnoh/eternaforest.shtml|Eterna Forest
+/pokearth/sinnoh/eternagalacticbuilding.shtml|Eterna Galactic Building
+/pokearth/sinnoh/fightarea.shtml|Fight Area
+/pokearth/sinnoh/floaromameadow.shtml|Floaroma Meadow
+/pokearth/sinnoh/floaromatown.shtml|Floaroma Town
+/pokearth/sinnoh/flowerparadise.shtml|Flower Paradise
+/pokearth/sinnoh/fuegoironworks.shtml|Fuego Ironworks
+/pokearth/sinnoh/fullmoonisland.shtml|Full Moon Island
+/pokearth/sinnoh/galacticwarehouse.shtml|Galactic Warehouse
+/pokearth/sinnoh/grandunderground.shtml|Grand Underground
+/pokearth/sinnoh/greatmarsh.shtml|Great Marsh
+/pokearth/sinnoh/halloforigin.shtml|Hall of Origin
+/pokearth/sinnoh/hearthomecity.shtml|Hearthome City
+/pokearth/sinnoh/hotelgrandlake.shtml|Hotel Grand Lake 
+/pokearth/sinnoh/index.shtml|Pok
+/pokearth/sinnoh/ironisland.shtml|Iron Island
+/pokearth/sinnoh/jubilifecity.shtml|Jubilife City
+/pokearth/sinnoh/lakeacuity.shtml|Lake Acuity
+/pokearth/sinnoh/lakevalor.shtml|Lake Valor
+/pokearth/sinnoh/lakeverity.shtml|Lake Verity
+/pokearth/sinnoh/losttower.shtml|Lost Tower
+/pokearth/sinnoh/maniactunnel.shtml|Maniac Tunnel
+/pokearth/sinnoh/mt.coronet.shtml|Mt. Coronet
+/pokearth/sinnoh/newmoonisland.shtml|New Moon Island
+/pokearth/sinnoh/oldchateau.shtml|Old Chateau
+/pokearth/sinnoh/oreburghcity.shtml|Oreburgh City
+/pokearth/sinnoh/oreburghgate.shtml|Oreburgh Gate
+/pokearth/sinnoh/oreburghmine.shtml|Oreburgh Mine
+/pokearth/sinnoh/palpark.shtml|Pal Park
+/pokearth/sinnoh/pastoriacity.shtml|Pastoria City
+/pokearth/sinnoh/pokemonleague.shtml|Pok
+/pokearth/sinnoh/pokemonmansion.shtml|Pok
+/pokearth/sinnoh/ramanaspark.shtml|Ramanas Park
+/pokearth/sinnoh/ravagedpath.shtml|Ravaged Path
+/pokearth/sinnoh/resortarea.shtml|Resort Area
+/pokearth/sinnoh/route201.shtml|Route 201
+/pokearth/sinnoh/route202.shtml|Route 202
+/pokearth/sinnoh/route203.shtml|Route 203
+/pokearth/sinnoh/route204.shtml|Route 204
+/pokearth/sinnoh/route205.shtml|Route 205
+/pokearth/sinnoh/route206.shtml|Route 206
+/pokearth/sinnoh/route207.shtml|Route 207
+/pokearth/sinnoh/route208.shtml|Route 208
+/pokearth/sinnoh/route209.shtml|Route 209
+/pokearth/sinnoh/route210.shtml|Route 210
+/pokearth/sinnoh/route211.shtml|Route 211
+/pokearth/sinnoh/route212.shtml|Route 212
+/pokearth/sinnoh/route213.shtml|Route 213
+/pokearth/sinnoh/route214.shtml|Route 214
+/pokearth/sinnoh/route215.shtml|Route 215
+/pokearth/sinnoh/route216.shtml|Route 216
+/pokearth/sinnoh/route217.shtml|Route 217
+/pokearth/sinnoh/route218.shtml|Route 218
+/pokearth/sinnoh/route219.shtml|Route 219
+/pokearth/sinnoh/route220.shtml|Route 220
+/pokearth/sinnoh/route221.shtml|Route 221
+/pokearth/sinnoh/route222.shtml|Route 222
+/pokearth/sinnoh/route223.shtml|Route 223
+/pokearth/sinnoh/route224.shtml|Route 224
+/pokearth/sinnoh/route225.shtml|Route 225
+/pokearth/sinnoh/route226.shtml|Route 226
+/pokearth/sinnoh/route227.shtml|Route 227
+/pokearth/sinnoh/route228.shtml|Route 228
+/pokearth/sinnoh/route229.shtml|Route 229
+/pokearth/sinnoh/route230.shtml|Route 230
+/pokearth/sinnoh/ruinsmaniac'scave.shtml|Ruins Maniac's Cave
+/pokearth/sinnoh/sandgemtown.shtml|Sandgem Town
+/pokearth/sinnoh/seabreakpath.shtml|Seabreak Path
+/pokearth/sinnoh/sendoffspring.shtml|Sendoff Spring
+/pokearth/sinnoh/snowpointcity.shtml|Snowpoint City
+/pokearth/sinnoh/snowpointtemple.shtml|Snowpoint Temple
+/pokearth/sinnoh/solaceonruins.shtml|Solaceon Ruins
+/pokearth/sinnoh/solaceontown.shtml|Solaceon Town
+/pokearth/sinnoh/spearpillar.shtml|Spear Pillar
+/pokearth/sinnoh/starkmountain.shtml|Stark Mountain
+/pokearth/sinnoh/sunyshorecity.shtml|Sunyshore City
+/pokearth/sinnoh/survivalarea.shtml|Survival Area
+/pokearth/sinnoh/trophygarden.shtml|Trophy Garden
+/pokearth/sinnoh/turnbackcave.shtml|Turnback Cave
+/pokearth/sinnoh/twinleaftown.shtml|Twinleaf Town
+/pokearth/sinnoh/valleywindworks.shtml|Valley Windworks
+/pokearth/sinnoh/valorlakefront.shtml|Valor Lakefront
+/pokearth/sinnoh/veilstonecity.shtml|Veilstone City
+/pokearth/sinnoh/veilstonegalacticbuilding.shtml|Veilstone Galactic Building
+/pokearth/sinnoh/veritylakefront.shtml|Verity Lakefront
+/pokearth/sinnoh/victoryroad.shtml|Victory Road
+/pokearth/sinnoh/waywardcave.shtml|Wayward Cave

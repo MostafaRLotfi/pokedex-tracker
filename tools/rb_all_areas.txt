@@ -1,0 +1,48 @@
+/x/celadon-city.shtml|Celadon City
+/x/cerulean-cave.shtml|Cerulean Cave
+/x/cerulean-city.shtml|Cerulean City
+/x/cinnabar-island.shtml|Cinnabar Island
+/x/digletts-cave.shtml|Diglett's Cave
+/x/fuchsia-city.shtml|Fuchsia City
+/x/indigo-plateau.shtml|Indigo Plateau
+/x/kanto-power-plant.shtml|Kanto Power Plant
+/x/kanto-route-1.shtml|Route 1
+/x/kanto-route-10.shtml|Route 10
+/x/kanto-route-11.shtml|Route 11
+/x/kanto-route-12.shtml|Route 12
+/x/kanto-route-13.shtml|Route 13
+/x/kanto-route-14.shtml|Route 14
+/x/kanto-route-15.shtml|Route 15
+/x/kanto-route-16.shtml|Route 16
+/x/kanto-route-17.shtml|Route 17
+/x/kanto-route-18.shtml|Route 18
+/x/kanto-route-2.shtml|Route 2
+/x/kanto-route-22.shtml|Route 22
+/x/kanto-route-23.shtml|Route 23
+/x/kanto-route-24.shtml|Route 24
+/x/kanto-route-25.shtml|Route 25
+/x/kanto-route-3.shtml|Route 3
+/x/kanto-route-4.shtml|Route 4
+/x/kanto-route-5.shtml|Route 5
+/x/kanto-route-6.shtml|Route 6
+/x/kanto-route-7.shtml|Route 7
+/x/kanto-route-8.shtml|Route 8
+/x/kanto-route-9.shtml|Route 9
+/x/kanto-safari-zone.shtml|Safari Zone
+/x/kanto-sea-route-19.shtml|Sea Route 19
+/x/kanto-sea-route-20.shtml|Sea Route 20
+/x/kanto-sea-route-21.shtml|Sea Route 21
+/x/kanto-underground-path.shtml|Kanto Underground Path
+/x/kanto-victory-road-2.shtml|Victory Road
+/x/lavender-town.shtml|Lavender Town
+/x/mt-moon.shtml|Mt. Moon
+/x/pallet-town.shtml|Pallet Town
+/x/pewter-city.shtml|Pewter City
+/x/pokemon-mansion.shtml|Pokémon Mansion
+/x/pokemon-tower.shtml|Pokémon Tower
+/x/rock-tunnel.shtml|Rock Tunnel
+/x/saffron-city.shtml|Saffron City
+/x/seafoam-islands.shtml|Seafoam Islands
+/x/vermilion-city.shtml|Vermilion City
+/x/viridian-city.shtml|Viridian City
+/x/viridian-forest.shtml|Viridian Forest

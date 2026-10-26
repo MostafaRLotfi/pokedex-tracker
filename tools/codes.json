@@ -1,0 +1,129 @@
+[
+{
+"prefix": "PLZA1-",
+"key": "plza",
+"re": [
+"PLZA1-[A-Za-z0-9_-]{79}"
+]
+},
+{
+"prefix": "PSV",
+"key": "psv",
+"re": [
+"PSV1-[A-Za-z0-9_-]{118}",
+"PSV2-[A-Za-z0-9_-]{139}"
+]
+},
+{
+"prefix": "PLA1-",
+"key": "pla",
+"re": [
+"PLA1-[A-Za-z0-9_-]{67}"
+]
+},
+{
+"prefix": "PBDSP1-",
+"key": "pbdsp",
+"re": [
+"PBDSP1-[A-Za-z0-9_-]{83}"
+]
+},
+{
+"prefix": "PSWSH1-",
+"key": "pswsh",
+"re": [
+"PSWSH1-[A-Za-z0-9_-]{130}"
+]
+},
+{
+"prefix": "LGPE1-",
+"key": "lgpe",
+"re": [
+"LGPE1-[A-Za-z0-9_-]{55}"
+]
+},
+{
+"prefix": "PUSUM1-",
+"key": "pusum",
+"re": [
+"PUSUM1-[A-Za-z0-9_-]{87}"
+]
+},
+{
+"prefix": "PSM1-",
+"key": "psm",
+"re": [
+"PSM1-[A-Za-z0-9_-]{70}"
+]
+},
+{
+"prefix": "PORAS1-",
+"key": "poras",
+"re": [
+"PORAS1-[A-Za-z0-9_-]{50}"
+]
+},
+{
+"prefix": "PXY1-",
+"key": "pxy",
+"re": [
+"PXY1-[A-Za-z0-9_-]{84}"
+]
+},
+{
+"prefix": "PBW21-",
+"key": "pbw2",
+"re": [
+"PBW21-[A-Za-z0-9_-]{55}"
+]
+},
+{
+"prefix": "PBW1-",
+"key": "pbw",
+"re": [
+"PBW1-[A-Za-z0-9_-]{28}"
+]
+},
+{
+"prefix": "PHGSS1-",
+"key": "phgss",
+"re": [
+"PHGSS1-[A-Za-z0-9_-]{46}"
+]
+},
+{
+"prefix": "PDPPT1-",
+"key": "pdppt",
+"re": [
+"PDPPT1-[A-Za-z0-9_-]{40}"
+]
+},
+{
+"prefix": "PFRLG1-",
+"key": "pfrlg",
+"re": [
+"PFRLG1-[A-Za-z0-9_-]{28}"
+]
+},
+{
+"prefix": "PRSE1-",
+"key": "prse",
+"re": [
+"PRSE1-[A-Za-z0-9_-]{38}"
+]
+},
+{
+"prefix": "PGSC1-",
+"key": "pgsc",
+"re": [
+"PGSC1-[A-Za-z0-9_-]{44}"
+]
+},
+{
+"prefix": "PRBY1-",
+"key": "prby",
+"re": [
+"PRBY1-[A-Za-z0-9_-]{27}"
+]
+}
+]

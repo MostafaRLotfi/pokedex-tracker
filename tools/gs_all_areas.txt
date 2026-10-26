@@ -1,0 +1,89 @@
+/x/azalea-town.shtml|Azalea Town
+/x/bell-tower.shtml|Bell Tower
+/x/blackthorn-city.shtml|Blackthorn City
+/x/burned-tower.shtml|Burned Tower
+/x/celadon-city.shtml|Celadon City
+/x/cerulean-city.shtml|Cerulean City
+/x/cherrygrove-city.shtml|Cherrygrove City
+/x/cianwood-city.shtml|Cianwood City
+/x/cinnabar-island.shtml|Cinnabar Island
+/x/dark-cave.shtml|Dark Cave
+/x/digletts-cave.shtml|Diglett's Cave
+/x/dragons-den.shtml|Dragon's Den
+/x/ecruteak-city.shtml|Ecruteak City
+/x/fuchsia-city.shtml|Fuchsia City
+/x/goldenrod-city.shtml|Goldenrod City
+/x/ice-path.shtml|Ice Path
+/x/ilex-forest.shtml|Ilex Forest
+/x/indigo-plateau.shtml|Indigo Plateau
+/x/johto-route-29.shtml|Route 29
+/x/johto-route-30.shtml|Route 30
+/x/johto-route-31.shtml|Route 31
+/x/johto-route-32.shtml|Route 32
+/x/johto-route-33.shtml|Route 33
+/x/johto-route-34.shtml|Route 34
+/x/johto-route-35.shtml|Route 35
+/x/johto-route-36.shtml|Route 36
+/x/johto-route-37.shtml|Route 37
+/x/johto-route-38.shtml|Route 38
+/x/johto-route-39.shtml|Route 39
+/x/johto-route-42.shtml|Route 42
+/x/johto-route-43.shtml|Route 43
+/x/johto-route-44.shtml|Route 44
+/x/johto-route-45.shtml|Route 45
+/x/johto-route-46.shtml|Route 46
+/x/johto-sea-route-40.shtml|Sea Route 40
+/x/johto-sea-route-41.shtml|Sea Route 41
+/x/kanto-power-plant.shtml|Kanto Power Plant
+/x/kanto-route-1.shtml|Route 1
+/x/kanto-route-10.shtml|Route 10
+/x/kanto-route-11.shtml|Route 11
+/x/kanto-route-12.shtml|Route 12
+/x/kanto-route-13.shtml|Route 13
+/x/kanto-route-14.shtml|Route 14
+/x/kanto-route-15.shtml|Route 15
+/x/kanto-route-16.shtml|Route 16
+/x/kanto-route-17.shtml|Route 17
+/x/kanto-route-18.shtml|Route 18
+/x/kanto-route-2.shtml|Route 2
+/x/kanto-route-22.shtml|Route 22
+/x/kanto-route-24.shtml|Route 24
+/x/kanto-route-25.shtml|Route 25
+/x/kanto-route-26.shtml|Route 26
+/x/kanto-route-27.shtml|Route 27
+/x/kanto-route-28.shtml|Route 28
+/x/kanto-route-3.shtml|Route 3
+/x/kanto-route-4.shtml|Route 4
+/x/kanto-route-5.shtml|Route 5
+/x/kanto-route-6.shtml|Route 6
+/x/kanto-route-7.shtml|Route 7
+/x/kanto-route-8.shtml|Route 8
+/x/kanto-route-9.shtml|Route 9
+/x/kanto-sea-route-19.shtml|Sea Route 19
+/x/kanto-sea-route-20.shtml|Sea Route 20
+/x/kanto-sea-route-21.shtml|Sea Route 21
+/x/kanto-victory-road-1.shtml|Victory Road
+/x/lake-of-rage.shtml|Lake of Rage
+/x/lavender-town.shtml|Lavender Town
+/x/mahogany-town.shtml|Mahogany Town
+/x/mt-moon.shtml|Mt. Moon
+/x/mt-mortar.shtml|Mt. Mortar
+/x/mt-silver.shtml|Mt. Silver
+/x/national-park.shtml|National Park
+/x/new-bark-town.shtml|New Bark Town
+/x/olivine-city.shtml|Olivine City
+/x/pallet-town.shtml|Pallet Town
+/x/pewter-city.shtml|Pewter City
+/x/roaming-johto.shtml|Roaming Johto
+/x/rock-tunnel.shtml|Rock Tunnel
+/x/ruins-of-alph.shtml|Ruins of Alph
+/x/saffron-city.shtml|Saffron City
+/x/slowpoke-well.shtml|Slowpoke Well
+/x/sprout-tower.shtml|Sprout Tower
+/x/team-rocket-hq.shtml|Team Rocket HQ
+/x/tohjo-falls.shtml|Tohjo Falls
+/x/union-cave.shtml|Union Cave
+/x/vermilion-city.shtml|Vermilion City
+/x/violet-city.shtml|Violet City
+/x/viridian-city.shtml|Viridian City
+/x/whirl-islands.shtml|Whirl Islands

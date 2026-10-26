@@ -1,0 +1,3858 @@
+{
+"abomasnow": {
+"za": "Wild Zone 12",
+"md": "Hyperspace Lumiose - Grass (4 Star) , Ice (4 Star)",
+"evo": {
+"abomasnow": [
+"l40",
+"mega460"
+]
+}
+},
+"abra": {
+"za": "Wild Zone 5 , Bleu District , Jaune District , Magenta District , Rouge District , Vert District",
+"md": "Hyperspace Lumiose - Psychic (1 Star) , Psychic (3 Star)",
+"evo": {
+"kadabra": [
+"l16"
+],
+"alakazam": [
+"trade",
+"mega65"
+]
+}
+},
+"absol": {
+"za": "Wild Zone 20 , Bleu District , Jaune District , Magenta District , Rouge District , Vert District",
+"md": "Hyperspace Lumiose - Dark (4 Star)",
+"evo": {
+"absol": [
+"mega359",
+"mega359z"
+]
+}
+},
+"aegislash": {
+"za": "Wild Zone 20",
+"md": "Hyperspace Lumiose - Steel (4 Star)",
+"evo": {
+"doublade": [
+"l35"
+],
+"aegislash": [
+"duskstone"
+]
+}
+},
+"aerodactyl": {
+"za": "Revive Fossil",
+"md": "Hyperspace Lumiose - Rock (5 Star)",
+"evo": {
+"aerodactyl": [
+"mega142"
+]
+}
+},
+"aggron": {
+"za": "Wild Zone 20",
+"md": "Hyperspace Lumiose - Rock (4 Star) , Steel (4 Star) , Special (5 Star)",
+"evo": {
+"lairon": [
+"l32"
+],
+"aggron": [
+"l42",
+"mega306"
+]
+}
+},
+"alakazam": {
+"za": "Wild Zone 20",
+"md": "Hyperspace Lumiose - Psychic (4 Star)",
+"evo": {
+"kadabra": [
+"l16"
+],
+"alakazam": [
+"trade",
+"mega65"
+]
+}
+},
+"altaria": {
+"za": "Wild Zone 18 , Wild Zone 20",
+"md": "Hyperspace Lumiose - Flying (3 Star) , Dragon (3 Star) , Special (5 Star)",
+"evo": {
+"altaria": [
+"l35",
+"mega334"
+]
+}
+},
+"amaura": {
+"za": "Revive Fossil",
+"md": "Hyperspace Lumiose - Rock (3 Star) , Rock (5 Star) , Ice (4 Star)",
+"evo": {
+"aurorus": [
+"lnight39"
+]
+}
+},
+"amoonguss": {
+"za": null,
+"md": "Hyperspace Lumiose - Grass (4 Star)",
+"evo": {
+"amoonguss": [
+"l39"
+]
+}
+},
+"ampharos": {
+"za": "Wild Zone 16",
+"md": "Hyperspace Lumiose - Electric (4 Star)",
+"evo": {
+"flaaffy": [
+"l15"
+],
+"ampharos": [
+"l30",
+"mega181"
+]
+}
+},
+"annihilape": {
+"za": null,
+"md": "Evolve Primeape",
+"evo": {
+"primeape": [
+"l28"
+],
+"annihilape": [
+"ragefist"
+]
+}
+},
+"arbok": {
+"za": "Wild Zone 10 , Rouge District , Lysandre Labs",
+"md": "Hyperspace Lumiose - Poison (3 Star)",
+"evo": {
+"arbok": [
+"l22"
+]
+}
+},
+"arctibax": {
+"za": null,
+"md": "Hyperspace Lumiose - Ice (5 Star) , Dragon (5 Star)",
+"evo": {
+"arctibax": [
+"l35"
+],
+"baxcalibur": [
+"l54",
+"mega998"
+]
+}
+},
+"ariados": {
+"za": "Wild Zone 20 , Bleu District , Jaune District , Magenta District , Rouge District , Vert District , The Sewers - Canal Access",
+"md": "Hyperspace Lumiose - Poison (3 Star)",
+"evo": {
+"ariados": [
+"l22"
+]
+}
+},
+"armarouge": {
+"za": null,
+"md": "Evolve Charcadet",
+"evo": {
+"armarouge": [
+"auspiciousarmor"
+],
+"ceruledge": [
+"maliciousarmor"
+]
+}
+},
+"aromatisse": {
+"za": "Evolve Spritzee",
+"md": "Hyperspace Lumiose - Fairy (3 Star)",
+"evo": {
+"aromatisse": [
+"tradesachet"
+]
+}
+},
+"aron": {
+"za": "Wild Zone 14",
+"md": "Hyperspace Lumiose - Rock (3 Star) , Steel (2 Star) , Steel (3 Star)",
+"evo": {
+"lairon": [
+"l32"
+],
+"aggron": [
+"l42",
+"mega306"
+]
+}
+},
+"audino": {
+"za": "Wild Zone 7 , Wild Zone 19",
+"md": "Hyperspace Lumiose - Normal (3 Star)",
+"evo": {
+"audino": [
+"mega531"
+]
+}
+},
+"aurorus": {
+"za": "Evolve Amaura",
+"md": "Hyperspace Lumiose - Rock (5 Star)",
+"evo": {
+"aurorus": [
+"lnight39"
+]
+}
+},
+"avalugg": {
+"za": "Wild Zone 12",
+"md": "Hyperspace Lumiose - Rock (4 Star) , Ice (4 Star) Hisuian Form Hyperspace Lumiose - Ice (5 Star)",
+"evo": {
+"avalugg": [
+"l37",
+"l37"
+]
+}
+},
+"bagon": {
+"za": "Wild Zone 18",
+"md": "Hyperspace Lumiose - Dragon (3 Star) , Dragon (4 Star)",
+"evo": {
+"shelgon": [
+"l30"
+],
+"salamence": [
+"l50",
+"mega373"
+]
+}
+},
+"banette": {
+"za": "Wild Zone 15",
+"md": "Hyperspace Lumiose - Ghost (3 Star)",
+"evo": {
+"banette": [
+"l37",
+"mega354"
+]
+}
+},
+"barbaracle": {
+"za": "Wild Zone 16 , Wild Zone 20",
+"md": "Hyperspace Lumiose - Rock (4 Star) , Water (4 Star) , Special (5 Star)",
+"evo": {
+"barbaracle": [
+"l39",
+"mega689"
+]
+}
+},
+"baxcalibur": {
+"za": null,
+"md": "Hyperspace Lumiose - Ice (5 Star) , Dragon (5 Star)",
+"evo": {
+"arctibax": [
+"l35"
+],
+"baxcalibur": [
+"l54",
+"mega998"
+]
+}
+},
+"bayleef": {
+"za": "Evolve Chikorita",
+"md": "Hyperspace Lumiose - Grass (3 Star) , Grass (4 Star)",
+"evo": {
+"bayleef": [
+"l16"
+],
+"meganium": [
+"l32",
+"mega154"
+]
+}
+},
+"beedrill": {
+"za": "Wild Zone 15 , Bleu District , Jaune District , Magenta District , Rouge District , Vert District",
+"md": "Hyperspace Lumiose - Poison (4 Star) , Bug (4 Star)",
+"evo": {
+"kakuna": [
+"l7"
+],
+"beedrill": [
+"l10",
+"mega15"
+]
+}
+},
+"beldum": {
+"za": "Lysandre Labs",
+"md": "Hyperspace Lumiose - Steel (2 Star) , Steel (4 Star) , Psychic (3 Star)",
+"evo": {
+"metang": [
+"l20"
+],
+"metagross": [
+"l45",
+"mega376"
+]
+}
+},
+"bellsprout": {
+"za": "Wild Zone 5 , Wild Zone 10 , Bleu District , Jaune District , Magenta District , Rouge District , Vert District",
+"md": "Hyperspace Lumiose - Poison (1 Star) , Poison (3 Star) , Grass (2 Star) , Grass (3 Star)",
+"evo": {
+"weepinbell": [
+"l21"
+],
+"victreebel": [
+"leafstone",
+"mega71"
+]
+}
+},
+"bergmite": {
+"za": "Wild Zone 12",
+"md": "Hyperspace Lumiose - Rock (4 Star) , Ice (3 Star) , Ice (4 Star) , Ice (5 Star)",
+"evo": {
+"avalugg": [
+"l37",
+"l37"
+]
+}
+},
+"binacle": {
+"za": "Wild Zone 2 , Wild Zone 5 , Wild Zone 6 , Bleu District , Jaune District , Magenta District , Rouge District , Vert District",
+"md": "Hyperspace Lumiose - Rock (3 Star) , Rock (4 Star) , Water (2 Star) , Water (4 Star) , Special (5 Star)",
+"evo": {
+"barbaracle": [
+"l39",
+"mega689"
+]
+}
+},
+"blastoise": {
+"za": "Evolve Wartortle",
+"md": "Hyperspace Lumiose - Water (4 Star) , Water (5 Star)",
+"evo": {
+"wartortle": [
+"l16"
+],
+"blastoise": [
+"l36",
+"mega9"
+]
+}
+},
+"blaziken": {
+"za": null,
+"md": "Hyperspace Lumiose - Fighting (4 Star) , Fire (4 Star) , Fire (5 Star)",
+"evo": {
+"combusken": [
+"l16"
+],
+"blaziken": [
+"l36",
+"mega257"
+]
+}
+},
+"braixen": {
+"za": "Evolve Fennekin",
+"md": "Hyperspace Lumiose - Fire (3 Star) , Fire (4 Star) , Psychic (4 Star)",
+"evo": {
+"braixen": [
+"l16"
+],
+"delphox": [
+"l36",
+"mega655"
+]
+}
+},
+"budew": {
+"za": "Wild Zone 2 , Bleu District , Jaune District , Magenta District , Rouge District , Vert District",
+"md": "Hyperspace Lumiose - Poison (1 Star) , Poison (3 Star) , Grass (2 Star) , Grass (3 Star)",
+"evo": {
+"roselia": [
+"happinessday"
+],
+"roserade": [
+"shinystone"
+]
+}
+},
+"bulbasaur": {
+"za": "Wild Zone 20",
+"md": "Hyperspace Lumiose - Poison (1 Star) , Poison (3 Star) , Grass (2 Star) , Grass (3 Star) , Grass (5 Star)",
+"evo": {
+"ivysaur": [
+"l16"
+],
+"venusaur": [
+"l32",
+"mega3"
+]
+}
+},
+"buneary": {
+"za": "Wild Zone 6 , Bleu District , Magenta District , Vert District",
+"md": "Hyperspace Lumiose - Normal (2 Star) , Normal (3 Star)",
+"evo": {
+"lopunny": [
+"happiness",
+"mega428"
+]
+}
+},
+"bunnelby": {
+"za": "Wild Zone 1 , Wild Zone 5 , Bleu District , Jaune District , Magenta District , Rouge District , Vert District",
+"md": "Hyperspace Lumiose - Normal (1 Star) , Normal (2 Star) , Normal (3 Star) , Ground (3 Star)",
+"evo": {
+"diggersby": [
+"l20"
+]
+}
+},
+"camerupt": {
+"za": "Wild Zone 8",
+"md": "Hyperspace Lumiose - Ground (4 Star) , Fire (4 Star)",
+"evo": {
+"camerupt": [
+"l33",
+"mega323"
+]
+}
+},
+"capsakid": {
+"za": null,
+"md": "Hyperspace Lumiose - Fire (3 Star) , Grass (2 Star) , Grass (3 Star)",
+"evo": {
+"scovillain": [
+"firestone",
+"mega952"
+]
+}
+},
+"carbink": {
+"za": "Wild Zone 9 , Wild Zone 20",
+"md": "Hyperspace Lumiose - Rock (3 Star) , Fairy (2 Star)",
+"evo": {}
+},
+"carvanha": {
+"za": "Wild Zone 10",
+"md": "Hyperspace Lumiose - Water (2 Star) , Water (3 Star) , Dark (3 Star)",
+"evo": {
+"sharpedo": [
+"l30",
+"mega319"
+]
+}
+},
+"ceruledge": {
+"za": null,
+"md": "Evolve Charcadet",
+"evo": {
+"armarouge": [
+"auspiciousarmor"
+],
+"ceruledge": [
+"maliciousarmor"
+]
+}
+},
+"chandelure": {
+"za": "Wild Zone 20",
+"md": "Hyperspace Lumiose - Ghost (4 Star) , Fire (4 Star)",
+"evo": {
+"lampent": [
+"l41"
+],
+"chandelure": [
+"duskstone",
+"mega609"
+]
+}
+},
+"charcadet": {
+"za": null,
+"md": "Hyperspace Lumiose - Fire (2 Star)",
+"evo": {
+"armarouge": [
+"auspiciousarmor"
+],
+"ceruledge": [
+"maliciousarmor"
+]
+}
+},
+"charizard": {
+"za": "Evolve Charmeleon",
+"md": "Hyperspace Lumiose - Flying (4 Star) , Fire (4 Star) , Fire (5 Star)",
+"evo": {
+"charmeleon": [
+"l16"
+],
+"charizard": [
+"l36",
+"charizardnitex",
+"charizardnitey"
+]
+}
+},
+"charmander": {
+"za": "Wild Zone 20",
+"md": "Hyperspace Lumiose - Fire (2 Star) , Fire (3 Star) , Fire (5 Star)",
+"evo": {
+"charmeleon": [
+"l16"
+],
+"charizard": [
+"l36",
+"charizardnitex",
+"charizardnitey"
+]
+}
+},
+"charmeleon": {
+"za": "Evolve Charmander",
+"md": "Hyperspace Lumiose - Flying (4 Star) , Fire (3 Star) , Fire (4 Star)",
+"evo": {
+"charmeleon": [
+"l16"
+],
+"charizard": [
+"l36",
+"charizardnitex",
+"charizardnitey"
+]
+}
+},
+"chesnaught": {
+"za": "Evolve Quilladin",
+"md": "Hyperspace Lumiose - Fighting (4 Star) , Grass (4 Star) , Grass (5 Star)",
+"evo": {
+"quilladin": [
+"l16"
+],
+"chesnaught": [
+"l36",
+"mega652"
+]
+}
+},
+"chespin": {
+"za": "Wild Zone 17",
+"md": "Hyperspace Lumiose - Grass (2 Star) , Grass (3 Star) , Grass (5 Star)",
+"evo": {
+"quilladin": [
+"l16"
+],
+"chesnaught": [
+"l36",
+"mega652"
+]
+}
+},
+"chikorita": {
+"za": "Wild Zone 20",
+"md": "Hyperspace Lumiose - Grass (2 Star) , Grass (3 Star)",
+"evo": {
+"bayleef": [
+"l16"
+],
+"meganium": [
+"l32",
+"mega154"
+]
+}
+},
+"chimecho": {
+"za": null,
+"md": "Hyperspace Lumiose - Psychic (3 Star)",
+"evo": {
+"chimecho": [
+"happinessnight",
+"mega358"
+]
+}
+},
+"chingling": {
+"za": null,
+"md": "Hyperspace Lumiose - Psychic (1 Star) , Psychic (3 Star)",
+"evo": {
+"chimecho": [
+"happinessnight",
+"mega358"
+]
+}
+},
+"clauncher": {
+"za": "Wild Zone 11",
+"md": "Hyperspace Lumiose - Water (2 Star) , Water (3 Star)",
+"evo": {
+"clawitzer": [
+"l37"
+]
+}
+},
+"clawitzer": {
+"za": "Wild Zone 11",
+"md": "Hyperspace Lumiose - Water (3 Star)",
+"evo": {
+"clawitzer": [
+"l37"
+]
+}
+},
+"clefable": {
+"za": "Wild Zone 20",
+"md": "Hyperspace Lumiose - Fairy (4 Star) , Special (5 Star)",
+"evo": {
+"clefairy": [
+"happiness"
+],
+"clefable": [
+"moonstone",
+"mega36"
+]
+}
+},
+"clefairy": {
+"za": "Wild Zone 19",
+"md": "Hyperspace Lumiose - Fairy (2 Star) , Fairy (4 Star) , Special (5 Star)",
+"evo": {
+"clefairy": [
+"happiness"
+],
+"clefable": [
+"moonstone",
+"mega36"
+]
+}
+},
+"cleffa": {
+"za": "Wild Zone 19 , Bleu District , Jaune District , Magenta District , Rouge District , Vert District",
+"md": "Hyperspace Lumiose - Fairy (2 Star)",
+"evo": {
+"clefairy": [
+"happiness"
+],
+"clefable": [
+"moonstone",
+"mega36"
+]
+}
+},
+"clobbopus": {
+"za": null,
+"md": "Hyperspace Lumiose - Fighting (1 Star) , Fighting (4 Star) , Special (5 Star)",
+"evo": {
+"grapploct": [
+"leveltaunt"
+]
+}
+},
+"cobalion": {
+"za": null,
+"md": "Hyperspace Lumiose",
+"evo": {}
+},
+"cofagrigus": {
+"za": null,
+"md": "Hyperspace Lumiose - Ghost (4 Star)",
+"evo": {
+"cofagrigus": [
+"l34"
+],
+"runerigus": [
+"ldamage"
+]
+}
+},
+"combusken": {
+"za": null,
+"md": "Hyperspace Lumiose - Fighting (4 Star) , Fire (3 Star) , Fire (4 Star)",
+"evo": {
+"combusken": [
+"l16"
+],
+"blaziken": [
+"l36",
+"mega257"
+]
+}
+},
+"corviknight": {
+"za": null,
+"md": "Hyperspace Lumiose - Flying (4 Star)",
+"evo": {
+"corvisquire": [
+"l18"
+],
+"corviknight": [
+"l38"
+]
+}
+},
+"corvisquire": {
+"za": null,
+"md": "Hyperspace Lumiose - Flying (3 Star) , Flying (4 Star)",
+"evo": {
+"corvisquire": [
+"l18"
+],
+"corviknight": [
+"l38"
+]
+}
+},
+"crabominable": {
+"za": null,
+"md": "Hyperspace Lumiose - Fighting (4 Star) , Ice (4 Star)",
+"evo": {
+"crabominable": [
+"icestone",
+"mega740"
+]
+}
+},
+"crabrawler": {
+"za": null,
+"md": "Hyperspace Lumiose - Fighting (1 Star) , Fighting (4 Star) , Ice (4 Star)",
+"evo": {
+"crabominable": [
+"icestone",
+"mega740"
+]
+}
+},
+"crobat": {
+"za": null,
+"md": "Hyperspace Lumiose - Poison (4 Star)",
+"evo": {
+"golbat": [
+"l22"
+],
+"crobat": [
+"happiness"
+]
+}
+},
+"croconaw": {
+"za": "Evolve Totodile",
+"md": "Hyperspace Lumiose - Water (3 Star) , Water (4 Star)",
+"evo": {
+"croconaw": [
+"l18"
+],
+"feraligatr": [
+"l30",
+"mega160"
+]
+}
+},
+"cryogonal": {
+"za": null,
+"md": "Hyperspace Lumiose - Ice (3 Star)",
+"evo": {}
+},
+"cubone": {
+"za": null,
+"md": "Hyperspace Lumiose - Ground (1 Star) , Ground (4 Star) , Fire (4 Star)",
+"evo": {
+"marowak": [
+"l28"
+]
+}
+},
+"cyclizar": {
+"za": null,
+"md": "Hyperspace Lumiose - Normal (4 Star) , Dragon (4 Star)",
+"evo": {}
+},
+"dachsbun": {
+"za": null,
+"md": "Hyperspace Lumiose - Fairy (3 Star)",
+"evo": {
+"dachsbun": [
+"l26"
+]
+}
+},
+"darkrai": {
+"za": null,
+"md": "Hyperspace Newmoon Nightmare",
+"evo": {
+"darkrai": [
+"mega491"
+]
+}
+},
+"dedenne": {
+"za": "Wild Zone 20 , Bleu District , Jaune District , Magenta District , Rouge District , Vert District",
+"md": "Hyperspace Lumiose - Electric (3 Star) , Fairy (3 Star)",
+"evo": {}
+},
+"delibird": {
+"za": "Wild Zone 12 , Wild Zone 20",
+"md": "Hyperspace Lumiose - Ice (3 Star)",
+"evo": {}
+},
+"delphox": {
+"za": "Evolve Braixen",
+"md": "Hyperspace Lumiose - Fire (4 Star) , Fire (5 Star) , Psychic (4 Star)",
+"evo": {
+"braixen": [
+"l16"
+],
+"delphox": [
+"l36",
+"mega655"
+]
+}
+},
+"diancie": {
+"za": "Magenta District (Magenta Sector 8)",
+"md": null,
+"evo": {
+"diancie": [
+"mega719"
+]
+}
+},
+"diggersby": {
+"za": "Wild Zone 17 , Wild Zone 20",
+"md": "Hyperspace Lumiose - Normal (3 Star) , Ground (3 Star)",
+"evo": {
+"diggersby": [
+"l20"
+]
+}
+},
+"dondozo": {
+"za": null,
+"md": "Hyperspace Lumiose - Water (4 Star)",
+"evo": {}
+},
+"doublade": {
+"za": "Lysandre Labs",
+"md": "Hyperspace Lumiose - Steel (3 Star) , Steel (4 Star)",
+"evo": {
+"doublade": [
+"l35"
+],
+"aegislash": [
+"duskstone"
+]
+}
+},
+"dragalge": {
+"za": "Wild Zone 20 , The Sewers - Main Access",
+"md": "Hyperspace Lumiose - Poison (4 Star) , Dragon (4 Star)",
+"evo": {
+"dragalge": [
+"l48",
+"mega691"
+]
+}
+},
+"dragonair": {
+"za": "Bleu District (Bleu Sector 9), Jaune District (Jaune Sector 3), Magenta District , Rouge District , Vert District (Vert Sector 6)",
+"md": "Hyperspace Lumiose - Dragon (4 Star)",
+"evo": {
+"dragonair": [
+"l30"
+],
+"dragonite": [
+"l55",
+"mega149"
+]
+}
+},
+"dragonite": {
+"za": "Wild Zone 20",
+"md": "Evolve Dratini",
+"evo": {
+"dragonair": [
+"l30"
+],
+"dragonite": [
+"l55",
+"mega149"
+]
+}
+},
+"drampa": {
+"za": "Wild Zone 19 , Wild Zone 20",
+"md": "Hyperspace Lumiose - Normal (4 Star) , Dragon (4 Star)",
+"evo": {
+"drampa": [
+"mega780"
+]
+}
+},
+"dratini": {
+"za": "Bleu District (Bleu Sector 9), Jaune District (Jaune Sector 3), Magenta District , Rouge District , Vert District (Vert Sector 6)",
+"md": "Hyperspace Lumiose - Dragon (3 Star) , Dragon (4 Star)",
+"evo": {
+"dragonair": [
+"l30"
+],
+"dragonite": [
+"l55",
+"mega149"
+]
+}
+},
+"drilbur": {
+"za": "Wild Zone 8 , Wild Zone 14",
+"md": "Hyperspace Lumiose - Ground (1 Star) , Ground (4 Star) , Steel (4 Star)",
+"evo": {
+"excadrill": [
+"l31",
+"mega530"
+]
+}
+},
+"eelektrik": {
+"za": "Evolve Tynamo",
+"md": "Hyperspace Lumiose - Electric (3 Star) , Electric (4 Star)",
+"evo": {
+"eelektrik": [
+"l39"
+],
+"eelektross": [
+"thunderstone",
+"mega604"
+]
+}
+},
+"eelektross": {
+"za": "Wild Zone 20",
+"md": "Hyperspace Lumiose - Electric (4 Star)",
+"evo": {
+"eelektrik": [
+"l39"
+],
+"eelektross": [
+"thunderstone",
+"mega604"
+]
+}
+},
+"eevee": {
+"za": "Wild Zone 19 , Bleu District (Bleu Sector 7), Jaune District , Magenta District , Rouge District (Rouge Sector 8), Vert District (Vert Sector 9)",
+"md": "Hyperspace Lumiose - Normal (2 Star) , Normal (5 Star) , Fire (4 Star) , Water (4 Star) , Grass (4 Star) , Electric (4 Star) , Psychic (4 Star) , Ice (4 Star) , Dark (4 Star) , Fairy (4 Star)",
+"evo": {
+"470.shtml": [
+"eeveemonamie"
+]
+}
+},
+"ekans": {
+"za": "Wild Zone 4 , Bleu District , Jaune District , Magenta District , Rouge District , Vert District , Lysandre Labs",
+"md": "Hyperspace Lumiose - Poison (1 Star) , Poison (3 Star)",
+"evo": {
+"arbok": [
+"l22"
+]
+}
+},
+"electrike": {
+"za": "Wild Zone 5 , Lysandre Labs",
+"md": "Hyperspace Lumiose - Electric (2 Star) , Electric (3 Star)",
+"evo": {
+"manectric": [
+"l26",
+"mega310"
+]
+}
+},
+"emboar": {
+"za": "Evolve Pignite",
+"md": "Hyperspace Lumiose - Fighting (4 Star) , Fire (4 Star)",
+"evo": {
+"pignite": [
+"l17"
+],
+"emboar": [
+"l36",
+"mega500"
+]
+}
+},
+"emolga": {
+"za": "Wild Zone 14 , Bleu District , Jaune District , Magenta District , Rouge District , Vert District",
+"md": "Hyperspace Lumiose - Flying (3 Star) , Electric (3 Star)",
+"evo": {}
+},
+"espeon": {
+"za": "Evolve Eevee",
+"md": "Hyperspace Lumiose - Normal (5 Star) , Psychic (4 Star)",
+"evo": {
+"470.shtml": [
+"eeveemonamie"
+]
+}
+},
+"espurr": {
+"za": "Wild Zone 3 , Wild Zone 9 , Bleu District , Jaune District , Magenta District , Rouge District , Vert District",
+"md": "Hyperspace Lumiose - Psychic (1 Star) , Psychic (4 Star) , Special (5 Star)",
+"evo": {
+"meowstic": [
+"l25",
+"mega678"
+]
+}
+},
+"excadrill": {
+"za": "Wild Zone 14",
+"md": "Hyperspace Lumiose - Ground (4 Star) , Steel (4 Star)",
+"evo": {
+"excadrill": [
+"l31",
+"mega530"
+]
+}
+},
+"falinks": {
+"za": "Wild Zone 16 , Wild Zone 20",
+"md": "Hyperspace Lumiose - Fighting (3 Star)",
+"evo": {
+"falinks": [
+"mega870"
+]
+}
+},
+"farfetch'd": {
+"za": null,
+"md": "Hyperspace Lumiose - Normal (2 Star) Galarian Form Hyperspace Lumiose - Fighting (3 Star)",
+"evo": {
+"sirfetch'd": [
+"lbattles"
+]
+}
+},
+"feebas": {
+"za": null,
+"md": "Vert District Hyperspace Lumiose - Water (2 Star)",
+"evo": {
+"milotic": [
+"levelpokeblock"
+]
+}
+},
+"fennekin": {
+"za": "Wild Zone 18",
+"md": "Hyperspace Lumiose - Fire (2 Star) , Fire (3 Star) , Fire (5 Star)",
+"evo": {
+"braixen": [
+"l16"
+],
+"delphox": [
+"l36",
+"mega655"
+]
+}
+},
+"feraligatr": {
+"za": "Evolve Croconaw",
+"md": "Hyperspace Lumiose - Water (4 Star)",
+"evo": {
+"croconaw": [
+"l18"
+],
+"feraligatr": [
+"l30",
+"mega160"
+]
+}
+},
+"fidough": {
+"za": null,
+"md": "Hyperspace Lumiose - Fairy (2 Star) , Fairy (3 Star)",
+"evo": {
+"dachsbun": [
+"l26"
+]
+}
+},
+"flaaffy": {
+"za": "Wild Zone 6 , Wild Zone 16",
+"md": "Hyperspace Lumiose - Electric (3 Star) , Electric (4 Star)",
+"evo": {
+"flaaffy": [
+"l15"
+],
+"ampharos": [
+"l30",
+"mega181"
+]
+}
+},
+"flabebe": {
+"za": "Red Flower Wild Zone 3 , Bleu District , Jaune District , Magenta District , Rouge District , Vert District , Yellow Flower Bleu District , Jaune District , Magenta District , Rouge District , Vert District , Orange Flower Bleu District , Jaune District , Magenta District , Rouge District , Vert District , Blue Flower Wild Zone 3 , Bleu District , Jaune District , Magenta District , Rouge District , Vert District , White Flower Wild Zone 3 , Bleu District , Jaune District , Magenta District , Rouge District , Vert District",
+"md": "Hyperspace Lumiose - Fairy (2 Star) , Fairy (3 Star)",
+"evo": {
+"floette": [
+"l19",
+"mega670"
+],
+"florges": [
+"shinystone"
+]
+}
+},
+"flamigo": {
+"za": null,
+"md": "Hyperspace Lumiose - Flying (4 Star)",
+"evo": {}
+},
+"flareon": {
+"za": "Wild Zone 20",
+"md": "Hyperspace Lumiose - Normal (5 Star) , Fire (4 Star)",
+"evo": {
+"470.shtml": [
+"eeveemonamie"
+]
+}
+},
+"fletchinder": {
+"za": "Wild Zone 5 , Wild Zone 7 , Wild Zone 9 , Bleu District , Jaune District , Magenta District , Rouge District , Vert District",
+"md": "Hyperspace Lumiose - Flying (3 Star) , Flying (4 Star) , Fire (3 Star) , Fire (4 Star)",
+"evo": {
+"fletchinder": [
+"l17"
+],
+"talonflame": [
+"l35"
+]
+}
+},
+"fletchling": {
+"za": "Wild Zone 1 , Wild Zone 3 , Wild Zone 5 , Bleu District , Jaune District , Magenta District , Rouge District , Vert District",
+"md": "Hyperspace Lumiose - Normal (1 Star) , Normal (2 Star) , Flying (1 Star) , Flying (3 Star) , Fire (3 Star)",
+"evo": {
+"fletchinder": [
+"l17"
+],
+"talonflame": [
+"l35"
+]
+}
+},
+"floette": {
+"za": "Red Flower Wild Zone 7 , Bleu District , Jaune District , Magenta District , Rouge District , Vert District , Yellow Flower Bleu District , Jaune District , Magenta District , Rouge District , Vert District , Orange Flower Wild Zone 7 , Bleu District , Jaune District , Magenta District , Rouge District , Vert District , Blue Flower Bleu District , Jaune District , Magenta District , Rouge District , Vert District , White Flower Bleu District , Jaune District , Magenta District , Rouge District , Vert District",
+"md": "Hyperspace Lumiose - Fairy (3 Star) , Fairy (4 Star)",
+"evo": {
+"floette": [
+"l19",
+"mega670"
+],
+"florges": [
+"shinystone"
+]
+}
+},
+"florges": {
+"za": "Red Flower Wild Zone 16 , Wild Zone 20 , Blue Flower Wild Zone 16 , White Flower Wild Zone 16",
+"md": "Hyperspace Lumiose - Fairy (3 Star) , Fairy (4 Star)",
+"evo": {
+"floette": [
+"l19",
+"mega670"
+],
+"florges": [
+"shinystone"
+]
+}
+},
+"foongus": {
+"za": null,
+"md": "Hyperspace Lumiose - Grass (2 Star) , Grass (4 Star)",
+"evo": {
+"amoonguss": [
+"l39"
+]
+}
+},
+"frigibax": {
+"za": null,
+"md": "Hyperspace Lumiose - Ice (5 Star) , Dragon (5 Star)",
+"evo": {
+"arctibax": [
+"l35"
+],
+"baxcalibur": [
+"l54",
+"mega998"
+]
+}
+},
+"froakie": {
+"za": "Wild Zone 16",
+"md": "Hyperspace Lumiose - Water (2 Star) , Water (3 Star) , Water (5 Star)",
+"evo": {
+"frogadier": [
+"l16"
+],
+"greninja": [
+"l36",
+"mega658"
+]
+}
+},
+"frogadier": {
+"za": "Evolve Froakie",
+"md": "Hyperspace Lumiose - Water (3 Star) , Water (4 Star) , Dark (4 Star)",
+"evo": {
+"frogadier": [
+"l16"
+],
+"greninja": [
+"l36",
+"mega658"
+]
+}
+},
+"froslass": {
+"za": "Wild Zone 20",
+"md": "Hyperspace Lumiose - Ice (4 Star)",
+"evo": {
+"glalie": [
+"l42",
+"mega362"
+],
+"froslass": [
+"femaledawnstone",
+"mega478"
+]
+}
+},
+"furfrou": {
+"za": "Wild Zone 11 , Wild Zone 19 , Wild Zone 20",
+"md": "Hyperspace Lumiose - Normal (4 Star)",
+"evo": {}
+},
+"gabite": {
+"za": "Evolve Gible",
+"md": "Hyperspace Lumiose - Dragon (4 Star)",
+"evo": {
+"gabite": [
+"l24"
+],
+"garchomp": [
+"l48",
+"mega445",
+"mega445z"
+]
+}
+},
+"gallade": {
+"za": "Wild Zone 5 , Wild Zone 20",
+"md": "Hyperspace Lumiose - Fighting (4 Star) , Psychic (4 Star)",
+"evo": {
+"kirlia": [
+"l20"
+],
+"gardevoir": [
+"l30",
+"mega282"
+],
+"gallade": [
+"maledawnstone",
+"mega475"
+]
+}
+},
+"garbodor": {
+"za": "Wild Zone 20 , Jaune District",
+"md": "Hyperspace Lumiose - Poison (4 Star)",
+"evo": {
+"garbodor": [
+"l36"
+]
+}
+},
+"garchomp": {
+"za": "Wild Zone 20",
+"md": null,
+"evo": {
+"gabite": [
+"l24"
+],
+"garchomp": [
+"l48",
+"mega445",
+"mega445z"
+]
+}
+},
+"gardevoir": {
+"za": "Wild Zone 20",
+"md": "Hyperspace Lumiose - Psychic (4 Star) , Fairy (4 Star) , Special (5 Star)",
+"evo": {
+"kirlia": [
+"l20"
+],
+"gardevoir": [
+"l30",
+"mega282"
+],
+"gallade": [
+"maledawnstone",
+"mega475"
+]
+}
+},
+"garganacl": {
+"za": null,
+"md": "Hyperspace Lumiose - Rock (4 Star) , Special (5 Star)",
+"evo": {
+"naclstack": [
+"l24"
+],
+"garganacl": [
+"l38"
+]
+}
+},
+"gastly": {
+"za": "Wild Zone 4 , Wild Zone 7 , Bleu District , Jaune District , Magenta District , Rouge District , Vert District , Old House , The Sewers - Main Access",
+"md": "Hyperspace Lumiose - Ghost (1 Star) , Ghost (3 Star)",
+"evo": {
+"haunter": [
+"l25"
+],
+"gengar": [
+"trade",
+"mega94"
+]
+}
+},
+"genesect": {
+"za": null,
+"md": "Hyperspace Lumiose",
+"evo": {}
+},
+"gengar": {
+"za": "Wild Zone 20 , Old House",
+"md": "Hyperspace Lumiose - Ghost (4 Star)",
+"evo": {
+"haunter": [
+"l25"
+],
+"gengar": [
+"trade",
+"mega94"
+]
+}
+},
+"gholdengo": {
+"za": null,
+"md": "Evolve Gimmighoul",
+"evo": {
+"gholdengo": [
+"gimmighoulcoin"
+]
+}
+},
+"gible": {
+"za": "Wild Zone 8",
+"md": "Hyperspace Lumiose - Ground (3 Star) , Dragon (3 Star) , Dragon (4 Star)",
+"evo": {
+"gabite": [
+"l24"
+],
+"garchomp": [
+"l48",
+"mega445",
+"mega445z"
+]
+}
+},
+"gimmighoul": {
+"za": null,
+"md": "Hyperspace Lumiose - Ghost (5 Star)",
+"evo": {
+"gholdengo": [
+"gimmighoulcoin"
+]
+}
+},
+"glaceon": {
+"za": "Wild Zone 20",
+"md": "Hyperspace Lumiose - Normal (5 Star) , Ice (4 Star)",
+"evo": {
+"470.shtml": [
+"eeveemonamie"
+]
+}
+},
+"glalie": {
+"za": "Evolve Snorunt",
+"md": "Hyperspace Lumiose - Ice (4 Star)",
+"evo": {
+"glalie": [
+"l42",
+"mega362"
+],
+"froslass": [
+"femaledawnstone",
+"mega478"
+]
+}
+},
+"glimmet": {
+"za": null,
+"md": "Hyperspace Lumiose - Poison (3 Star) , Poison (4 Star) , Rock (3 Star) , Rock (4 Star)",
+"evo": {
+"glimmora": [
+"l35",
+"mega970"
+]
+}
+},
+"glimmora": {
+"za": null,
+"md": "Hyperspace Lumiose - Poison (4 Star) , Rock (4 Star)",
+"evo": {
+"glimmora": [
+"l35",
+"mega970"
+]
+}
+},
+"gogoat": {
+"za": "Wild Zone 12 , Wild Zone 20",
+"md": "Hyperspace Lumiose - Grass (3 Star)",
+"evo": {
+"gogoat": [
+"l32"
+]
+}
+},
+"golbat": {
+"za": null,
+"md": "Hyperspace Lumiose - Flying (3 Star) , Poison (4 Star)",
+"evo": {
+"golbat": [
+"l22"
+],
+"crobat": [
+"happiness"
+]
+}
+},
+"golett": {
+"za": null,
+"md": "Hyperspace Lumiose - Ground (3 Star) , Ground (4 Star)",
+"evo": {
+"golurk": [
+"l43",
+"mega623"
+]
+}
+},
+"golisopod": {
+"za": null,
+"md": "Hyperspace Lumiose - Water (3 Star)",
+"evo": {
+"golisopod": [
+"l30",
+"mega768"
+]
+}
+},
+"golurk": {
+"za": null,
+"md": "Hyperspace Lumiose - Ground (4 Star)",
+"evo": {
+"golurk": [
+"l43",
+"mega623"
+]
+}
+},
+"goodra": {
+"za": "Wild Zone 20",
+"md": "Hisuian Form Hyperspace Lumiose - Dragon (5 Star)",
+"evo": {
+"sliggoo": [
+"l40"
+],
+"goodra": [
+"l50rain",
+"l50rain"
+]
+}
+},
+"goomy": {
+"za": "Bleu District (Bleu Sector 3), Jaune District , Magenta District , Rouge District (Rouge Sector 1), Vert District (Vert Sector 9), The Sewers - Main Access",
+"md": "Hyperspace Lumiose - Dragon (3 Star) , Dragon (4 Star)",
+"evo": {
+"sliggoo": [
+"l40"
+],
+"goodra": [
+"l50rain",
+"l50rain"
+]
+}
+},
+"gourgeist": {
+"za": "Wild Zone 15 , Wild Zone 20",
+"md": "Hyperspace Lumiose - Ghost (4 Star) , Grass (4 Star)",
+"evo": {
+"gourgeist": [
+"trade"
+]
+}
+},
+"grafaiai": {
+"za": null,
+"md": "Hyperspace Lumiose - Normal (3 Star) , Poison (4 Star)",
+"evo": {
+"grafaiai": [
+"l28"
+]
+}
+},
+"grapploct": {
+"za": null,
+"md": "Hyperspace Lumiose - Fighting (4 Star) , Special (5 Star)",
+"evo": {
+"grapploct": [
+"leveltaunt"
+]
+}
+},
+"greavard": {
+"za": null,
+"md": "Hyperspace Lumiose - Ghost (1 Star) , Ghost (4 Star)",
+"evo": {
+"houndstone": [
+"l30night"
+]
+}
+},
+"greninja": {
+"za": "Evolve Frogadier",
+"md": "Hyperspace Lumiose - Water (4 Star) , Water (5 Star) , Dark (4 Star)",
+"evo": {
+"frogadier": [
+"l16"
+],
+"greninja": [
+"l36",
+"mega658"
+]
+}
+},
+"groudon": {
+"za": null,
+"md": "Hyperspace Desolate Land",
+"evo": {
+"groudon": [
+"mega383"
+]
+}
+},
+"grovyle": {
+"za": null,
+"md": "Hyperspace Lumiose - Grass (3 Star) , Grass (4 Star)",
+"evo": {
+"grovyle": [
+"l16"
+],
+"sceptile": [
+"l36",
+"mega254"
+]
+}
+},
+"grumpig": {
+"za": null,
+"md": "Hyperspace Lumiose - Psychic (4 Star)",
+"evo": {
+"grumpig": [
+"l32"
+]
+}
+},
+"gulpin": {
+"za": null,
+"md": "Hyperspace Lumiose - Poison (1 Star) , Poison (4 Star)",
+"evo": {
+"swalot": [
+"l26"
+]
+}
+},
+"gyarados": {
+"za": "Wild Zone 11 , Wild Zone 20",
+"md": "Hyperspace Lumiose - Water (4 Star) , Special (5 Star)",
+"evo": {
+"gyarados": [
+"l20",
+"mega130"
+]
+}
+},
+"haunter": {
+"za": "Wild Zone 15 , Bleu District , Jaune District , Magenta District , Rouge District , Vert District , Old House , The Sewers - Main Access",
+"md": "Hyperspace Lumiose - Ghost (1 Star) , Ghost (3 Star) , Ghost (4 Star)",
+"evo": {
+"haunter": [
+"l25"
+],
+"gengar": [
+"trade",
+"mega94"
+]
+}
+},
+"hawlucha": {
+"za": "Wild Zone 20 , Bleu District , Jaune District , Magenta District , Rouge District , Vert District",
+"md": "Hyperspace Lumiose - Fighting (3 Star) , Flying (3 Star) , Special (5 Star)",
+"evo": {
+"hawlucha": [
+"mega701"
+]
+}
+},
+"heatran": {
+"za": null,
+"md": "Hyperspace Infernal Arena",
+"evo": {
+"heatran": [
+"mega485"
+]
+}
+},
+"heliolisk": {
+"za": "Wild Zone 20",
+"md": "Hyperspace Lumiose - Normal (4 Star) , Electric (4 Star)",
+"evo": {
+"heliolisk": [
+"sunstone"
+]
+}
+},
+"helioptile": {
+"za": "Wild Zone 14",
+"md": "Hyperspace Lumiose - Normal (4 Star) , Electric (2 Star) , Electric (4 Star)",
+"evo": {
+"heliolisk": [
+"sunstone"
+]
+}
+},
+"heracross": {
+"za": "Wild Zone 13 , Wild Zone 20",
+"md": "Hyperspace Lumiose - Fighting (4 Star) , Bug (4 Star) , Special (5 Star)",
+"evo": {
+"heracross": [
+"mega214"
+]
+}
+},
+"hippopotas": {
+"za": "Wild Zone 7",
+"md": "Hyperspace Lumiose - Ground (1 Star) , Ground (4 Star)",
+"evo": {
+"hippowdon": [
+"l34"
+]
+}
+},
+"hippowdon": {
+"za": "Wild Zone 20",
+"md": "Hyperspace Lumiose - Ground (4 Star)",
+"evo": {
+"hippowdon": [
+"l34"
+]
+}
+},
+"honedge": {
+"za": "Wild Zone 4 , Lysandre Labs",
+"md": "Hyperspace Lumiose - Steel (2 Star) , Steel (3 Star)",
+"evo": {
+"doublade": [
+"l35"
+],
+"aegislash": [
+"duskstone"
+]
+}
+},
+"hoopa": {
+"za": null,
+"md": "Hyperspace Lumiose",
+"evo": {}
+},
+"houndoom": {
+"za": "Wild Zone 6 , Lysandre Labs",
+"md": "Hyperspace Lumiose - Fire (3 Star) , Dark (3 Star)",
+"evo": {
+"houndoom": [
+"l24",
+"mega229"
+]
+}
+},
+"houndour": {
+"za": "Wild Zone 6 , Lysandre Labs",
+"md": "Hyperspace Lumiose - Fire (2 Star) , Fire (3 Star) , Dark (1 Star) , Dark (3 Star)",
+"evo": {
+"houndoom": [
+"l24",
+"mega229"
+]
+}
+},
+"houndstone": {
+"za": null,
+"md": "Hyperspace Lumiose - Ghost (4 Star)",
+"evo": {
+"houndstone": [
+"l30night"
+]
+}
+},
+"igglybuff": {
+"za": null,
+"md": "Hyperspace Lumiose - Fairy (2 Star) , Fairy (3 Star)",
+"evo": {
+"jigglypuff": [
+"happiness"
+],
+"wigglytuff": [
+"moonstone"
+]
+}
+},
+"indeedee": {
+"za": null,
+"md": "Hyperspace Lumiose - Normal (3 Star)",
+"evo": {}
+},
+"inkay": {
+"za": "Wild Zone 11 , The Sewers - Main Access , The Sewers - Canal Access",
+"md": "Hyperspace Lumiose - Psychic (1 Star) , Psychic (4 Star) , Dark (4 Star)",
+"evo": {
+"malamar": [
+"l303ds",
+"mega687"
+]
+}
+},
+"ivysaur": {
+"za": "Evolve Bulbasaur",
+"md": "Hyperspace Lumiose - Poison (3 Star) , Poison (4 Star) , Grass (3 Star) , Grass (4 Star)",
+"evo": {
+"ivysaur": [
+"l16"
+],
+"venusaur": [
+"l32",
+"mega3"
+]
+}
+},
+"jigglypuff": {
+"za": null,
+"md": "Hyperspace Lumiose - Fairy (3 Star) , Fairy (4 Star) , Special (5 Star)",
+"evo": {
+"jigglypuff": [
+"happiness"
+],
+"wigglytuff": [
+"moonstone"
+]
+}
+},
+"jolteon": {
+"za": "Wild Zone 20",
+"md": "Hyperspace Lumiose - Normal (5 Star) , Electric (4 Star)",
+"evo": {
+"470.shtml": [
+"eeveemonamie"
+]
+}
+},
+"kadabra": {
+"za": "Wild Zone 9",
+"md": "Hyperspace Lumiose - Psychic (3 Star) , Psychic (4 Star)",
+"evo": {
+"kadabra": [
+"l16"
+],
+"alakazam": [
+"trade",
+"mega65"
+]
+}
+},
+"kakuna": {
+"za": "Wild Zone 2 , Wild Zone 7 , Bleu District , Jaune District , Magenta District , Rouge District , Vert District",
+"md": "Hyperspace Lumiose - Poison (4 Star) , Bug (1 Star) , Bug (4 Star)",
+"evo": {
+"kakuna": [
+"l7"
+],
+"beedrill": [
+"l10",
+"mega15"
+]
+}
+},
+"kangaskhan": {
+"za": "Wild Zone 19 , Wild Zone 20",
+"md": "Hyperspace Lumiose - Normal (4 Star)",
+"evo": {
+"kangaskhan": [
+"mega115"
+]
+}
+},
+"kecleon": {
+"za": null,
+"md": "Hyperspace Lumiose - Normal (4 Star)",
+"evo": {}
+},
+"keldeo": {
+"za": null,
+"md": "Hyperspace Lumiose",
+"evo": {}
+},
+"kirlia": {
+"za": "Evolve Ralts",
+"md": "Hyperspace Lumiose - Fighting (4 Star) , Psychic (3 Star) , Psychic (4 Star) , Fairy (4 Star) , Special (5 Star)",
+"evo": {
+"kirlia": [
+"l20"
+],
+"gardevoir": [
+"l30",
+"mega282"
+],
+"gallade": [
+"maledawnstone",
+"mega475"
+]
+}
+},
+"kleavor": {
+"za": null,
+"md": "Hyperspace Lumiose - Bug (4 Star)",
+"evo": {
+"scizor": [
+"trademetalcoat",
+"mega212"
+],
+"kleavor": [
+"blackaugurite"
+]
+}
+},
+"klefki": {
+"za": "Wild Zone 17 , Wild Zone 20 , The Sewers - Main Access , The Sewers - Canal Access",
+"md": "Hyperspace Lumiose - Steel (2 Star) , Fairy (2 Star)",
+"evo": {}
+},
+"krokorok": {
+"za": "Wild Zone 8",
+"md": "Hyperspace Lumiose - Ground (3 Star) , Ground (4 Star) , Dark (3 Star) , Dark (4 Star)",
+"evo": {
+"krokorok": [
+"l29"
+],
+"krookodile": [
+"l40"
+]
+}
+},
+"krookodile": {
+"za": "Wild Zone 20",
+"md": "Hyperspace Lumiose - Ground (4 Star) , Dark (4 Star)",
+"evo": {
+"krokorok": [
+"l29"
+],
+"krookodile": [
+"l40"
+]
+}
+},
+"kyogre": {
+"za": null,
+"md": "Hyperspace Primordial Sea",
+"evo": {
+"kyogre": [
+"mega382"
+]
+}
+},
+"lairon": {
+"za": "Wild Zone 14",
+"md": "Hyperspace Lumiose - Rock (3 Star) , Rock (4 Star) , Steel (3 Star) , Steel (4 Star) , Special (5 Star)",
+"evo": {
+"lairon": [
+"l32"
+],
+"aggron": [
+"l42",
+"mega306"
+]
+}
+},
+"lampent": {
+"za": "Wild Zone 17",
+"md": "Hyperspace Lumiose - Ghost (3 Star) , Ghost (4 Star) , Fire (3 Star) , Fire (4 Star)",
+"evo": {
+"lampent": [
+"l41"
+],
+"chandelure": [
+"duskstone",
+"mega609"
+]
+}
+},
+"larvitar": {
+"za": "Wild Zone 15 , Bleu District (Bleu Sector 7), Jaune District (Jaune Sector 6), Magenta District , Rouge District (Rouge Sector 7), Vert District",
+"md": "Hyperspace Lumiose - Ground (3 Star) , Rock (3 Star) , Rock (4 Star) , Special (5 Star)",
+"evo": {
+"pupitar": [
+"l30"
+],
+"tyranitar": [
+"l55",
+"mega248"
+]
+}
+},
+"latias": {
+"za": null,
+"md": "Hyperspace Lumiose",
+"evo": {
+"latias": [
+"mega380"
+]
+}
+},
+"latios": {
+"za": null,
+"md": "Hyperspace Lumiose",
+"evo": {
+"latios": [
+"mega381"
+]
+}
+},
+"leafeon": {
+"za": "Wild Zone 20",
+"md": "Hyperspace Lumiose - Normal (5 Star) , Grass (4 Star)",
+"evo": {
+"470.shtml": [
+"eeveemonamie"
+]
+}
+},
+"liepard": {
+"za": null,
+"md": "Hyperspace Lumiose - Dark (3 Star)",
+"evo": {
+"liepard": [
+"l20"
+]
+}
+},
+"litleo": {
+"za": "Wild Zone 3",
+"md": "Hyperspace Lumiose - Fire (2 Star) , Fire (4 Star)",
+"evo": {
+"pyroar": [
+"l35",
+"mega668"
+]
+}
+},
+"litwick": {
+"za": "The Sewers - Main Access",
+"md": "Hyperspace Lumiose - Ghost (1 Star) , Ghost (3 Star) , Fire (2 Star) , Fire (3 Star)",
+"evo": {
+"lampent": [
+"l41"
+],
+"chandelure": [
+"duskstone",
+"mega609"
+]
+}
+},
+"lopunny": {
+"za": "Wild Zone 18",
+"md": "Hyperspace Lumiose - Normal (3 Star)",
+"evo": {
+"lopunny": [
+"happiness",
+"mega428"
+]
+}
+},
+"lucario": {
+"za": "Wild Zone 20",
+"md": "Hyperspace Lumiose - Fighting (4 Star) , Steel (4 Star) , Special (5 Star)",
+"evo": {
+"lucario": [
+"happinessday",
+"mega448",
+"mega448z"
+]
+}
+},
+"mabosstiff": {
+"za": null,
+"md": "Hyperspace Lumiose - Dark (4 Star)",
+"evo": {
+"mabosstiff": [
+"l30"
+]
+}
+},
+"machamp": {
+"za": "Wild Zone 20",
+"md": "Hyperspace Lumiose - Fighting (4 Star) , Special (5 Star)",
+"evo": {
+"machoke": [
+"l28"
+],
+"machamp": [
+"trade"
+]
+}
+},
+"machoke": {
+"za": "Wild Zone 12",
+"md": "Hyperspace Lumiose - Fighting (3 Star) , Fighting (4 Star) , Special (5 Star)",
+"evo": {
+"machoke": [
+"l28"
+],
+"machamp": [
+"trade"
+]
+}
+},
+"machop": {
+"za": "Wild Zone 8 , Wild Zone 12",
+"md": "Hyperspace Lumiose - Fighting (1 Star) , Fighting (3 Star)",
+"evo": {
+"machoke": [
+"l28"
+],
+"machamp": [
+"trade"
+]
+}
+},
+"magearna": {
+"za": null,
+"md": "Quasartico Inc.",
+"evo": {
+"magearna": [
+"mega801"
+]
+}
+},
+"magikarp": {
+"za": "Wild Zone 2 , Wild Zone 6 , Bleu District , Jaune District , Magenta District , Rouge District , Vert District",
+"md": "Hyperspace Lumiose - Water (2 Star) , Water (4 Star) , Special (5 Star)",
+"evo": {
+"gyarados": [
+"l20",
+"mega130"
+]
+}
+},
+"malamar": {
+"za": "Wild Zone 20",
+"md": "Hyperspace Lumiose - Psychic (4 Star) , Dark (4 Star)",
+"evo": {
+"malamar": [
+"l303ds",
+"mega687"
+]
+}
+},
+"manectric": {
+"za": "Wild Zone 9 , Lysandre Labs",
+"md": "Hyperspace Lumiose - Electric (3 Star)",
+"evo": {
+"manectric": [
+"l26",
+"mega310"
+]
+}
+},
+"mankey": {
+"za": null,
+"md": "Hyperspace Lumiose - Fighting (1 Star) , Fighting (3 Star)",
+"evo": {
+"primeape": [
+"l28"
+],
+"annihilape": [
+"ragefist"
+]
+}
+},
+"mareep": {
+"za": "Wild Zone 1",
+"md": "Hyperspace Lumiose - Electric (2 Star) , Electric (3 Star)",
+"evo": {
+"flaaffy": [
+"l15"
+],
+"ampharos": [
+"l30",
+"mega181"
+]
+}
+},
+"marowak": {
+"za": null,
+"md": "Hyperspace Lumiose - Ground (4 Star) Alolan Form Hyperspace Lumiose - Fire (4 Star)",
+"evo": {
+"marowak": [
+"l28"
+]
+}
+},
+"marshadow": {
+"za": null,
+"md": "Rouge District (Rouge Sector 1)",
+"evo": {}
+},
+"marshtomp": {
+"za": null,
+"md": "Hyperspace Lumiose - Ground (4 Star) , Water (3 Star) , Water (4 Star)",
+"evo": {
+"marshtomp": [
+"l16"
+],
+"swampert": [
+"l36",
+"mega260"
+]
+}
+},
+"maschiff": {
+"za": null,
+"md": "Hyperspace Lumiose - Dark (1 Star) , Dark (4 Star)",
+"evo": {
+"mabosstiff": [
+"l30"
+]
+}
+},
+"mawile": {
+"za": "Wild Zone 9 , Wild Zone 17 , Bleu District , Jaune District , Magenta District , Rouge District , Vert District",
+"md": "Hyperspace Lumiose - Steel (3 Star) , Fairy (3 Star)",
+"evo": {
+"mawile": [
+"mega303"
+]
+}
+},
+"medicham": {
+"za": "Wild Zone 16 , Wild Zone 20",
+"md": "Hyperspace Lumiose - Fighting (3 Star) , Psychic (3 Star)",
+"evo": {
+"medicham": [
+"l37",
+"mega308"
+]
+}
+},
+"meditite": {
+"za": "Wild Zone 6",
+"md": "Hyperspace Lumiose - Fighting (1 Star) , Fighting (3 Star) , Psychic (1 Star) , Psychic (3 Star)",
+"evo": {
+"medicham": [
+"l37",
+"mega308"
+]
+}
+},
+"meganium": {
+"za": "Evolve Bayleef",
+"md": "Hyperspace Lumiose - Grass (4 Star)",
+"evo": {
+"bayleef": [
+"l16"
+],
+"meganium": [
+"l32",
+"mega154"
+]
+}
+},
+"melmetal": {
+"za": null,
+"md": "Hyperspace Lumiose",
+"evo": {
+"melmetal": [
+"meltan400"
+]
+}
+},
+"meloetta": {
+"za": null,
+"md": "Hyperspace Lumiose",
+"evo": {}
+},
+"meltan": {
+"za": null,
+"md": "Rouge Sector 1",
+"evo": {
+"melmetal": [
+"meltan400"
+]
+}
+},
+"meowstic": {
+"za": "Wild Zone 9",
+"md": "Hyperspace Lumiose - Psychic (4 Star) , Special (5 Star)",
+"evo": {
+"meowstic": [
+"l25",
+"mega678"
+]
+}
+},
+"meowth": {
+"za": null,
+"md": "Hyperspace Lumiose - Normal (1 Star) , Normal (3 Star) Alolan Form Hyperspace Lumiose - Dark (1 Star) , Dark (4 Star) Galarian Form Hyperspace Lumiose - Steel (2 Star) , Steel (4 Star) , Special (5 Star)",
+"evo": {
+"persian": [
+"l28",
+"happiness"
+],
+"perrserker": [
+"l28"
+]
+}
+},
+"metagross": {
+"za": "Wild Zone 20",
+"md": "Evolve Metang",
+"evo": {
+"metang": [
+"l20"
+],
+"metagross": [
+"l45",
+"mega376"
+]
+}
+},
+"metang": {
+"za": "Lysandre Labs",
+"md": "Hyperspace Lumiose - Steel (4 Star)",
+"evo": {
+"metang": [
+"l20"
+],
+"metagross": [
+"l45",
+"mega376"
+]
+}
+},
+"mewtwo": {
+"za": "Lysandre Labs",
+"md": null,
+"evo": {
+"mewtwo": [
+"mewtwonitex",
+"mewtwonitey"
+]
+}
+},
+"milotic": {
+"za": null,
+"md": "Evolve Feebas",
+"evo": {
+"milotic": [
+"levelpokeblock"
+]
+}
+},
+"mimejr.": {
+"za": null,
+"md": "Hyperspace Lumiose - Psychic (1 Star) , Psychic (3 Star) , Fairy (2 Star)",
+"evo": {
+"mr.mime": [
+"levelmimic"
+],
+"mr.rime": [
+"l42"
+]
+}
+},
+"mimikyu": {
+"za": null,
+"md": "Hyperspace Lumiose - Ghost (3 Star)",
+"evo": {}
+},
+"morpeko": {
+"za": null,
+"md": "Hyperspace Lumiose - Electric (3 Star)",
+"evo": {}
+},
+"mr.mime": {
+"za": null,
+"md": "Hyperspace Lumiose - Psychic (3 Star) Galarian Form Hyperspace Lumiose - Ice (3 Star) , Ice (4 Star)",
+"evo": {
+"mr.mime": [
+"levelmimic"
+],
+"mr.rime": [
+"l42"
+]
+}
+},
+"mr.rime": {
+"za": null,
+"md": "Hyperspace Lumiose - Ice (4 Star)",
+"evo": {
+"mr.mime": [
+"levelmimic"
+],
+"mr.rime": [
+"l42"
+]
+}
+},
+"mudkip": {
+"za": null,
+"md": "Hyperspace Lumiose - Water (2 Star) , Water (3 Star) , Water (5 Star)",
+"evo": {
+"marshtomp": [
+"l16"
+],
+"swampert": [
+"l36",
+"mega260"
+]
+}
+},
+"munna": {
+"za": null,
+"md": "Hyperspace Lumiose - Psychic (1 Star) , Psychic (4 Star) , Special (5 Star)",
+"evo": {
+"musharna": [
+"moonstone"
+]
+}
+},
+"musharna": {
+"za": null,
+"md": "Hyperspace Lumiose - Psychic (4 Star) , Special (5 Star)",
+"evo": {
+"musharna": [
+"moonstone"
+]
+}
+},
+"nacli": {
+"za": null,
+"md": "Hyperspace Lumiose - Rock (3 Star)",
+"evo": {
+"naclstack": [
+"l24"
+],
+"garganacl": [
+"l38"
+]
+}
+},
+"naclstack": {
+"za": null,
+"md": "Hyperspace Lumiose - Rock (3 Star) , Rock (4 Star) , Special (5 Star)",
+"evo": {
+"naclstack": [
+"l24"
+],
+"garganacl": [
+"l38"
+]
+}
+},
+"nickit": {
+"za": null,
+"md": "Hyperspace Lumiose - Dark (1 Star) , Dark (3 Star)",
+"evo": {
+"thievul": [
+"l18"
+]
+}
+},
+"noibat": {
+"za": "Wild Zone 15 , Wild Zone 18 , Bleu District , Jaune District , Magenta District , Rouge District , Vert District , Lysandre Labs , The Sewers - Main Access , The Sewers - Canal Access",
+"md": "Hyperspace Lumiose - Flying (3 Star) , Flying (4 Star) , Dragon (3 Star) , Dragon (4 Star) , Special (5 Star)",
+"evo": {
+"noivern": [
+"l48"
+]
+}
+},
+"noivern": {
+"za": "Wild Zone 18 , Wild Zone 20 , Lysandre Labs",
+"md": "Hyperspace Lumiose - Flying (4 Star) , Dragon (4 Star) , Special (5 Star)",
+"evo": {
+"noivern": [
+"l48"
+]
+}
+},
+"numel": {
+"za": "Wild Zone 8",
+"md": "Hyperspace Lumiose - Ground (1 Star) , Ground (4 Star) , Fire (2 Star) , Fire (4 Star)",
+"evo": {
+"camerupt": [
+"l33",
+"mega323"
+]
+}
+},
+"onix": {
+"za": "Wild Zone 14",
+"md": "Hyperspace Lumiose - Ground (1 Star) , Ground (3 Star) , Rock (3 Star) , Steel (4 Star) , Special (5 Star)",
+"evo": {
+"steelix": [
+"trademetalcoat",
+"mega208"
+]
+}
+},
+"overqwil": {
+"za": null,
+"md": "Hyperspace Lumiose - Poison (5 Star)",
+"evo": {
+"overqwil": [
+"barbbarrge"
+]
+}
+},
+"palossand": {
+"za": null,
+"md": "Hyperspace Lumiose - Ground (4 Star)",
+"evo": {
+"palossand": [
+"l42"
+]
+}
+},
+"pancham": {
+"za": "Wild Zone 3",
+"md": "Hyperspace Lumiose - Fighting (1 Star) , Fighting (4 Star) , Dark (4 Star) , Special (5 Star)",
+"evo": {
+"pangoro": [
+"l32dark"
+]
+}
+},
+"pangoro": {
+"za": "Wild Zone 9 , Wild Zone 20",
+"md": "Hyperspace Lumiose - Fighting (4 Star) , Dark (4 Star) , Special (5 Star)",
+"evo": {
+"pangoro": [
+"l32dark"
+]
+}
+},
+"panpour": {
+"za": "Bleu District , Jaune District , Magenta District , Rouge District , Vert District",
+"md": "Hyperspace Lumiose - Water (2 Star) , Water (4 Star) , Special (5 Star)",
+"evo": {
+"simipour": [
+"waterstone"
+]
+}
+},
+"pansage": {
+"za": "Bleu District , Jaune District , Magenta District , Rouge District , Vert District",
+"md": "Hyperspace Lumiose - Grass (2 Star) , Grass (4 Star) , Special (5 Star)",
+"evo": {
+"simisage": [
+"leafstone"
+]
+}
+},
+"pansear": {
+"za": "Bleu District , Jaune District , Magenta District , Rouge District , Vert District",
+"md": "Hyperspace Lumiose - Fire (2 Star) , Fire (4 Star)",
+"evo": {
+"simisear": [
+"firestone"
+]
+}
+},
+"patrat": {
+"za": "Wild Zone 2 , Wild Zone 4 , Wild Zone 5 , Bleu District , Jaune District , Magenta District , Rouge District , Vert District , The Sewers - Main Access",
+"md": "Hyperspace Lumiose - Normal (1 Star) , Normal (2 Star)",
+"evo": {
+"watchog": [
+"l20"
+]
+}
+},
+"perrserker": {
+"za": null,
+"md": "Hyperspace Lumiose - Steel (4 Star) , Special (5 Star)",
+"evo": {
+"persian": [
+"l28",
+"happiness"
+],
+"perrserker": [
+"l28"
+]
+}
+},
+"persian": {
+"za": null,
+"md": "Hyperspace Lumiose - Normal (3 Star) Alolan Form Hyperspace Lumiose - Dark (4 Star)",
+"evo": {
+"persian": [
+"l28",
+"happiness"
+],
+"perrserker": [
+"l28"
+]
+}
+},
+"phantump": {
+"za": "Wild Zone 13",
+"md": "Hyperspace Lumiose - Ghost (1 Star) , Ghost (4 Star) , Grass (4 Star)",
+"evo": {
+"trevenant": [
+"trade"
+]
+}
+},
+"pichu": {
+"za": "Wild Zone 1 , Bleu District , Jaune District , Magenta District , Rouge District , Vert District",
+"md": "Hyperspace Lumiose - Electric (2 Star)",
+"evo": {
+"pikachu": [
+"happiness"
+],
+"raichu": [
+"thunderstone",
+"mega26x",
+"mega26y"
+]
+}
+},
+"pidgeot": {
+"za": "Bleu District , Jaune District , Magenta District , Rouge District , Vert District",
+"md": "Hyperspace Lumiose - Normal (4 Star) , Flying (4 Star)",
+"evo": {
+"pidgeotto": [
+"l18"
+],
+"pidgeot": [
+"l36",
+"mega18"
+]
+}
+},
+"pidgeotto": {
+"za": "Wild Zone 5 , Bleu District , Jaune District , Magenta District , Rouge District , Vert District",
+"md": "Hyperspace Lumiose - Normal (3 Star) , Normal (4 Star) , Flying (3 Star) , Flying (4 Star)",
+"evo": {
+"pidgeotto": [
+"l18"
+],
+"pidgeot": [
+"l36",
+"mega18"
+]
+}
+},
+"pidgey": {
+"za": "Wild Zone 1 , Wild Zone 5 , Bleu District , Jaune District , Magenta District , Rouge District , Vert District",
+"md": "Hyperspace Lumiose - Normal (1 Star) , Normal (2 Star) , Normal (3 Star) , Flying (1 Star) , Flying (3 Star)",
+"evo": {
+"pidgeotto": [
+"l18"
+],
+"pidgeot": [
+"l36",
+"mega18"
+]
+}
+},
+"pignite": {
+"za": "Evolve Tepig",
+"md": "Hyperspace Lumiose - Fighting (3 Star) , Fighting (4 Star) , Fire (3 Star) , Fire (4 Star)",
+"evo": {
+"pignite": [
+"l17"
+],
+"emboar": [
+"l36",
+"mega500"
+]
+}
+},
+"pikachu": {
+"za": "Wild Zone 3 , Wild Zone 6 , Vert District",
+"md": "Hyperspace Lumiose - Electric (2 Star) , Electric (4 Star)",
+"evo": {
+"pikachu": [
+"happiness"
+],
+"raichu": [
+"thunderstone",
+"mega26x",
+"mega26y"
+]
+}
+},
+"pinsir": {
+"za": "Wild Zone 13 , Wild Zone 20",
+"md": "Hyperspace Lumiose - Bug (4 Star)",
+"evo": {
+"pinsir": [
+"mega127"
+]
+}
+},
+"porygon-z": {
+"za": null,
+"md": "Hyperspace Lumiose - Normal (5 Star)",
+"evo": {
+"porygon2": [
+"tradeupgrade"
+],
+"porygon-z": [
+"tradedubiousdisc"
+]
+}
+},
+"porygon": {
+"za": null,
+"md": "Hyperspace Lumiose - Normal (3 Star) , Normal (5 Star)",
+"evo": {
+"porygon2": [
+"tradeupgrade"
+],
+"porygon-z": [
+"tradedubiousdisc"
+]
+}
+},
+"porygon2": {
+"za": null,
+"md": "Hyperspace Lumiose - Normal (5 Star)",
+"evo": {
+"porygon2": [
+"tradeupgrade"
+],
+"porygon-z": [
+"tradedubiousdisc"
+]
+}
+},
+"primeape": {
+"za": null,
+"md": "Hyperspace Lumiose - Fighting (3 Star)",
+"evo": {
+"primeape": [
+"l28"
+],
+"annihilape": [
+"ragefist"
+]
+}
+},
+"pumpkaboo": {
+"za": "Wild Zone 15",
+"md": "Hyperspace Lumiose - Ghost (1 Star) , Ghost (4 Star) , Grass (4 Star)",
+"evo": {
+"gourgeist": [
+"trade"
+]
+}
+},
+"pupitar": {
+"za": "Evolve Larvitar",
+"md": "Hyperspace Lumiose - Rock (4 Star) , Dark (4 Star) , Special (5 Star)",
+"evo": {
+"pupitar": [
+"l30"
+],
+"tyranitar": [
+"l55",
+"mega248"
+]
+}
+},
+"purrloin": {
+"za": null,
+"md": "Hyperspace Lumiose - Dark (1 Star) , Dark (3 Star)",
+"evo": {
+"liepard": [
+"l20"
+]
+}
+},
+"pyroar": {
+"za": "Wild Zone 17",
+"md": "Hyperspace Lumiose - Fire (4 Star)",
+"evo": {
+"pyroar": [
+"l35",
+"mega668"
+]
+}
+},
+"quilladin": {
+"za": "Evolve Chespin",
+"md": "Hyperspace Lumiose - Fighting (4 Star) , Grass (3 Star) , Grass (4 Star)",
+"evo": {
+"quilladin": [
+"l16"
+],
+"chesnaught": [
+"l36",
+"mega652"
+]
+}
+},
+"qwilfish": {
+"za": null,
+"md": "Hyperspace Lumiose - Water (2 Star) Hisuian Form Poison (3 Star) , Poison (5 Star) ,",
+"evo": {
+"overqwil": [
+"barbbarrge"
+]
+}
+},
+"raichu": {
+"za": "Wild Zone 20",
+"md": "Hyperspace Lumiose - Electric (4 Star) Alolan Form Hyperspace Lumiose - Electric (4 Star)",
+"evo": {
+"pikachu": [
+"happiness"
+],
+"raichu": [
+"thunderstone",
+"mega26x",
+"mega26y"
+]
+}
+},
+"ralts": {
+"za": "Bleu District , Jaune District , Magenta District , Rouge District (Rouge Sector 7), Vert District",
+"md": "Hyperspace Lumiose - Psychic (3 Star)",
+"evo": {
+"kirlia": [
+"l20"
+],
+"gardevoir": [
+"l30",
+"mega282"
+],
+"gallade": [
+"maledawnstone",
+"mega475"
+]
+}
+},
+"rayquaza": {
+"za": null,
+"md": "Hyperspace Sky Pillar",
+"evo": {
+"rayquaza": [
+"mega384"
+]
+}
+},
+"riolu": {
+"za": "Bleu District (Bleu Sector 5), Jaune District , Magenta District , Rouge District (Rouge Sector 4), Vert District (Vert Sector 8)",
+"md": "Hyperspace Lumiose - Fighting (4 Star) , Steel (4 Star) , Special (5 Star)",
+"evo": {
+"lucario": [
+"happinessday",
+"mega448",
+"mega448z"
+]
+}
+},
+"rookidee": {
+"za": null,
+"md": "Hyperspace Lumiose - Flying (1 Star) , Flying (3 Star)",
+"evo": {
+"corvisquire": [
+"l18"
+],
+"corviknight": [
+"l38"
+]
+}
+},
+"roselia": {
+"za": "Wild Zone 7",
+"md": "Hyperspace Lumiose - Poison (3 Star) , Poison (4 Star) , Grass (3 Star) , Grass (4 Star) , Special (5 Star)",
+"evo": {
+"roselia": [
+"happinessday"
+],
+"roserade": [
+"shinystone"
+]
+}
+},
+"roserade": {
+"za": "Wild Zone 20",
+"md": "Hyperspace Lumiose - Poison (4 Star) , Grass (4 Star) , Special (5 Star)",
+"evo": {
+"roselia": [
+"happinessday"
+],
+"roserade": [
+"shinystone"
+]
+}
+},
+"rotom": {
+"za": null,
+"md": "Hyperspace Lumiose - Electric (5 Star)",
+"evo": {}
+},
+"runerigus": {
+"za": null,
+"md": "Evolve Galarian Yamask",
+"evo": {
+"cofagrigus": [
+"l34"
+],
+"runerigus": [
+"ldamage"
+]
+}
+},
+"sableye": {
+"za": "Wild Zone 9 , Wild Zone 20",
+"md": "Hyperspace Lumiose - Ghost (1 Star) , Dark (1 Star)",
+"evo": {
+"sableye": [
+"mega302"
+]
+}
+},
+"salamence": {
+"za": "Wild Zone 18",
+"md": "Evolve Shelgon",
+"evo": {
+"shelgon": [
+"l30"
+],
+"salamence": [
+"l50",
+"mega373"
+]
+}
+},
+"sandile": {
+"za": "Wild Zone 8",
+"md": "Hyperspace Lumiose - Ground (1 Star) , Ground (3 Star) , Dark (1 Star) , Dark (3 Star)",
+"evo": {
+"krokorok": [
+"l29"
+],
+"krookodile": [
+"l40"
+]
+}
+},
+"sandygast": {
+"za": null,
+"md": "Hyperspace Lumiose - Ground (1 Star) , Ground (4 Star)",
+"evo": {
+"palossand": [
+"l42"
+]
+}
+},
+"sawk": {
+"za": null,
+"md": "Hyperspace Lumiose - Fighting (3 Star) , Special (5 Star)",
+"evo": {}
+},
+"scatterbug": {
+"za": "Wild Zone 1 , Bleu District , Jaune District , Magenta District , Rouge District , Vert District",
+"md": "Hyperspace Lumiose - Flying (1 Star) , Bug (1 Star)",
+"evo": {
+"spewpa": [
+"l9"
+],
+"vivillon": [
+"l12"
+]
+}
+},
+"sceptile": {
+"za": null,
+"md": "Hyperspace Lumiose - Grass (4 Star) , Grass (5 Star)",
+"evo": {
+"grovyle": [
+"l16"
+],
+"sceptile": [
+"l36",
+"mega254"
+]
+}
+},
+"scizor": {
+"za": "Evolve Scyther",
+"md": "Hyperspace Lumiose - Bug (4 Star) , Steel (4 Star)",
+"evo": {
+"scizor": [
+"trademetalcoat",
+"mega212"
+],
+"kleavor": [
+"blackaugurite"
+]
+}
+},
+"scolipede": {
+"za": "Wild Zone 15 , Wild Zone 20",
+"md": "Hyperspace Lumiose - Poison (4 Star) , Bug (4 Star)",
+"evo": {
+"whirlipede": [
+"l22"
+],
+"scolipede": [
+"l30",
+"mega545"
+]
+}
+},
+"scovillain": {
+"za": null,
+"md": "Hyperspace Lumiose - Fire (3 Star) , Grass (3 Star)",
+"evo": {
+"scovillain": [
+"firestone",
+"mega952"
+]
+}
+},
+"scrafty": {
+"za": "Wild Zone 20 , Bleu District , Jaune District , Magenta District , Rouge District , Vert District",
+"md": "Hyperspace Lumiose - Fighting (4 Star) , Dark (4 Star) , Special (5 Star)",
+"evo": {
+"scrafty": [
+"l39",
+"mega560"
+]
+}
+},
+"scraggy": {
+"za": "Bleu District , Jaune District , Magenta District , Rouge District , Vert District , The Sewers - Main Access",
+"md": "Hyperspace Lumiose - Fighting (4 Star) , Dark (1 Star) , Dark (4 Star) , Special (5 Star)",
+"evo": {
+"scrafty": [
+"l39",
+"mega560"
+]
+}
+},
+"scyther": {
+"za": "Wild Zone 13",
+"md": "Hyperspace Lumiose - Bug (4 Star) , Steel (4 Star)",
+"evo": {
+"scizor": [
+"trademetalcoat",
+"mega212"
+],
+"kleavor": [
+"blackaugurite"
+]
+}
+},
+"seviper": {
+"za": null,
+"md": "Hyperspace Lumiose - Poison (3 Star)",
+"evo": {}
+},
+"sharpedo": {
+"za": "Wild Zone 10",
+"md": "Hyperspace Lumiose - Water (3 Star) , Dark (3 Star)",
+"evo": {
+"sharpedo": [
+"l30",
+"mega319"
+]
+}
+},
+"shelgon": {
+"za": "Evolve Bagon",
+"md": "Hyperspace Lumiose - Dragon (4 Star)",
+"evo": {
+"shelgon": [
+"l30"
+],
+"salamence": [
+"l50",
+"mega373"
+]
+}
+},
+"shroodle": {
+"za": null,
+"md": "Hyperspace Lumiose - Normal (3 Star) , Poison (1 Star) , Poison (4 Star)",
+"evo": {
+"grafaiai": [
+"l28"
+]
+}
+},
+"shuppet": {
+"za": "Wild Zone 7 , Wild Zone 15 , Bleu District , Jaune District , Magenta District , Rouge District , Vert District",
+"md": "Hyperspace Lumiose - Ghost (1 Star) , Ghost (3 Star)",
+"evo": {
+"banette": [
+"l37",
+"mega354"
+]
+}
+},
+"simipour": {
+"za": "Wild Zone 20",
+"md": "Hyperspace Lumiose - Water (4 Star) , Special (5 Star)",
+"evo": {
+"simipour": [
+"waterstone"
+]
+}
+},
+"simisage": {
+"za": "Wild Zone 20",
+"md": "Hyperspace Lumiose - Grass (4 Star) , Special (5 Star)",
+"evo": {
+"simisage": [
+"leafstone"
+]
+}
+},
+"simisear": {
+"za": "Wild Zone 20",
+"md": "Hyperspace Lumiose - Fire (4 Star)",
+"evo": {
+"simisear": [
+"firestone"
+]
+}
+},
+"sirfetch'd": {
+"za": null,
+"md": "Evolve Galarian Farfetch'd",
+"evo": {
+"sirfetch'd": [
+"lbattles"
+]
+}
+},
+"skarmory": {
+"za": "Wild Zone 17 , Wild Zone 20",
+"md": "Hyperspace Lumiose - Flying (4 Star) , Steel (3 Star)",
+"evo": {
+"skarmory": [
+"mega227"
+]
+}
+},
+"skiddo": {
+"za": "Wild Zone 3",
+"md": "Hyperspace Lumiose - Grass (2 Star) , Grass (3 Star)",
+"evo": {
+"gogoat": [
+"l32"
+]
+}
+},
+"skrelp": {
+"za": "The Sewers - Main Access , The Sewers - Canal Access",
+"md": "Hyperspace Lumiose - Poison (3 Star) , Poison (4 Star) , Dragon (4 Star)",
+"evo": {
+"dragalge": [
+"l48",
+"mega691"
+]
+}
+},
+"sliggoo": {
+"za": "Bleu District , Jaune District , Magenta District , Rouge District , Vert District",
+"md": "Hyperspace Lumiose - Dragon (4 Star) Hisuian Form Hyperspace Lumiose - Dragon (5 Star)",
+"evo": {
+"sliggoo": [
+"l40"
+],
+"goodra": [
+"l50rain",
+"l50rain"
+]
+}
+},
+"slowbro": {
+"za": "Wild Zone 11",
+"md": "Hyperspace Lumiose - Water (4 Star) , Psychic (4 Star) Galarian Form Hyperspace Lumiose - Poison (5 Star)",
+"evo": {
+"slowbro": [
+"l37",
+"mega80",
+"galaricacuff"
+],
+"slowking": [
+"tradeking'srock",
+"galaricawreath"
+]
+}
+},
+"slowking": {
+"za": "Evolve Slowpoke",
+"md": "Hyperspace Lumiose - Water (4 Star) , Psychic (4 Star) Galarian Form Hyperspace Lumiose - Poison (5 Star)",
+"evo": {
+"slowbro": [
+"l37",
+"mega80",
+"galaricacuff"
+],
+"slowking": [
+"tradeking'srock",
+"galaricawreath"
+]
+}
+},
+"slowpoke": {
+"za": "Wild Zone 10 , Wild Zone 11",
+"md": "Hyperspace Lumiose - Water (3 Star) , Water (4 Star) , Psychic (4 Star) Galarian Form Hyperspace Lumiose - Poison (5 Star) , Psychic (3 Star)",
+"evo": {
+"slowbro": [
+"l37",
+"mega80",
+"galaricacuff"
+],
+"slowking": [
+"tradeking'srock",
+"galaricawreath"
+]
+}
+},
+"slurpuff": {
+"za": "Evolve Swirlix",
+"md": "Hyperspace Lumiose - Fairy (4 Star) , Special (5 Star)",
+"evo": {
+"slurpuff": [
+"tradewhippeddream"
+]
+}
+},
+"snorunt": {
+"za": "Wild Zone 12",
+"md": "Hyperspace Lumiose - Ice (3 Star) , Ice (4 Star)",
+"evo": {
+"glalie": [
+"l42",
+"mega362"
+],
+"froslass": [
+"femaledawnstone",
+"mega478"
+]
+}
+},
+"snover": {
+"za": "Wild Zone 12",
+"md": "Hyperspace Lumiose - Grass (4 Star) , Ice (3 Star) , Ice (4 Star)",
+"evo": {
+"abomasnow": [
+"l40",
+"mega460"
+]
+}
+},
+"spewpa": {
+"za": "Wild Zone 4 , Bleu District , Jaune District , Magenta District , Rouge District , Vert District",
+"md": "Hyperspace Lumiose - Flying (1 Star) , Bug (1 Star)",
+"evo": {
+"spewpa": [
+"l9"
+],
+"vivillon": [
+"l12"
+]
+}
+},
+"spinarak": {
+"za": "Wild Zone 4 , Bleu District , Jaune District , Magenta District , Rouge District , Vert District",
+"md": "Hyperspace Lumiose - Poison (3 Star) , Bug (1 Star)",
+"evo": {
+"ariados": [
+"l22"
+]
+}
+},
+"spoink": {
+"za": null,
+"md": "Hyperspace Lumiose - Psychic (1 Star) , Psychic (4 Star)",
+"evo": {
+"grumpig": [
+"l32"
+]
+}
+},
+"spritzee": {
+"za": "Bleu District , Jaune District , Magenta District , Rouge District , Vert District",
+"md": "Hyperspace Lumiose - Fairy (2 Star) , Fairy (3 Star)",
+"evo": {
+"aromatisse": [
+"tradesachet"
+]
+}
+},
+"squawkabilly": {
+"za": null,
+"md": "Hyperspace Lumiose - Normal (1 Star)",
+"evo": {}
+},
+"squirtle": {
+"za": "Wild Zone 20",
+"md": "Hyperspace Lumiose - Water (2 Star) , Water (3 Star) , Water (5 Star)",
+"evo": {
+"wartortle": [
+"l16"
+],
+"blastoise": [
+"l36",
+"mega9"
+]
+}
+},
+"staraptor": {
+"za": null,
+"md": "Hyperspace Lumiose - Normal (4 Star)",
+"evo": {
+"staravia": [
+"l14"
+],
+"staraptor": [
+"l34",
+"mega398"
+]
+}
+},
+"staravia": {
+"za": null,
+"md": "Hyperspace Lumiose - Normal (2 Star) , Normal (4 Star) , Flying (3 Star)",
+"evo": {
+"staravia": [
+"l14"
+],
+"staraptor": [
+"l34",
+"mega398"
+]
+}
+},
+"starly": {
+"za": null,
+"md": "Hyperspace Lumiose - Normal (1 Star) , Normal (2 Star) , Flying (1 Star) , Flying (3 Star)",
+"evo": {
+"staravia": [
+"l14"
+],
+"staraptor": [
+"l34",
+"mega398"
+]
+}
+},
+"starmie": {
+"za": "Wild Zone 16 , Wild Zone 20",
+"md": "Hyperspace Lumiose - Water (4 Star) , Psychic (4 Star)",
+"evo": {
+"starmie": [
+"waterstone",
+"mega121"
+]
+}
+},
+"staryu": {
+"za": "Wild Zone 2 , Wild Zone 10 , Bleu District , Magenta District",
+"md": "Hyperspace Lumiose - Water (2 Star) , Water (4 Star) , Psychic (4 Star)",
+"evo": {
+"starmie": [
+"waterstone",
+"mega121"
+]
+}
+},
+"steelix": {
+"za": "Wild Zone 3 (Story Only)",
+"md": "Hyperspace Lumiose - Steel (4 Star) , Special (5 Star)",
+"evo": {
+"steelix": [
+"trademetalcoat",
+"mega208"
+]
+}
+},
+"stunfisk": {
+"za": "Wild Zone 11 , Wild Zone 20",
+"md": "Hyperspace Lumiose - Ground (3 Star) , Ground (4 Star) Galarian Form Hyperspace Lumiose - Ground (4 Star)",
+"evo": {}
+},
+"swablu": {
+"za": "Wild Zone 6 , Wild Zone 18 , Bleu District , Jaune District , Magenta District , Rouge District , Vert District",
+"md": "Hyperspace Lumiose - Flying (1 Star) , Flying (3 Star) , Dragon (3 Star) , Special (5 Star)",
+"evo": {
+"altaria": [
+"l35",
+"mega334"
+]
+}
+},
+"swalot": {
+"za": null,
+"md": "Hyperspace Lumiose - Poison (4 Star)",
+"evo": {
+"swalot": [
+"l26"
+]
+}
+},
+"swampert": {
+"za": null,
+"md": "Hyperspace Lumiose - Ground (4 Star) , Water (4 Star) , Water (5 Star)",
+"evo": {
+"marshtomp": [
+"l16"
+],
+"swampert": [
+"l36",
+"mega260"
+]
+}
+},
+"swirlix": {
+"za": "Bleu District , Jaune District , Magenta District , Rouge District , Vert District",
+"md": "Hyperspace Lumiose - Fairy (2 Star) , Fairy (4 Star) , Special (5 Star)",
+"evo": {
+"slurpuff": [
+"tradewhippeddream"
+]
+}
+},
+"sylveon": {
+"za": "Wild Zone 20",
+"md": "Hyperspace Lumiose - Normal (5 Star) , Fairy (4 Star)",
+"evo": {
+"470.shtml": [
+"eeveemonamie"
+]
+}
+},
+"talonflame": {
+"za": "Wild Zone 20 , Bleu District , Jaune District , Magenta District , Rouge District , Vert District",
+"md": "Hyperspace Lumiose - Flying (4 Star) , Fire (4 Star)",
+"evo": {
+"fletchinder": [
+"l17"
+],
+"talonflame": [
+"l35"
+]
+}
+},
+"tatsugiri": {
+"za": null,
+"md": "Hyperspace Lumiose - Water (4 Star)",
+"evo": {
+"tatsugiri": [
+"mega978"
+]
+}
+},
+"tepig": {
+"za": "Wild Zone 20",
+"md": "Hyperspace Lumiose - Fighting (3 Star) , Fire (2 Star) , Fire (3 Star)",
+"evo": {
+"pignite": [
+"l17"
+],
+"emboar": [
+"l36",
+"mega500"
+]
+}
+},
+"terrakion": {
+"za": null,
+"md": "Hyperspace Lumiose",
+"evo": {}
+},
+"thievul": {
+"za": null,
+"md": "Hyperspace Lumiose - Dark (3 Star)",
+"evo": {
+"thievul": [
+"l18"
+]
+}
+},
+"throh": {
+"za": null,
+"md": "Hyperspace Lumiose - Fighting (3 Star) , Special (5 Star)",
+"evo": {}
+},
+"tinkatink": {
+"za": null,
+"md": "Hyperspace Lumiose - Steel (2 Star) , Steel (3 Star)",
+"evo": {
+"tinkatuff": [
+"l24"
+],
+"tinkaton": [
+"l38"
+]
+}
+},
+"tinkaton": {
+"za": null,
+"md": "Hyperspace Lumiose - Steel (4 Star) , Fairy (4 Star)",
+"evo": {
+"tinkatuff": [
+"l24"
+],
+"tinkaton": [
+"l38"
+]
+}
+},
+"tinkatuff": {
+"za": null,
+"md": "Hyperspace Lumiose - Steel (3 Star) , Steel (4 Star) , Fairy (4 Star)",
+"evo": {
+"tinkatuff": [
+"l24"
+],
+"tinkaton": [
+"l38"
+]
+}
+},
+"torchic": {
+"za": null,
+"md": "Hyperspace Lumiose - Fire (2 Star) , Fire (3 Star) , Fire (5 Star)",
+"evo": {
+"combusken": [
+"l16"
+],
+"blaziken": [
+"l36",
+"mega257"
+]
+}
+},
+"totodile": {
+"za": "Wild Zone 20",
+"md": "Hyperspace Lumiose - Water (2 Star) , Water (3 Star)",
+"evo": {
+"croconaw": [
+"l18"
+],
+"feraligatr": [
+"l30",
+"mega160"
+]
+}
+},
+"toxel": {
+"za": null,
+"md": "Hyperspace Lumiose - Electric (2 Star) , Electric (4 Star)",
+"evo": {
+"toxtricity": [
+"nature30",
+"nature30"
+]
+}
+},
+"toxtricity": {
+"za": null,
+"md": "Hyperspace Lumiose - Electric (4 Star)",
+"evo": {
+"toxtricity": [
+"nature30",
+"nature30"
+]
+}
+},
+"treecko": {
+"za": null,
+"md": "Hyperspace Lumiose - Grass (2 Star) , Grass (3 Star) , Grass (5 Star)",
+"evo": {
+"grovyle": [
+"l16"
+],
+"sceptile": [
+"l36",
+"mega254"
+]
+}
+},
+"trevenant": {
+"za": "Wild Zone 13 , Wild Zone 15",
+"md": "Hyperspace Lumiose - Ghost (4 Star) , Grass (4 Star)",
+"evo": {
+"trevenant": [
+"trade"
+]
+}
+},
+"trubbish": {
+"za": "Bleu District , Jaune District , Magenta District , Rouge District , Vert District",
+"md": "Hyperspace Lumiose - Poison (1 Star) , Poison (4 Star)",
+"evo": {
+"garbodor": [
+"l36"
+]
+}
+},
+"tynamo": {
+"za": "Wild Zone 10",
+"md": "Hyperspace Lumiose - Electric (2 Star) , Electric (3 Star)",
+"evo": {
+"eelektrik": [
+"l39"
+],
+"eelektross": [
+"thunderstone",
+"mega604"
+]
+}
+},
+"tyranitar": {
+"za": "Wild Zone 20",
+"md": "Hyperspace Lumiose - Dark (4 Star)",
+"evo": {
+"pupitar": [
+"l30"
+],
+"tyranitar": [
+"l55",
+"mega248"
+]
+}
+},
+"tyrantrum": {
+"za": "Evolve Tyrunt",
+"md": "Hyperspace Lumiose - Rock (5 Star)",
+"evo": {
+"tyrantrum": [
+"lday39"
+]
+}
+},
+"tyrunt": {
+"za": "Revive Fossil",
+"md": "Hyperspace Lumiose - Rock (3 Star) , Rock (5 Star)",
+"evo": {
+"tyrantrum": [
+"lday39"
+]
+}
+},
+"umbreon": {
+"za": "Evolve Eevee",
+"md": "Hyperspace Lumiose - Normal (5 Star) , Dark (4 Star)",
+"evo": {
+"470.shtml": [
+"eeveemonamie"
+]
+}
+},
+"vanillish": {
+"za": "Evolve Vanillite",
+"md": "Hyperspace Lumiose - Ice (3 Star) , Ice (4 Star)",
+"evo": {
+"vanillish": [
+"l35"
+],
+"vanilluxe": [
+"l47"
+]
+}
+},
+"vanillite": {
+"za": "Wild Zone 7 , Wild Zone 12",
+"md": "Hyperspace Lumiose - Ice (3 Star)",
+"evo": {
+"vanillish": [
+"l35"
+],
+"vanilluxe": [
+"l47"
+]
+}
+},
+"vanilluxe": {
+"za": "Wild Zone 20",
+"md": "Hyperspace Lumiose - Ice (4 Star)",
+"evo": {
+"vanillish": [
+"l35"
+],
+"vanilluxe": [
+"l47"
+]
+}
+},
+"vaporeon": {
+"za": "Wild Zone 20",
+"md": "Hyperspace Lumiose - Normal (5 Star) , Water (4 Star)",
+"evo": {
+"470.shtml": [
+"eeveemonamie"
+]
+}
+},
+"venipede": {
+"za": "Wild Zone 5",
+"md": "Hyperspace Lumiose - Poison (1 Star) , Bug (1 Star)",
+"evo": {
+"whirlipede": [
+"l22"
+],
+"scolipede": [
+"l30",
+"mega545"
+]
+}
+},
+"venusaur": {
+"za": "Evolve Ivysaur",
+"md": "Hyperspace Lumiose - Poison (4 Star) , Grass (4 Star) , Grass (5 Star)",
+"evo": {
+"ivysaur": [
+"l16"
+],
+"venusaur": [
+"l32",
+"mega3"
+]
+}
+},
+"victreebel": {
+"za": "Wild Zone 20",
+"md": "Hyperspace Lumiose - Poison (4 Star) , Grass (4 Star) , Special (5 Star)",
+"evo": {
+"weepinbell": [
+"l21"
+],
+"victreebel": [
+"leafstone",
+"mega71"
+]
+}
+},
+"virizion": {
+"za": null,
+"md": "Hyperspace Lumiose",
+"evo": {}
+},
+"vivillon": {
+"za": "Wild Zone 13 , Wild Zone 20 , Bleu District , Jaune District , Magenta District , Rouge District , Vert District",
+"md": "Hyperspace Lumiose - Flying (1 Star) , Bug (1 Star)",
+"evo": {
+"spewpa": [
+"l9"
+],
+"vivillon": [
+"l12"
+]
+}
+},
+"volcanion": {
+"za": null,
+"md": "Pok\u00e9mon Research Lab",
+"evo": {}
+},
+"wartortle": {
+"za": "Evolve Squirtle",
+"md": "Hyperspace Lumiose - Water (3 Star) , Water (4 Star)",
+"evo": {
+"wartortle": [
+"l16"
+],
+"blastoise": [
+"l36",
+"mega9"
+]
+}
+},
+"watchog": {
+"za": "Wild Zone 10",
+"md": "Hyperspace Lumiose - Normal (2 Star)",
+"evo": {
+"watchog": [
+"l20"
+]
+}
+},
+"weedle": {
+"za": "Wild Zone 1 , Bleu District , Jaune District , Magenta District , Rouge District , Vert District",
+"md": "Hyperspace Lumiose - Bug (1 Star)",
+"evo": {
+"kakuna": [
+"l7"
+],
+"beedrill": [
+"l10",
+"mega15"
+]
+}
+},
+"weepinbell": {
+"za": "Wild Zone 13",
+"md": "Hyperspace Lumiose - Poison (3 Star) , Poison (4 Star) , Grass (3 Star) , Grass (4 Star) , Special (5 Star)",
+"evo": {
+"weepinbell": [
+"l21"
+],
+"victreebel": [
+"leafstone",
+"mega71"
+]
+}
+},
+"whirlipede": {
+"za": "Wild Zone 5 , Wild Zone 15",
+"md": "Hyperspace Lumiose - Poison (4 Star) , Bug (4 Star)",
+"evo": {
+"whirlipede": [
+"l22"
+],
+"scolipede": [
+"l30",
+"mega545"
+]
+}
+},
+"wigglytuff": {
+"za": null,
+"md": "Hyperspace Lumiose - Fairy (4 Star) , Special (5 Star)",
+"evo": {
+"jigglypuff": [
+"happiness"
+],
+"wigglytuff": [
+"moonstone"
+]
+}
+},
+"wimpod": {
+"za": null,
+"md": "Hyperspace Lumiose - Bug (1 Star) , Water (3 Star)",
+"evo": {
+"golisopod": [
+"l30",
+"mega768"
+]
+}
+},
+"xerneas": {
+"za": "Wild Zone 11",
+"md": null,
+"evo": {}
+},
+"yamask": {
+"za": null,
+"md": "Hyperspace Lumiose - Ghost (1 Star) , Ghost (4 Star) Galarian Form Hyperspace Lumiose - Ground (3 Star) , Ghost (3 Star)",
+"evo": {
+"cofagrigus": [
+"l34"
+],
+"runerigus": [
+"ldamage"
+]
+}
+},
+"yveltal": {
+"za": "Rouge District (Rouge Sector 2)",
+"md": null,
+"evo": {}
+},
+"zangoose": {
+"za": null,
+"md": "Hyperspace Lumiose - Normal (2 Star)",
+"evo": {}
+},
+"zeraora": {
+"za": null,
+"md": "Hyperspace Lumiose",
+"evo": {
+"zeraora": [
+"mega807"
+]
+}
+},
+"zubat": {
+"za": null,
+"md": "Hyperspace Lumiose - Flying (3 Star) , Poison (1 Star)",
+"evo": {
+"golbat": [
+"l22"
+],
+"crobat": [
+"happiness"
+]
+}
+},
+"zygarde": {
+"za": "Wild Zone 20",
+"md": null,
+"evo": {
+"zygarde": [
+"mega384",
+"mega718"
+]
+}
+}
+}

@@ -1,0 +1,13 @@
+{"gkey":"gHg","label":{"en":"HeartGold & SoulSilver","ja":"ハートゴールド・ソウルシルバー","fr":"Or HeartGold et Argent SoulSilver","de":"HeartGold & SoulSilver","ko":"하트골드·소울실버","zh-Hant":"心金／魂銀","zh-Hans":"心金／魂银"},
+ "cardkey":"hg","prefix":"PHGSS1-",
+ "name":{"en":"Pokémon HeartGold & SoulSilver","ja":"ポケットモンスター ハートゴールド・ソウルシルバー","fr":"Pokémon Or HeartGold et Argent SoulSilver","de":"Pokémon HeartGold und SoulSilver","ko":"포켓몬스터 하트골드·소울실버","zh-Hant":"寶可夢 心金／魂銀","zh-Hans":"宝可梦 心金／魂银"},
+ "desc":{"en":"A route through Johto's eight Gyms and on through Kanto to the Johto Pokédex (all 256), with an area view and every legendary.",
+  "ja":"ジョウトの8つのジムからカントーまでめぐり、ジョウト図鑑（256匹）を埋めるルート。場所別表示と伝説のポケモンにも対応。",
+  "fr":"Un itinéraire à travers les huit Arènes de Johto puis Kanto jusqu'au Pokédex de Johto (256), avec une vue par lieu et tous les légendaires.",
+  "de":"Eine Route durch Johtos acht Arenen und weiter durch Kanto bis zum Johto-Pokédex (alle 256), mit Ortsansicht und allen Legendären.",
+  "ko":"성도의 8개 체육관을 거쳐 관동까지 돌며 성도도감(256종)을 채우는 루트. 장소별 보기와 전설의 포켓몬 포함.",
+  "zh-Hant":"走過城都8座道館再到關都、填滿城都圖鑑（256隻）的路線，並包含地點檢視與所有傳說寶可夢。",
+  "zh-Hans":"走过城都8座道馆再到关都、填满城都图鉴（256只）的路线，并包含地点查看与所有传说宝可梦。"},
+ "readme_row":"| Pokémon HeartGold & SoulSilver | [Open](https://mostafarlotfi.github.io/pokedex-tracker/hgss/) | Pokédex route (Johto 256, gym by gym and on through Kanto, with an area view) · Legendaries |",
+ "readme_goal":"For HeartGold & SoulSilver it's every legendary, including the orb legendaries from the post-game.",
+ "readme_src":"HeartGold & SoulSilver locations, wild encounters, evolutions and legendaries come from [Serebii](https://www.serebii.net/heartgoldsoulsilver/)."}

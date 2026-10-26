@@ -1,0 +1,89 @@
+/x/acuity-lakefront.shtml|Acuity Lakefront
+/x/canalave-city.shtml|Canalave City
+/x/canalave-city.shtml|Canalave City
+/x/celestic-town.shtml|Celestic Town
+/x/distortion-world.shtml|Distortion World
+/x/eterna-city.shtml|Eterna City
+/x/eterna-city.shtml|Eterna City
+/x/eterna-forest.shtml|Eterna Forest
+/x/floaroma-meadow.shtml|Floaroma Meadow
+/x/flower-paradise.shtml|Flower Paradise
+/x/fuego-ironworks.shtml|Fuego Ironworks
+/x/fullmoon-island.shtml|Fullmoon Island
+/x/great-marsh.shtml|Great Marsh
+/x/hearthome-city.shtml|Hearthome City
+/x/hearthome-city.shtml|Hearthome City
+/x/iceberg-ruins.shtml|Iceberg Ruins
+/x/iron-island.shtml|Iron Island
+/x/iron-ruins.shtml|Iron Ruins
+/x/lake-acuity.shtml|Lake Acuity
+/x/lake-valor.shtml|Lake Valor
+/x/lake-verity.shtml|Lake Verity
+/x/lost-tower.shtml|Lost Tower
+/x/maniac-tunnel.shtml|Maniac Tunnel
+/x/mt-coronet.shtml|Mt. Coronet
+/x/newmoon-island.shtml|Newmoon Island
+/x/old-chateau.shtml|Old Chateau
+/x/oreburgh-city.shtml|Oreburgh City
+/x/oreburgh-city.shtml|Oreburgh City
+/x/oreburgh-gate.shtml|Oreburgh Gate
+/x/oreburgh-mine.shtml|Oreburgh Mine
+/x/pastoria-city.shtml|Pastoria City
+/x/pastoria-city.shtml|Pastoria City
+/x/ravaged-path.shtml|Ravaged Path
+/x/resort-area.shtml|Resort Area
+/x/roaming-sinnoh.shtml|Roaming Sinnoh
+/x/rock-peak-ruins.shtml|Rock Peak Ruins
+/x/ruin-maniac-cave.shtml|Ruin Maniac Cave
+/x/sendoff-spring.shtml|Sendoff Spring
+/x/sinnoh-hall-of-origin-1.shtml|Hall of Origin
+/x/sinnoh-pokemart.shtml|sinnoh-pokemart
+/x/sinnoh-pokemon-league.shtml|Pokémon League
+/x/sinnoh-route-201.shtml|Route 201
+/x/sinnoh-route-202.shtml|Route 202
+/x/sinnoh-route-203.shtml|Route 203
+/x/sinnoh-route-204.shtml|Route 204
+/x/sinnoh-route-205.shtml|Route 205
+/x/sinnoh-route-206.shtml|Route 206
+/x/sinnoh-route-207.shtml|Route 207
+/x/sinnoh-route-208.shtml|Route 208
+/x/sinnoh-route-209.shtml|Route 209
+/x/sinnoh-route-210.shtml|Route 210
+/x/sinnoh-route-211.shtml|Route 211
+/x/sinnoh-route-212.shtml|Route 212
+/x/sinnoh-route-213.shtml|Route 213
+/x/sinnoh-route-214.shtml|Route 214
+/x/sinnoh-route-215.shtml|Route 215
+/x/sinnoh-route-216.shtml|Route 216
+/x/sinnoh-route-217.shtml|Route 217
+/x/sinnoh-route-218.shtml|Route 218
+/x/sinnoh-route-219.shtml|Route 219
+/x/sinnoh-route-221.shtml|Route 221
+/x/sinnoh-route-222.shtml|Route 222
+/x/sinnoh-route-224.shtml|Route 224
+/x/sinnoh-route-225.shtml|Route 225
+/x/sinnoh-route-227.shtml|Route 227
+/x/sinnoh-route-228.shtml|Route 228
+/x/sinnoh-route-229.shtml|Route 229
+/x/sinnoh-sea-route-220.shtml|Sea Route 220
+/x/sinnoh-sea-route-223.shtml|Sea Route 223
+/x/sinnoh-sea-route-226.shtml|Sea Route 226
+/x/sinnoh-sea-route-230.shtml|Sea Route 230
+/x/sinnoh-victory-road.shtml|Victory Road
+/x/snowpoint-city.shtml|Snowpoint City
+/x/snowpoint-city.shtml|Snowpoint City
+/x/snowpoint-temple.shtml|Snowpoint Temple
+/x/solaceon-ruins.shtml|Solaceon Ruins
+/x/spear-pillar.shtml|Spear Pillar
+/x/stark-mountain.shtml|Stark Mountain
+/x/sunyshore-city.shtml|Sunyshore City
+/x/sunyshore-city.shtml|Sunyshore City
+/x/trophy-garden.shtml|Trophy Garden
+/x/turnback-cave.shtml|Turnback Cave
+/x/twinleaf-town.shtml|Twinleaf Town
+/x/twinleaf-town.shtml|Twinleaf Town
+/x/valley-windworks.shtml|Valley Windworks
+/x/valor-lakefront.shtml|Valor Lakefront
+/x/veilstone-city.shtml|Veilstone City
+/x/veilstone-city.shtml|Veilstone City
+/x/wayward-cave.shtml|Wayward Cave

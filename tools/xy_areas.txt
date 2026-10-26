@@ -1,0 +1,61 @@
+/pokearth/kalos/ambrettetown.shtml|Ambrette Town
+/pokearth/kalos/anistarcity.shtml|Anistar City
+/pokearth/kalos/aquacordetown.shtml|Aquacorde Town
+/pokearth/kalos/azurebay.shtml|Azure Bay
+/pokearth/kalos/battlechateau.shtml|Battle Chateau
+/pokearth/kalos/battlemaison.shtml|Battle Maison
+/pokearth/kalos/camphriertown.shtml|Camphrier Town
+/pokearth/kalos/chamberofemptiness.shtml|Chamber of Emptiness
+/pokearth/kalos/connectingcave.shtml|Connecting Cave
+/pokearth/kalos/coumarinecity.shtml|Coumarine City
+/pokearth/kalos/couriwaytown.shtml|Couriway Town
+/pokearth/kalos/cyllagecity.shtml|Cyllage City
+/pokearth/kalos/dendemilletown.shtml|Dendemille Town
+/pokearth/kalos/flarecafe.shtml|Flare Cafe
+/pokearth/kalos/frostcavern.shtml|Frost Cavern
+/pokearth/kalos/geosengetown.shtml|Geosenge Town
+/pokearth/kalos/glitteringcave.shtml|Glittering Cave
+/pokearth/kalos/index.shtml|Pok
+/pokearth/kalos/kalospowerplant.shtml|Kalos Power Plant
+/pokearth/kalos/kiloudecity.shtml|Kiloude City
+/pokearth/kalos/laverrecity.shtml|Laverre City
+/pokearth/kalos/losthotel.shtml|Lost Hotel
+/pokearth/kalos/lumiosecity.shtml|Lumiose City
+/pokearth/kalos/lysandrelabs.shtml|Lysandre Labs
+/pokearth/kalos/parfumpalace.shtml|Parfum Palace
+/pokearth/kalos/pokeballfactory.shtml|Poke Ball Factory
+/pokearth/kalos/pokemonleague.shtml|Pokemon League
+/pokearth/kalos/pokemonvillage.shtml|Pokemon Village
+/pokearth/kalos/reflectioncave.shtml|Reflection Cave
+/pokearth/kalos/route1.shtml|Route 1
+/pokearth/kalos/route10.shtml|Route 10
+/pokearth/kalos/route11.shtml|Route 11
+/pokearth/kalos/route12.shtml|Route 12
+/pokearth/kalos/route13.shtml|Route 13
+/pokearth/kalos/route14.shtml|Route 14
+/pokearth/kalos/route15.shtml|Route 15
+/pokearth/kalos/route16.shtml|Route 16
+/pokearth/kalos/route17.shtml|Route 17
+/pokearth/kalos/route18.shtml|Route 18
+/pokearth/kalos/route19.shtml|Route 19
+/pokearth/kalos/route2.shtml|Route 2
+/pokearth/kalos/route20.shtml|Route 20
+/pokearth/kalos/route21.shtml|Route 21
+/pokearth/kalos/route22.shtml|Route 22
+/pokearth/kalos/route3.shtml|Route 3
+/pokearth/kalos/route4.shtml|Route 4
+/pokearth/kalos/route5.shtml|Route 5
+/pokearth/kalos/route6.shtml|Route 6
+/pokearth/kalos/route7.shtml|Route 7
+/pokearth/kalos/route8.shtml|Route 8
+/pokearth/kalos/route9.shtml|Route 9
+/pokearth/kalos/santalunecity.shtml|Santalune City
+/pokearth/kalos/santaluneforest.shtml|Santalune Forest
+/pokearth/kalos/seaspirit'sden.shtml|Sea Spirit's Den
+/pokearth/kalos/shalourcity.shtml|Shalour City
+/pokearth/kalos/snowbellecity.shtml|Snowbelle City
+/pokearth/kalos/teamflarehq.shtml|Team Flare HQ
+/pokearth/kalos/terminuscave.shtml|Terminus Cave
+/pokearth/kalos/towerofmastery.shtml|Tower of Mastery
+/pokearth/kalos/vanivilletown.shtml|Vaniville Town
+/pokearth/kalos/victoryroad.shtml|Victory Road

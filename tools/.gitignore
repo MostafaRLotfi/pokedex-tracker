@@ -1,0 +1,17 @@
+dl/
+dl2/
+pkhex/
+web/
+__pycache__/
+# written by build.sh / gen_g.py, not edited by hand
+b2w2_core.js
+b2w2_data.json
+b2w2_i18n.js
+b2w2_names.json
+b2w2_template.html
+hgss_i18n.js
+dppt_i18n.js
+frlg_i18n.js
+rse_i18n.js
+gsc_i18n.js
+rby_i18n.js

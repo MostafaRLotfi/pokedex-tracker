@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sword & Shield Dex Tracker</title>
+<meta name="description" content="Story-ordered Pokédex checklist for Pokémon Sword and Shield with The Isle of Armor and The Crown Tundra, plus Alolan Diglett and Gigantamax checklists.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+__STYLE__
+.note{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin:0 0 14px;font-size:14px;color:var(--muted)}
+.note b{color:var(--ink)}
+.tag.W{background:color-mix(in srgb,#2f8fd8 16%,transparent);color:#3c9be0}
+.tag.H{background:color-mix(in srgb,#d0386a 16%,transparent);color:#d84a78}
+.gm ol{margin:8px 0 0;padding-left:0;list-style:none;display:flex;flex-wrap:wrap;gap:6px 14px;color:var(--muted);font-size:14px}
+.gm ol b{color:var(--ink)}
+@media (max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<nav class="gamebar" aria-label="Games">
+  <div class="wrap">
+    <a class="brand" href="../" data-i18n="brand">Pokédex Tracker</a>
+    __GAMESEL__
+  </div>
+</nav>
+<header class="hero">
+  <div class="wrap">
+    <div class="ball" aria-hidden="true"></div>
+    <h1 data-i18n="title">Sword & Shield Dex Tracker</h1>
+    <p class="sub" data-i18n="sub">An efficient, story-ordered route to fill the Galar Pokédex in Pokémon Sword and Shield, plus The Isle of Armor and The Crown Tundra, the Alolan Diglett hunt and every Gigantamax Pokémon.</p>
+    <div class="stats">
+      <div class="stat"><div class="k" data-i18n="kGal">Galar Pokédex</div><div class="v" id="sGal">0</div><div class="bar"><i id="bGal"></i></div></div>
+      <div class="stat"><div class="k" data-i18n="kAll">All Pokémon</div><div class="v" id="sAll">0</div><div class="bar"><i id="bAll"></i></div></div>
+      <div class="stat"><div class="k" data-i18n="kDig">Alolan Diglett</div><div class="v" id="sDig">0</div><div class="bar"><i id="bDig"></i></div></div>
+      <div class="stat"><div class="k" data-i18n="kGmx">Gigantamax</div><div class="v" id="sGmx">0</div><div class="bar"><i id="bGmx"></i></div></div>
+    </div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="wrap">
+    <div class="tabs" role="tablist">
+      <button role="tab" aria-selected="true" data-tab="dex" data-i18n="tabDex">Pokédex route</button>
+      <button role="tab" aria-selected="false" data-tab="dig" data-i18n="tabDig">Diglett</button>
+      <button role="tab" aria-selected="false" data-tab="gmx" data-i18n="tabGmx">Gigantamax</button>
+    </div>
+    <input class="search" id="q" type="search" placeholder="Search Pokémon or area…" aria-label="Search" data-i18n-ph="search" data-i18n-aria="searchA">
+    <select class="ctl" id="ver" aria-label="Game version" data-i18n-aria="verA">
+      <option value="0" data-i18n="verBoth">Both versions</option>
+      <option value="1" data-i18n="verW">Sword</option>
+      <option value="2" data-i18n="verH">Shield</option>
+    </select>
+    <label class="tog" title="Show The Isle of Armor and The Crown Tundra Pokémon" data-i18n-title="dlcT"><input type="checkbox" id="dlc" checked> <span data-i18n="dlc">DLC</span></label>
+    <label class="tog"><input type="checkbox" id="hide"> <span data-i18n="hide">Hide done</span></label>
+    <select class="ctl" id="lang" aria-label="Language" data-i18n-aria="lang"></select>
+    <button class="ctl" style="font-size:17px;line-height:1" id="theme" title="Toggle theme" aria-label="Toggle theme" data-i18n-title="theme" data-i18n-aria="theme">◐</button>
+  </div>
+</div>
+
+<main class="wrap">
+  <section id="tab-dex">
+    <p class="intro" data-i18n-html="intro">Follow the stops in order, from Postwick through the eight Gyms to the post-game and the two DLC areas. In the Wild Area you can only catch Pokémon up to a level set by your badges, so each Pokémon is listed at the first badge that lets you catch it. Tap a row to check it off. <b>Evolves into</b> shows later stages and how they evolve.</p>
+    <p class="note" data-i18n-html="shiny"><b>Shiny Charm:</b> catch every Pokémon in the Galar Pokédex, then talk to the game director at Hotel Ionia in Circhester. You'll need trades for the other version's exclusives.</p>
+    <div style="display:flex;gap:10px;align-items:center;margin:0 0 12px;flex-wrap:wrap">
+      <label class="tog"><span data-i18n="viewBy">View</span>
+        <select class="ctl" id="dview"><option value="route" data-i18n="viewRoute">Route order</option><option value="num" data-i18n="viewNum">Dex number</option><option value="zone" data-i18n="viewZone">Area</option></select>
+      </label>
+    </div>
+    <div id="stops"></div>
+  </section>
+
+  <section id="tab-dig" hidden>
+    <div class="gm">
+      <h2 data-i18n="digH">Alolan Diglett hunt</h2>
+      <p data-i18n-html="digP">The Isle of Armor hides 150 Alolan Diglett. Look for their three hairs poking out of the ground and press A to find one. Report back to the man you meet with the first one when you arrive on the island, and he gives you rewards as your count goes up. Diglett are tracked by area.</p>
+      <ol id="digRew"></ol>
+      <div class="badge" id="digBadge">0</div>
+    </div>
+    <div class="mgrid" id="digGrid"></div>
+  </section>
+
+  <section id="tab-gmx" hidden>
+    <div class="gm">
+      <h2 data-i18n="gmxH">Gigantamax Pokémon</h2>
+      <p data-i18n-html="gmxP">Most Gigantamax Pokémon are caught in Max Raid Battles at the dens listed; a few are gifts or events. In The Isle of Armor, Max Soup made from Max Mushrooms can give a Pokémon you already have its Gigantamax Factor. Each one is a single check-off here, separate from the Pokédex.</p>
+      <div class="badge" id="gmxBadge">0</div>
+    </div>
+    <div class="mgrid" id="gmxGrid"></div>
+  </section>
+
+  <footer class="src" data-i18n-html="footer">
+    Locations, levels, evolutions, Diglett and Gigantamax from <a href="https://www.serebii.net/swordshield/">Serebii</a>. Pokédex order and localized names from <a href="https://pokeapi.co/">PokeAPI</a>. Fan-made tracker, not affiliated with Nintendo, Game Freak or The Pokémon Company.
+  </footer>
+</main>
+
+<div class="savebar">
+  <div class="wrap">
+    <span class="lbl" data-i18n="save">Save code</span>
+    <div class="code" id="code" title="Copy this into your notes app" data-i18n-title="codeT"></div>
+    <button class="btn" id="copy" data-i18n="copy">Copy</button>
+    <button class="btn ghost" id="loadBtn" data-i18n="load">Load</button>
+    <button class="btn ghost" id="copyAll" data-i18n="copyAll" title="Copy the save codes of every game you track here, to paste into your notes" data-i18n-title="copyAllT">Copy all games</button>
+    <div class="loadrow" id="loadRow">
+      <input id="loadIn" placeholder="Paste a saved code (PSWSH1-…)" aria-label="Saved code" data-i18n-ph="loadPh" data-i18n-aria="loadA">
+      <button class="btn" id="loadGo" data-i18n="restore">Restore</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const D = __DATA__;
+const N = __NAMES__;
+__I18N__
+__CORE__
+</script>
+</body>
+</html>

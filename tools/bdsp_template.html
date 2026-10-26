@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brilliant Diamond & Shining Pearl Dex Tracker</title>
+<meta name="description" content="Story-ordered Sinnoh and National Pokédex checklist for Pokémon Brilliant Diamond and Shining Pearl, plus a Ramanas Park legendary tracker.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+__STYLE__
+.note{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin:0 0 14px;font-size:14px;color:var(--muted)}
+.note b{color:var(--ink)}
+.tag.B{background:color-mix(in srgb,#3b6fd1 16%,transparent);color:#4d7fe0}
+.tag.S{background:color-mix(in srgb,#d14f8c 16%,transparent);color:#d65c94}
+</style>
+</head>
+<body>
+<nav class="gamebar" aria-label="Games">
+  <div class="wrap">
+    <a class="brand" href="../" data-i18n="brand">Pokédex Tracker</a>
+    __GAMESEL__
+  </div>
+</nav>
+<header class="hero">
+  <div class="wrap">
+    <div class="ball" aria-hidden="true"></div>
+    <h1 data-i18n="title">Brilliant Diamond & Shining Pearl Dex Tracker</h1>
+    <p class="sub" data-i18n="sub">An efficient, story-ordered route to fill the Sinnoh and National Pokédex in Pokémon Brilliant Diamond and Shining Pearl, plus a Ramanas Park legendary checklist.</p>
+    <div class="stats">
+      <div class="stat"><div class="k" data-i18n="kSin">Sinnoh Pokédex</div><div class="v" id="sSin">0</div><div class="bar"><i id="bSin"></i></div></div>
+      <div class="stat"><div class="k" data-i18n="kNat">National Pokédex</div><div class="v" id="sNat">0</div><div class="bar"><i id="bNat"></i></div></div>
+      <div class="stat"><div class="k" data-i18n="kRam">Ramanas Park</div><div class="v" id="sRam">0</div><div class="bar"><i id="bRam"></i></div></div>
+    </div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="wrap">
+    <div class="tabs" role="tablist">
+      <button role="tab" aria-selected="true" data-tab="dex" data-i18n="tabDex">Pokédex route</button>
+      <button role="tab" aria-selected="false" data-tab="ram" data-i18n="tabRam">Ramanas Park</button>
+    </div>
+    <input class="search" id="q" type="search" placeholder="Search Pokémon or area…" aria-label="Search" data-i18n-ph="search" data-i18n-aria="searchA">
+    <select class="ctl" id="ver" aria-label="Game version" data-i18n-aria="verA">
+      <option value="0" data-i18n="verBoth">Both versions</option>
+      <option value="1" data-i18n="verB">Brilliant Diamond</option>
+      <option value="2" data-i18n="verSP">Shining Pearl</option>
+    </select>
+    <label class="tog"><input type="checkbox" id="hide"> <span data-i18n="hide">Hide done</span></label>
+    <select class="ctl" id="lang" aria-label="Language" data-i18n-aria="lang"></select>
+    <button class="ctl" style="font-size:17px;line-height:1" id="theme" title="Toggle theme" aria-label="Toggle theme" data-i18n-title="theme" data-i18n-aria="theme">◐</button>
+  </div>
+</div>
+
+<main class="wrap">
+  <section id="tab-dex">
+    <p class="intro" data-i18n-html="intro">Follow the stops in order, from Twinleaf Town through the eight Gyms to the post-game. Each Pokémon is listed at the first point you can get it, including the Grand Underground as it opens up. Pokémon outside the Sinnoh Pokédex only appear after you get the National Pokédex. Tap a row to check it off. <b>Evolves into</b> shows later stages and how they evolve.</p>
+    <p class="note" data-i18n-html="shiny"><b>National Pokédex:</b> see every Pokémon in the Sinnoh Pokédex, then show Professor Rowan. <b>Shiny Charm:</b> catch every non-Mythical Pokémon in the National Pokédex, then visit the game director at Hotel Grand Lake. In these games it only raises shiny odds for Eggs.</p>
+    <div style="display:flex;gap:10px;align-items:center;margin:0 0 12px;flex-wrap:wrap">
+      <label class="tog"><span data-i18n="viewBy">View</span>
+        <select class="ctl" id="dview"><option value="route" data-i18n="viewRoute">Route order</option><option value="num" data-i18n="viewNum">Dex number</option><option value="zone" data-i18n="viewZone">Area</option></select>
+      </label>
+    </div>
+    <div id="stops"></div>
+  </section>
+
+  <section id="tab-ram" hidden>
+    <div class="gm">
+      <h2 data-i18n="ramH">Ramanas Park</h2>
+      <p data-i18n-html="ramP">Ramanas Park opens on Route 221 after you complete the Sinnoh Pokédex. Buy slates with Mysterious Shards dug up in the Grand Underground, then place them in a room's pedestal to summon its legendary Pokémon (level 70). Rooms unlock in order, and a few are exclusive to one version. Checking a Pokémon here also checks it in the Pokédex.</p>
+    </div>
+    <div class="mgrid" id="mgrid"></div>
+  </section>
+
+  <footer class="src" data-i18n-html="footer">
+    Locations, Grand Underground spawns, evolutions and Ramanas Park from <a href="https://www.serebii.net/brilliantdiamondshiningpearl/">Serebii</a>. Pokédex order and localized names from <a href="https://pokeapi.co/">PokeAPI</a>. Fan-made tracker, not affiliated with Nintendo, Game Freak or The Pokémon Company.
+  </footer>
+</main>
+
+<div class="savebar">
+  <div class="wrap">
+    <span class="lbl" data-i18n="save">Save code</span>
+    <div class="code" id="code" title="Copy this into your notes app" data-i18n-title="codeT"></div>
+    <button class="btn" id="copy" data-i18n="copy">Copy</button>
+    <button class="btn ghost" id="loadBtn" data-i18n="load">Load</button>
+    <button class="btn ghost" id="copyAll" data-i18n="copyAll" title="Copy the save codes of every game you track here, to paste into your notes" data-i18n-title="copyAllT">Copy all games</button>
+    <div class="loadrow" id="loadRow">
+      <input id="loadIn" placeholder="Paste a saved code (PBDSP1-…)" aria-label="Saved code" data-i18n-ph="loadPh" data-i18n-aria="loadA">
+      <button class="btn" id="loadGo" data-i18n="restore">Restore</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const D = __DATA__;
+const N = __NAMES__;
+__I18N__
+__CORE__
+</script>
+</body>
+</html>

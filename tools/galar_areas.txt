@@ -1,0 +1,91 @@
+/pokearth/galar/index.shtml	Pokéarth: Galar
+/pokearth/galar/index.shtml	Pokéarth: Galar
+/pokearth/galar/route1.shtml	Route 1
+/pokearth/galar/route2.shtml	Route 2
+/pokearth/galar/route3.shtml	Route 3
+/pokearth/galar/route4.shtml	Route 4
+/pokearth/galar/route5.shtml	Route 5
+/pokearth/galar/route6.shtml	Route 6
+/pokearth/galar/route7.shtml	Route 7
+/pokearth/galar/route8.shtml	Route 8
+/pokearth/galar/route9.shtml	Route 9
+/pokearth/galar/route10.shtml	Route 10
+/pokearth/galar/axew'seye.shtml	Axew's Eye
+/pokearth/galar/ballonlea.shtml	Ballonlea
+/pokearth/galar/battletower.shtml	Battle Tower
+/pokearth/galar/bridgefield.shtml	Bridge Field
+/pokearth/galar/circhester.shtml	Circhester
+/pokearth/galar/dappledgrove.shtml	Dappled Grove
+/pokearth/galar/dustybowl.shtml	Dusty Bowl
+/pokearth/galar/eastlakeaxewell.shtml	East Lake Axewell
+/pokearth/galar/energyplant.shtml	Energy Plant
+/pokearth/galar/galarmine.shtml	Galar Mine
+/pokearth/galar/galarmineno.2.shtml	Galar Mine No. 2
+/pokearth/galar/giant'scap.shtml	Giant's Cap
+/pokearth/galar/giant'smirror.shtml	Giant's Mirror
+/pokearth/galar/giant'sseat.shtml	Giant's Seat
+/pokearth/galar/glimwoodtangle.shtml	Glimwood Tangle
+/pokearth/galar/hammerlocke.shtml	Hammerlocke
+/pokearth/galar/hammerlockehills.shtml	Hammerlocke Hills
+/pokearth/galar/hulbury.shtml	Hulbury
+/pokearth/galar/lakeofoutrage.shtml	Lake of Outrage
+/pokearth/galar/meetupspot.shtml	Meetup Spot
+/pokearth/galar/motostoke.shtml	Motostoke
+/pokearth/galar/motostokeoutskirts.shtml	Motostoke Outskirts
+/pokearth/galar/motostokeriverbank.shtml	Motostoke Riverbank
+/pokearth/galar/northlakemiloch.shtml	North Lake Miloch
+/pokearth/galar/postwick.shtml	Postwick
+/pokearth/galar/rollingfields.shtml	Rolling Fields
+/pokearth/galar/rosetower.shtml	Rose Tower
+/pokearth/galar/route9tunnel.shtml	Route 9 Tunnel
+/pokearth/galar/slumberingweald.shtml	Slumbering Weald
+/pokearth/galar/southlakemiloch.shtml	South Lake Miloch
+/pokearth/galar/spikemuth.shtml	Spikemuth
+/pokearth/galar/stonywilderness.shtml	Stony Wilderness
+/pokearth/galar/stow-on-side.shtml	Stow-on-Side
+/pokearth/galar/turffield.shtml	Turffield
+/pokearth/galar/watchtowerruins.shtml	Watchtower Ruins
+/pokearth/galar/wedgehurst.shtml	Wedgehurst
+/pokearth/galar/westlakeaxewell.shtml	West Lake Axewell
+/pokearth/galar/wyndon.shtml	Wyndon
+/pokearth/galar/wyndonstadium.shtml	Wyndon Stadium
+/pokearth/galar/brawlers'cave.shtml	Brawlers' Cave
+/pokearth/galar/challengebeach.shtml	Challenge Beach
+/pokearth/galar/challengeroad.shtml	Challenge Road
+/pokearth/galar/courageouscavern.shtml	Courageous Cavern
+/pokearth/galar/fieldsofhonor.shtml	Fields of Honor
+/pokearth/galar/forestoffocus.shtml	Forest of Focus
+/pokearth/galar/honeycalmisland.shtml	Honeycalm Island
+/pokearth/galar/honeycalmsea.shtml	Honeycalm Sea
+/pokearth/galar/insularsea.shtml	Insular Sea
+/pokearth/galar/looplagoon.shtml	Loop Lagoon
+/pokearth/galar/masterdojo.shtml	Master Dojo
+/pokearth/galar/potbottomdesert.shtml	Potbottom Desert
+/pokearth/galar/soothingwetlands.shtml	Soothing Wetlands
+/pokearth/galar/stepping-stonesea.shtml	Stepping-Stone Sea
+/pokearth/galar/towerofdarkness.shtml	Tower of Darkness
+/pokearth/galar/towerofwaters.shtml	Tower of Waters
+/pokearth/galar/traininglowlands.shtml	Training Lowlands
+/pokearth/galar/warm-uptunnel.shtml	Warm-Up Tunnel
+/pokearth/galar/workoutsea.shtml	Workout Sea
+/pokearth/galar/slipperyslope.shtml	Slippery Slope
+/pokearth/galar/freezington.shtml	Freezington
+/pokearth/galar/frostpointfield.shtml	Frostpoint Field
+/pokearth/galar/giant'sbed.shtml	Giant's Bed
+/pokearth/galar/oldcemetery.shtml	Old Cemetery
+/pokearth/galar/snowslideslope.shtml	Snowslide Slope
+/pokearth/galar/tunneltothetop.shtml	Tunnel to the Top
+/pokearth/galar/pathtothepeak.shtml	Path to the Peak
+/pokearth/galar/crownshrine.shtml	Crown Shrine
+/pokearth/galar/giant'sfoot.shtml	Giant's Foot
+/pokearth/galar/roaring-seacaves.shtml	Roaring-Sea Caves
+/pokearth/galar/frigidsea.shtml	Frigid Sea
+/pokearth/galar/three-pointpass.shtml	Three-Point Pass
+/pokearth/galar/ballimerelake.shtml	Ballimere Lake
+/pokearth/galar/lakesidecave.shtml	Lakeside Cave
+/pokearth/galar/dynatreehill.shtml	Dyna Tree Hill
+/pokearth/galar/rockpeakruins.shtml	Rock Peak Ruins
+/pokearth/galar/icebergruins.shtml	Iceberg Ruins
+/pokearth/galar/ironruins.shtml	Iron Ruins
+/pokearth/galar/split-decisionruins.shtml	Split-Decision Ruins
+/pokearth/galar/maxlair.shtml	Max Lair

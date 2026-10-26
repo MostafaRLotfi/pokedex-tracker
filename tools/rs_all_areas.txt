@@ -1,0 +1,86 @@
+/x/abandoned-ship.shtml|Abandoned Ship
+/x/ancient-tomb.shtml|Ancient Tomb
+/x/artisan-cave.shtml|Artisan Cave
+/x/birth-island.shtml|Birth Island
+/x/cave-of-origin.shtml|Cave of Origin
+/x/desert-ruins.shtml|Desert Ruins
+/x/desert-underpass.shtml|Desert Underpass
+/x/dewford-town.shtml|Dewford Town
+/x/ever-grande-city.shtml|Ever Grande City
+/x/fallarbor-town.shtml|Fallarbor Town
+/x/faraway-island.shtml|Faraway Island
+/x/fiery-path.shtml|Fiery Path
+/x/fortree-city.shtml|Fortree City
+/x/granite-cave.shtml|Granite Cave
+/x/hoenn-altering-cave.shtml|Altering Cave
+/x/hoenn-battle-frontier.shtml|Hoenn Battle Frontier
+/x/hoenn-pokecenter.shtml|hoenn-pokecenter
+/x/hoenn-pokemon-league.shtml|Pokémon League
+/x/hoenn-route-101.shtml|Route 101
+/x/hoenn-route-102.shtml|Route 102
+/x/hoenn-route-103.shtml|Route 103
+/x/hoenn-route-104.shtml|Route 104
+/x/hoenn-route-105.shtml|Route 105
+/x/hoenn-route-106.shtml|Route 106
+/x/hoenn-route-107.shtml|Route 107
+/x/hoenn-route-108.shtml|Route 108
+/x/hoenn-route-109.shtml|Route 109
+/x/hoenn-route-110.shtml|Route 110
+/x/hoenn-route-111.shtml|Route 111
+/x/hoenn-route-112.shtml|Route 112
+/x/hoenn-route-113.shtml|Route 113
+/x/hoenn-route-114.shtml|Route 114
+/x/hoenn-route-115.shtml|Route 115
+/x/hoenn-route-116.shtml|Route 116
+/x/hoenn-route-117.shtml|Route 117
+/x/hoenn-route-118.shtml|Route 118
+/x/hoenn-route-119.shtml|Route 119
+/x/hoenn-route-120.shtml|Route 120
+/x/hoenn-route-121.shtml|Route 121
+/x/hoenn-route-122.shtml|Route 122
+/x/hoenn-route-123.shtml|Route 123
+/x/hoenn-route-124.shtml|Route 124
+/x/hoenn-route-125.shtml|Route 125
+/x/hoenn-route-126.shtml|Route 126
+/x/hoenn-route-127.shtml|Route 127
+/x/hoenn-route-128.shtml|Route 128
+/x/hoenn-route-129.shtml|Route 129
+/x/hoenn-route-130.shtml|Route 130
+/x/hoenn-route-131.shtml|Route 131
+/x/hoenn-route-132.shtml|Route 132
+/x/hoenn-route-133.shtml|Route 133
+/x/hoenn-route-134.shtml|Route 134
+/x/hoenn-safari-zone.shtml|Safari Zone
+/x/hoenn-victory-road.shtml|Victory Road
+/x/island-cave.shtml|Island Cave
+/x/jagged-pass.shtml|Jagged Pass
+/x/lavaridge-town.shtml|Lavaridge Town
+/x/lilycove-city.shtml|Lilycove City
+/x/littleroot-town.shtml|Littleroot Town
+/x/magma-hideout.shtml|Magma Hideout
+/x/marine-cave.shtml|Marine Cave
+/x/mauville-city.shtml|Mauville City
+/x/meteor-falls.shtml|Meteor Falls
+/x/mirage-island.shtml|mirage-island
+/x/mirage-tower.shtml|Mirage Tower
+/x/mossdeep-city.shtml|Mossdeep City
+/x/mt-pyre.shtml|Mt. Pyre
+/x/navel-rock.shtml|Navel Rock
+/x/new-mauville.shtml|New Mauville
+/x/oldale-town.shtml|Oldale Town
+/x/pacifidlog-town.shtml|Pacifidlog Town
+/x/petalburg-city.shtml|Petalburg City
+/x/petalburg-woods.shtml|Petalburg Woods
+/x/roaming-hoenn.shtml|Roaming Hoenn
+/x/rustboro-city.shtml|Rustboro City
+/x/rusturf-tunnel.shtml|Rusturf Tunnel
+/x/seafloor-cavern.shtml|Seafloor Cavern
+/x/shoal-cave.shtml|Shoal Cave
+/x/sky-pillar.shtml|Sky Pillar
+/x/slateport-city.shtml|Slateport City
+/x/sootopolis-city.shtml|Sootopolis City
+/x/southern-island.shtml|Southern Island
+/x/team-aqua-hideout.shtml|Team Aqua Hideout
+/x/team-magma-hideout.shtml|Team Magma Hideout
+/x/terra-cave.shtml|Terra Cave
+/x/verdanturf-town.shtml|Verdanturf Town

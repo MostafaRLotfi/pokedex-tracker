@@ -1,0 +1,93 @@
+/pokearth/unova/abundantshrine.shtml|Abundant Shrine
+/pokearth/unova/abyssalruins.shtml|Abyssal Ruins
+/pokearth/unova/accumulatown.shtml|Accumula Town
+/pokearth/unova/anvilletown.shtml|Anville Town
+/pokearth/unova/aspertiacity.shtml|Aspertia City
+/pokearth/unova/blackcity.shtml|Black City
+/pokearth/unova/casteliacity.shtml|Castelia City
+/pokearth/unova/casteliasewers.shtml|Castelia Sewers
+/pokearth/unova/caveofbeing.shtml|Cave of Being
+/pokearth/unova/celestialtower.shtml|Celestial Tower
+/pokearth/unova/challenger'scave.shtml|Challenger's Cave
+/pokearth/unova/chargestonecave.shtml|Chargestone Cave
+/pokearth/unova/claytunnel.shtml|Clay Tunnel
+/pokearth/unova/coldstorage.shtml|Cold Storage
+/pokearth/unova/desertresort.shtml|Desert Resort
+/pokearth/unova/dragonspiraltower.shtml|Dragonspiral Tower
+/pokearth/unova/dreamyard.shtml|Dreamyard
+/pokearth/unova/driftveilcity.shtml|Driftveil City
+/pokearth/unova/driftveildrawbridge.shtml|Driftveil Drawbridge
+/pokearth/unova/entralink.shtml|Entralink
+/pokearth/unova/floccesyranch.shtml|Floccesy Ranch
+/pokearth/unova/floccesytown.shtml|Floccesy Town
+/pokearth/unova/gearstation.shtml|Gear Station
+/pokearth/unova/giantchasm.shtml|Giant Chasm
+/pokearth/unova/humilaucity.shtml|Humilau City
+/pokearth/unova/icirruscity.shtml|Icirrus City
+/pokearth/unova/index.shtml|Pok
+/pokearth/unova/joinavenue.shtml|Join Avenue
+/pokearth/unova/lacunosatown.shtml|Lacunosa Town
+/pokearth/unova/lentimastown.shtml|Lentimas Town
+/pokearth/unova/libertygarden.shtml|Liberty Garden
+/pokearth/unova/lostlornforest.shtml|Lostlorn Forest
+/pokearth/unova/marinetube.shtml|Marine Tube
+/pokearth/unova/marvelousbridge.shtml|Marvelous Bridge
+/pokearth/unova/mistraltoncave.shtml|Mistralton Cave
+/pokearth/unova/mistraltoncity.shtml|Mistralton City
+/pokearth/unova/mooroficirrus.shtml|Moor of Icirrus
+/pokearth/unova/n'scastle.shtml|N's Castle
+/pokearth/unova/nacrenecity.shtml|Nacrene City
+/pokearth/unova/naturepreserve.shtml|Nature Preserve
+/pokearth/unova/nimbasacity.shtml|Nimbasa City
+/pokearth/unova/nuvematown.shtml|Nuvema Town
+/pokearth/unova/opelucidcity.shtml|Opelucid City
+/pokearth/unova/p2laboratory.shtml|P2 Laboratory
+/pokearth/unova/pinwheelforest.shtml|Pinwheel Forest
+/pokearth/unova/plasmafrigate.shtml|Plasma Frigate
+/pokearth/unova/pledgegrove.shtml|Pledge Grove
+/pokearth/unova/pokemonleague.shtml|Pok
+/pokearth/unova/pokestarstudios.shtml|Pok
+/pokearth/unova/pwt.shtml|PWT
+/pokearth/unova/reliccastle.shtml|Relic Castle
+/pokearth/unova/relicpassage.shtml|Relic Passage
+/pokearth/unova/reversalmountain.shtml|Reversal Mountain
+/pokearth/unova/route1.shtml|Route 1
+/pokearth/unova/route10.shtml|Route 10
+/pokearth/unova/route11.shtml|Route 11
+/pokearth/unova/route12.shtml|Route 12
+/pokearth/unova/route13.shtml|Route 13
+/pokearth/unova/route14.shtml|Route 14
+/pokearth/unova/route15.shtml|Route 15
+/pokearth/unova/route16.shtml|Route 16
+/pokearth/unova/route17.shtml|Route 17
+/pokearth/unova/route18.shtml|Route 18
+/pokearth/unova/route19.shtml|Route 19
+/pokearth/unova/route2.shtml|Route 2
+/pokearth/unova/route20.shtml|Route 20
+/pokearth/unova/route21.shtml|Route 21
+/pokearth/unova/route22.shtml|Route 22
+/pokearth/unova/route23.shtml|Route 23
+/pokearth/unova/route3.shtml|Route 3
+/pokearth/unova/route4.shtml|Route 4
+/pokearth/unova/route5.shtml|Route 5
+/pokearth/unova/route6.shtml|Route 6
+/pokearth/unova/route7.shtml|Route 7
+/pokearth/unova/route8.shtml|Route 8
+/pokearth/unova/route9.shtml|Route 9
+/pokearth/unova/seasidecave.shtml|Seaside Cave
+/pokearth/unova/skyarrowbridge.shtml|Skyarrow Bridge
+/pokearth/unova/strangehouse.shtml|Strange House
+/pokearth/unova/striatoncity.shtml|Striaton City
+/pokearth/unova/tubelinebridge.shtml|Tubeline Bridge
+/pokearth/unova/twistmountain.shtml|Twist Mountain
+/pokearth/unova/undellabay.shtml|Undella Bay
+/pokearth/unova/undellatown.shtml|Undella Town
+/pokearth/unova/undergroundruins.shtml|Underground Ruins
+/pokearth/unova/unitytower.shtml|Unity Tower
+/pokearth/unova/victoryroad.shtml|Victory Road
+/pokearth/unova/victoryroadb2w2.shtml|Victory Road
+/pokearth/unova/villagebridge.shtml|Village Bridge
+/pokearth/unova/virbankcity.shtml|Virbank City
+/pokearth/unova/virbankcomplex.shtml|Virbank Complex
+/pokearth/unova/wellspringcave.shtml|Wellspring Cave
+/pokearth/unova/whiteforest.shtml|White Forest
