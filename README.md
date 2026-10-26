@@ -71,4 +71,23 @@ Native speakers wanted! The trackers are available in 日本語, Français, Deut
 
 Spot a data error (a wrong location or evolution)? [Open an issue](https://github.com/MostafaRLotfi/pokedex-tracker/issues/new).
 
+## Future work
+
+Help with any of these is welcome. [CONTRIBUTING.md](CONTRIBUTING.md) explains how to rebuild the pages after a change.
+
+**Translations**
+- **Native-speaker review.** Official names come from game data, but the text around them (stop titles, how-to text, tips, buttons) in 日本語, Français, Deutsch, 한국어, 繁體中文 and 简体中文 hasn't been checked by a native speaker.
+- **Place names still in English** in Japanese, Korean and Chinese, because no reliable source was found:
+  - Scarlet & Violet: Grasswither Shrine, Icerend Shrine, Groundblight Shrine, Firescourge Shrine, League Club Room
+  - Legends: Arceus: Space-time distortion
+  - Legends: Z-A: Vernal Avenue (every language except English) and Quasartico Inc. (every language except English and Japanese)
+
+**Keeping the data current**
+- **Scarlet & Violet 7★ raids.** Each new Mightiest Mark event needs adding to the end of `RAIDS` in `tools/add_sv_raids.py` (never in the middle: the save code stores one bit per raid in list order). Then run the script and `tools/build.sh`. The current `PSV2-` code has room for 128 raids; beyond that, a new `PSV3-` prefix is needed, and `PSV2-` codes must keep loading.
+- **Legends: Z-A.** New DLC or event Pokémon and Mega Stones would need adding to the Z-A data.
+- **New games.** Each new mainline game gets its own folder, save-code prefix, front-page card and entry in the game menu, in release order.
+
+**Housekeeping**
+- `tools/gsc_game.json` and `tools/rby_game.json` carry a few unused version labels inherited from the HeartGold & SoulSilver and FireRed & LeafGreen texts. They're harmless but could be removed in `tools/gen12_game.py`.
+
 *Fan-made project, not affiliated with Nintendo, Game Freak, Creatures Inc. or The Pokémon Company.*
